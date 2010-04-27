@@ -53,7 +53,7 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://1x:8080/
+		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = Dogbert.Tests\\Dogbert.Tests.csproj
 		SccProjectName1 = Dogbert.Tests
