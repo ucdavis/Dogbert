@@ -329,6 +329,17 @@ namespace Dogbert.Tests.Core
             Repository.OfType<User>().DbContext.CommitTransaction();
         }
 
+        protected void LoadFileTypes(int entriesToAdd)
+        {
+            Repository.OfType<FileType>().DbContext.BeginTransaction();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.FileType(i + 1);
+                Repository.OfType<FileType>().EnsurePersistent(validEntity);
+            }
+            Repository.OfType<FileType>().DbContext.CommitTransaction();
+        }
+
         /// <summary>
         /// Abstract Repository Tests Action
         /// </summary>

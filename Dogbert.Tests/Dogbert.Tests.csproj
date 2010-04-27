@@ -114,6 +114,8 @@
     <Compile Include="Repositories\PersonRepositoryTests.cs" />
     <Compile Include="Repositories\PersonTypeRepositoryTests.cs" />
     <Compile Include="Repositories\PriorityTypeRepositoryTests.cs" />
+    <Compile Include="Repositories\ProjectFileRepositoryTests.cs" />
+    <Compile Include="Repositories\ProjectRepositoryTests.cs" />
     <Compile Include="Repositories\RequirementRepositoryTests.cs" />
     <Compile Include="Repositories\StatusRepositoryTests.cs" />
   </ItemGroup>
