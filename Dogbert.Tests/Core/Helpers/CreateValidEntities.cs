@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Dogbert.Core.Abstractions;
 using Dogbert.Core.Domain;
 
@@ -122,6 +119,7 @@ namespace Dogbert.Tests.Core.Helpers
             rtValue.Project = new Project();
             rtValue.DateAdded = SystemTime.Now();
             rtValue.FileContents = new byte[] {1,2,3};
+            rtValue.FileContentType = "image/jpg";
 
             return rtValue;
         }

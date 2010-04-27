@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dogbert.Core.Domain;
-using Elmah;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
 
