@@ -13,10 +13,8 @@ namespace Dogbert.Controllers.Helpers
 
         public static string EditProjectUrl(this HtmlHelper html, int projectId, string tabName)
         {
-            //var url = Url.RouteUrl(new { controller = "Project", action = "Edit", id = projectId }) + "#" + tabName;
-            var url = Url.RouteUrl(ControllerGenerator.EditProject(projectId)) + "#" + tabName;
-
-            var link = string.Format("<a href='{0}'>Back to Project</a>", url);
+            var url = Url.RouteUrl(new { controller = "Project", action = "Edit", id = projectId });// +"#" + tabName;
+            var link = string.Format("<a href='{0}'>Back to Project</a>", url ?? "blank");
 
             return link;
         }
