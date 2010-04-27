@@ -1,36 +1,41 @@
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
 using MvcContrib.Attributes;
+using UCDArch.Core.PersistanceSupport;
+using UCDArch.Core.Utils;
 using UCDArch.Web.ActionResults;
+using UCDArch.Web.Attributes;
 using UCDArch.Web.Controller;
 using MvcContrib;
+using UCDArch.Web.Helpers;
+using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
 {
     public class ProjectController : SuperController
     {
+
+
+        private readonly IRepository<Project> _projectRepository;
+        
+        public ProjectController(IRepository<Project> projectRepository)
+        {
+            Check.Require(projectRepository != null);
+            _projectRepository = projectRepository;
+        }
+        
+        
+        
         // GET: /Project/
+        [HandleTransactionManually]
         public ActionResult Index()
         {
-            var projects = Repository.OfType<Project>().Queryable.Where(p => p.Status.IsActive);
+            var projects = _projectRepository.Queryable.Where(p => p.Status.IsActive);
             return View(projects.ToList());
         }
 
-        public ActionResult Edit(int id)
-        {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
-
-            if (project != null)
-            {
-                return View(project);
-            }
-            else
-            {
-                return this.RedirectToAction(a => a.Index());
-            }
-
-        }
 
         [AcceptPost]
         public ActionResult UpdateProjectPriority(int[] projects)
@@ -42,11 +47,105 @@ namespace Dogbert.Controllers
                 p.Priority = i + 1;
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
-            return new JsonNetResult(true) ;
+            return new JsonNetResult(true);
 
         }
 
+        //GET: /Project/Create
+        public ActionResult Create()
+        {
+            return View(ProjectViewModel.Create(Repository));
+        }
+        
+        //POST: /Project/Create
+        [AcceptPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Project project)
+        {
+             
+           //set project Status
+            project.Status = Repository.OfType<Status>().Queryable.Where(p => p.Name == "Pending").FirstOrDefault();
+   
+
+            project.TransferValidationMessagesTo(ModelState);
+            if (ModelState.IsValid)
+            {
+                _projectRepository.EnsurePersistent(project);
+                Message = "New Project Created Successfully";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _projectRepository.DbContext.RollbackTransaction();
+
+                var viewModel = ProjectViewModel.Create(Repository);
+                viewModel.Project = project;
+
+                return View(viewModel);
+            }
+        }
+
+
+
+        // GET: /Order/Edit/
+        public ActionResult Edit(int id)
+        {
+            var existingProject = _projectRepository.GetNullableByID(id);
+
+            if (existingProject == null) return RedirectToAction("Create");
+
+            var viewModel = ProjectViewModel.Create(Repository);
+
+            viewModel.Project = existingProject;
+
+            return View(viewModel);
+        }
+
+
+
+        private static void TransferValuesTo(Project projectToUpdate, Project project)
+        {
+            projectToUpdate.Name = project.Name;
+            projectToUpdate.ProjectType = project.ProjectType;
+            projectToUpdate.Contact = project.Contact;
+            projectToUpdate.ContactEmail = project.ContactEmail;
+            projectToUpdate.Unit = project.Unit;
+            projectToUpdate.ProjectedStart = project.ProjectedStart;
+            //Deadline
+            //ProjectManager
+            //LeadProgrammer
+            //Description
+        }
+
+
+        // POST: /Order/Edit/5
+        [AcceptPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Project project)
+        {
+            var projectToUpdate = _projectRepository.GetById(project.Id);
+            TransferValuesTo(projectToUpdate, project);
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectToUpdate.ValidationResults());
+
+            if (ModelState.IsValid)
+            {
+                _projectRepository.EnsurePersistent(projectToUpdate);
+
+                Message = "Project edited successfully";
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var viewModel = ProjectViewModel.Create(Repository);
+                viewModel.Project = project;
+
+                return View(viewModel);
+            }
+        }
        
    
     }
+   
 }

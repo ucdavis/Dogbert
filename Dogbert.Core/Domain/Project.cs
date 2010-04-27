@@ -66,7 +66,7 @@ namespace Dogbert.Core.Domain
             }
         }
 
-        [Required]
+        [NotNull]
         public virtual Status Status { get; set; }
 
         public virtual User ProjectManager { get; set; }
