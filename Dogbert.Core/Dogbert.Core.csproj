@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\SystemTime.cs" />
     <Compile Include="Domain\CatbertClasses.cs" />
     <Compile Include="Domain\Lookups.cs" />
     <Compile Include="Domain\Person.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Domain\ProjectText.cs" />
     <Compile Include="Domain\ProjectType.cs" />
     <Compile Include="Domain\Requirement.cs" />
-    <Compile Include="Domain\RequirementBase.cs" />
     <Compile Include="Domain\RequirementCategory.cs" />
     <Compile Include="Domain\RequirementType.cs" />
     <Compile Include="Domain\StatusCode.cs" />
