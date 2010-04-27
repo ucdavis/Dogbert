@@ -20,7 +20,7 @@
 		<property name="IsActive" column="IsActive" />
 	</class>
 
-	<class name="Dogbert.Core.Domain.ProjectType, Dogbert.Core" table="ProjectTypes" >
+	<!--<class name="Dogbert.Core.Domain.ProjectType, Dogbert.Core" table="ProjectTypes" >
     <id name="Id" column="id" unsaved-value="0">
 			<generator class="identity" />
 		</id>
@@ -33,16 +33,16 @@
 			<one-to-many class="Dogbert.Core.Domain.Project, Dogbert.Core"/>
 		</bag>
 		
-	</class>
+	</class>-->
 
-	<class name="Dogbert.Core.Domain.RequirementType, Dogbert.Core" table="RequirementTypes" >
+	<!--<class name="Dogbert.Core.Domain.RequirementType, Dogbert.Core" table="RequirementTypes" >
     <id name="Id" column="id" unsaved-value="0">
 			<generator class="identity" />
 		</id>
 
 		<property name="Name" column="Name" />
 		<property name="IsActive" column="IsActive" />
-	</class>
+	</class>-->
 
 	<class name="Dogbert.Core.Domain.PriorityType, Dogbert.Core" table="PriorityTypes" >
     <id name="Id" column="id" unsaved-value="0">

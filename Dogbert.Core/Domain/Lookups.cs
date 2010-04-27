@@ -24,32 +24,32 @@ namespace Dogbert.Core.Domain
     {
     }
 
-    public class ProjectType : LookupBase
-    {
-        public virtual IList<Project> Projects { get; set; }
+    //public class ProjectType : LookupBase
+    //{
+    //    public virtual IList<Project> Projects { get; set; }
 
-        public virtual IQueryable<Project> GetActiveProjects
-        {
-            get
-            {
-                if (Projects != null)
-                {
-                    return from p in Projects.AsQueryable()
-                           where p.StatusCode.IsComplete == false && p.StatusCode.IsActive
-                           orderby p.Priority
-                           select p;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-    }
+    //    public virtual IQueryable<Project> GetActiveProjects
+    //    {
+    //        get
+    //        {
+    //            if (Projects != null)
+    //            {
+    //                return from p in Projects.AsQueryable()
+    //                       where p.StatusCode.IsComplete == false && p.StatusCode.IsActive
+    //                       orderby p.Priority
+    //                       select p;
+    //            }
+    //            else
+    //            {
+    //                return null;
+    //            }
+    //        }
+    //    }
+    //}
 
-    public class RequirementType : LookupBase
-    {
-    }
+    //public class RequirementType : LookupBase
+    //{
+    //}
 
     public class PriorityType : LookupBase
     {
