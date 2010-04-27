@@ -10,11 +10,18 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <%= Html.ClientSideValidation<Requirement>("Requirement")%>
     <h2>Create</h2>
 
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
+    <% using (Html.BeginForm()) {%>
     <% Html.RenderPartial("RequirementForm"); %>
+    
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+
+    <% } %>
     
     <div>
         <%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_Requirements)%>

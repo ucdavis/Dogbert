@@ -87,7 +87,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestMappingEdit()
         {
-            "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5));
+           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, 5), true);
         }
 
         /// <summary>
@@ -96,18 +96,10 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestMappingEditWithTwoParameters()
         {
-            "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, new Requirement()), true);
+           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, 5, new Requirement()), true);
         }
 
-        /// <summary>
-        /// Tests the mapping details.
-        /// </summary>
-        [TestMethod]
-        public void TestMappingDetails()
-        {
-            //"~/Requirement/Details/5".ShouldMapTo<RequirementController>(a => a.Details(5));
-            Assert.Inconclusive("Need to create details method");
-        }
+      
         #endregion Route Tests
 
         #region Index Tests
@@ -161,9 +153,5 @@ namespace Dogbert.Tests.Controllers
 
         #endregion Edit Tests
 
-        #region Details Tests
-
-
-        #endregion Details Tests
     }
 }

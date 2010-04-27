@@ -5,15 +5,15 @@
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="xVal.Html"%>
 
-    <%= Html.ClientSideValidation<RequirementViewModel>()%>
+   
 
-    <% using (Html.BeginForm()) {%>
+    
     <%= Html.AntiForgeryToken() %>
         <fieldset>
             <legend>Fields</legend>
             <p>
                 <label for="Description">Description:</label>
-                <%= this.TextBox("Requirement.Description")%>
+                <%= this.TextArea("Requirement.Description")%>
                 <%= Html.ValidationMessage("Requirement.Description", "*")%> 
             </p>
             <p>
@@ -54,9 +54,7 @@
                 <%= this.CheckBox("Requirement.IsComplete")%>
                 <%= Html.ValidationMessage("Requirement.IsComplete", "*")%>
             </p>
-            <p>
-                <input type="submit" value="Save" />
-            </p>
+            
         </fieldset>
 
-    <% } %>
+   

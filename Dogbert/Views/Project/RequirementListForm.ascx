@@ -32,8 +32,8 @@
             <td>
                 <!--<%= Html.ActionLink("Edit", "Edit", new { id=item.Project.Id }) %>--> 
                 <%int id = item.Id;%>
-                <%= Html.ActionLink<RequirementController>(a => a.Edit(id), "Edit")%> |
-                <%= Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })%>
+                <%Requirement requirement = item;%>
+                <%= Html.ActionLink<RequirementController>(a => a.Edit(id, requirement.Project.Id), "Edit")%>
             </td>
             <td>
                 <%= Html.Encode(item.Description) %>
