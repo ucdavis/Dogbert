@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.ProjectFile, Dogbert.Core" table="ProjectFiles" >
+		<id name="id" access="field" column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="FileName" column="FileName" />
+		<many-to-one name="Type" class="Dogbert.Core.Domain.FileType, Dogbert.Core" column="FileTypeID" cascade="none" />
+		<property name="DateAdded" column="DateAdded" />
+		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+
+	</class>
+</hibernate-mapping>

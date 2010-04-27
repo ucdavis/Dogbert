@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.Requirement, Dogbert.Core" table="Requirements" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Description" column="Description" />
+		<property name="DateAdded" column="DateAdded" />
+		<many-to-one name="Type" class="Dogbert.Core.Domain.RequirementType, Dogbert.Core" column="RequirementTypeID" cascade="none" />
+		<many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
+		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+		<many-to-one name="Category" class="Dogbert.Core.Domain.Category, Dogbert.Core" column="CategoryID" cascade="none" />
+
+		<property name="TechnicalDifficulty" column="TechnicalDifficulty" />
+		<property name="IsComplete" column="IsComplete" />
+
+
+	</class>
+</hibernate-mapping>

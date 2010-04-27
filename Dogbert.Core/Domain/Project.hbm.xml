@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.Project, Dogbert.Core" table="Projects" >
+		<id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="Priority" column="Priority" />
+		<property name="Deadline" column="Deadline" />
+		<property name="Contact" column="Contact" />
+		<property name="ContactEmail" column="ContactEmail" />
+		<property name="Unit" column="Unit" />
+		<property name="Complexity" column="Complexity" />
+		<property name="ProjectedStart" column="ProjectedStart" />
+    <property name="ProjectedEnd" column="ProjectedEnd" />
+		<property name="BeginDate" column="BeginDate" />
+		<property name="EndDate" column="EndDate" />
+		<many-to-one name="Status" class="Dogbert.Core.Domain.Status, Dogbert.Core" column="StatusID" cascade="none" />
+
+		<many-to-one name="ProjectManager" class="Dogbert.Core.Domain.User, Dogbert.Core" column="ProjectManagerID" cascade="none" />
+		<many-to-one name="LeadProgrammer" class="Dogbert.Core.Domain.User, Dogbert.Core" column="LeadProgrammerID" cascade="none" />
+		
+		<property name="Description" column="Description" />
+		<property name="Purpose" column="Purpose" />
+
+		<many-to-one name="ProjectType" class="Dogbert.Core.Domain.ProjectType, Dogbert.Core" column="ProjectTypeID" cascade="none" />
+
+		<bag name="Requirements" table="Requirements">
+			<key column="ProjectID" />
+			<one-to-many class="Dogbert.Core.Domain.Requirement, Dogbert.Core"/>
+		</bag>
+
+		<bag name="UseCases" table="UseCases">
+			<key column="ProjectID" />
+			<one-to-many class="Dogbert.Core.Domain.UseCase, Dogbert.Core"/>
+		</bag>
+
+		<bag name="Categories" table="Categories">
+			<key column="ProjectID" />
+			<one-to-many class="Dogbert.Core.Domain.Category, Dogbert.Core"/>
+		</bag>
+
+		<bag name="Files" table="ProjectFiles">
+			<key column="ProjectID" />
+			<one-to-many class="Dogbert.Core.Domain.ProjectFile, Dogbert.Core"/>
+		</bag>
+	</class>
+</hibernate-mapping>

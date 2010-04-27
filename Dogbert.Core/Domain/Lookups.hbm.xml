@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.Status, Dogbert.Core" table="Status" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+		<property name="IsComplete" column="IsComplete" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.PersonType, Dogbert.Core" table="PeopleType" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.ProjectType, Dogbert.Core" table="ProjectTypes" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+
+		<bag name="Projects" table="Projects">
+			<key column="ProjectTypeID" />
+			<one-to-many class="Dogbert.Core.Domain.Project, Dogbert.Core"/>
+		</bag>
+		
+	</class>
+
+	<class name="Dogbert.Core.Domain.RequirementType, Dogbert.Core" table="RequirementTypes" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.PriorityType, Dogbert.Core" table="PriorityTypes" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.Actor, Dogbert.Core" table="Actors" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.Category, Dogbert.Core" table="Categories" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+
+		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+	</class>
+
+	<class name="Dogbert.Core.Domain.FileType, Dogbert.Core" table="FileTypes" >
+    <id name="ID" access="nosetter.lowercase"  column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="IsActive" column="IsActive" />
+
+	</class>
+	
+</hibernate-mapping>

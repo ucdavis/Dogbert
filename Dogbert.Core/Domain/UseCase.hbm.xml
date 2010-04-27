@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.UseCase, Dogbert.Core" table="UseCases" >
+		<id name="id" access="field" column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<property name="Name" column="Name" />
+		<property name="Description" column="Description" />
+		<property name="DateAdded" column="DateAdded" />
+		<many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
+		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+		<many-to-one name="Category" class="Dogbert.Core.Domain.Category, Dogbert.Core" column="CategoryID" cascade="none" />
+		
+		<bag name="Steps" table="UseCaseSteps">
+			<key column="UseCaseID" />
+			<one-to-many class="Dogbert.Core.Domain.UseCaseStep, Dogbert.Core"/>
+		</bag>
+
+	</class>
+
+</hibernate-mapping>

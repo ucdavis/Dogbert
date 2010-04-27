@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+	<class name="Dogbert.Core.Domain.Person, Dogbert.Core" table="People" >
+		<id name="id" access="field" column="id" unsaved-value="0">
+			<generator class="identity" />
+		</id>
+
+		<many-to-one name="User" class="Dogbert.Core.Domain.User, Dogbert.Core" column="UserID" cascade="none" />
+		<many-to-one name="PersonType" class="Dogbert.Core.Domain.PersonType, Dogbert.Core" column="PeopleTypeID" cascade="none" />
+
+	</class>
+
+</hibernate-mapping>
