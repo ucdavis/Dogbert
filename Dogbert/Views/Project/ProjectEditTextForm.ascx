@@ -19,7 +19,7 @@
                 <%= Html.AntiForgeryToken() %>
                 <%= Html.Hidden("Id", Model.ProjectText.Id) %>
                 <p>
-                    <%= this.TextBox("ProjectText.Text").Label("Text:")%>
+                    <%= this.TextArea("ProjectText.Text").Label("Text:")%>
                 </p>
                 <p>
                  <%= this.Select("ProjectText.TextType")
