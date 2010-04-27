@@ -6,7 +6,6 @@ using Dogbert.Core.Domain;
 using Dogbert.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
-using NHibernate.Mapping;
 using Rhino.Mocks;
 using UCDArch.Core.PersistanceSupport;
 
@@ -29,7 +28,7 @@ namespace Dogbert.Tests.Controllers
         public void Index()
         {
             // Arrange
-            var Projects = new List<Project>();
+            Projects = new List<Project>();
             for (int i = 0; i < 3; i++)
             {
                 Projects.Add(CreateValidEntities.Project(i + 1));
