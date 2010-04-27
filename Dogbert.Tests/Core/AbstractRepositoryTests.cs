@@ -140,14 +140,14 @@ namespace Dogbert.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = Repository.OfType<T>().GetById(2);
+                var foundEntity = Repository.OfType<T>().GetByID(2);
                 FoundEntityComparison(foundEntity, 2);
             }
             else
             {
                 IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = typedStringRepository.GetById("2");
+                var foundEntity = typedStringRepository.GetByID("2");
                 FoundEntityComparison(foundEntity, 2);
             }
         }

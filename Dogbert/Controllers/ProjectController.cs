@@ -29,7 +29,7 @@ namespace Dogbert.Controllers
         
         
         // GET: /Project/
-        [HandleTransactionManually]
+        [HandleTransactionsManually]
         public ActionResult Index()
         {
             var projects = _projectRepository.GetAll();
@@ -53,7 +53,7 @@ namespace Dogbert.Controllers
             Project p;
             for (int i = 1; i <= projects.Length; i++)
             {
-                p = Repository.OfType<Project>().GetById(projects[i]);
+                p = Repository.OfType<Project>().GetByID(projects[i]);
                 p.Priority = i + 1;
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
@@ -138,7 +138,7 @@ namespace Dogbert.Controllers
         {
             DateTime mindate = new DateTime(1999, 1, 1);
             DateTime maxdate = new DateTime(9999, 12, 31);
-            var projectToUpdate = _projectRepository.GetById(project.Id);
+            var projectToUpdate = _projectRepository.GetByID(project.Id);
             //TransferValuesTo(projectToUpdate, project);
             
             //Validate input

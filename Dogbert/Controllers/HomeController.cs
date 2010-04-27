@@ -6,7 +6,7 @@ namespace Dogbert.Controllers
 {
     public class HomeController : SuperController
     {
-        [HandleTransactionManually]
+        [HandleTransactionsManually]
         public ActionResult Index()
         {
             ViewData["Message"] = "Welcome to ASP.NET MVC!";
@@ -14,7 +14,7 @@ namespace Dogbert.Controllers
             return View();
         }
 
-        [HandleTransactionManually]
+        [HandleTransactionsManually]
         public ActionResult About()
         {
             return View();
