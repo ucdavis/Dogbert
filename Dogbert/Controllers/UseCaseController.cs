@@ -90,7 +90,7 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        // GET: /EditUseCase/
+        // GET: Project/UseCase/Edit/
         public ActionResult Edit(int Id)
         {
             var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
@@ -105,7 +105,7 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        // POST: /Project/EditUseCase/
+        // POST: /Project/UseCase/Edit/
         [AcceptPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -154,6 +154,64 @@ namespace Dogbert.Controllers
 
             UseCaseToUpdate.LastModified = DateTime.Now;
         }
+
+        // GET: /RemoveUseCase/
+        public ActionResult Remove(int Id)
+        {
+            var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
+
+            if (existingUseCase == null) return RedirectToAction("Create");
+
+
+            var viewModel = UseCaseViewModel.Create(Repository, existingUseCase.Project);
+            viewModel.UseCase = existingUseCase;
+            viewModel.UseCaseStep = existingUCSteps;
+            return View(viewModel);
+        }
+
+
+        // POST: /Project/RemoveUseCase/
+        [AcceptPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult Remove(int id, UseCase UseCase)
+        {
+            var ucToRemove = Repository.OfType<UseCase>().GetNullableByID(id);
+
+
+            if (ucToRemove == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            var saveProjectId = ucToRemove.Project.Id;
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCase>().Remove(ucToRemove);
+                Message = string.Format(NotificationMessages.STR_ObjectRemoved, "UseCase");
+                return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_UseCases));
+            }
+            var project = Repository.OfType<Project>().GetNullableByID(saveProjectId);
+            return RedirectToAction("Edit", project);
+
+
+            /////////////////////////////////////////////////////
+
+            //if (ModelState.IsValid)
+            //{
+            //    Repository.OfType<UseCase>().EnsurePersistent(uc);
+            //    Message = "Use Case edited successfully";
+            //    return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
+
+            //}
+            //var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            //return RedirectToAction("Edit", project);
+            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
+
+        }
+
 
 
         // GET: /EditUseCase/CreateUseCaseStep
@@ -205,6 +263,9 @@ namespace Dogbert.Controllers
             viewModel.UseCase = useCase;
             return this.RedirectToAction(a => a.Edit(useCaseId));
         }
+
+
+
 
         // GET: /EditUseCase/EditUseCaseSteps/
         public ActionResult EditUseCaseSteps(int Id)

@@ -25,6 +25,7 @@
 
             // dimensions stuff
             height: "400",
+            width: "800",
 
             // Example content CSS (should be your site CSS)
             //content_css: "css/Main.css",
@@ -46,7 +47,7 @@
         <fieldset>
             <legend>Project Text</legend>
               
-              <% Html.Grid(Model.Project.ProjectTexts)
+              <% Html.Grid(Model.Project.ProjectTexts.OrderBy(a => a.TextType.Id))
                .Transactional()
                .Name("Texts")
                .PrefixUrlParameters(false)

@@ -24,6 +24,7 @@
 
             // dimensions stuff
             height: "400",
+            width: "800",
 
             // Example content CSS (should be your site CSS)
             //content_css: "css/Main.css",

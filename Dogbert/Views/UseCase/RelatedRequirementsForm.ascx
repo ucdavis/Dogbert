@@ -18,7 +18,7 @@
                     .Selected(Model.UseCase != null && Model.UseCase.Requirements  != null ? Model.UseCase.Requirements : new List<Requirement>()) 
                     .FirstOption("--Related Requirements--")
                     .HideFirstOptionWhen(Model.Project.Requirements != null)
-                    .Label("Re-Select Related Requirements:")%>
+                    .Label("Select All Related Requirements: (use cntl to select multiple)")%>
               </p>
                
                

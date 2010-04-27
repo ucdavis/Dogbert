@@ -33,7 +33,9 @@
             <td>
                 <!--<%= Html.ActionLink("Edit", "Edit", new { id=item.Project.Id }) %>--> 
                 <%int id = item.Id;%>
-               <%=  Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.Edit(id), "Edit")%>
+                <%=  Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.Edit(id), "Edit")%>
+                <%=  Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.Remove(id), "Remove")%>
+    
             </td>
             <td>
                 <%= Html.Encode(item.Id) %>

@@ -6,29 +6,34 @@
 <%@ Import Namespace="xVal.Html"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Create Use Case Step
+	Remove
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <%= Html.ClientSideValidation<UseCaseStep>("UseCaseStep")%>
-    <h2>Edit Use Case Step</h2>
-    <h3>UseCase: <%= this.Label("UseCaseStep.UseCase.Name")%></h3>
+    <%= Html.ClientSideValidation<UseCase>("UseCase")%>
     <h4>Project: <%= this.Label("Project.Name")%> </h4>
-    
-    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
-    <% using (Html.BeginForm()) {%>
-    <% Html.RenderPartial("UseCaseStepForm"); %>
-    
 
-    <% } %>
-    
+    <%= Html.ValidationSummary("Remove was unsuccessful. Please correct the errors and try again.") %>
+
     <div>
         <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
     </div>
+    
+    <% using (Html.BeginForm()) {%>
+      
+    <p>
+        Will Error if Use Case Steps (Need to cascade delete for usecase steps)
+        <input type="submit" value="Remove" />
+    </p>
+    <% Html.RenderPartial("UseCaseForm"); %>
+  
+
+    <% } %>
 
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
     <script src='../../Scripts/tiny_mce/jquery.tinymce.js' type="text/javascript"></script>
+
 </asp:Content>
 
