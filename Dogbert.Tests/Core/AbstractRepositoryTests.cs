@@ -355,6 +355,7 @@ namespace Dogbert.Tests.Core
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.Category(i + 1);
+                validEntity.Project = Repository.OfType<Project>().GetNullableByID(1);
                 Repository.OfType<RequirementCategory>().EnsurePersistent(validEntity);
             }
             Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();

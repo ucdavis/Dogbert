@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Dogbert.Core.Domain;
 using Dogbert.Tests.Core;
@@ -6,7 +5,6 @@ using Dogbert.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
-using UCDArch.Testing.Extensions;
 
 namespace Dogbert.Tests.Repositories
 {
@@ -99,9 +97,9 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         protected override void LoadData()
         {
-            LoadRequirementTypes(1);            
-            LoadCategories(1);
+            LoadRequirementTypes(1);
             LoadProjects(1);
+            LoadCategories(1);           
             LoadPriorityTypes(1);
             RequirementRepository.DbContext.BeginTransaction();
             LoadRecords(5);

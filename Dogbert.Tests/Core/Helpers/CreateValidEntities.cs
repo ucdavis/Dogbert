@@ -117,6 +117,7 @@ namespace Dogbert.Tests.Core.Helpers
         {
             var rtValue = new RequirementCategory();
             rtValue.Name = "Name" + count.Extra();
+            rtValue.Project = new Project();
             rtValue.IsActive = true;
 
             return rtValue;
@@ -357,7 +358,7 @@ namespace Dogbert.Tests.Core.Helpers
         /// Creates a valid entity.
         /// Repository tests may have to assign real data to linked tables.
         /// </summary>
-        /// <param name="count">The count.</param>
+        /// <param name="counter">The count.</param>
         /// <returns></returns>
         private static string Extra(this int? counter)
         {

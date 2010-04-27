@@ -1,34 +1,59 @@
-﻿using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Dogbert.Controllers;
+using Dogbert.Core.Domain;
+using Dogbert.Tests.Core.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MvcContrib.TestHelper;
+using NHibernate.Mapping;
+using Rhino.Mocks;
+using UCDArch.Core.PersistanceSupport;
+
 
 namespace Dogbert.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class HomeControllerTest : Core.ControllerTestBase<HomeController>
     {
+        protected List<Project> Projects { get; set; }
+        protected IRepository<Project> ProjectRepository { get; set; }
+
+        public HomeControllerTest()
+        {
+            Projects = new List<Project>();
+            ProjectRepository = FakeRepository<Project>();
+            Controller.Repository.Expect(a => a.OfType<Project>()).Return(ProjectRepository).Repeat.Any();
+        }
         [TestMethod]
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
-
+            var Projects = new List<Project>();
+            for (int i = 0; i < 3; i++)
+            {
+                Projects.Add(CreateValidEntities.Project(i + 1));
+            }
+            ProjectRepository.Expect(a => a.Queryable).Return(Projects.AsQueryable()).Repeat.Any();
+           
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var result = Controller.Index()
+                .AssertViewRendered()
+                .WithViewData<IEnumerable<Project>>();
 
             // Assert
-            ViewDataDictionary viewData = result.ViewData;
-            Assert.AreEqual("Welcome to ASP.NET MVC!", viewData["Message"]);
+            // Assert
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController();
+
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            ViewResult result = Controller.About() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

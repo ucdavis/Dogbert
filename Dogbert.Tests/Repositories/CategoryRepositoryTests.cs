@@ -38,7 +38,9 @@ namespace Dogbert.Tests.Repositories
         /// <returns>A valid entity of type T</returns>
         protected override RequirementCategory GetValid(int? counter)
         {
-            return CreateValidEntities.Category(counter);
+            var rtValue = CreateValidEntities.Category(counter);
+            rtValue.Project = Repository.OfType<Project>().GetNullableByID(1);
+            return rtValue;
         }
 
         /// <summary>
@@ -90,6 +92,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         protected override void LoadData()
         {
+            LoadProjects(1);
             CategoryRepository.DbContext.BeginTransaction();
             LoadRecords(5);
             CategoryRepository.DbContext.CommitTransaction();
