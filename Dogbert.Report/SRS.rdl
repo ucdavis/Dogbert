@@ -169,7 +169,7 @@ ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
         </Field>
         <Field Name="RelatedUseCaseList">
           <DataField>RelatedUseCaseList</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:UserDefined>true</rd:UserDefined>
         </Field>
       </Fields>
       <Query>
@@ -327,7 +327,6 @@ select 'Results' =  + @reqList</CommandText>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
         <Top>0.22583in</Top>
-        <Left>0in</Left>
         <Height>0.64583in</Height>
         <Width>7.12167in</Width>
         <Style>
@@ -776,8 +775,7 @@ select 'Results' =  + @reqList</CommandText>
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>1.49826in</Top>
-        <Left>0in</Left>
+        <Top>1.98263in</Top>
         <Height>1.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>1</ZIndex>
@@ -792,8 +790,7 @@ select 'Results' =  + @reqList</CommandText>
         </Style>
       </Tablix>
       <Line Name="Line7">
-        <Top>1.35431in</Top>
-        <Left>0in</Left>
+        <Top>1.83868in</Top>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>2</ZIndex>
@@ -806,8 +803,7 @@ select 'Results' =  + @reqList</CommandText>
         </Style>
       </Line>
       <Line Name="Line8">
-        <Top>3.28819in</Top>
-        <Left>0in</Left>
+        <Top>3.77256in</Top>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>3</ZIndex>
@@ -991,64 +987,83 @@ select 'Results' =  + @reqList</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20833in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Tablix Name="Tablix14">
-                      <TablixBody>
-                        <TablixColumns>
-                          <TablixColumn>
-                            <Width>6.72927in</Width>
-                          </TablixColumn>
-                        </TablixColumns>
-                        <TablixRows>
-                          <TablixRow>
-                            <Height>0.20833in</Height>
-                            <TablixCells>
-                              <TablixCell>
-                                <CellContents>
-                                  <Rectangle Name="Rectangle15">
-                                    <KeepTogether>true</KeepTogether>
-                                    <Style>
-                                      <Border>
-                                        <Style>None</Style>
-                                      </Border>
-                                    </Style>
-                                  </Rectangle>
-                                </CellContents>
-                              </TablixCell>
-                            </TablixCells>
-                          </TablixRow>
-                        </TablixRows>
-                      </TablixBody>
-                      <TablixColumnHierarchy>
-                        <TablixMembers>
-                          <TablixMember />
-                        </TablixMembers>
-                      </TablixColumnHierarchy>
-                      <TablixRowHierarchy>
-                        <TablixMembers>
-                          <TablixMember>
-                            <Group Name="Details2" />
-                            <Visibility>
-                              <Hidden>true</Hidden>
-                            </Visibility>
-                          </TablixMember>
-                        </TablixMembers>
-                      </TablixRowHierarchy>
+                    <Textbox Name="Textbox35">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Related Requirements: </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!RequirementsList.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox35</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
                       </Style>
-                    </Tablix>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.23958in</Height>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="RelatedUseCaseList">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Relatede Use Cases: </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!RelatedUseCaseList.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>RelatedUseCaseList</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.625in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1056,19 +1071,19 @@ select 'Results' =  + @reqList</CommandText>
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.62784in</Width>
+                            <Width>0.31534in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>6.01814in</Width>
+                            <Width>6.33064in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.36719in</Height>
+                            <Height>0.22222in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox192">
+                                  <Textbox Name="Textbox6">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -1082,7 +1097,7 @@ select 'Results' =  + @reqList</CommandText>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox192</rd:DefaultName>
+                                    <rd:DefaultName>Textbox6</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Width>0.5pt</Width>
@@ -1109,57 +1124,10 @@ select 'Results' =  + @reqList</CommandText>
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="RequirementsList">
+                                  <Textbox Name="Textbox7">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
-                                      <Paragraph>
-                                        <TextRuns>
-                                          <TextRun>
-                                            <Value>Requirements: </Value>
-                                            <Style />
-                                          </TextRun>
-                                          <TextRun>
-                                            <Value>=Fields!RequirementsList.Value</Value>
-                                            <Style />
-                                          </TextRun>
-                                        </TextRuns>
-                                        <Style />
-                                      </Paragraph>
-                                    </Paragraphs>
-                                    <rd:DefaultName>RequirementsList</rd:DefaultName>
-                                    <Style>
-                                      <Border>
-                                        <Width>0.5pt</Width>
-                                      </Border>
-                                      <VerticalAlign>Middle</VerticalAlign>
-                                      <PaddingLeft>2pt</PaddingLeft>
-                                      <PaddingRight>2pt</PaddingRight>
-                                      <PaddingBottom>1pt</PaddingBottom>
-                                    </Style>
-                                  </Textbox>
-                                </CellContents>
-                              </TablixCell>
-                            </TablixCells>
-                          </TablixRow>
-                          <TablixRow>
-                            <Height>0.41927in</Height>
-                            <TablixCells>
-                              <TablixCell>
-                                <CellContents>
-                                  <Textbox Name="Textbox195">
-                                    <CanGrow>true</CanGrow>
-                                    <KeepTogether>true</KeepTogether>
-                                    <Paragraphs>
-                                      <Paragraph>
-                                        <TextRuns>
-                                          <TextRun>
-                                            <Value />
-                                            <Style />
-                                          </TextRun>
-                                        </TextRuns>
-                                        <Style />
-                                      </Paragraph>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
@@ -1172,9 +1140,10 @@ select 'Results' =  + @reqList</CommandText>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox195</rd:DefaultName>
+                                    <rd:DefaultName>Textbox7</rd:DefaultName>
                                     <Style>
                                       <Border>
+                                        <Style>None</Style>
                                         <Width>0.5pt</Width>
                                       </Border>
                                       <TopBorder>
@@ -1188,56 +1157,6 @@ select 'Results' =  + @reqList</CommandText>
                                       </LeftBorder>
                                       <RightBorder>
                                         <Color>Silver</Color>
-                                      </RightBorder>
-                                      <VerticalAlign>Middle</VerticalAlign>
-                                      <PaddingLeft>2pt</PaddingLeft>
-                                      <PaddingRight>8pt</PaddingRight>
-                                      <PaddingBottom>1pt</PaddingBottom>
-                                    </Style>
-                                  </Textbox>
-                                </CellContents>
-                              </TablixCell>
-                              <TablixCell>
-                                <CellContents>
-                                  <Textbox Name="Textbox196">
-                                    <CanGrow>true</CanGrow>
-                                    <KeepTogether>true</KeepTogether>
-                                    <Paragraphs>
-                                      <Paragraph>
-                                        <TextRuns>
-                                          <TextRun>
-                                            <Value>Related Use Cases: </Value>
-                                            <Style />
-                                          </TextRun>
-                                          <TextRun>
-                                            <Value>=Fields!RelatedUseCaseList.Value</Value>
-                                            <Style />
-                                          </TextRun>
-                                        </TextRuns>
-                                        <Style />
-                                      </Paragraph>
-                                    </Paragraphs>
-                                    <rd:DefaultName>Textbox196</rd:DefaultName>
-                                    <Style>
-                                      <Border>
-                                        <Style>None</Style>
-                                        <Width>0.5pt</Width>
-                                      </Border>
-                                      <TopBorder>
-                                        <Color>Silver</Color>
-                                        <Style>None</Style>
-                                      </TopBorder>
-                                      <BottomBorder>
-                                        <Color>Silver</Color>
-                                        <Style>Solid</Style>
-                                      </BottomBorder>
-                                      <LeftBorder>
-                                        <Color>Silver</Color>
-                                        <Style>None</Style>
-                                      </LeftBorder>
-                                      <RightBorder>
-                                        <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </RightBorder>
                                       <VerticalAlign>Middle</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
@@ -1250,7 +1169,7 @@ select 'Results' =  + @reqList</CommandText>
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.22656in</Height>
+                            <Height>0.24206in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1276,19 +1195,15 @@ select 'Results' =  + @reqList</CommandText>
                                       </Border>
                                       <TopBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </TopBorder>
                                       <BottomBorder>
                                         <Color>Silver</Color>
-                                        <Style>Solid</Style>
                                       </BottomBorder>
                                       <LeftBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </LeftBorder>
                                       <RightBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </RightBorder>
                                       <VerticalAlign>Middle</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
@@ -1296,7 +1211,6 @@ select 'Results' =  + @reqList</CommandText>
                                       <PaddingBottom>1pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                               <TablixCell>
@@ -1319,24 +1233,20 @@ select 'Results' =  + @reqList</CommandText>
                                     <rd:DefaultName>Textbox187</rd:DefaultName>
                                     <Style>
                                       <Border>
-                                        <Style>None</Style>
+                                        <Style>Solid</Style>
                                         <Width>0.5pt</Width>
                                       </Border>
                                       <TopBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </TopBorder>
                                       <BottomBorder>
                                         <Color>Silver</Color>
-                                        <Style>Solid</Style>
                                       </BottomBorder>
                                       <LeftBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </LeftBorder>
                                       <RightBorder>
                                         <Color>Silver</Color>
-                                        <Style>None</Style>
                                       </RightBorder>
                                       <VerticalAlign>Middle</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
@@ -1349,7 +1259,7 @@ select 'Results' =  + @reqList</CommandText>
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.22656in</Height>
+                            <Height>0.16071in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1423,62 +1333,10 @@ select 'Results' =  + @reqList</CommandText>
                       <TablixRowHierarchy>
                         <TablixMembers>
                           <TablixMember>
-                            <Group Name="Group3">
-                              <GroupExpressions>
-                                <GroupExpression>=Fields!RequirementsList.Value</GroupExpression>
-                              </GroupExpressions>
-                            </Group>
-                            <SortExpressions>
-                              <SortExpression>
-                                <Value>=Fields!RequirementsList.Value</Value>
-                              </SortExpression>
-                            </SortExpressions>
                             <TablixHeader>
                               <Size>0.08329in</Size>
                               <CellContents>
-                                <Textbox Name="Group32">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value />
-                                          <Style />
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Group32</rd:DefaultName>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>2pt</PaddingLeft>
-                                    <PaddingRight>2pt</PaddingRight>
-                                    <PaddingBottom>1pt</PaddingBottom>
-                                  </Style>
-                                </Textbox>
-                              </CellContents>
-                            </TablixHeader>
-                          </TablixMember>
-                          <TablixMember>
-                            <Group Name="Group4">
-                              <GroupExpressions>
-                                <GroupExpression>=Fields!RelatedUseCaseList.Value</GroupExpression>
-                              </GroupExpressions>
-                            </Group>
-                            <SortExpressions>
-                              <SortExpression>
-                                <Value>=Fields!RelatedUseCaseList.Value</Value>
-                              </SortExpression>
-                            </SortExpressions>
-                            <TablixHeader>
-                              <Size>0.08329in</Size>
-                              <CellContents>
-                                <Textbox Name="Group4">
+                                <Textbox Name="Textbox5">
                                   <CanGrow>true</CanGrow>
                                   <KeepTogether>true</KeepTogether>
                                   <Paragraphs>
@@ -1493,19 +1351,8 @@ select 'Results' =  + @reqList</CommandText>
                                       </TextRuns>
                                       <Style />
                                     </Paragraph>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value />
-                                          <Style>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
                                   </Paragraphs>
-                                  <rd:DefaultName>Group4</rd:DefaultName>
+                                  <rd:DefaultName>Textbox5</rd:DefaultName>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1551,7 +1398,7 @@ select 'Results' =  + @reqList</CommandText>
                                   <Style>
                                     <Border>
                                       <Color>Silver</Color>
-                                      <Style>Solid</Style>
+                                      <Style>None</Style>
                                     </Border>
                                     <VerticalAlign>Middle</VerticalAlign>
                                     <PaddingLeft>2pt</PaddingLeft>
@@ -1584,7 +1431,7 @@ select 'Results' =  + @reqList</CommandText>
                       <Style>
                         <Border>
                           <Color>Silver</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                       </Style>
                     </Tablix>
@@ -1705,6 +1552,7 @@ select 'Results' =  + @reqList</CommandText>
                     <TablixMember />
                     <TablixMember />
                     <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
                 <TablixMember />
@@ -1721,9 +1569,9 @@ select 'Results' =  + @reqList</CommandText>
             <Value>=Fields!Order.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>3.38208in</Top>
+        <Top>3.86645in</Top>
         <Left>0.08in</Left>
-        <Height>2.58542in</Height>
+        <Height>2.2625in</Height>
         <Width>7.04167in</Width>
         <ZIndex>4</ZIndex>
         <Style>
@@ -1784,7 +1632,7 @@ select 'Results' =  + @reqList</CommandText>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
         <KeepTogether>true</KeepTogether>
-        <Top>1.05209in</Top>
+        <Top>1.53646in</Top>
         <Left>0.02958in</Left>
         <Height>0.29167in</Height>
         <Width>7.12167in</Width>
@@ -1813,7 +1661,7 @@ select 'Results' =  + @reqList</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Name</rd:DefaultName>
-        <Top>2.98263in</Top>
+        <Top>3.467in</Top>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>6</ZIndex>
@@ -1878,7 +1726,6 @@ select 'Results' =  + @reqList</CommandText>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.24111in</Top>
-          <Left>0in</Left>
           <Height>0.25in</Height>
           <Width>1.82291in</Width>
           <Style>
@@ -1928,7 +1775,6 @@ select 'Results' =  + @reqList</CommandText>
         </Textbox>
         <Line Name="Line12">
           <Top>0.505in</Top>
-          <Left>0in</Left>
           <Height>0in</Height>
           <Width>7.12167in</Width>
           <ZIndex>2</ZIndex>
@@ -1974,7 +1820,6 @@ select 'Results' =  + @reqList</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Left>0in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
           <Style>
