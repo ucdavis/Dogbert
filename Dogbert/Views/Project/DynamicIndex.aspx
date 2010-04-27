@@ -20,7 +20,7 @@
      </style>
      
  
- <script type="text/javascript" src="<%= Request.ApplicationPath + @"Scripts/jquery.tablednd_0_5.js" %>"></script>
+ <script type="text/javascript" src="<%= Request.ApplicationPath + @"/Scripts/jquery.tablednd_0_5.js" %>"></script>
  <script type="text/javascript">
 
      $(document).ready(function() {

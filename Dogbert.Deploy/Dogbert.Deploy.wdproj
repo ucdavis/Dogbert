@@ -35,6 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>1.2.23.2010</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>1.2.23.2010</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.WebDeployment.targets.
