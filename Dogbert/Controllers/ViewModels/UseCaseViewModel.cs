@@ -11,8 +11,9 @@ namespace Dogbert.Controllers.ViewModels
     {
         //used for use cases
         public UseCase UseCase { get; set; }
-        public IList<UseCase> UseCases { get; set; }
+       // public IList<UseCase> UseCases { get; set; }
         public IList<Actor> Actors { get; set; }
+  //      public IList<UseCase> Childeren { get; set; }
         public UseCaseStep UseCaseStep { get; set; }
         public IList<RequirementCategory> RequirementCategories { get; set; }
         public Project Project { get; set; }
@@ -24,7 +25,8 @@ namespace Dogbert.Controllers.ViewModels
                 //populate the stuff needed for use cases
                 Actors = repository.OfType<Actor>().Queryable.Where(a => a.IsActive).ToList(),
                 RequirementCategories = repository.OfType<RequirementCategory>().Queryable.ToList(),
-                UseCases = repository.OfType<UseCase>().Queryable.ToList(),
+            //    UseCases = repository.OfType<UseCase>().Queryable.ToList(),
+            //    Childeren = repository.OfType<UseCase>().Queryable.ToList(),
                 Project = project
 
             };

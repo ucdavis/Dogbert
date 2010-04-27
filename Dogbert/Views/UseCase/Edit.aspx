@@ -26,8 +26,10 @@
         </ul>
         
         <div id="tab-1">
+         <%= Html.ClientSideValidation<UseCase>("UseCase")%>
+         <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
          <% using (Html.BeginForm()) {%>
-            <% Html.RenderPartial("UseCaseStepListForm"); %>
+            <% Html.RenderPartial("UseCaseForm"); %>
             <p>
                 <input type="submit" value="Save" />
             </p>

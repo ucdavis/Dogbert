@@ -11,13 +11,13 @@
                { %>
                     <%= Html.AntiForgeryToken() %>
              
-   
+                    <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
                <p>
-                 <%= this.MultiSelect("UseCase.UseCases")
-                    .Options(Model.UseCases , x=>x.Id, x=>x.Name)
-                    .Selected(Model.UseCase != null && Model.UseCase.Children != null ? Model.UseCase.Children : new List<UseCase>()) 
+                 <%= this.MultiSelect("Project.UseCases")
+                    .Options(Model.UseCase.Project.UseCases, x=>x.Id, x=>x.Name)
+                    .Selected(Model.UseCase.Project.UseCases != null && Model.UseCase.Children != null ? Model.UseCase.Children : new List<UseCase>()) 
                     .FirstOption("--Related Use Cases--")
-                    .HideFirstOptionWhen(Model.UseCases != null)
+                    .HideFirstOptionWhen(Model.UseCase.Project.UseCases != null)
                     .Label("Re-Select Related Use Cases:")%>
                </p>
                
