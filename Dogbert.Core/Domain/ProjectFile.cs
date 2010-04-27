@@ -11,13 +11,13 @@ namespace Dogbert.Core.Domain
         [Length(100)]
         public virtual string FileName { get; set; }
 
-        [Required]
+        [NotNull]
         public virtual FileType Type { get; set; }
 
-        [Required]
+        
         public virtual DateTime DateAdded { get; set; }
 
-        [Required]
+        [NotNull]
         public virtual Project Project { get; set; }
     }
 }
