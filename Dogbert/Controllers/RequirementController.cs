@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
+using Dogbert.Core.Resources;
 using MvcContrib.Attributes;
 using UCDArch.Web.Controller;
 using MvcContrib;
+using UCDArch.Web.Helpers;
 using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
@@ -34,6 +37,7 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
+                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
 
@@ -42,6 +46,12 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Creates the specified requirement.
+        /// </summary>
+        /// <param name="requirement">The requirement.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
         [AcceptPost]
         public ActionResult Create(Requirement requirement, int projectId)
         {
@@ -49,14 +59,20 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
+                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
-            }
+            }            
 
             requirement.Project = project;
 
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, requirement.ValidationResults());
-
-
+            requirement.TransferValidationMessagesTo(ModelState);
+            if(ModelState.IsValid)
+            {
+                Repository.OfType<Requirement>().EnsurePersistent(requirement);
+                Message = NotificationMessages.STR_ObjectCreated.Replace(NotificationMessages.ObjectType, "Requirement");
+                //return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
+                return Redirect(Url.EditProjectUrl(projectId, StaticValues.Tab_Requirements));
+            }
 
             var viewModel = RequirementViewModel.Create(Repository, project);
             viewModel.Requirement = requirement;

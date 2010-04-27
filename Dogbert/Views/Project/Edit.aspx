@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Dogbert.Controllers.ViewModels.ProjectViewModel>" %>
+<%@ Import Namespace="Dogbert.Core.Resources"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
@@ -25,18 +26,18 @@
     
     <div id="tabs">
         <ul>
-            <li><a href="#tab-1"><span>Project Details</span></a></li>
-            <li><a href="#tab-2"><span>Requirements</span></a></li>
-            <li><a href="#tab-3"><span>Use Cases</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_ProjectDetails %>"><span>Project Details</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_Requirements %>"><span>Requirements</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
         </ul>
         
-        <div id="tab-1">
+        <div id="<%= StaticValues.Tab_ProjectDetails %>">
         <% Html.RenderPartial("ProjectForm"); %>
         
         <% Html.RenderPartial("ProjectEditForm"); %>
         </div>
     
-        <div id="tab-2">
+        <div id="<%= StaticValues.Tab_Requirements %>">
             
             <% Html.RenderPartial("RequirementListForm", Model.Project.Requirements); %>
             
@@ -46,7 +47,7 @@
             
         </div>
 
-        <div id="tab-3">
+        <div id="<%= StaticValues.Tab_UseCases %>">
             Use Case Tab Starts Here
             <% Html.RenderPartial("ProjectUseCaseForm"); %>
         </div>
