@@ -173,7 +173,8 @@ FROM         UseCaseXRequirements RIGHT OUTER JOIN
                       UseCases LEFT OUTER JOIN
                       UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
                       UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
-WHERE     (UseCases.ProjectID = @projectid)</CommandText>
+WHERE     (UseCases.ProjectID = @projectid)
+ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
             <Value>41</Value>
@@ -258,7 +259,6 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                           </Paragraphs>
                           <rd:DefaultName>Textbox12</rd:DefaultName>
                           <Top>0.23958in</Top>
-                          <Left>0in</Left>
                           <Height>0.25in</Height>
                           <Width>6.96542in</Width>
                           <ZIndex>2</ZIndex>
@@ -300,7 +300,6 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
         <Top>0.22583in</Top>
-        <Left>0in</Left>
         <Height>0.64583in</Height>
         <Width>7.12167in</Width>
         <Style>
@@ -328,7 +327,6 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
         </Paragraphs>
         <rd:DefaultName>Name</rd:DefaultName>
         <Top>1.06264in</Top>
-        <Left>0in</Left>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>1</ZIndex>
@@ -552,7 +550,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                           <rd:DefaultName>Description</rd:DefaultName>
                           <Left>1.05208in</Left>
                           <Height>0.25in</Height>
-                          <Width>5.75014in</Width>
+                          <Width>5.9064in</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
@@ -958,6 +956,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                             </TextRun>
                             <TextRun>
                               <Value>=Fields!Precondition.Value</Value>
+                              <MarkupType>HTML</MarkupType>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -996,6 +995,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                             </TextRun>
                             <TextRun>
                               <Value>=Fields!Postcondition.Value</Value>
+                              <MarkupType>HTML</MarkupType>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -1018,7 +1018,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.61792in</Height>
+              <Height>0.28125in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1026,13 +1026,47 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>6.25005in</Width>
+                            <Width>0.31948in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>6.09031in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.30896in</Height>
+                            <Height>0.25in</Height>
                             <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox3">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>=Fields!Order.Value</Value>
+                                            <MarkupType>HTML</MarkupType>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox3</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <VerticalAlign>Top</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
                               <TablixCell>
                                 <CellContents>
                                   <Textbox Name="Textbox381">
@@ -1055,6 +1089,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                                       <Border>
                                         <Style>None</Style>
                                       </Border>
+                                      <VerticalAlign>Top</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -1066,11 +1101,11 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.30896in</Height>
+                            <Height>0.03125in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox377">
+                                  <Textbox Name="Textbox4">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -1084,11 +1119,42 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox377</rd:DefaultName>
+                                    <rd:DefaultName>Textbox4</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
                                       </Border>
+                                      <VerticalAlign>Top</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox1">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value />
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox1</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <VerticalAlign>Top</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -1103,6 +1169,7 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                       </TablixBody>
                       <TablixColumnHierarchy>
                         <TablixMembers>
+                          <TablixMember />
                           <TablixMember />
                         </TablixMembers>
                       </TablixColumnHierarchy>
@@ -1120,27 +1187,28 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                               </SortExpression>
                             </SortExpressions>
                             <TablixHeader>
-                              <Size>0.47922in</Size>
+                              <Size>0.31948in</Size>
                               <CellContents>
-                                <Textbox Name="Group4">
+                                <Textbox Name="Textbox2">
                                   <CanGrow>true</CanGrow>
                                   <KeepTogether>true</KeepTogether>
                                   <Paragraphs>
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>=Fields!Order.Value</Value>
+                                          <Value />
                                           <Style />
                                         </TextRun>
                                       </TextRuns>
                                       <Style />
                                     </Paragraph>
                                   </Paragraphs>
-                                  <rd:DefaultName>Group4</rd:DefaultName>
+                                  <rd:DefaultName>Textbox2</rd:DefaultName>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
                                     </Border>
+                                    <VerticalAlign>Top</VerticalAlign>
                                     <PaddingLeft>2pt</PaddingLeft>
                                     <PaddingRight>2pt</PaddingRight>
                                     <PaddingTop>2pt</PaddingTop>
@@ -1161,6 +1229,9 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
                         </TablixMembers>
                       </TablixRowHierarchy>
                       <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!id.Value</Value>
+                        </SortExpression>
                         <SortExpression>
                           <Value>=Fields!Order.Value</Value>
                         </SortExpression>
@@ -1264,10 +1335,13 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
           <SortExpression>
             <Value>=Fields!id.Value</Value>
           </SortExpression>
+          <SortExpression>
+            <Value>=Fields!Order.Value</Value>
+          </SortExpression>
         </SortExpressions>
         <Top>3.38208in</Top>
         <Left>0.08in</Left>
-        <Height>1.61792in</Height>
+        <Height>1.28125in</Height>
         <Width>7.04167in</Width>
         <ZIndex>6</ZIndex>
         <Style>
@@ -1421,7 +1495,6 @@ WHERE     (UseCases.ProjectID = @projectid)</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Left>0in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
           <Style>
