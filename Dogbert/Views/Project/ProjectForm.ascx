@@ -5,9 +5,10 @@
 
 <%= Html.ClientSideValidation<Project>("Project") %>
     <%= Html.ValidationSummary() %>
-    <%= Html.AntiForgeryToken() %>
+    
 
     <% using (Html.BeginForm()) {%>
+        <%= Html.AntiForgeryToken() %>
         <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
  
      
