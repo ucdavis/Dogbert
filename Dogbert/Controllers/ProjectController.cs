@@ -15,10 +15,10 @@ using System;
 
 namespace Dogbert.Controllers
 {
+
+    [Authorize(Roles = "User")]
     public class ProjectController : SuperController
     {
-
-
         private readonly IRepository<Project> _projectRepository;
         
         public ProjectController(IRepository<Project> projectRepository)

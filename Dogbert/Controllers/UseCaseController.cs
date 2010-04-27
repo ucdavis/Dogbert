@@ -16,6 +16,7 @@ using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
 {
+    [Authorize(Roles = "User")]
     public class UseCaseController : SuperController
     {
         public ActionResult Index()

@@ -10,6 +10,7 @@ using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
 {
+    [Authorize(Roles = "User")]
     public class RequirementCategoryController : SuperController
     {
         //

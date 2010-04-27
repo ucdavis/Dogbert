@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using Dogbert.Core.Domain;
 using UCDArch.Web.Attributes;
 using UCDArch.Web.Controller;
 
@@ -9,9 +11,9 @@ namespace Dogbert.Controllers
         [HandleTransactionsManually]
         public ActionResult Index()
         {
-            ViewData["Message"] = "Welcome to ASP.NET MVC!";
+            var projects = Repository.OfType<Project>().Queryable.Where(a => !a.StatusCode.IsComplete);
 
-            return View();
+            return View(projects);
         }
 
         [HandleTransactionsManually]

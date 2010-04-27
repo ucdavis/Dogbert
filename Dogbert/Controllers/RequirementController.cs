@@ -10,6 +10,7 @@ using UCDArch.Web.Helpers;
 
 namespace Dogbert.Controllers
 {
+    [Authorize(Roles = "User")]
     public class RequirementController : SuperController
     {
         //

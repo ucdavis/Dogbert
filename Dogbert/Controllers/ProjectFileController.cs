@@ -13,6 +13,7 @@ using UCDArch.Web.Helpers;
 
 namespace Dogbert.Controllers
 {
+    [Authorize(Roles = "User")]
     public class ProjectFileController : SuperController
     {
         //
