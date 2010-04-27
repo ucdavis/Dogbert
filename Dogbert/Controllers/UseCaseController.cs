@@ -51,6 +51,7 @@ namespace Dogbert.Controllers
         /// <param name="id">Project Id</param>
         /// <param name="projectUseCase"></param>
         [AcceptPost]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Exclude = "Id")]UseCase useCase, int projectId)
         {
             var project = Repository.OfType<Project>().GetNullableByID(projectId);
@@ -107,6 +108,7 @@ namespace Dogbert.Controllers
         // POST: /Project/EditUseCase/
         [AcceptPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(int id, UseCase UseCase)
         {
             var uc = Repository.OfType<UseCase>().GetNullableByID(id);
@@ -173,6 +175,7 @@ namespace Dogbert.Controllers
 
         // POST: /EditUseCase/CreateUseCaseStep
         [AcceptPost]
+        [ValidateInput(false)]
         public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
         {
             var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
@@ -217,6 +220,7 @@ namespace Dogbert.Controllers
 
         // POST: /EditUseCase/EditUseCaseSteps/
         [AcceptPost]
+        [ValidateInput (false)]
         public ActionResult EditUseCaseSteps(int Id, UseCaseStep useCaseStep)
         {
             var existingUCS = Repository.OfType<UseCaseStep>().GetNullableByID(Id);

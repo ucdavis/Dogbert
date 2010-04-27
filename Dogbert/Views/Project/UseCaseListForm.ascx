@@ -7,6 +7,9 @@
         <tr>
             <th></th>
             <th>
+                Id
+            </th>
+            <th>
                 Name
             </th>
             <th>
@@ -21,9 +24,7 @@
             <th>
                 LastModified
             </th>
-            <th>
-                Id
-            </th>
+            
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -34,6 +35,10 @@
                 <%int id = item.Id;%>
                <%=  Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.Edit(id), "Edit")%>
             </td>
+            <td>
+                <%= Html.Encode(item.Id) %>
+            </td>
+  
             <td>
                 <%= Html.Encode(item.Name) %>
             </td>
@@ -50,9 +55,6 @@
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.LastModified)) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Id) %>
             </td>
         </tr>
     
