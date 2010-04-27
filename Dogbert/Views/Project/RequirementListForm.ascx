@@ -1,4 +1,5 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<Dogbert.Core.Domain.Requirement>>" %>
+<%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
 
 
@@ -29,7 +30,9 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
+                <!--<%= Html.ActionLink("Edit", "Edit", new { id=item.Project.Id }) %>--> 
+                <%int id = item.Id;%>
+                <%= Html.ActionLink<RequirementController>(a => a.Edit(id), "Edit")%> |
                 <%= Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })%>
             </td>
             <td>

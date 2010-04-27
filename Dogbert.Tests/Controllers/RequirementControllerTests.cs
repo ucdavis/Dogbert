@@ -74,8 +74,8 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestMappingEdit()
         {
-            //"~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5));
-            Assert.Inconclusive("Need to create edit method");
+            "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5), true);
+            //Assert.Inconclusive("Need to create edit method");
         }
 
         /// <summary>

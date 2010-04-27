@@ -79,5 +79,22 @@ namespace Dogbert.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult Edit(int id)
+        {
+            //var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
+
+            if (requirement == null)
+            {
+                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Requirement");
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+            var requirementViewModel = new RequirementViewModel();
+            requirementViewModel.Requirement = requirement;
+
+            return View(requirementViewModel);
+
+        }
     }
 }
