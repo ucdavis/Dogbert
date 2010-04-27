@@ -20,7 +20,7 @@
      </style>
      
  
- <script type="text/javascript" src="<%= Request.ApplicationPath + @"/Scripts/jquery.tablednd_0_5.js" %>"></script>
+ <script type="text/javascript" src="<%= Url.Content("~/Scripts/jquery.tablednd_0_5.js") %>"></script>
  <script type="text/javascript">
 
      $(document).ready(function() {
@@ -78,7 +78,7 @@
         <h2><%= Html.Encode(projectType) %></h2>
     
         <%      
-                Html.Grid(Model.Projects.Where(p => p.ProjectType.Name == projectType))
+                Html.Grid(Model.Projects.Where(p => p.ProjectType.Name == projectType).OrderBy(a => a.Priority))
                .Transactional()
                .Name(projectType)
                .Columns(col =>
