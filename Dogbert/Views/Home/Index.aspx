@@ -8,7 +8,7 @@
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     
-    <% Html.Grid(Model.OrderBy(a => a.ProjectType).ThenBy(a => a.Priority))
+    <% Html.Grid(Model.Where(a => a.ProjectType.IsActive).OrderBy(a => a.ProjectType).ThenBy(a => a.Priority))
            .PrefixUrlParameters(false)
            .Name("Projects")
            .Columns(col =>
