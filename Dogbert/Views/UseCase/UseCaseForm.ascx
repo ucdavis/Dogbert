@@ -7,7 +7,7 @@
      <%= Html.ValidationSummary() %>
 
         
-        <h4> <%= this.Label("UseCase.Project.Name")%></h4>     
+        <h4>Project: <%= this.Label("UseCase.Project.Name")%></h4>     
         <fieldset>
             <legend>Use Case</legend>
             <% using (Html.BeginForm())

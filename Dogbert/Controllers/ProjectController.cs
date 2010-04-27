@@ -132,8 +132,8 @@ namespace Dogbert.Controllers
         }
 
         // POST: /Project/Edit/5
-        [AcceptPost]
         [ValidateAntiForgeryToken]
+        [AcceptPost]
         public ActionResult Edit(Project project)
         {
             DateTime mindate = new DateTime(1999, 1, 1);

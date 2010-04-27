@@ -81,7 +81,7 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        // GET: /Project/EditUseCase/
+        // GET: /EditUseCase/
         public ActionResult Edit(int Id)
         {
             var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
@@ -136,7 +136,7 @@ namespace Dogbert.Controllers
         }
 
 
-        // /Project/EditUseCase/UseCaseSteps
+        // POST: /EditUseCase/UseCaseSteps
         [AcceptPost]
         public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
         {
@@ -168,7 +168,7 @@ namespace Dogbert.Controllers
             return this.RedirectToAction(a => a.Edit(useCaseId));
         }
 
-        // GET: /Project/EditUseCase/EditUseCaseSteps/
+        // GET: /EditUseCase/EditUseCaseSteps/
         public ActionResult EditUseCaseSteps(int Id)
         {
             var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
