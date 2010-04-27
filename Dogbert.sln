@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert", "Dogbert\Dogbert.csproj", "{4229056C-F883-46AB-A130-D10B4EA01E6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Tests", "Dogbert.Tests\Dogbert.Tests.csproj", "{B3A49428-F194-41AD-86A6-9A818539CF65}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://1x:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Dogbert.Tests\\Dogbert.Tests.csproj
+		SccProjectName1 = Dogbert.Tests
+		SccLocalPath1 = Dogbert.Tests
+		SccProjectUniqueName2 = Dogbert\\Dogbert.csproj
+		SccProjectName2 = Dogbert
+		SccLocalPath2 = Dogbert
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
