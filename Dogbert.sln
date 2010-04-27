@@ -41,9 +41,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{78CFAECA-891
 		Bin\xVal.dll = Bin\xVal.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Core", "Dogbert.Core\Dogbert.Core.csproj", "{CBD54153-AC7A-4DB3-BA60-4A528AA41050}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://1x:8080/
 		SccLocalPath0 = .
@@ -53,6 +55,9 @@ Global
 		SccProjectUniqueName2 = Dogbert\\Dogbert.csproj
 		SccProjectName2 = Dogbert
 		SccLocalPath2 = Dogbert
+		SccProjectUniqueName3 = Dogbert.Core\\Dogbert.Core.csproj
+		SccProjectName3 = Dogbert.Core
+		SccLocalPath3 = Dogbert.Core
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +72,10 @@ Global
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
