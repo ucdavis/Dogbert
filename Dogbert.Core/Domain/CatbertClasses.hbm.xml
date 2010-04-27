@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
 	<class name="Dogbert.Core.Domain.User, Dogbert.Core" table="vUsers" >
-		<id name="id" access="field" column="UserID" unsaved-value="0">
+		<id name="Id" column="UserID" unsaved-value="0">
 			<generator class="identity" />
 		</id>
 
@@ -26,7 +26,7 @@
 	</class>
 
 	<class name="Dogbert.Core.Domain.Login, Dogbert.Core" table="vLogin" >
-		<id name="id" access="field" column="LoginID" unsaved-value="empty">
+		<id name="Id" column="LoginID" unsaved-value="empty">
 			<generator class="assigned" />
 		</id>
 
@@ -35,7 +35,7 @@
 	</class>
 
 	<class name="Dogbert.Core.Domain.Unit, Dogbert.Core" table="vUnit" >
-		<id name="id" access="field" column="FIS_Code" unsaved-value="0">
+		<id name="Id" column="FIS_Code" unsaved-value="0">
 			<generator class="assigned" />
 		</id>
 
