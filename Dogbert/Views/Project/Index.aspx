@@ -79,7 +79,7 @@
                .Transactional()
                .Name("WebApplications")
                .PrefixUrlParameters(false)
-               .RowAction(r=>r.HtmlAttributes.Add("id", r.DataItem.Id))
+               .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
                .Columns(col =>
                             {
                                 col.Add(project =>
@@ -96,6 +96,7 @@
                                 col.Add(project => project.StartDateString);
                                 col.Add(project => project.EndDateString);
                                 col.Add(project => project.Deadline).Format("{0:d}");
+                                col.Add(project => project.StatusCode.Name);
                             })
                 .Render(); %>
     <%}%>
@@ -124,6 +125,7 @@
                                 col.Add(project => project.StartDateString);
                                 col.Add(project => project.EndDateString);
                                 col.Add(project => project.Deadline).Format("{0:d}");
+                                col.Add(project => project.StatusCode.Name);
                             })
                 .Render(); %>
     <%}%>  
@@ -151,6 +153,7 @@
                                 col.Add(project => project.StartDateString);
                                 col.Add(project => project.EndDateString);
                                 col.Add(project => project.Deadline).Format("{0:d}");
+                                col.Add(project => project.StatusCode.Name);
                             })
                 .Render(); %>
     <%}%>  
@@ -179,6 +182,7 @@
                                 col.Add(project => project.StartDateString);
                                 col.Add(project => project.EndDateString);
                                 col.Add(project => project.Deadline).Format("{0:d}");
+                                col.Add(project => project.StatusCode.Name);
                             })
                 .Render(); %>
     <%}%>  

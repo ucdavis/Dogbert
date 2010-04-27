@@ -9,23 +9,18 @@
     <% using (Html.BeginForm()) {%>
 
         <%= Html.AntiForgeryToken() %>
-        <%= Html.HiddenFor(p=>p.Project.Id) %>
-        
-        
+        <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
+ 
         
         <fieldset>
             <legend>Fields</legend>
-            <p>
-                <%= this.Label("Project.Id").Label("Project ID:")%>
-            <p>
-            
             <p>
                 <%= this.TextBox("Project.Name").Label("Name:")%>
             </p>
             <p>
              <%= this.Select("Project.ProjectType")
                 .Options(Model.ProjectTypes, x=>x.Id, x=>x.Name)
-                .Selected(Model.Project != null && Model.Project.ProjectType != null ? Model.Project.ProjectType.Id : 0)
+                .Selected(Model.Project != null && Model.Project.ProjectType != null ? Model.Project.ProjectType.Id : "WS")
                 .FirstOption("--Select Project Type--")
                 .HideFirstOptionWhen(Model.Project != null)
                 .Label("Project Type:")%>
@@ -37,19 +32,20 @@
            <p>
                 <%= this.TextBox("Project.ContactEmail").Label("ContactEmail:")%>
            </p>
-           
-           
             <p>
                 <%= this.TextBox("Project.Unit").Label("Unit:")%>
             </p>
-       
-       
+            <p>
+                <%= this.TextBox("Project.Complexity").Label("Complexity:")%>
+            </p>
             <p>
                 <%= this.TextBox("Project.ProjectedStart").Format("{0:d}").Label("Start Date:")%>
             </p>
             <p>
-                <%= this.TextBox("Project.Deadline").Label("Deadline:") %>
-           </p>
+                <%= this.TextBox("Project.ProjectedEnd").Format("{0:d}").Label("End Date/Deadline:")%>
+            </p>
+            
+          
                  <p>
              <%= this.Select("Project.ProjectManager")
                 .Options(Model.Users, x=>x.Id, x=>x.FullName)
@@ -67,11 +63,6 @@
                  .Label("Lead Programmer:")%>
            </p>
 
-
-           <p>
-                <%= this.TextArea("Project.Description").Label("Description:")%>
-            </p>
-          
             <p>
             </p>
            

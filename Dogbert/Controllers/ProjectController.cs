@@ -11,6 +11,7 @@ using UCDArch.Web.Controller;
 using MvcContrib;
 using UCDArch.Web.Helpers;
 using UCDArch.Web.Validator;
+using System;
 
 namespace Dogbert.Controllers
 {
@@ -32,8 +33,8 @@ namespace Dogbert.Controllers
         [HandleTransactionManually]
         public ActionResult Index()
         {
-            var projects = _projectRepository.Queryable.Where(p => p.Status.IsActive);
-            return View(projects.ToList());
+            var projects = _projectRepository.GetAll();
+            return View(projects);
         }
 
 
@@ -48,7 +49,6 @@ namespace Dogbert.Controllers
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
             return new JsonNetResult(true);
-
         }
 
         //GET: /Project/Create
@@ -64,7 +64,10 @@ namespace Dogbert.Controllers
         {
              
            //set project Status
-            project.Status = Repository.OfType<Status>().Queryable.Where(p => p.Name == "Pending").FirstOrDefault();
+            project.StatusCode = Repository.OfType<StatusCode>().Queryable.Where(p => p.Name == "Pending").FirstOrDefault();
+            project.Deadline = project.ProjectedEnd;
+            project.DateAdded = DateTime.Now;
+            project.LastModified = DateTime.Now;
    
 
             project.TransferValidationMessagesTo(ModelState);
@@ -85,9 +88,8 @@ namespace Dogbert.Controllers
             }
         }
 
-
-
-        // GET: /Order/Edit/
+    
+        // GET: /Project/Edit/
         public ActionResult Edit(int id)
         {
             var existingProject = _projectRepository.GetNullableByID(id);
@@ -110,15 +112,18 @@ namespace Dogbert.Controllers
             projectToUpdate.Contact = project.Contact;
             projectToUpdate.ContactEmail = project.ContactEmail;
             projectToUpdate.Unit = project.Unit;
+            projectToUpdate.Complexity = project.Complexity;
             projectToUpdate.ProjectedStart = project.ProjectedStart;
             //Deadline
             //ProjectManager
             //LeadProgrammer
             //Description
+            projectToUpdate.LastModified = DateTime.Now;
+   
         }
 
 
-        // POST: /Order/Edit/5
+        // POST: /Project/Edit/5
         [AcceptPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Project project)
@@ -131,16 +136,13 @@ namespace Dogbert.Controllers
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(projectToUpdate);
-
                 Message = "Project edited successfully";
-
                 return RedirectToAction("Index");
             }
             else
             {
                 var viewModel = ProjectViewModel.Create(Repository);
                 viewModel.Project = project;
-
                 return View(viewModel);
             }
         }
