@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="Dogbert.Core" namespace="Dogbert.Core.Domain">
+  <class
+    name="Worker"
+    table="Workers" >
+    <id name="Id" column="ID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+
+    <many-to-one name="User" class="User" column="UserID" cascade="none" />
+    <property name="IsActive" column="IsActive" />
+
+  </class>
+</hibernate-mapping>

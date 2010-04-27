@@ -1,16 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="Dogbert.Core" namespace="Dogbert.Core.Domain">
+  <class
+    name="UseCaseStep"
+    table="UseCaseSteps" >
+    <id name="Id" column="ID" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
 
-	<class name="Dogbert.Core.Domain.UseCaseStep, Dogbert.Core" table="UseCaseSteps" >
-		<id name="Id" column="id" unsaved-value="0">
-			<generator class="identity" />
-		</id>
+    <property name="Description" column="Description" />
+    <property name="Order" column="[Order]" />
+    <property name="Optional" column="Optional" />
 
-		<property name="Name" column="Name" />
-		<property name="Order" column="[Order]" />
+    <many-to-one name="UseCase" class="UseCase" column="UseCaseID" cascade="none" />
 
-		<many-to-one name="UseCase" class="Dogbert.Core.Domain.UseCase, Dogbert.Core" column="UseCaseID" cascade="none" />
-
-	</class>
-
+  </class>
 </hibernate-mapping>
