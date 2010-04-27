@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
 using Dogbert.Core.Resources;
+using MvcContrib;
 using MvcContrib.Attributes;
 using UCDArch.Web.Controller;
-using MvcContrib;
 using UCDArch.Web.Helpers;
-using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
 {
@@ -29,7 +23,7 @@ namespace Dogbert.Controllers
         /// <summary>
         /// // GET: /Requirement/Create/{id}
         /// </summary>
-        /// <param name="id">Project Id to link to</param>
+        /// <param name="projectId">Project Id to link to</param>
         /// <returns></returns>
         public ActionResult Create(int projectId)
         {
@@ -79,9 +73,13 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Edits the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            //var project = Repository.OfType<Project>().GetNullableByID(projectId);
             var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
             
             if (requirement == null)
@@ -96,10 +94,15 @@ namespace Dogbert.Controllers
 
         }
 
+        /// <summary>
+        /// Edits the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="requirement">The requirement.</param>
+        /// <returns></returns>
         [AcceptPost]
         public ActionResult Edit(int id, Requirement requirement)
         {
-            //TODO: Clean up once we figure out why it is saving even when invalid
             var dest = Repository.OfType<Requirement>().GetNullableByID(id);
 
             if (requirement == null)

@@ -113,7 +113,7 @@ namespace Dogbert.Tests.Controllers
         #region Index Tests
 
         [TestMethod]
-        public void TestIndexReturnsView()
+        public void TestIndexRedirectsToAction()
         {
             Controller.Index()
                 .AssertActionRedirect()
@@ -124,6 +124,9 @@ namespace Dogbert.Tests.Controllers
 
         #region Create Tests
 
+        /// <summary>
+        /// Tests the index of the create when id not found redirects to project.
+        /// </summary>
         [TestMethod]
         public void TestCreateWhenIdNotFoundRedirectsToProjectIndex()
         {
@@ -135,6 +138,9 @@ namespace Dogbert.Tests.Controllers
         }
 
 
+        /// <summary>
+        /// Tests the create when id is found.
+        /// </summary>
         [TestMethod]
         public void TestCreateWhenIdIsFound()
         {
@@ -154,12 +160,213 @@ namespace Dogbert.Tests.Controllers
             Assert.AreEqual(2, result.Categories.Count());
             Assert.AreEqual(3, result.PriorityTypes.Count());
         }
+
+        /// <summary>
+        /// Tests the create when project id is not found does not save.
+        /// </summary>
+        [TestMethod]
+        public void TestCreateWhenProjectIdIsNotFoundDoesNotSave()
+        {
+            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            Controller.Create(new Requirement(), 1)
+                .AssertActionRedirect()
+                .ToAction<ProjectController>(a => a.Index());
+            Assert.AreEqual("Project was not found.", Controller.Message);
+            RequirementRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<Requirement>.Is.Anything));
+        }
+
+
+        /// <summary>
+        /// Tests the create assigns found project id and saves.
+        /// </summary>
+        [TestMethod]
+        public void TestCreateAssignsFoundProjectIdAndSaves()
+        {
+            Controller.ControllerContext.HttpContext.Response.Expect(a => a.ApplyAppPathModifier(null)).IgnoreArguments()
+                .Return("http://Test.com/").Repeat.Any();
+            Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext.RequestContext);
+
+            FakeProjects(Projects, 3);
+            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            var requirement = CreateValidEntities.Requirement(1);
+            requirement.Project = null;
+
+            var result = Controller.Create(requirement, 2)
+                .AssertHttpRedirect();
+            Assert.AreEqual("http://Test.com/#tab-2", result.Url);
+            RequirementRepository.AssertWasCalled(a => a.EnsurePersistent(requirement));
+            Assert.AreSame(requirement.Project, Projects[1]);
+            Assert.AreEqual("Requirement has been created successfully.", Controller.Message);
+        }
+
+
+        /// <summary>
+        /// Tests the create with invalid data does not save.
+        /// </summary>
+        [TestMethod]
+        public void TestCreateWithInvalidDataDoesNotSave()
+        {
+            Controller.ControllerContext.HttpContext.Response.Expect(a => a.ApplyAppPathModifier(null)).IgnoreArguments()
+                .Return("http://Test.com/").Repeat.Any();
+            Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext.RequestContext);
+
+            FakeProjects(Projects, 3);
+            FakeRequirementTypes(RequirementTypes, 1);
+            FakeCategories(Categories, 2);
+            FakePriorityTypes(PriorityTypes, 3);
+
+            RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
+            CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
+            PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+
+            var requirement = CreateValidEntities.Requirement(1);
+            requirement.Project = null;
+            requirement.Description = " "; //Invalid
+
+            Controller.Create(requirement, 2)
+                .AssertViewRendered()
+                .WithViewData<RequirementViewModel>();
+  
+            RequirementRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<Requirement>.Is.Anything));
+            Assert.AreSame(requirement.Project, Projects[1]);
+            Assert.AreNotEqual("Requirement has been created successfully.", Controller.Message);
+            Controller.ModelState.AssertErrorsAre("Description: may not be null or empty");
+        }
+
         #endregion Create Tests
 
         #region Edit Tests
 
+        /// <summary>
+        /// Tests the edit with one parameter redirects to project index when id not found.
+        /// </summary>
         [TestMethod]
-        public void TestEditDataWithInvalidDataDoesNotSave()
+        public void TestEditWithOneParameterRedirectsToProjectIndexWhenIdNotFound()
+        {
+            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            Controller.Edit(1)
+                .AssertActionRedirect()
+                .ToAction<ProjectController>(a => a.Index());
+            Assert.AreEqual("Requirement was not found.", Controller.Message); 
+        }
+
+        /// <summary>
+        /// Tests the edit with one parameter returns view when id is found.
+        /// </summary>
+        [TestMethod]
+        public void TestEditWithOneParameterReturnsViewWhenIdIsFound()
+        {
+            FakeProjects(Projects, 3);
+            FakeRequirementTypes(RequirementTypes, 1);
+            FakeCategories(Categories, 2);
+            FakePriorityTypes(PriorityTypes, 3);
+            FakeRequirements(Requirements, 1);
+
+            RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
+            CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
+            PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(Requirements[0]).Repeat.Any();
+
+            var result = Controller.Edit(1)
+                .AssertViewRendered()
+                .WithViewData<RequirementViewModel>();
+            Assert.AreSame(Requirements[0], result.Requirement);
+        }
+
+        [TestMethod]
+        public void TestEditWithValidDataSavesAndOnlyCopiesExpectedFields()
+        {
+            Controller.ControllerContext.HttpContext.Response.Expect(a => a.ApplyAppPathModifier(null)).IgnoreArguments()
+                .Return("http://Test.com/").Repeat.Any();
+            Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext.RequestContext);
+
+            FakeRequirements(Requirements, 3);
+            RequirementRepository.Expect(a => a.GetNullableByID(2)).Return(Requirements[1]).Repeat.Any();
+            var requirementUpdateValues = CreateValidEntities.Requirement(99);
+            requirementUpdateValues.Description = "DescriptionUpdated";
+            requirementUpdateValues.RequirementType = CreateValidEntities.RequirementType(99);
+            requirementUpdateValues.IsComplete = !Requirements[1].IsComplete;
+            requirementUpdateValues.Category = CreateValidEntities.Category(99);
+            requirementUpdateValues.PriorityType = CreateValidEntities.PriorityType(99);
+            requirementUpdateValues.Project = CreateValidEntities.Project(99); //This one will not be updated
+            requirementUpdateValues.TechnicalDifficulty = 99;
+
+            Assert.AreNotEqual(Requirements[1].Description, requirementUpdateValues.Description);
+            Assert.AreNotSame(Requirements[1].RequirementType, requirementUpdateValues.RequirementType);
+            Assert.AreNotEqual(Requirements[1].IsComplete, requirementUpdateValues.IsComplete);
+            Assert.AreNotSame(Requirements[1].Category, requirementUpdateValues.Category);
+            Assert.AreNotSame(Requirements[1].PriorityType, requirementUpdateValues.PriorityType);
+            Assert.AreNotSame(Requirements[1].Project, requirementUpdateValues.Project);
+            Assert.AreNotEqual(Requirements[1].TechnicalDifficulty, requirementUpdateValues.TechnicalDifficulty);
+
+            var result = Controller.Edit(2, requirementUpdateValues)
+                .AssertHttpRedirect();
+
+            Assert.AreEqual("http://Test.com/#tab-2", result.Url);
+            RequirementRepository.AssertWasCalled(a => a.EnsurePersistent(Requirements[1]));
+            Assert.AreEqual("Requirement has been updated successfully.", Controller.Message);
+
+            Assert.AreEqual(Requirements[1].Description, requirementUpdateValues.Description);
+            Assert.AreSame(Requirements[1].RequirementType, requirementUpdateValues.RequirementType);
+            Assert.AreEqual(Requirements[1].IsComplete, requirementUpdateValues.IsComplete);
+            Assert.AreSame(Requirements[1].Category, requirementUpdateValues.Category);
+            Assert.AreSame(Requirements[1].PriorityType, requirementUpdateValues.PriorityType);
+            Assert.AreNotSame(Requirements[1].Project, requirementUpdateValues.Project);
+            Assert.AreEqual(Requirements[1].TechnicalDifficulty, requirementUpdateValues.TechnicalDifficulty);
+        }
+
+        [TestMethod]
+        public void TestEditWithInvalidDataDoesNotSave1()
+        {
+            FakeProjects(Projects, 3);
+            FakeRequirementTypes(RequirementTypes, 1);
+            FakeCategories(Categories, 2);
+            FakePriorityTypes(PriorityTypes, 3);
+
+            RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
+            CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
+            PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+
+            FakeRequirements(Requirements, 3);
+            RequirementRepository.Expect(a => a.GetNullableByID(2)).Return(Requirements[1]).Repeat.Any();
+            var requirementUpdateValues = CreateValidEntities.Requirement(99);
+            requirementUpdateValues.Description = " "; //Invalid
+            requirementUpdateValues.RequirementType = CreateValidEntities.RequirementType(99);
+            requirementUpdateValues.IsComplete = !Requirements[1].IsComplete;
+            requirementUpdateValues.Category = CreateValidEntities.Category(99);
+            requirementUpdateValues.PriorityType = CreateValidEntities.PriorityType(99);
+            requirementUpdateValues.Project = CreateValidEntities.Project(99); //This one will not be updated
+            requirementUpdateValues.TechnicalDifficulty = 99;
+
+            Assert.AreNotEqual(Requirements[1].Description, requirementUpdateValues.Description);
+            Assert.AreNotSame(Requirements[1].RequirementType, requirementUpdateValues.RequirementType);
+            Assert.AreNotEqual(Requirements[1].IsComplete, requirementUpdateValues.IsComplete);
+            Assert.AreNotSame(Requirements[1].Category, requirementUpdateValues.Category);
+            Assert.AreNotSame(Requirements[1].PriorityType, requirementUpdateValues.PriorityType);
+            Assert.AreNotSame(Requirements[1].Project, requirementUpdateValues.Project);
+            Assert.AreNotEqual(Requirements[1].TechnicalDifficulty, requirementUpdateValues.TechnicalDifficulty);
+
+            Controller.Edit(2, requirementUpdateValues)
+                .AssertViewRendered()
+                .WithViewData<RequirementViewModel>();
+
+            RequirementRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<Requirement>.Is.Anything));
+            Assert.AreNotEqual("Requirement has been updated successfully.", Controller.Message);
+
+            Assert.AreEqual(Requirements[1].Description, requirementUpdateValues.Description);
+            Assert.AreSame(Requirements[1].RequirementType, requirementUpdateValues.RequirementType);
+            Assert.AreEqual(Requirements[1].IsComplete, requirementUpdateValues.IsComplete);
+            Assert.AreSame(Requirements[1].Category, requirementUpdateValues.Category);
+            Assert.AreSame(Requirements[1].PriorityType, requirementUpdateValues.PriorityType);
+            Assert.AreNotSame(Requirements[1].Project, requirementUpdateValues.Project);
+            Assert.AreEqual(Requirements[1].TechnicalDifficulty, requirementUpdateValues.TechnicalDifficulty);
+        }
+
+        [TestMethod]
+        public void TestEditWithInvalidDataDoesNotSave2()
         {
             FakeProjects(Projects, 1);
             FakeRequirementTypes(RequirementTypes, 1);
