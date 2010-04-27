@@ -21,9 +21,6 @@
             <th>
                 LastModified
             </th>
-            <th>
-                Id
-            </th>
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -41,16 +38,13 @@
                 <%= Html.Encode(item.TechnicalDifficulty) %>
             </td>
             <td>
-                <%= Html.Encode(item.IsComplete) %>
+                <%= Html.Encode(item.IsComplete) %> 
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.DateAdded)) %>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.LastModified)) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Id) %>
             </td>
         </tr>
     
