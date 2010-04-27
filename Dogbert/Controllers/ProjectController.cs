@@ -198,6 +198,7 @@ namespace Dogbert.Controllers
         // POST: /Project/EditText/
         [AcceptPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult EditText(int id, ProjectText projectText)
         {
             var pt = Repository.OfType<ProjectText>().GetNullableByID(id);
@@ -244,6 +245,7 @@ namespace Dogbert.Controllers
         /// <param name="id">Project Id</param>
         /// <param name="projectText"></param>
         [AcceptPost]
+        [ValidateInput(false)]
         public ActionResult CreateText(int projectId, [Bind(Exclude="Id")]ProjectText projectText)
         {
             var project = Repository.OfType<Project>().GetNullableByID(projectId);
