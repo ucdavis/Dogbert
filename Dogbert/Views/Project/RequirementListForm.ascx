@@ -21,9 +21,12 @@
             <th>
                 LastModified
             </th>
+            <th>
+                Category
+            </th>
         </tr>
 
-    <% foreach (var item in Model) { %>
+    <% foreach (var item in Model.OrderBy(a => a.Category.Id)) { %>
     
         <tr>
             <td>
@@ -45,6 +48,9 @@
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.LastModified)) %>
+            </td>
+            <td>
+                <%= Html.Encode(item.Category.Name) %>
             </td>
         </tr>
     
