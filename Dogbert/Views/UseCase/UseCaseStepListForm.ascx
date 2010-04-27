@@ -29,6 +29,7 @@
                                 Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditUseCaseSteps(steps.Id), "Edit")
                             %>
                             <% });
+                                col.Add(steps => steps.Order);
                                 col.Add(steps => steps.Description);
                                 col.Add(steps => steps.Optional);
                             })

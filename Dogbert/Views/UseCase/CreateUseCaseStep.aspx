@@ -12,9 +12,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <%= Html.ClientSideValidation<UseCaseStep>("UseCaseStep")%>
     <h2>Create Use Case Step</h2>
-    <%--<h2>UseCase: <%= this.Label("UseCase.Name")%> </h2>
-    <h4>Project: <%= this.Label("UseCase.Project.Name")%> </h4>--%>
-
+    <h2>UseCase: <%= this.Label("UseCase.Name")%> </h2>
+    <h4>Project: <%= this.Label("UseCase.Project.Name")%> </h4>
+    
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm()) {%>
     <% Html.RenderPartial("UseCaseStepForm"); %>

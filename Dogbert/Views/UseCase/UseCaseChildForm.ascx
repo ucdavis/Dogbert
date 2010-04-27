@@ -13,7 +13,7 @@
              
                     <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
                <p>
-                 <%= this.MultiSelect("Model.Project.UseCases")
+                 <%= this.MultiSelect("UseCase.Project.UseCases")
                     .Options(Model.Project.UseCases, x=>x.Id, x=>x.Name)
                     .Selected(Model.Project.UseCases != null && Model.UseCase.Children != null ? Model.UseCase.Children : new List<UseCase>()) 
                     .FirstOption("--Related Use Cases--")
