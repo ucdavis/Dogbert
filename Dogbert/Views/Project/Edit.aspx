@@ -33,6 +33,7 @@
             <li><a href="#<%= StaticValues.Tab_ProjectDetails %>"><span>Project Details</span></a></li>
             <li><a href="#<%= StaticValues.Tab_Requirements %>"><span>Requirements</span></a></li>
             <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_ProjectFiles %>"><span>Files</span></a></li>
         </ul>
         
         <div id="<%= StaticValues.Tab_ProjectDetails %>">
@@ -55,6 +56,13 @@
             <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
              <p>
                 <%= Html.ActionLink<UseCaseController>(a => a.Create(Model.Project.Id), "Create UseCase") %>
+            </p>
+        </div>
+        
+        <div id="<%= StaticValues.Tab_ProjectFiles %>">
+            <% Html.RenderPartial("ProjectFileListForm", Model.Project.ProjectFiles); %>
+            <p>
+                <%= Html.ActionLink<ProjectFileController>(a => a.Create(Model.Project.Id), "Create ProjectFile") %>
             </p>
         </div>
     
