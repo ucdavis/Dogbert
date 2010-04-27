@@ -155,19 +155,28 @@ ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
           <DataField>Optional</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
-        <Field Name="UseCaseID">
-          <DataField>UseCaseID</DataField>
+        <Field Name="UCStepID">
+          <DataField>UCStepID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="RequirementID">
           <DataField>RequirementID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="RequirementsList">
+          <DataField>RequirementsList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RelatedUseCaseList">
+          <DataField>RelatedUseCaseList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>Dogbert</DataSourceName>
         <CommandText>SELECT     UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
-                      UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.UseCaseID, UseCaseXRequirements.RequirementID
+                      UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
+                      UseCases.RelatedUseCaseList
 FROM         UseCaseXRequirements RIGHT OUTER JOIN
                       UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
                       UseCases LEFT OUTER JOIN
@@ -180,6 +189,24 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
             <Value>41</Value>
           </QueryParameter>
         </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="ReqList">
+      <Fields>
+        <Field Name="Results">
+          <DataField>Results</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>declare @reqList varchar(1000)
+select @reqList = COALESCE(@reqList + ', ', '') + CAST(id AS varchar(50))
+FROM Requirements
+WHERE ProjectID = 41
+
+select 'Results' =  + @reqList</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
     </DataSet>
   </DataSets>
@@ -300,6 +327,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
         <Top>0.22583in</Top>
+        <Left>0in</Left>
         <Height>0.64583in</Height>
         <Width>7.12167in</Width>
         <Style>
@@ -308,38 +336,6 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="Name2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Requirements</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Name</rd:DefaultName>
-        <Top>1.06264in</Top>
-        <Height>0.25in</Height>
-        <Width>7.12167in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix6">
         <TablixBody>
           <TablixColumns>
@@ -781,9 +777,10 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Top>1.49826in</Top>
+        <Left>0in</Left>
         <Height>1.25in</Height>
         <Width>7.12167in</Width>
-        <ZIndex>2</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -796,9 +793,10 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
       </Tablix>
       <Line Name="Line7">
         <Top>1.35431in</Top>
+        <Left>0in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Color>Brown</Color>
@@ -807,43 +805,12 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
           </Border>
         </Style>
       </Line>
-      <Textbox Name="Name3">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Use Cases</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Name</rd:DefaultName>
-        <Top>3.01042in</Top>
-        <Height>0.25in</Height>
-        <Width>7.12167in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Line Name="Line8">
         <Top>3.28819in</Top>
+        <Left>0in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Color>Brown</Color>
@@ -871,6 +838,12 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
+                            <TextRun>
+                              <Value>Use Case: </Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
                             <TextRun>
                               <Value>=Fields!Name.Value</Value>
                               <Style>
@@ -905,7 +878,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.2in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -931,8 +904,8 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -940,7 +913,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -970,8 +943,8 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -979,7 +952,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1009,8 +982,8 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -1018,58 +991,317 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.28125in</Height>
+              <Height>0.20833in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Tablix Name="Tablix11">
+                    <Tablix Name="Tablix14">
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.31948in</Width>
-                          </TablixColumn>
-                          <TablixColumn>
-                            <Width>6.09031in</Width>
+                            <Width>6.72927in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.25in</Height>
+                            <Height>0.20833in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox3">
+                                  <Rectangle Name="Rectangle15">
+                                    <KeepTogether>true</KeepTogether>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Rectangle>
+                                </CellContents>
+                              </TablixCell>
+                            </TablixCells>
+                          </TablixRow>
+                        </TablixRows>
+                      </TablixBody>
+                      <TablixColumnHierarchy>
+                        <TablixMembers>
+                          <TablixMember />
+                        </TablixMembers>
+                      </TablixColumnHierarchy>
+                      <TablixRowHierarchy>
+                        <TablixMembers>
+                          <TablixMember>
+                            <Group Name="Details2" />
+                            <Visibility>
+                              <Hidden>true</Hidden>
+                            </Visibility>
+                          </TablixMember>
+                        </TablixMembers>
+                      </TablixRowHierarchy>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Tablix>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>1.23958in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Tablix Name="Tablix3">
+                      <TablixBody>
+                        <TablixColumns>
+                          <TablixColumn>
+                            <Width>0.62784in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>6.01814in</Width>
+                          </TablixColumn>
+                        </TablixColumns>
+                        <TablixRows>
+                          <TablixRow>
+                            <Height>0.36719in</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox192">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!Order.Value</Value>
-                                            <MarkupType>HTML</MarkupType>
+                                            <Value />
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox3</rd:DefaultName>
+                                    <rd:DefaultName>Textbox192</rd:DefaultName>
                                     <Style>
                                       <Border>
-                                        <Style>None</Style>
+                                        <Width>0.5pt</Width>
                                       </Border>
-                                      <VerticalAlign>Top</VerticalAlign>
+                                      <TopBorder>
+                                        <Color>Silver</Color>
+                                      </TopBorder>
+                                      <BottomBorder>
+                                        <Color>Silver</Color>
+                                      </BottomBorder>
+                                      <LeftBorder>
+                                        <Color>Silver</Color>
+                                      </LeftBorder>
+                                      <RightBorder>
+                                        <Color>Silver</Color>
+                                      </RightBorder>
+                                      <VerticalAlign>Middle</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
-                                      <PaddingRight>2pt</PaddingRight>
-                                      <PaddingTop>2pt</PaddingTop>
-                                      <PaddingBottom>2pt</PaddingBottom>
+                                      <PaddingRight>8pt</PaddingRight>
+                                      <PaddingBottom>1pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
                                 </CellContents>
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox381">
+                                  <Textbox Name="RequirementsList">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>Requirements: </Value>
+                                            <Style />
+                                          </TextRun>
+                                          <TextRun>
+                                            <Value>=Fields!RequirementsList.Value</Value>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>RequirementsList</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Width>0.5pt</Width>
+                                      </Border>
+                                      <VerticalAlign>Middle</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingBottom>1pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                            </TablixCells>
+                          </TablixRow>
+                          <TablixRow>
+                            <Height>0.41927in</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox195">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value />
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>Steps:</Value>
+                                            <Style>
+                                              <FontWeight>Bold</FontWeight>
+                                            </Style>
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox195</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Width>0.5pt</Width>
+                                      </Border>
+                                      <TopBorder>
+                                        <Color>Silver</Color>
+                                      </TopBorder>
+                                      <BottomBorder>
+                                        <Color>Silver</Color>
+                                      </BottomBorder>
+                                      <LeftBorder>
+                                        <Color>Silver</Color>
+                                      </LeftBorder>
+                                      <RightBorder>
+                                        <Color>Silver</Color>
+                                      </RightBorder>
+                                      <VerticalAlign>Middle</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>8pt</PaddingRight>
+                                      <PaddingBottom>1pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox196">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>Related Use Cases: </Value>
+                                            <Style />
+                                          </TextRun>
+                                          <TextRun>
+                                            <Value>=Fields!RelatedUseCaseList.Value</Value>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox196</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                        <Width>0.5pt</Width>
+                                      </Border>
+                                      <TopBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </TopBorder>
+                                      <BottomBorder>
+                                        <Color>Silver</Color>
+                                        <Style>Solid</Style>
+                                      </BottomBorder>
+                                      <LeftBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </LeftBorder>
+                                      <RightBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </RightBorder>
+                                      <VerticalAlign>Middle</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingBottom>1pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                            </TablixCells>
+                          </TablixRow>
+                          <TablixRow>
+                            <Height>0.22656in</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox186">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>=Min(Fields!Order.Value)</Value>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox186</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>Solid</Style>
+                                        <Width>0.5pt</Width>
+                                      </Border>
+                                      <TopBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </TopBorder>
+                                      <BottomBorder>
+                                        <Color>Silver</Color>
+                                        <Style>Solid</Style>
+                                      </BottomBorder>
+                                      <LeftBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </LeftBorder>
+                                      <RightBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </RightBorder>
+                                      <VerticalAlign>Middle</VerticalAlign>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>8pt</PaddingRight>
+                                      <PaddingBottom>1pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                  <rd:Selected>true</rd:Selected>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox187">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -1084,16 +1316,32 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox381</rd:DefaultName>
+                                    <rd:DefaultName>Textbox187</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
+                                        <Width>0.5pt</Width>
                                       </Border>
-                                      <VerticalAlign>Top</VerticalAlign>
+                                      <TopBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </TopBorder>
+                                      <BottomBorder>
+                                        <Color>Silver</Color>
+                                        <Style>Solid</Style>
+                                      </BottomBorder>
+                                      <LeftBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </LeftBorder>
+                                      <RightBorder>
+                                        <Color>Silver</Color>
+                                        <Style>None</Style>
+                                      </RightBorder>
+                                      <VerticalAlign>Middle</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
-                                      <PaddingTop>2pt</PaddingTop>
-                                      <PaddingBottom>2pt</PaddingBottom>
+                                      <PaddingBottom>1pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
                                 </CellContents>
@@ -1101,11 +1349,11 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.03125in</Height>
+                            <Height>0.22656in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox4">
+                                  <Textbox Name="Textbox24">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -1119,12 +1367,14 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox4</rd:DefaultName>
+                                    <rd:DefaultName>Textbox24</rd:DefaultName>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
                                       </Border>
-                                      <VerticalAlign>Top</VerticalAlign>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -1135,32 +1385,17 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox1">
-                                    <CanGrow>true</CanGrow>
+                                  <Rectangle Name="Rectangle8">
                                     <KeepTogether>true</KeepTogether>
-                                    <Paragraphs>
-                                      <Paragraph>
-                                        <TextRuns>
-                                          <TextRun>
-                                            <Value />
-                                            <Style />
-                                          </TextRun>
-                                        </TextRuns>
-                                        <Style />
-                                      </Paragraph>
-                                    </Paragraphs>
-                                    <rd:DefaultName>Textbox1</rd:DefaultName>
+                                    <Visibility>
+                                      <Hidden>true</Hidden>
+                                    </Visibility>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
                                       </Border>
-                                      <VerticalAlign>Top</VerticalAlign>
-                                      <PaddingLeft>2pt</PaddingLeft>
-                                      <PaddingRight>2pt</PaddingRight>
-                                      <PaddingTop>2pt</PaddingTop>
-                                      <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
-                                  </Textbox>
+                                  </Rectangle>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -1170,26 +1405,38 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                       <TablixColumnHierarchy>
                         <TablixMembers>
                           <TablixMember />
-                          <TablixMember />
+                          <TablixMember>
+                            <TablixMembers>
+                              <TablixMember>
+                                <TablixMembers>
+                                  <TablixMember>
+                                    <TablixMembers>
+                                      <TablixMember />
+                                    </TablixMembers>
+                                  </TablixMember>
+                                </TablixMembers>
+                              </TablixMember>
+                            </TablixMembers>
+                          </TablixMember>
                         </TablixMembers>
                       </TablixColumnHierarchy>
                       <TablixRowHierarchy>
                         <TablixMembers>
                           <TablixMember>
-                            <Group Name="Group4">
+                            <Group Name="Group3">
                               <GroupExpressions>
-                                <GroupExpression>=Fields!Step.Value</GroupExpression>
+                                <GroupExpression>=Fields!RequirementsList.Value</GroupExpression>
                               </GroupExpressions>
                             </Group>
                             <SortExpressions>
                               <SortExpression>
-                                <Value>=Fields!Step.Value</Value>
+                                <Value>=Fields!RequirementsList.Value</Value>
                               </SortExpression>
                             </SortExpressions>
                             <TablixHeader>
-                              <Size>0.31948in</Size>
+                              <Size>0.08329in</Size>
                               <CellContents>
-                                <Textbox Name="Textbox2">
+                                <Textbox Name="Group32">
                                   <CanGrow>true</CanGrow>
                                   <KeepTogether>true</KeepTogether>
                                   <Paragraphs>
@@ -1203,16 +1450,113 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                                       <Style />
                                     </Paragraph>
                                   </Paragraphs>
-                                  <rd:DefaultName>Textbox2</rd:DefaultName>
+                                  <rd:DefaultName>Group32</rd:DefaultName>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
                                     </Border>
-                                    <VerticalAlign>Top</VerticalAlign>
+                                    <VerticalAlign>Middle</VerticalAlign>
                                     <PaddingLeft>2pt</PaddingLeft>
                                     <PaddingRight>2pt</PaddingRight>
-                                    <PaddingTop>2pt</PaddingTop>
-                                    <PaddingBottom>2pt</PaddingBottom>
+                                    <PaddingBottom>1pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                              </CellContents>
+                            </TablixHeader>
+                          </TablixMember>
+                          <TablixMember>
+                            <Group Name="Group4">
+                              <GroupExpressions>
+                                <GroupExpression>=Fields!RelatedUseCaseList.Value</GroupExpression>
+                              </GroupExpressions>
+                            </Group>
+                            <SortExpressions>
+                              <SortExpression>
+                                <Value>=Fields!RelatedUseCaseList.Value</Value>
+                              </SortExpression>
+                            </SortExpressions>
+                            <TablixHeader>
+                              <Size>0.08329in</Size>
+                              <CellContents>
+                                <Textbox Name="Group4">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value />
+                                          <Style>
+                                            <FontWeight>Bold</FontWeight>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value />
+                                          <Style>
+                                            <FontWeight>Bold</FontWeight>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>Group4</rd:DefaultName>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <VerticalAlign>Middle</VerticalAlign>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingBottom>1pt</PaddingBottom>
+                                  </Style>
+                                </Textbox>
+                              </CellContents>
+                            </TablixHeader>
+                          </TablixMember>
+                          <TablixMember>
+                            <Group Name="GroupUCStepID">
+                              <GroupExpressions>
+                                <GroupExpression>=Fields!UCStepID.Value</GroupExpression>
+                              </GroupExpressions>
+                            </Group>
+                            <SortExpressions>
+                              <SortExpression>
+                                <Value>=Fields!UCStepID.Value</Value>
+                              </SortExpression>
+                            </SortExpressions>
+                            <TablixHeader>
+                              <Size>0.08329in</Size>
+                              <CellContents>
+                                <Textbox Name="Group31">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value />
+                                          <Style />
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>Group31</rd:DefaultName>
+                                  <Style>
+                                    <Border>
+                                      <Color>Silver</Color>
+                                      <Style>Solid</Style>
+                                    </Border>
+                                    <VerticalAlign>Middle</VerticalAlign>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingBottom>1pt</PaddingBottom>
                                   </Style>
                                 </Textbox>
                               </CellContents>
@@ -1223,25 +1567,61 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                               </TablixMember>
                               <TablixMember>
                                 <Group Name="Details1" />
+                                <Visibility>
+                                  <Hidden>true</Hidden>
+                                </Visibility>
                               </TablixMember>
                             </TablixMembers>
                           </TablixMember>
                         </TablixMembers>
                       </TablixRowHierarchy>
+                      <DataSetName>UseCases</DataSetName>
                       <SortExpressions>
                         <SortExpression>
-                          <Value>=Fields!id.Value</Value>
-                        </SortExpression>
-                        <SortExpression>
-                          <Value>=Fields!Order.Value</Value>
+                          <Value>Min(Fields!Order.Value)</Value>
                         </SortExpression>
                       </SortExpressions>
                       <Style>
                         <Border>
-                          <Style>None</Style>
+                          <Color>Silver</Color>
+                          <Style>Solid</Style>
                         </Border>
                       </Style>
                     </Tablix>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox126">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox126</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1260,7 +1640,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
-              <Group Name="Group3">
+              <Group Name="GroupbyID">
                 <GroupExpressions>
                   <GroupExpression>=Fields!id.Value</GroupExpression>
                 </GroupExpressions>
@@ -1324,8 +1704,10 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
                     </TablixMember>
                     <TablixMember />
                     <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
@@ -1341,15 +1723,110 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         </SortExpressions>
         <Top>3.38208in</Top>
         <Left>0.08in</Left>
-        <Height>1.28125in</Height>
+        <Height>2.58542in</Height>
         <Width>7.04167in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Rectangle Name="Rectangle5">
+        <ReportItems>
+          <Textbox Name="Name2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Requirements</Value>
+                    <Style>
+                      <FontSize>12pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Name</rd:DefaultName>
+            <Top>0.02084in</Top>
+            <Height>0.25in</Height>
+            <Width>7.12167in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Rectangle Name="Rectangle7">
+            <PageBreak>
+              <BreakLocation>Start</BreakLocation>
+            </PageBreak>
+            <KeepTogether>true</KeepTogether>
+            <Height>0.29167in</Height>
+            <Width>7.12167in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
+        <KeepTogether>true</KeepTogether>
+        <Top>1.05209in</Top>
+        <Left>0.02958in</Left>
+        <Height>0.29167in</Height>
+        <Width>7.12167in</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+      <Textbox Name="Name3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Use Case</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Name</rd:DefaultName>
+        <Top>2.98263in</Top>
+        <Height>0.25in</Height>
+        <Width>7.12167in</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>10in</Height>
     <Style>
@@ -1401,6 +1878,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.24111in</Top>
+          <Left>0in</Left>
           <Height>0.25in</Height>
           <Width>1.82291in</Width>
           <Style>
@@ -1450,6 +1928,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         </Textbox>
         <Line Name="Line12">
           <Top>0.505in</Top>
+          <Left>0in</Left>
           <Height>0in</Height>
           <Width>7.12167in</Width>
           <ZIndex>2</ZIndex>
@@ -1495,6 +1974,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
+          <Left>0in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
           <Style>
@@ -1544,7 +2024,7 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
       </Style>
     </PageFooter>
     <InteractiveHeight>10in</InteractiveHeight>
-    <InteractiveWidth>7in</InteractiveWidth>
+    <InteractiveWidth>7.5in</InteractiveWidth>
     <LeftMargin>0.5in</LeftMargin>
     <RightMargin>0.5in</RightMargin>
     <TopMargin>0.25in</TopMargin>
