@@ -63,6 +63,7 @@
             <p>
                 <%= Html.ActionLink<ProjectFileController>(a => a.Create(Model.Project.Id), "Create ProjectFile") %>
             </p>
+            <p>Images (*.bmp, *.jpg, *.png, *.gif) will be included in reporting</p>
         </div>
     
         <div id="<%= StaticValues.Tab_RequirementCategories %>">
