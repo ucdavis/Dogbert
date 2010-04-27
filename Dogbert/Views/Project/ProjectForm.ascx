@@ -1,4 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Dogbert.Controllers.ViewModels.ProjectViewModel>" %>
+<%@ Register Assembly="System.Web.DynamicData, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+    Namespace="System.Web.DynamicData" TagPrefix="cc1" %>
 <%@ Import Namespace="xVal.Html"%>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 
@@ -16,7 +18,7 @@
         <fieldset>
             <legend>Fields</legend>
             <p>
-                <%= this.TextBox("Project.Name").Label("Name:")%>
+                <%= Html.TextBox("Project.Name")%>
             </p>
             <p>
              <%= this.Select("Project.ProjectType")
@@ -37,29 +39,41 @@
            </p>
            <p>
            
-                <%= this.TextBox("Project.Contact").Label("Contact:")%>
+                <%= Html.TextBox("Project.Contact")%>
+                    <%--.Label("Contact:")--%>
            </p>
            <p>
-                <%= this.TextBox("Project.ContactEmail").Label("ContactEmail:")%>
+                <%= Html.TextBox("Project.ContactEmail")%>
+                            <%--.Label("ContactEmail:")--%>
            </p>
             <p>
-                <%= this.TextBox("Project.Unit").Label("Unit:")%>
+                <%= Html.TextBox("Project.Unit")%>
+                    <%--.Label("Unit:")--%>
             </p>
             <p>
-                <%= this.TextBox("Project.Complexity").Label("Complexity:")%>
+                <%= Html.TextBox("Project.Complexity")%>
+                <%--.Label("Complexity:")--%>
             </p>
             <p>
                 
-               <%= this.TextBox("Project.ProjectedStart").Format("{0:d}").Label("Start Date:")%>
-
+               <%= Html.TextBox("Project.ProjectedStart")%>
+                    <%--.Format("{0:d}").Label("Start Date:")                   --%>
+                   
+            <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" 
+                runat="server" ErrorMessage="RequiredFieldValidator" 
+                ControlToValidate="Project_ProjectedStart"></asp:RequiredFieldValidator>--%>
                 
             </p>
             <p>
-                <%= this.TextBox("Project.ProjectedEnd").Format("{0:d}").Label("End Date/Deadline:")%>
+                <%= Html.TextBox("Project.ProjectedEnd")%>
+                    <%--.Format("{0:d}").Label("End Date/Deadline:")--%>
             </p>
             
           
                  <p>
+                    <%-- <select id="Select1">
+                         <option></option>
+                     </select>--%>
              <%= this.Select("Project.ProjectManager")
                 .Options(Model.Users, x=>x.Id, x=>x.FullName)
                 .Selected(Model.Project != null && Model.Project.ProjectManager != null ? Model.Project.ProjectManager.Id : 0)

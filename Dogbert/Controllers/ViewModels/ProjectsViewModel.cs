@@ -104,6 +104,7 @@ namespace Dogbert.Controllers.ViewModels
         {
             Check.Require(repository != null, "Repository is required");
             var viewModel = new ProjectViewModel();
+                
                 viewModel.ProjectTypes = repository.OfType<ProjectType>().Queryable.ToList();
                 viewModel.Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).ToList();
                 viewModel.StatusCode = repository.OfType<StatusCode>().Queryable.Where(s => s.IsActive).ToList();

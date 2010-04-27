@@ -42,7 +42,7 @@ namespace Dogbert.Core.Domain
         public virtual User LeadProgrammer { get; set; }
         public virtual ProjectType ProjectType { get; set; }
 
-
+        
         public virtual string ProjectedStartString
         {
             get

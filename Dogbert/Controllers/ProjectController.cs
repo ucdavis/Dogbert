@@ -20,6 +20,9 @@ namespace Dogbert.Controllers
     public class ProjectController : SuperController
     {
         private readonly IRepository<Project> _projectRepository;
+       // DateTime mindate = new DateTime(1999, 1, 1);
+        //DateTime maxdate = new DateTime(9999, 12, 31);
+   
         
         public ProjectController(IRepository<Project> projectRepository)
         {
@@ -77,8 +80,18 @@ namespace Dogbert.Controllers
             project.DateAdded = DateTime.Now;
             project.LastModified = DateTime.Now;
    
-
             project.TransferValidationMessagesTo(ModelState);
+
+            //LD: workaround for validating dates (cause I don't now to validate dates : )
+     
+            //Validate input
+            if (project.ProjectedEnd < project.ProjectedStart)
+            {
+                ModelState.AddModelError("ProjectedEnd", "End Date must be > Project Start Date");
+            }
+           
+
+
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(project);
@@ -136,8 +149,6 @@ namespace Dogbert.Controllers
         [AcceptPost]
         public ActionResult Edit(Project project)
         {
-            DateTime mindate = new DateTime(1999, 1, 1);
-            DateTime maxdate = new DateTime(9999, 12, 31);
             var projectToUpdate = _projectRepository.GetByID(project.Id);
             //TransferValuesTo(projectToUpdate, project);
             
@@ -146,14 +157,7 @@ namespace Dogbert.Controllers
             {
                 ModelState.AddModelError("ProjectedEnd", "End Date must be > Project Start Date");
             }
-            if ((project.ProjectedEnd < mindate) || (project.ProjectedEnd > maxdate))
-            {
-                ModelState.AddModelError("ProjectedEnd", "End Date must be valid date");
-            }
-            if ((project.ProjectedStart < mindate) || (project.ProjectedStart > maxdate))
-            {
-                ModelState.AddModelError("ProjectedStart", "Start Date must be valid date");
-            }
+           
 
             if (ModelState.IsValid)
             {//if values are valid, transfer to project

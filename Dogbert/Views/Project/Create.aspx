@@ -11,6 +11,15 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
+<script type="text/javascript">
+    $(function() {
+        $("#tabs").tabs();
+
+        $("#" + "Project_ProjectedStart").datepicker(); //TextBox("Project.ProjectedStart")
+        $("#" + "Project_ProjectedEnd").datepicker(); //TextBox("Project.ProjectedStart")
+    });
+
+</script>
 
 </asp:Content>
 
