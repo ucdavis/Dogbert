@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Dogbert.Controllers.ViewModels.ProjectViewModel>" %>
+<%@ Import Namespace="Dogbert.Controllers"%>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
 <script type="text/javascript">
@@ -36,10 +37,11 @@
         </div>
     
         <div id="tab-2">
+            
+            <% Html.RenderPartial("RequirementListForm", Model.Project.Requirements); %>
+            
             <p>
-            Requirements Tab: Requirements Go Here--------------------
-            </p>
-            <p>
+                <%= Html.ActionLink<RequirementController>(a => a.Create(Model.Project.Id), "Create Requirement") %>
             </p>
             
         </div>

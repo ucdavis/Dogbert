@@ -7,14 +7,16 @@
 		</id>
 
 		<property name="Description" column="Description" />
-		<property name="DateAdded" column="DateAdded" />
-		<many-to-one name="Type" class="Dogbert.Core.Domain.RequirementType, Dogbert.Core" column="RequirementTypeID" cascade="none" />
-		<many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
-		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
-		<many-to-one name="Category" class="Dogbert.Core.Domain.Category, Dogbert.Core" column="CategoryID" cascade="none" />
+    <property name="TechnicalDifficulty" column="TechnicalDifficulty" />
+    <property name="IsComplete" column="IsComplete" />
 
-		<property name="TechnicalDifficulty" column="TechnicalDifficulty" />
-		<property name="IsComplete" column="IsComplete" />
+    <many-to-one name="RequirementType" class="Dogbert.Core.Domain.RequirementType, Dogbert.Core" column="RequirementTypeID" cascade="none" />
+    <many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
+    <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+    <many-to-one name="Category" class="Dogbert.Core.Domain.Category, Dogbert.Core" column="CategoryID" cascade="none" />
+
+    <property name="DateAdded" column="DateAdded" />
+    <property name="LastModified" column="LastModified" />
 
 
 	</class>

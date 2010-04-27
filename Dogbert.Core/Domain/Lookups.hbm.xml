@@ -62,7 +62,7 @@
 		<property name="IsActive" column="IsActive" />
 	</class>
 
-	<class name="Dogbert.Core.Domain.Category, Dogbert.Core" table="Categories" >
+	<class name="Dogbert.Core.Domain.Category, Dogbert.Core" table="RequirementCategories" >
     <id name="Id" column="id" unsaved-value="0">
 			<generator class="identity" />
 		</id>
