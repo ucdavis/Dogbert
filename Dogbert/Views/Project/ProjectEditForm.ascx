@@ -6,7 +6,7 @@
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
     <%= Html.ValidationSummary() %>
 
-   
+<%--<%          Add Project Text%>      --%>
         <fieldset>
             <legend>Project Text</legend>
             <% using (Html.BeginForm("CreateText", "Project", FormMethod.Post))

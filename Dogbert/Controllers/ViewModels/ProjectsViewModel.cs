@@ -17,7 +17,19 @@ namespace Dogbert.Controllers.ViewModels
         // used for editing
         public ProjectText ProjectText { get; set; }
         public IList<TextType> TextTypes { get; set; }
+        public IList<RequirementCategory> RequirementCategories { get; set; }
+        
+        //used for requirements
+        public Requirement Requirement { get; set; }
+        public IList<RequirementType> RequirementTypes { get; set; }
+        public IList<PriorityType> PriorityTypes { get; set; }
 
+        //used for use cases
+        public UseCase UseCase { get; set; }
+        public IList<UseCase> UseCases { get; set; }
+        public IList<Actor> Actors { get; set; }
+        public UseCaseStep UseCaseStep { get; set; }
+        
         public static ProjectViewModel Create(IRepository repository)
         {
             return CreateBasic(repository);
@@ -29,37 +41,73 @@ namespace Dogbert.Controllers.ViewModels
 
             //populate the stuff needed for editing
             viewModel.TextTypes = repository.OfType<TextType>().Queryable.ToList();
+
+            //populate the stuff needed for requirements
+            viewModel.RequirementTypes= repository.OfType<RequirementType>().Queryable.Where(r => r.IsActive).ToList();
+            viewModel.PriorityTypes = repository.OfType<PriorityType>().Queryable.Where(r => r.IsActive).ToList();
+            //populate the stuff needed for use cases
+            viewModel.Actors = repository.OfType<Actor>().Queryable.ToList();
+            viewModel.RequirementCategories = repository.OfType<RequirementCategory>().Queryable.Where(r =>r.IsActive).ToList();
+
             return viewModel;
         }
-
 
         public static ProjectViewModel CreateEditText(IRepository repository)
         {
             var viewModel = new ProjectViewModel
             {
-
                 //populate the stuff needed for editing
-                TextTypes = repository.OfType<TextType>().Queryable.ToList()
+                TextTypes = repository.OfType<TextType>().Queryable.ToList(),
+
             };
             return viewModel;
         }
 
+        public static ProjectViewModel CreateEditRequirements(IRepository repository)
+        {
+            var viewModel =new ProjectViewModel
+            {
+                //populate the stuff needed for requirements
+                RequirementTypes = repository.OfType<RequirementType>().Queryable.ToList(),
+                PriorityTypes = repository.OfType<PriorityType>().Queryable .ToList()
+            };
+            return viewModel;
+        }
 
+        public static ProjectViewModel CreateEditUseCase(IRepository repository)
+        {
+            var viewModel = new ProjectViewModel
+            {
+                //populate the stuff needed for use cases
+                Actors = repository.OfType<Actor>().Queryable.ToList(),
+                RequirementCategories = repository.OfType<RequirementCategory>().Queryable.ToList()
+                
+            };
+            return viewModel;
+        }
 
+        public static ProjectViewModel CreateEditUseCaseSteps(IRepository repository)
+        {
+            var viewModel = new ProjectViewModel
+            {
+                //populate the stuff needed for use cases steps
+               
+            };
+            return viewModel;
+        }
+        
         private static ProjectViewModel CreateBasic(IRepository repository)
         {
             Check.Require(repository != null, "Repository is required");
-            var viewModel = new ProjectViewModel
-            {
-                ProjectTypes = repository.OfType<ProjectType>().Queryable.ToList(),
-                Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).ToList()
-
-                //Where(p => p.ProjectType.Name == "Web Application")
-            };
+            var viewModel = new ProjectViewModel();
+                viewModel.ProjectTypes = repository.OfType<ProjectType>().Queryable.ToList();
+                viewModel.Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).ToList();
+               //Where(p => p.ProjectType.Name == "Web Application")
             return viewModel;
         }
 
         
+     
     }
 
   }

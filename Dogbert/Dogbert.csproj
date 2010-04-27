@@ -146,7 +146,11 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
+    <Content Include="Views\Project\ProjectRequirementsForm.ascx" />
+    <Content Include="Views\Project\ProjectEditUseCaseForm.ascx" />
+    <Content Include="Views\Project\EditUseCase.aspx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
+    <Content Include="Views\Project\ProjectUseCaseForm.ascx" />
     <Content Include="Views\Project\EditText.aspx" />
     <Content Include="Views\Project\ProjectEditForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />

@@ -9,7 +9,7 @@
     <%= Html.ValidationSummary() %>
 
         <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.Edit(Model.ProjectText.Project.Id), "Back to Project")%>
         </div>
         
         <fieldset>

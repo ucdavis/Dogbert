@@ -28,7 +28,6 @@ namespace Dogbert.Controllers
         }
         
         
-        
         // GET: /Project/
         [HandleTransactionManually]
         public ActionResult Index()
@@ -85,7 +84,6 @@ namespace Dogbert.Controllers
                 return View(viewModel);
             }
         }
-
     
         // GET: /Project/Edit/
         public ActionResult Edit(int id)
@@ -101,6 +99,7 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
+        //Transfer Values: For Project/Edit 
         private static void TransferValuesTo(Project projectToUpdate, Project project)
         {
             projectToUpdate.Name = project.Name;
@@ -144,14 +143,13 @@ namespace Dogbert.Controllers
 
 
 
-    //---------------------------------------------------------------------------------------------------
-    //Project Texts -------------------------------------------------------------------------------------
-    //---------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
+    //Project Texts
+    //--------------------------------------------------------------------------------------------------------
         // GET: /Project/EditText/
         public ActionResult EditText(int Id)
         {
             var existingProjectText = Repository.OfType<ProjectText>().GetNullableByID(Id);
-         
             
             if (existingProjectText == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
@@ -170,31 +168,37 @@ namespace Dogbert.Controllers
             TransferValuesTo(pt, projectText);
 
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, pt.ValidationResults());
+
+            var proj =  Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+        
+            if (proj.ProjectTexts.Any(a => a.TextType == pt.TextType))
+            {
+                ModelState.AddModelError("Text Type", "Text type already exists in this project");
+            }
+            else if (pt.Text.Length  < 1)
+            {
+                 ModelState.AddModelError("Text Type", "No text entered");
+            }
+
+
             if (ModelState.IsValid)
             {
                 Repository.OfType<ProjectText>().EnsurePersistent(pt);
                 Message = "Project text edited successfully";
 
-                var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
-                return RedirectToAction("Edit", project);
-               // return RedirectToAction("Edit", pt.Project.Id);  //?Need to redirect to edit screen, but don't have projId.
             }
-            else
-            {
-                //Else what?
-                return RedirectToAction("Index");  
-            }
+            var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+            return RedirectToAction("Edit", project);
+            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
+      
         }
 
-
-
-        
+        //Transfer Values: For  /Project/EditText/
         private static void TransferValuesTo(ProjectText projectTextToUpdate, ProjectText projectText)
         {
             projectTextToUpdate.TextType = projectText.TextType;
             projectTextToUpdate.Text = projectText.Text;
         }
-
 
         // POST: /Project/CreateText/
         /// <summary>
@@ -214,16 +218,20 @@ namespace Dogbert.Controllers
 
             project.AddProjectTexts(projectText);
 
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, project.ValidationResults());
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectText.ValidationResults());
 
             if (project.ProjectTexts.Any(a => a.TextType == projectText.TextType))
             {
                 ModelState.AddModelError("Text Type", "Text type already exists in this project");
             }
+            else if (projectText.Text.Length < 1)
+            {
+                 ModelState.AddModelError("Text Type", "No text entered");
+            }
 
             if (ModelState.IsValid)
             {
-                Repository.OfType<Project>().EnsurePersistent(project);
+                Repository.OfType<ProjectText>().EnsurePersistent(projectText);
                 //_projectRepository.EnsurePersistent(projectText);//which repository
                 Message = "New Text Created Successfully";
                 //return RedirectToAction("Index");
@@ -231,10 +239,108 @@ namespace Dogbert.Controllers
 
             var viewModel = ProjectViewModel.CreateEdit(Repository);
             viewModel.Project = project;
-
             return this.RedirectToAction(a => a.Edit(projectId));
         }
-   
+
+    //--------------------------------------------------------------------------------------------------------
+    //Project Requirements
+    //--------------------------------------------------------------------------------------------------------
+        
+
+
+    //--------------------------------------------------------------------------------------------------------
+    //Project Use Cases
+    //--------------------------------------------------------------------------------------------------------
+        // POST: /Project/CreateUseCase/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <param name="projectUseCase"></param>
+        [AcceptPost]
+        public ActionResult CreateUseCase(int projectId, [Bind(Exclude = "Id")]UseCase useCase)
+        {
+            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+
+            //set values
+            useCase.DateAdded = DateTime.Now;
+            useCase.LastModified = DateTime.Now;
+
+            if (project == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            project.AddUseCase(useCase);
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCase.ValidationResults());
+
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCase>().EnsurePersistent(useCase);
+                //_projectRepository.EnsurePersistent(projectText);//which repository
+                Message = "New Text Created Successfully";
+                //return RedirectToAction("Index");
+            }
+
+            var viewModel = ProjectViewModel.CreateEdit(Repository);
+            viewModel.Project = project;
+            return this.RedirectToAction(a => a.Edit(projectId));
+        }
+
+        // GET: /Project/EditUseCase/
+        public ActionResult EditUseCase(int Id)
+        {
+            var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
+
+            if (existingUseCase == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
+
+            
+            var viewModel = ProjectViewModel.CreateEditUseCase(Repository);
+            viewModel.UseCase = existingUseCase;
+            return View(viewModel);
+        }
+
+        // POST: /Project/EditUseCase/
+        [AcceptPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUseCase(int id, UseCase UseCase)
+        {
+            var pt = Repository.OfType<UseCase>().GetNullableByID(id);
+
+            TransferValuesTo(pt, UseCase);
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, pt.ValidationResults());
+
+            var proj = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+
+
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCase>().EnsurePersistent(pt);
+                Message = "Project Use Case edited successfully";
+
+            }
+            var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+            return RedirectToAction("Edit", project);
+            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
+
+        }
+
+        //Transfer Values: For  /Project/EditUseCase/
+        private static void TransferValuesTo(UseCase UseCaseToUpdate, UseCase UseCase)
+        {
+            UseCaseToUpdate.Name = UseCase.Name;
+            UseCaseToUpdate.Description = UseCase.Description;
+            UseCaseToUpdate.Precondition = UseCase.Precondition;
+            UseCaseToUpdate.Postcondition = UseCase.Postcondition;
+            UseCaseToUpdate.RequirementCategory = UseCase.RequirementCategory;
+            
+            UseCaseToUpdate.LastModified = DateTime.Now;
+        }
+  
+    
+    
     }
    
 }
