@@ -2,8 +2,6 @@
 using Dogbert.Core.Domain;
 using Dogbert.Tests.Core.Helpers;
 using MvcContrib.TestHelper;
-using Rhino.Mocks;
-using UCDArch.Core.PersistanceSupport;
 using UCDArch.Testing;
 using UCDArch.Web.Controller;
 
@@ -25,12 +23,14 @@ namespace Dogbert.Tests.Core
         /// </summary>
         protected override void SetupController()
         {
+            // ReSharper disable RedundantBaseQualifier
             base.Controller = new TestControllerBuilder().CreateController<CT>();
+            // ReSharper restore RedundantBaseQualifier
         }
 
         #region Fakes
 
-        protected void FakeProjects(List<Project> entities, int entitiesToAdd)
+        protected virtual void FakeProjects(List<Project> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)
@@ -40,7 +40,7 @@ namespace Dogbert.Tests.Core
             }
         }
 
-        protected void FakeRequirementTypes(List<RequirementType> entities, int entitiesToAdd)
+        protected virtual void FakeRequirementTypes(List<RequirementType> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)
@@ -50,7 +50,7 @@ namespace Dogbert.Tests.Core
             }
         }
 
-        protected void FakeCategories(List<Category> entities, int entitiesToAdd)
+        protected virtual void FakeCategories(List<Category> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)
@@ -60,7 +60,7 @@ namespace Dogbert.Tests.Core
             }
         }
 
-        protected void FakePriorityTypes(List<PriorityType> entities, int entitiesToAdd)
+        protected virtual void FakePriorityTypes(List<PriorityType> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)
@@ -70,7 +70,7 @@ namespace Dogbert.Tests.Core
             }
         }
 
-        protected void FakeRequirements(List<Requirement> entities, int entitiesToAdd)
+        protected virtual void FakeRequirements(List<Requirement> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)

@@ -52,6 +52,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dogbert\Bin\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Spring, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\NHibernate.ByteCode.Spring.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Rhino.Mocks.dll</HintPath>
@@ -62,6 +70,10 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Abstractions" />
@@ -86,7 +98,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContinuousIntegrationDeploymentHack.cs" />
     <Compile Include="Controllers\RequirementControllerTests.cs" />
+    <Compile Include="Core\AbstractRepositoryTests.cs" />
     <Compile Include="Core\ControllerTestBase.cs" />
     <Compile Include="Core\Extensions\AssertExtensions.cs" />
     <Compile Include="Core\Extensions\RouteTestingExtensions.cs" />
@@ -94,6 +108,7 @@
     <Compile Include="Core\Helpers\CreateValidEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Repositories\RequirementRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
