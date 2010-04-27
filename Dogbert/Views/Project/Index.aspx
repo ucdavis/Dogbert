@@ -21,9 +21,9 @@
  
  <script type="text/javascript" src="<%= Request.ApplicationPath + @"Scripts/jquery.tablednd_0_5.js" %>"></script>
  <script type="text/javascript">
-     
+
      $(document).ready(function() {
-         
+
 
          $("#WebApplications").find("table").tableDnD({
              onDragClass: "myDragClass",
@@ -45,22 +45,14 @@
                  //                  debugger;
              }
          }); //tableDnD
-
-
      });
 
-</script>
-
-<script type="text/javascript">
-    $(function() {
-        var tabs = $("#tabs");
-        $("#tabs").tabs();
-    });
+     $(function() { $("#tabs").tabs(); });
 
 </script>
 
-     
- 
+
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
