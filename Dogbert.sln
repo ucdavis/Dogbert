@@ -45,9 +45,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Core", "Dogbert.Cor
 EndProject
 Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Dogbert.Deploy", "Dogbert.Deploy\Dogbert.Deploy.wdproj", "{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}"
 EndProject
+Project("{4F174C21-8C12-11D0-8340-0000F80270F8}") = "Dogbert.DB", "Dogbert.DB\Dogbert.DB.dbp", "{CE250596-CCAD-4377-BF42-0BED229AACF2}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://1x:8080/
 		SccLocalPath0 = .
@@ -63,6 +65,9 @@ Global
 		SccProjectUniqueName4 = Dogbert.Deploy\\Dogbert.Deploy.wdproj
 		SccProjectName4 = Dogbert.Deploy
 		SccLocalPath4 = Dogbert.Deploy
+		SccProjectUniqueName5 = Dogbert.DB\\Dogbert.DB.dbp
+		SccProjectName5 = Dogbert.DB
+		SccLocalPath5 = Dogbert.DB
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
