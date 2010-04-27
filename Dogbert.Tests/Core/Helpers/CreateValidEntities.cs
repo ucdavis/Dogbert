@@ -49,6 +49,19 @@ namespace Dogbert.Tests.Core.Helpers
             return rtValue;
         }
 
+        public static Requirement Requirement(int? count)
+        {
+            var rtValue = new Requirement();
+            rtValue.Description = "Description" + count.Extra();
+            rtValue.RequirementType = new RequirementType();
+            rtValue.PriorityType = new PriorityType();
+            rtValue.Project = new Project();
+            rtValue.Category = new Category();
+            rtValue.DateAdded = DateTime.Now;
+            rtValue.LastModified = DateTime.Now;
+
+            return rtValue;
+        }
 
         #region Helper Extension
 

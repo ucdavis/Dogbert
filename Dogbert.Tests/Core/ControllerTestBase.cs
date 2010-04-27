@@ -70,6 +70,16 @@ namespace Dogbert.Tests.Core
             }
         }
 
+        protected void FakeRequirements(List<Requirement> entities, int entitiesToAdd)
+        {
+            var offSet = entities.Count;
+            for (int i = 0; i < entitiesToAdd; i++)
+            {
+                entities.Add(CreateValidEntities.Requirement(offSet + i + 1));
+                entities[offSet + i].SetIdTo(offSet + i + 1);
+            }
+        }
+
 
         #endregion Fakes
     }

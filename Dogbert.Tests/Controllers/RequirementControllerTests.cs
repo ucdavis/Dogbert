@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using Rhino.Mocks;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Testing;
 
 namespace Dogbert.Tests.Controllers
 {
@@ -27,8 +28,10 @@ namespace Dogbert.Tests.Controllers
         protected IRepository<Category> CategoryRepository { get; set; }
         protected List<PriorityType> PriorityTypes { get; set; }
         protected IRepository<PriorityType> PriorityTypeRepository { get; set; }
+        protected List<Requirement> Requirements { get; set; }
+        protected IRepository<Requirement> RequirementRepository { get; set; }
 
-        
+
         #region Init
         public RequirementControllerTests()
         {
@@ -47,6 +50,11 @@ namespace Dogbert.Tests.Controllers
             PriorityTypes = new List<PriorityType>();
             PriorityTypeRepository = FakeRepository<PriorityType>();
             Controller.Repository.Expect(a => a.OfType<PriorityType>()).Return(PriorityTypeRepository).Repeat.Any();
+
+            Requirements = new List<Requirement>();
+            RequirementRepository = FakeRepository<Requirement>();
+            Controller.Repository.Expect(a => a.OfType<Requirement>()).Return(RequirementRepository).Repeat.Any();
+        
         }
 
 
@@ -87,7 +95,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestMappingEdit()
         {
-           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, 5), true);
+           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5));
         }
 
         /// <summary>
@@ -96,7 +104,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestMappingEditWithTwoParameters()
         {
-           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, 5, new Requirement()), true);
+           "~/Requirement/Edit/5".ShouldMapTo<RequirementController>(a => a.Edit(5, new Requirement()), true);
         }
 
       
@@ -150,6 +158,43 @@ namespace Dogbert.Tests.Controllers
 
         #region Edit Tests
 
+        [TestMethod]
+        public void TestEditDataWithInvalidDataDoesNotSave()
+        {
+            FakeProjects(Projects, 1);
+            FakeRequirementTypes(RequirementTypes, 1);
+            FakePriorityTypes(PriorityTypes, 1);
+            FakeCategories(Categories, 1);
+
+            FakeRequirements(Requirements, 2);
+            Requirements[0].Project = Projects[0];
+            Requirements[0].RequirementType = RequirementTypes[0];
+            Requirements[0].PriorityType = PriorityTypes[0];
+            Requirements[0].Category = Categories[0];
+            Requirements[0].SetIdTo(1);
+
+            Requirements[1].Project = Projects[0];
+            Requirements[1].RequirementType = RequirementTypes[0];
+            Requirements[1].PriorityType = PriorityTypes[0];
+            Requirements[1].Category = Categories[0];
+            Requirements[1].SetIdTo(1);
+
+            Requirements[1].Description = "";
+
+            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(Requirements[0]).Repeat.Any();
+
+            CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
+            PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
+            RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
+
+
+            var result = Controller.Edit(1, Requirements[1]);
+
+            RequirementRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<Requirement>.Is.Anything));
+            ProjectRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<Project>.Is.Anything));
+            
+        }
 
         #endregion Edit Tests
 

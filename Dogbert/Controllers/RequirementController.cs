@@ -80,7 +80,7 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Edit(int id, int projectId)
+        public ActionResult Edit(int id)
         {
             //var project = Repository.OfType<Project>().GetNullableByID(projectId);
             var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
@@ -98,7 +98,7 @@ namespace Dogbert.Controllers
         }
 
         [AcceptPost]
-        public ActionResult Edit(int id, int projectId, Requirement requirement)
+        public ActionResult Edit(int id, Requirement requirement)
         {
             //TODO: Clean up once we figure out why it is saving even when invalid
             var dest = Repository.OfType<Requirement>().GetNullableByID(id);
@@ -111,8 +111,6 @@ namespace Dogbert.Controllers
             Copiers.CopyRequirement(requirement, dest);
             dest.TransferValidationMessagesTo(ModelState);
 
-            //var test = dest.IsValid();
-
             if (ModelState.IsValid)
             {
                 Repository.OfType<Requirement>().EnsurePersistent(dest);
@@ -120,9 +118,8 @@ namespace Dogbert.Controllers
                 //return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
                 return Redirect(Url.EditProjectUrl(dest.Project.Id, StaticValues.Tab_Requirements));
             }
-            //return this.RedirectToAction(a => a.Edit(id, projectId));
-            var proj = Repository.OfType<Project>().GetNullableByID(projectId);
-            var viewModel = RequirementViewModel.Create(Repository, proj);
+
+            var viewModel = RequirementViewModel.Create(Repository, dest.Project);
             viewModel.Requirement = requirement;
 
             return View(viewModel);
