@@ -1,50 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="Dogbert.Core" namespace="Dogbert.Core.Domain">
+  <class
+    name="Project"
+    table="Projects" >
+    <id name="Id" column="ID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
 
-	<class name="Dogbert.Core.Domain.Project, Dogbert.Core" table="Projects" >
-		<id name="Id" column="id" unsaved-value="0">
-			<generator class="identity" />
-		</id>
-
-		<property name="Name" column="Name" />
-		<property name="Priority" column="Priority" />
-		<property name="Deadline" column="Deadline" />
-		<property name="Contact" column="Contact" />
-		<property name="ContactEmail" column="ContactEmail" />
-		<property name="Unit" column="Unit" />
-		<property name="Complexity" column="Complexity" />
-		<property name="ProjectedStart" column="ProjectedStart" />
+    <property name="Name" column="Name" />
+    <property name="Priority" column="Priority" />
+    <property name="Deadline" column="Deadline" />
+    <property name="Contact" column="Contact" />
+    <property name="ContactEmail" column="ContactEmail" />
+    <property name="Unit" column="Unit" />
+    <property name="Complexity" column="Complexity" />
+    <property name="ProjectedStart" column="ProjectedStart" />
     <property name="ProjectedEnd" column="ProjectedEnd" />
-		<property name="BeginDate" column="BeginDate" />
-		<property name="EndDate" column="EndDate" />
-		<many-to-one name="Status" class="Dogbert.Core.Domain.Status, Dogbert.Core" column="StatusID" cascade="none" />
+    <property name="BeginDate" column="BeginDate" />
+    <property name="EndDate" column="EndDate" />
+    <property name="DateAdded" column="DateAdded" />
+    <property name="LastModified" column="LastModified" />
+    
+    <many-to-one name="ProjectManager" class="User" column="ProjectManagerID" cascade="none" />
+    <many-to-one name="LeadProgrammer" class="User" column="LeadProgrammerID" cascade="none" />
 
-		<many-to-one name="ProjectManager" class="Dogbert.Core.Domain.User, Dogbert.Core" column="ProjectManagerID" cascade="none" />
-		<many-to-one name="LeadProgrammer" class="Dogbert.Core.Domain.User, Dogbert.Core" column="LeadProgrammerID" cascade="none" />
-		
-		<property name="Description" column="Description" />
-		<property name="Purpose" column="Purpose" />
+    <many-to-one name="StatusCode" class="StatusCode" column="StatusCode" cascade="none" />
+    <many-to-one name="ProjectType" class="ProjectType" column="ProjectTypeID" cascade="none" />
 
-		<many-to-one name="ProjectType" class="Dogbert.Core.Domain.ProjectType, Dogbert.Core" column="ProjectTypeID" cascade="none" />
+    <bag name="Requirements" table="Requirements" cascade="all-delete-orphan" inverse="true" >
+      <key column="ProjectID" />
+      <one-to-many class="Requirement" />
+    </bag>
 
-		<bag name="Requirements" table="Requirements">
-			<key column="ProjectID" />
-			<one-to-many class="Dogbert.Core.Domain.Requirement, Dogbert.Core"/>
-		</bag>
+    <bag name="ProjectTexts" table="ProjectTexts" cascade="all-delete-orphan" inverse="true" >
+      <key column="ProjectID" />
+      <one-to-many class="ProjectText" />
+    </bag>
 
-		<bag name="UseCases" table="UseCases">
-			<key column="ProjectID" />
-			<one-to-many class="Dogbert.Core.Domain.UseCase, Dogbert.Core"/>
-		</bag>
+    <bag name="RequirementCategories" table="RequirementCategories" cascade="all-delete-orphan" inverse="true" >
+      <key column="ProjectID" />
+      <one-to-many class="RequirementCategory" />
+    </bag>
 
-		<bag name="Categories" table="Categories">
-			<key column="ProjectID" />
-			<one-to-many class="Dogbert.Core.Domain.Category, Dogbert.Core"/>
-		</bag>
-
-		<bag name="Files" table="ProjectFiles">
-			<key column="ProjectID" />
-			<one-to-many class="Dogbert.Core.Domain.ProjectFile, Dogbert.Core"/>
-		</bag>
-	</class>
+    <bag name="UseCases" table="UseCases" cascade="all-delete-orphan" inverse="true" >
+      <key column="ProjectID" />
+      <one-to-many class="UseCase" />
+    </bag>
+  </class>
 </hibernate-mapping>
