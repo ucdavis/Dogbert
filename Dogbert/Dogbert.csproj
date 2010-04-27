@@ -161,6 +161,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
+    <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Project\ProjectRequirementsForm.ascx" />
     <Content Include="Views\Project\ProjectEditUseCaseForm.ascx" />
     <Content Include="Views\Project\EditUseCase.aspx" />
