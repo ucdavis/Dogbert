@@ -12,17 +12,17 @@
                     <%= Html.AntiForgeryToken() %>
              
                     <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
-               <p>
-                 <%= this.MultiSelect("UseCase.Project.UseCases")
-                    .Options(Model.Project.UseCases, x=>x.Id, x=>x.Name)
-                    .Selected(Model.Project.UseCases != null && Model.UseCase.Children != null ? Model.UseCase.Children : new List<UseCase>()) 
+              <p>
+                 <%= this.MultiSelect("UseCase.Children")
+                    .Options(Model.Project.UseCases.Where(x => x.Id != Model.UseCase.Id),x=>x.Id, x=>x.Name)
+                    .Selected(Model.UseCase != null && Model.UseCase.Children  != null ? Model.UseCase.Children : new List<UseCase>()) 
                     .FirstOption("--Related Use Cases--")
                     .HideFirstOptionWhen(Model.Project.UseCases != null)
                     .Label("Re-Select Related Use Cases:")%>
-               </p>
+              </p>
                
                
-             <%--  <p>
+              <%--<p>
                     <%= this.CheckBoxList("UseCase.UseCases")
                     .Options(new MultiSelectList(Model.UseCases, "Id", "Name", Model.UseCase.Children.Select(x => x.Id)))
                     .Id("UseCase.Children").Label("Related UseCases:")

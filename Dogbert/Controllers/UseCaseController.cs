@@ -262,20 +262,25 @@ namespace Dogbert.Controllers
             }
 
             var viewModel = UseCaseViewModel.Create(Repository, uc.Project);
+            viewModel.UseCase = uc;
             return View(viewModel);
         }
 
         // POST: /EditUseCase/EditChildren
         [AcceptPost]
-        public ActionResult EditChildren(int ucid, List<UseCase> children)
+        public ActionResult EditChildren(int ucid, UseCase UseCase)
         {
             var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
 
-            uc.Children.Clear();    //clear list of children
-            foreach (UseCase i in children) //update list of children
+            if (UseCase.Children != null && UseCase.Children.Count > 0)
             {
-                uc.addChild (i);
+                uc.Children.Clear();    //clear list of children
+                foreach (UseCase i in UseCase.Children) //update list 
+                {
+                    uc.addChild (i);
+                }
             }
+
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, uc.ValidationResults());
             if (ModelState.IsValid)
             {
