@@ -14,6 +14,7 @@ namespace Dogbert.Tests.Core.Helpers
         {
             var rtValue = new User();
             rtValue.FirstName = "FirstName" + count.Extra();
+            rtValue.LastName = "LastName" + count.Extra();
             rtValue.LoginIDs = new List<Login>();
             rtValue.Units = new List<Unit>();
 

@@ -304,6 +304,32 @@ namespace Dogbert.Tests.Core
         }
 
         /// <summary>
+        /// Loads the person types.
+        /// </summary>
+        /// <param name="entriesToAdd">The entries to add.</param>
+        protected void LoadPersonTypes(int entriesToAdd)
+        {
+            Repository.OfType<PersonType>().DbContext.BeginTransaction();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.PersonType(i + 1);
+                Repository.OfType<PersonType>().EnsurePersistent(validEntity);
+            }
+            Repository.OfType<PersonType>().DbContext.CommitTransaction();
+        }
+
+        protected void LoadUsers(int entriesToAdd)
+        {
+            Repository.OfType<User>().DbContext.BeginTransaction();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.User(i + 1);
+                Repository.OfType<User>().EnsurePersistent(validEntity);
+            }
+            Repository.OfType<User>().DbContext.CommitTransaction();
+        }
+
+        /// <summary>
         /// Abstract Repository Tests Action
         /// </summary>
         public enum ARTAction
