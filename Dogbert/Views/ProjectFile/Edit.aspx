@@ -25,9 +25,7 @@
             <%= Model.ProjectFile.FileName ?? string.Empty%>
         </p>
         <p>
-            <label for="file">
-                Replace with new upload:</label>
-            <input type="file" name="file" id="file" />
+            <%=this.FileUpload("fileUpload").Label("Replace with new upload:")%>
         </p>
     </fieldset>
     <p>

@@ -7,6 +7,12 @@ namespace Dogbert.Tests.Core.Helpers
     public static class CreateValidEntities
     {
         #region Catbert Classes
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static User User(int? count)
         {
             var rtValue = new User();
@@ -17,14 +23,24 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Login Login(int? count)
         {
             var rtValue = new Login();
             rtValue.User = new User();
 
             return rtValue;
-        }
+        }        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Unit Unit(int? count)
         {
             var rtValue = new Unit();
@@ -35,7 +51,12 @@ namespace Dogbert.Tests.Core.Helpers
         #endregion Catbert Classes
 
         #region Lookups
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Status Status(int? count)
         {
             var rtValue = new Status();
@@ -44,6 +65,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static PersonType PersonType(int? count)
         {
             var rtValue = new PersonType();
@@ -52,6 +79,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static PriorityType PriorityType(int? count)
         {
             var rtValue = new PriorityType();
@@ -60,6 +93,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Actor Actor(int? count)
         {
             var rtValue = new Actor();
@@ -68,6 +107,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Category Category(int? count)
         {
             var rtValue = new Category();
@@ -76,6 +121,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static FileType FileType(int? count)
         {
             var rtValue = new FileType();
@@ -84,9 +135,20 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
 
         #endregion Lookups
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Person Person(int? count)
         {
             var rtValue = new Person();
@@ -96,6 +158,12 @@ namespace Dogbert.Tests.Core.Helpers
             return rtValue;
         }
 
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Project Project(int? count)
         {
             var rtValue = new Project();
@@ -110,7 +178,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static ProjectFile ProjectFile(int? count)
         {
             var rtValue = new ProjectFile();
@@ -123,7 +196,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static ProjectText ProjectText(int? count)
         {
             var rtValue = new ProjectText();
@@ -133,7 +211,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static ProjectType ProjectType(int? count)
         {
             var rtValue = new ProjectType();
@@ -142,7 +225,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Requirement Requirement(int? count)
         {
             var rtValue = new Requirement();
@@ -156,7 +244,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static RequirementCategory RequirementCategory(int? count)
         {
             var rtValue = new RequirementCategory();
@@ -166,7 +259,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static RequirementType RequirementType(int? count)
         {
             var rtValue = new RequirementType();
@@ -175,7 +273,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static StatusCode StatusCode(int? count)
         {
             var rtValue = new StatusCode();
@@ -184,7 +287,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static TextType TextType(int? count)
         {
             var rtValue = new TextType();
@@ -193,7 +301,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static UseCase UseCase(int? count)
         {
             var rtValue = new UseCase();
@@ -211,7 +324,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static UseCaseStep UseCaseStep(int? count)
         {
             var rtValue = new UseCaseStep();
@@ -219,7 +337,12 @@ namespace Dogbert.Tests.Core.Helpers
 
             return rtValue;
         }
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static Worker Worker(int? count)
         {
             var rtValue = new Worker();
@@ -230,7 +353,12 @@ namespace Dogbert.Tests.Core.Helpers
         }
 
         #region Helper Extension
-
+        /// <summary>
+        /// Creates a valid entity.
+        /// Repository tests may have to assign real data to linked tables.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         private static string Extra(this int? counter)
         {
             var extraString = "";

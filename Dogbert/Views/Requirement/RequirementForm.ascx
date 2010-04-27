@@ -24,7 +24,7 @@
             <p>
                 <%= this.Select("Requirement.RequirementType").Options(Model.RequirementTypes, x => x.Id, x => x.Name)
                         .FirstOption("--Select a Requirement Type--")
-                        .HideFirstOptionWhen(Model.Requirement.RequirementType != null)                
+                        .HideFirstOptionWhen(Model.Requirement.RequirementType != null && Model.Requirement.RequirementType.IsActive)                
                         .Label("Requirement Type:")
                         .Selected(Model.Requirement.RequirementType != null ? Model.Requirement.RequirementType.Id : string.Empty )
                 %>
@@ -33,7 +33,7 @@
             <p>
                 <%= this.Select("Requirement.PriorityType").Options(Model.PriorityTypes, x => x.Id, x => x.Name)
                         .FirstOption("--Select a Priority Type--")
-                        .HideFirstOptionWhen(Model.Requirement.PriorityType != null)
+                        .HideFirstOptionWhen(Model.Requirement.PriorityType != null && Model.Requirement.PriorityType.IsActive)
                         .Label("Priority Type:")
                         .Selected(Model.Requirement.PriorityType != null ? Model.Requirement.PriorityType.Id.ToString() : string.Empty)
                 %>
@@ -42,7 +42,7 @@
             <p>
                 <%= this.Select("Requirement.Category").Options(Model.Categories, x => x.Id, x => x.Name)
                         .FirstOption("--Select a Category--")
-                        .HideFirstOptionWhen(Model.Requirement.Category != null)
+                        .HideFirstOptionWhen(Model.Requirement.Category != null && Model.Requirement.Category.IsActive)
                         .Label("Category Type:")
                         .Selected(Model.Requirement.Category != null ? Model.Requirement.Category.Id.ToString(): string.Empty)
                                                                     

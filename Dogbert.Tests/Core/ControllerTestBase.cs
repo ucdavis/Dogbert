@@ -7,7 +7,7 @@ using UCDArch.Web.Controller;
 
 namespace Dogbert.Tests.Core
 {
-    public class ControllerTestBase<CT> : UCDArch.Testing.ControllerTestBase<CT> where CT : SuperController
+    public class ControllerTestBase<TCt> : UCDArch.Testing.ControllerTestBase<TCt> where TCt : SuperController
     {
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Dogbert.Tests.Core
         protected override void SetupController()
         {
             // ReSharper disable RedundantBaseQualifier
-            base.Controller = new TestControllerBuilder().CreateController<CT>();
+            base.Controller = new TestControllerBuilder().CreateController<TCt>();
             // ReSharper restore RedundantBaseQualifier
         }
 
@@ -80,6 +80,35 @@ namespace Dogbert.Tests.Core
             }
         }
 
+        /// <summary>
+        /// Fakes the file types.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <param name="entitiesToAdd">The entities to add.</param>
+        protected virtual void FakeFileTypes(List<FileType> entities, int entitiesToAdd)
+        {
+            var offSet = entities.Count;
+            for (int i = 0; i < entitiesToAdd; i++)
+            {
+                entities.Add(CreateValidEntities.FileType(offSet + i + 1));
+                entities[offSet + i].SetIdTo(offSet + i + 1);
+            }
+        }
+
+        /// <summary>
+        /// Fakes the project files.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <param name="entitiesToAdd">The entities to add.</param>
+        protected virtual void FakeProjectFiles(List<ProjectFile> entities, int entitiesToAdd)
+        {
+            var offSet = entities.Count;
+            for (int i = 0; i < entitiesToAdd; i++)
+            {
+                entities.Add(CreateValidEntities.ProjectFile(offSet + i + 1));
+                entities[offSet + i].SetIdTo(offSet + i + 1);
+            }
+        }
 
         #endregion Fakes
     }

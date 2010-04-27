@@ -22,6 +22,10 @@ namespace Dogbert.Tests.Core.Extensions
 
         public static string ByteArrayToString(this byte[] source)
         {
+            if(source == null)
+            {
+                return "";
+            }
             var sb = new StringBuilder();
             for (int i = 0; i < source.Length; i++)
             {

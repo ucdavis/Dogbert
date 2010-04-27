@@ -1,4 +1,5 @@
 using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
@@ -38,20 +39,17 @@ namespace Dogbert.Controllers
             var viewModel = ProjectFileViewModel.Create(Repository, project);
 
             return View(viewModel);
-        } 
+        }
 
         /// <summary>
         /// Creates the specified project file.
-        /// POST: /ProjectFile/Create
-        /// If no file with content is found, the domain validation will prevent the create.
-        /// If more than one file with content is found (maybe not possible) a 
-        /// manual validation error will be added
         /// </summary>
         /// <param name="projectFile">The project file.</param>
         /// <param name="projectId">The project id.</param>
+        /// <param name="fileUpload">The file upload.</param>
         /// <returns></returns>
         [AcceptPost]
-        public ActionResult Create(ProjectFile projectFile, int projectId)
+        public ActionResult Create(ProjectFile projectFile, int projectId, HttpPostedFileBase fileUpload)
         {
             var project = Repository.OfType<Project>().GetNullableByID(projectId);
 
@@ -60,26 +58,9 @@ namespace Dogbert.Controllers
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
-            LoadFileContents(projectFile);
-            //var foundFile = false;
-            //for (int i = 0; i < Request.Files.Count; i++)
-            //{
-            //    if (Request.Files[i].ContentLength > 0)
-            //    {
-            //        if (foundFile)
-            //        {
-            //            ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
-            //            break;
-            //        }
-            //        foundFile = true;
-            //        var file = Request.Files[i];
-            //        var reader = new BinaryReader(file.InputStream);
-            //        projectFile.FileContents = reader.ReadBytes(file.ContentLength);
-            //        projectFile.FileName = file.FileName;
-            //        projectFile.FileContentType = file.ContentType;
-            //    }
-            //}
-
+            
+            LoadFileContents(projectFile, fileUpload);
+           
             projectFile.Project = project;
 
             projectFile.TransferValidationMessagesTo(ModelState);
@@ -119,13 +100,13 @@ namespace Dogbert.Controllers
 
         /// <summary>
         /// Edits the specified id.
-        /// POST: /ProjectFile/Edit/
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="projectFile">The project file.</param>
+        /// <param name="fileUpload">The file upload.</param>
         /// <returns></returns>
         [AcceptPost]
-        public ActionResult Edit(int id, ProjectFile projectFile)
+        public ActionResult Edit(int id, ProjectFile projectFile, HttpPostedFileBase fileUpload)
         {
             var dest = Repository.OfType<ProjectFile>().GetNullableByID(id);
 
@@ -135,25 +116,7 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
             Copiers.CopyProjectFile(projectFile, dest);
-            LoadFileContents(dest);
-            //var foundFile = false;
-            //for (int i = 0; i < Request.Files.Count; i++)
-            //{
-            //    if (Request.Files[i].ContentLength > 0)
-            //    {
-            //        if (foundFile)
-            //        {
-            //            ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
-            //            break;
-            //        }
-            //        foundFile = true;
-            //        var file = Request.Files[i];
-            //        var reader = new BinaryReader(file.InputStream);
-            //        dest.FileContents = reader.ReadBytes(file.ContentLength);
-            //        dest.FileName = file.FileName;
-            //        dest.FileContentType = file.ContentType;
-            //    }
-            //}
+            LoadFileContents(dest, fileUpload);
 
             dest.TransferValidationMessagesTo(ModelState);
 
@@ -234,11 +197,14 @@ namespace Dogbert.Controllers
             // ReSharper restore PossibleNullReferenceException
         }
 
+/*
         /// <summary>
         /// Loads the file contents.
+        /// I'm just keeping this here for now as an example of another way to get the upload file.
         /// </summary>
         /// <param name="projectFile">The project file.</param>
-        public virtual void LoadFileContents(ProjectFile projectFile)
+        [System.Obsolete("The Other LoadFileContents is better.")]
+        private void LoadFileContents(ProjectFile projectFile)
         {
             var foundFile = false;
             for (int i = 0; i < Request.Files.Count; i++)
@@ -258,6 +224,23 @@ namespace Dogbert.Controllers
                     projectFile.FileContentType = file.ContentType;
                 }
             }
+        }
+*/
+
+        /// <summary>
+        /// Loads the file contents.
+        /// </summary>
+        /// <param name="projectFile">The project file.</param>
+        /// <param name="fileUpload">The file upload.</param>
+        private static void LoadFileContents(ProjectFile projectFile, HttpPostedFileBase fileUpload)
+        {
+            if (fileUpload != null && fileUpload.ContentLength != 0)
+            {
+                var reader = new BinaryReader(fileUpload.InputStream);
+                projectFile.FileContents = reader.ReadBytes(fileUpload.ContentLength);
+                projectFile.FileName = fileUpload.FileName;
+                projectFile.FileContentType = fileUpload.ContentType;
+            }           
         }
     }
 }

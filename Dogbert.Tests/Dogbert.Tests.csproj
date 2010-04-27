@@ -44,6 +44,7 @@
       <HintPath>..\Bin\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="MvcContrib, Version=1.5.996.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\MvcContrib.dll</HintPath>
@@ -99,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContinuousIntegrationDeploymentHack.cs" />
+    <Compile Include="Controllers\ProjectFileControllerTests.cs" />
     <Compile Include="Controllers\RequirementControllerTests.cs" />
     <Compile Include="Core\AbstractRepositoryTests.cs" />
     <Compile Include="Core\ControllerTestBase.cs" />

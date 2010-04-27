@@ -8,7 +8,7 @@
         <p>
             <%= this.Select("ProjectFile.Type").Options(Model.FileTypes, x => x.Id, x => x.Name)
                     .FirstOption("--Select a File Type--")
-                    .HideFirstOptionWhen(Model.ProjectFile.Type != null)                
+                    .HideFirstOptionWhen(Model.ProjectFile.Type != null && Model.ProjectFile.Type.IsActive)                
                     .Label("File Type:")
                     .Selected(Model.ProjectFile.Type != null ? Model.ProjectFile.Type.Id.ToString() : string.Empty )
             %>

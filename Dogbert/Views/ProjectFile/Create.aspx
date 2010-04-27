@@ -20,9 +20,7 @@
         <legend>Fields</legend>
         <% Html.RenderPartial("ProjectFileForm"); %>
         <p>
-            <label for="file">
-                Upload File:</label>
-            <input type="file" name="file" id="file" />
+            <%=this.FileUpload("fileUpload").Label("Upload File:")%>
         </p>
     </fieldset>
     <p>
