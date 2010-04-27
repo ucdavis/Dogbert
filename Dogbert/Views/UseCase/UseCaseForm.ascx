@@ -4,14 +4,11 @@
 <%@ Import Namespace="Dogbert.Helpers"%>
 
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
-     <%= Html.ValidationSummary() %>
-      
+ <%--    <%= Html.ValidationSummary() %>
+ --%>     
+        <%= Html.AntiForgeryToken() %>
         <fieldset>
             <legend>Use Case</legend>
-            <% using (Html.BeginForm())
-               { %>
-                   
-                    <%= Html.AntiForgeryToken() %>
                    <%-- <%= Html.Hidden("Id", Model.UseCase.Id) %>
                     <%= Html.Hidden("projectID", Model.UseCase.Project.Id) %>--%>
                 <p>
@@ -52,7 +49,6 @@
                     
                </p>
        
-            <%} %>
                       
         </fieldset>
          

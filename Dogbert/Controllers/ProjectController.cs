@@ -252,11 +252,7 @@ namespace Dogbert.Controllers
             {
                 return RedirectToAction("DynamicIndex");
             }
-
-            project.AddProjectTexts(projectText);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectText.ValidationResults());
-
+           
             if (project.ProjectTexts.Any(a => a.TextType == projectText.TextType))
             {
                 ModelState.AddModelError("Text Type", "Text type already exists in this project");
@@ -266,6 +262,8 @@ namespace Dogbert.Controllers
                  ModelState.AddModelError("Text Type", "No text entered");
             }
 
+            project.AddProjectTexts(projectText);
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectText.ValidationResults());
             if (ModelState.IsValid)
             {
                 Repository.OfType<ProjectText>().EnsurePersistent(projectText);

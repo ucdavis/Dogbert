@@ -10,7 +10,6 @@
             <% using (Html.BeginForm())
                { %>
                     <%= Html.AntiForgeryToken() %>
-                
              
    
                <p>

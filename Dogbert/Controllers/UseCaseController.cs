@@ -94,7 +94,7 @@ namespace Dogbert.Controllers
             var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
             var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
 
-            if (existingUseCase == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
+            if (existingUseCase == null) return RedirectToAction("Create");
 
 
             var viewModel = UseCaseViewModel.Create(Repository, existingUseCase.Project);
