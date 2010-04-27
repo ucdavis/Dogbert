@@ -1,4 +1,6 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Dogbert.Controllers.ViewModels.RequirementViewModel>" %>
+<%@ Import Namespace="Dogbert.Controllers.Helpers"%>
+<%@ Import Namespace="Dogbert.Core.Resources"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Edit
@@ -13,17 +15,11 @@
     <% Html.RenderPartial("RequirementForm"); %>
     <% using (Html.BeginForm()) {%>
 
-        <fieldset>
-            <legend>Fields</legend>
-            <p>
-                <input type="submit" value="Save" />
-            </p>
-        </fieldset>
 
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+       <%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_Requirements)%>
     </div>
 
 </asp:Content>

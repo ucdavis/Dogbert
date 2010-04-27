@@ -127,4 +127,7 @@
     <value>{ObjectType} was not found.</value>
     <comment>When GetByNullable returns null, use this in the message</comment>
   </data>
+  <data name="STR_ObjectUpdated" xml:space="preserve">
+    <value>{ObjectType} has been updated successfully.</value>
+  </data>
 </root>

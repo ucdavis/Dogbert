@@ -84,17 +84,43 @@ namespace Dogbert.Controllers
         {
             //var project = Repository.OfType<Project>().GetNullableByID(projectId);
             var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
+            
+            if (requirement == null)
+            {
+                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Requirement");
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+            var requirementViewModel = RequirementViewModel.Create(Repository, requirement.Project);
+            requirementViewModel.Requirement = requirement;
+
+            return View(requirementViewModel);
+
+        }
+
+        [AcceptPost]
+        public ActionResult Edit(int id, Requirement requirement)
+        {
+            var dest = Repository.OfType<Requirement>().GetNullableByID(id);
 
             if (requirement == null)
             {
                 Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Requirement");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
-            var requirementViewModel = new RequirementViewModel();
-            requirementViewModel.Requirement = requirement;
+            Copiers.CopyRequirement(requirement, dest);
+            dest.TransferValidationMessagesTo(ModelState);
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<Requirement>().EnsurePersistent(dest);
+                Message = NotificationMessages.STR_ObjectUpdated.Replace(NotificationMessages.ObjectType, "Requirement");
+                //return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
+                return Redirect(Url.EditProjectUrl(dest.Project.Id, StaticValues.Tab_Requirements));
+            }
 
-            return View(requirementViewModel);
+            var viewModel = RequirementViewModel.Create(Repository, dest.Project);
+            viewModel.Requirement = requirement;
 
+            return View(viewModel);
         }
     }
 }

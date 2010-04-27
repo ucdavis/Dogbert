@@ -26,6 +26,7 @@ namespace Dogbert.Controllers.ViewModels
                     PriorityTypes = repository.OfType<PriorityType>().Queryable.Where(a => a.IsActive).ToList(),
                     Project = project
                 };
+            
             // ReSharper restore PossibleNullReferenceException
             if(viewModel.Requirement == null)
             {
