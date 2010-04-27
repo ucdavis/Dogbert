@@ -245,6 +245,8 @@ namespace Dogbert.Controllers
         //Transfer Values: For  /Project/EditUseCase/
         private static void TransferValuesTo(UseCaseStep StepToUpdate, UseCaseStep Step)
         {
+
+            StepToUpdate.Order = Step.Order;
             StepToUpdate.Description = Step.Description;
             StepToUpdate.Optional = Step.Optional;
             StepToUpdate.LastModified =  DateTime.Now;
@@ -286,15 +288,55 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<UseCase>().EnsurePersistent(uc);
                 Message = "Use Case edited successfully";
-                return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
-                //?? fix: redirect to use case edit page
+                return this.RedirectToAction(a => a.Edit(uc.Id));
             }
            // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
             return RedirectToAction("Edit", uc);
         
         }
 
-        
+        // GET: /EditUseCase/EditRelatedRequirements
+        public ActionResult EditRelatedRequirements(int ucid)
+        {
+            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            if (uc == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+
+            var viewModel = UseCaseViewModel.Create(Repository, uc.Project);
+            viewModel.UseCase = uc;
+            return View(viewModel);
+        }
+
+
+        // POST: /EditUseCase/EditRelatedRequirements
+        [AcceptPost]
+        public ActionResult EditRelatedRequirements(int ucid, UseCase UseCase)
+        {
+            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+
+            if (UseCase.Requirements != null && UseCase.Requirements.Count > 0)
+            {
+                uc.Requirements.Clear();    //clear list of children
+                foreach (Requirement i in UseCase.Requirements) //update list 
+                {
+                    uc.AddRequirement (i);
+                }
+            }
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, uc.ValidationResults());
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCase>().EnsurePersistent(uc);
+                Message = "Use Case edited successfully";
+                return this.RedirectToAction(a => a.Edit(uc.Id));
+            }
+            // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            return RedirectToAction("Edit", uc);
+
+        }
        
     }
 }

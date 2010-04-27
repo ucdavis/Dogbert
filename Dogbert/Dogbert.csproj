@@ -430,6 +430,9 @@
     <Content Include="Views\Project\RequirementCategoryForm.ascx" />
     <Content Include="Views\Project\UseCaseListForm.ascx" />
     <Content Include="Views\RequirementCategory\Create.aspx" />
+    <Content Include="Views\UseCase\EditRelatedRequirements.aspx" />
+    <Content Include="Views\UseCase\RelatedRequirementsListForm.ascx" />
+    <Content Include="Views\UseCase\RelatedRequirementsForm.ascx" />
     <Content Include="Views\UseCase\EditChildren.aspx" />
     <Content Include="Views\UseCase\RelatedUseCaseListForm.ascx" />
     <Content Include="Views\UseCase\UseCaseChildForm.ascx" />

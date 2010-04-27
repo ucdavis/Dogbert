@@ -52,6 +52,10 @@ namespace Dogbert.Core.Domain
             this.Actors.Add(Actor);
         }
 
+        public virtual void AddRequirement(Requirement Requirement)
+        {
+            this.Requirements.Add(Requirement);
+        }
        
 
         public virtual void AddSteps(UseCaseStep UseCaseStep)

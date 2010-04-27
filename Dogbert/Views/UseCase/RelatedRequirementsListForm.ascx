@@ -9,30 +9,22 @@
     <%= Html.ValidationSummary() %>
               
         <fieldset>
-            <legend>Use Case Steps</legend>
+            <legend>Related Requirements</legend>
             <% using (Html.BeginForm())
                { %>
                     <%= Html.AntiForgeryToken() %>
                     <%= Html.Hidden("UseCaseId", Model.UseCase.Id) %>
                     <%= Html.Hidden("projectID", Model.UseCase.Project.Id) %>
 
-               <% Html.Grid(Model.UseCase.Steps.OrderBy(a => a.Order))
+               <% Html.Grid(Model.UseCase.Requirements)
                .Transactional()
-               .Name("UseCaseSteps")
+               .Name("RelatedRequirements")
                .PrefixUrlParameters(false)
                .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
                .Columns(col =>
                   {
-                      col.Add(steps =>
-                          { %>
-                            <%=
-                                Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditUseCaseSteps(steps.Id), "Edit")
-                            %>
-                            <% });
-                                col.Add(steps => steps.Order);
-                                col.Add(steps => steps.Description);
-                                col.Add(steps => steps.Optional);
-                      
+                                col.Add(a => a.Id);
+                                col.Add(a => a.Description);
                             })
                 .Render(); %>
               

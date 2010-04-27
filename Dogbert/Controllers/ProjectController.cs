@@ -209,9 +209,12 @@ namespace Dogbert.Controllers
 
             var proj =  Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
         
-            if (proj.ProjectTexts.Any(a => a.TextType == pt.TextType))
-            {
+            if (proj.ProjectTexts.Any(a => a.TextType == pt.TextType)  )
+            {//Ensure project text does not already exist for record other than self
+
+                ////NEED to update.  TextType can be the same if it's on the ProjectText being updated.
                 ModelState.AddModelError("Text Type", "Text type already exists in this project");
+               
             }
             else if (pt.Text.Length  < 1)
             {

@@ -11,7 +11,9 @@
             <% using (Html.BeginForm())
                { %>
                     <%= Html.AntiForgeryToken() %>
-               
+                <p>
+                    <%= this.TextBox ("UseCaseStep.Order").Label("Order:")%>
+               </p>
    
                 <p>
                     <%= this.TextArea("UseCaseStep.Description").Label("Description:")%>

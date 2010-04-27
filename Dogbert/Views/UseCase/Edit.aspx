@@ -23,6 +23,7 @@
             <li><a href="#tab-1"><span>Use Case Details</span></a></li>
             <li><a href="#tab-2"><span>Use Case Steps</span></a></li>
             <li><a href="#tab-3"><span>Related Uses Cases</span></a></li>
+            <li><a href="#tab-4"><span>Related Requirements</span></a></li>
         </ul>
         
         <div id="tab-1">
@@ -50,6 +51,14 @@
             <% Html.RenderPartial("RelateduseCaseListForm"); %>
             <p>
                 <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditChildren (Model.UseCase.Id), "Update Related Use Cases")%>
+            </p> 
+            
+         </div>
+         
+         <div id= "tab-4">
+            <% Html.RenderPartial("RelatedRequirementsListForm"); %>
+            <p>
+                <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditRelatedRequirements (Model.UseCase.Id), "Update Related Requirements")%>
             </p> 
             
          </div>
