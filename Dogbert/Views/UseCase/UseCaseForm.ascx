@@ -40,13 +40,11 @@
                 <p>
                  <%= this.MultiSelect("UseCase.Actors")
                     .Options(Model.Actors, x=>x.Id, x=>x.Name)
-                    //.Selected(Model.UseCase != null && Model.UseCase.Actors != null ? Model.UseCase.Actors.i: 1)
                     .Selected(Model.UseCase != null && Model.UseCase.Actors != null ? Model.UseCase.Actors : new List<Actor>()) 
                     .FirstOption("--Actors--")
                     .HideFirstOptionWhen(Model.Actors!= null)
                     .Label("Select Actors:")%>
                    
-                    
                </p>
        
                       

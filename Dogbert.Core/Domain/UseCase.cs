@@ -49,7 +49,7 @@ namespace Dogbert.Core.Domain
 
         public virtual void AddActors(Actor Actor)
         {
-                this.Actors.Add(Actor);
+            this.Actors.Add(Actor);
         }
 
        

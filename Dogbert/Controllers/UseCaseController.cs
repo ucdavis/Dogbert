@@ -64,14 +64,15 @@ namespace Dogbert.Controllers
                 return RedirectToAction("DynamicIndex");
             }
 
+            //add actors
+            //foreach (Actor i in useCase.Actors)
+            //{
+            //    useCase.AddActors(i);
+            //}
+        
             project.AddUseCase(useCase);
-
-            var uc = Repository.OfType<UseCase>().GetNullableByID (project.Id);
-            foreach (Actor i in useCase.Actors)
-            {
-                uc.AddActors(i);
-            }
-
+           
+            
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCase.ValidationResults());
 
             if (ModelState.IsValid)
@@ -116,10 +117,13 @@ namespace Dogbert.Controllers
 
             var proj = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
 
-            uc.Actors.Clear();    //clear list of actors
-            foreach (Actor i in UseCase.Actors) //update list of actors
+            if (UseCase.Actors != null && UseCase.Actors.Count > 0)
             {
-                uc.AddActors(i);
+                uc.Actors.Clear();    //clear list of actors
+                foreach (Actor i in UseCase.Actors) //update list of actors
+                {
+                    uc.AddActors(i);
+                }
             }
 
    
@@ -228,11 +232,13 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<UseCaseStep>().EnsurePersistent(existingUCS);
                 Message = "Use Case edited successfully";
-                return Redirect(Url.EditProjectUrl(existingUCS.UseCase.Project.Id, StaticValues.Tab_UseCases));
-                //?? fix: redirect to use case edit page
+                //return Redirect(Url.EditProjectUrl(existingUCS.UseCase.Project.Id, StaticValues.Tab_UseCases));
+                return this.RedirectToAction(a => a.Edit(uc.Id));
+                
             }
             var project = Repository.OfType<Project>().GetNullableByID(existingUCS.UseCase.Project.Id);
-            return RedirectToAction("Edit", project);
+            return Redirect(Url.EditProjectUrl(existingUCS.UseCase.Project.Id, StaticValues.Tab_UseCases));
+            
             // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
         }
 

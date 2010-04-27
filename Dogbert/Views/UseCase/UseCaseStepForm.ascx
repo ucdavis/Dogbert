@@ -17,7 +17,7 @@
                     <%= this.TextArea("UseCaseStep.Description").Label("Description:")%>
                </p>
                <p>
-                    <%= this.CheckBox("UseCaseSet.Optional").Label("Optional")%>
+                    <%= this.CheckBox("UseCaseStep.Optional").Label("Optional")%>
                </p>
       
                 <p>

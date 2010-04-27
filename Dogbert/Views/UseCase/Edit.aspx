@@ -29,12 +29,13 @@
          <%= Html.ClientSideValidation<UseCase>("UseCase")%>
          <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
          <% using (Html.BeginForm()) {%>
-            <% Html.RenderPartial("UseCaseForm"); %>
+            <% Html.RenderPartial("UseCaseEditForm"); %>
             <p>
                 <input type="submit" value="Save" />
             </p>
 
             <% } %>
+         
         </div>
         
         
