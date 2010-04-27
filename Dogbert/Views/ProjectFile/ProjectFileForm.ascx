@@ -6,6 +6,7 @@
 <%@ Import Namespace="xVal.Html"%>
 
         <p>
+            Bitmaps (*.bmp) will be included in reporting
             <%= this.Select("ProjectFile.Type").Options(Model.FileTypes, x => x.Id, x => x.Name)
                     .FirstOption("--Select a File Type--")
                     .HideFirstOptionWhen(Model.ProjectFile.Type != null && Model.ProjectFile.Type.IsActive)                

@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 namespace Dogbert.Controllers
 {
 
-    [Authorize(Roles = "User")]
+   // [Authorize(Roles = "User")]  
     public class ProjectController : SuperController
     {
         private readonly IRepository<Project> _projectRepository;
