@@ -61,15 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Actor.cs" />
     <Compile Include="Domain\CatbertClasses.cs" />
     <Compile Include="Domain\Lookups.cs" />
     <Compile Include="Domain\Person.cs" />
-    <Compile Include="Domain\PriorityType.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="Domain\ProjectFile.cs" />
     <Compile Include="Domain\ProjectText.cs" />
-    <Compile Include="Domain\ProjectType.cs" />
     <Compile Include="Domain\Requirement.cs" />
     <Compile Include="Domain\RequirementBase.cs" />
     <Compile Include="Domain\RequirementCategory.cs" />
@@ -98,15 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Domain\Worker.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Domain\Actor.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Domain\PriorityType.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Domain\ProjectType.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
