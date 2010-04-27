@@ -131,7 +131,7 @@ namespace Dogbert.Controllers
         {
             var dest = Repository.OfType<ProjectFile>().GetNullableByID(id);
 
-            if (projectFile == null)
+            if (dest == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
@@ -166,6 +166,62 @@ namespace Dogbert.Controllers
             }
 
             var viewModel = ProjectFileViewModel.Create(Repository, dest.Project);
+            viewModel.ProjectFile = projectFile;
+
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// Gets the specified id to remove.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        public ActionResult Remove(int id)
+        {
+            var projectFile = Repository.OfType<ProjectFile>().GetNullableByID(id);
+
+            if (projectFile == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+            var projectFileViewModel = ProjectFileViewModel.Create(Repository, projectFile.Project);
+            projectFileViewModel.ProjectFile = projectFile;
+            //TODO: In here, some how populate the file?
+
+
+            return View(projectFileViewModel);
+        }
+
+        /// <summary>
+        /// Removes the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="projectFile">The project file.</param>
+        /// <returns></returns>
+        [AcceptPost]
+        public ActionResult Remove(int id, ProjectFile projectFile)
+        {
+            var projectFileToRemove = Repository.OfType<ProjectFile>().GetNullableByID(id);
+
+            if (projectFileToRemove == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            var saveProjectId = projectFileToRemove.Project.Id;
+
+            projectFileToRemove.TransferValidationMessagesTo(ModelState);
+
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<ProjectFile>().Remove(projectFileToRemove);
+                Message = string.Format(NotificationMessages.STR_ObjectRemoved, "ProjectFile");
+                return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_ProjectFiles));
+            }
+
+            var viewModel = ProjectFileViewModel.Create(Repository, projectFileToRemove.Project);
             viewModel.ProjectFile = projectFile;
 
             return View(viewModel);

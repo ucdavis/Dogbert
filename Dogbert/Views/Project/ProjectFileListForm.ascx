@@ -1,4 +1,4 @@
-<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<Dogbert.Core.Domain.ProjectFile>>" %>
+<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<ProjectFile>>" %>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
 
@@ -6,13 +6,13 @@
         <tr>
             <th></th>
             <th>
-                FileName
+                File Name
             </th>
             <th>
-                DateAdded
+                Date Added
             </th>
             <th>
-                DateChanged
+                Date Changed
             </th>
         </tr>
 
@@ -21,7 +21,8 @@
         <tr>
             <td>
                 <%ProjectFile projectFile = item;%>
-                <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Edit")%>
+                <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Edit")%> |
+                <%= Html.ActionLink<ProjectFileController>(a => a.Remove(projectFile.Id), "Remove") %>
             </td>
             <td>
                 <%= Html.Encode(item.FileName) %>
