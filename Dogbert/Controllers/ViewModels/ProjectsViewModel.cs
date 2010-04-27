@@ -7,6 +7,17 @@ using UCDArch.Core.Utils;
 
 namespace Dogbert.Controllers.ViewModels
 {
+    public class ProjectIndexViewModel
+    {
+        public static ProjectIndexViewModel Create()
+        {
+            return new ProjectIndexViewModel();
+        }
+
+        public IList<ProjectType> ProjectTypes { get; set; }
+        public IList<Project> Projects { get; set; }
+    }
+
     public class ProjectViewModel
     {
         // used for creating and editing

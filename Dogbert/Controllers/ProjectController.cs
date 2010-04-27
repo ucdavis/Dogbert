@@ -36,6 +36,16 @@ namespace Dogbert.Controllers
             return View(projects);
         }
 
+        public ActionResult DynamicIndex()
+        {
+            var viewModel = ProjectIndexViewModel.Create();
+
+            viewModel.Projects = _projectRepository.GetAll();
+            viewModel.ProjectTypes = Repository.OfType<ProjectType>().Queryable.Where(x => x.IsActive).ToList();
+
+            return View(viewModel);
+        }
+
         [AcceptPost]
         public ActionResult UpdateProjectPriority(int[] projects)
         {
