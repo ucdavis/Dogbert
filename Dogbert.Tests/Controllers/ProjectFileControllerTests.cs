@@ -439,12 +439,185 @@ namespace Dogbert.Tests.Controllers
 
 
         #region Remove Tests
-        //TODO: Test Tests
+
+        [TestMethod]
+        public void TestRemoveGetWhenIdIsNotFoundRedirectsToProjectControllerIndex()
+        {
+            #region Arrange
+
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+
+            #endregion Arrange
+
+            #region Act
+
+            Controller.Remove(1)
+                .AssertActionRedirect()
+                .ToAction<ProjectController>(a => a.Index());
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("ProjectFile was not found.", Controller.Message);
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestRemoveGetReturnsViewWhenIdFound()
+        {
+            #region Arrange
+            FakeProjectFiles(ProjectFiles, 1);
+            FakeFileTypes(FileTypes, 1);
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
+
+            #endregion Arrange
+
+            #region Act
+            var result = Controller.Remove(1)
+                .AssertViewRendered()
+                .WithViewData<ProjectFileViewModel>();
+
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(1, result.FileTypes.Count());
+            #endregion Assert		
+        }
+        
+        [TestMethod]
+        public void TestRemovePostRedirectsToProjectControllerIndexWhenIdNotFound()
+        {
+            #region Arrange
+            FakeProjectFiles(ProjectFiles, 1);
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            
+            #endregion Arrange
+
+            #region Act
+            Controller.Remove(1, ProjectFiles[0])
+                .AssertActionRedirect()
+                .ToAction<ProjectController>(a => a.Index());
+
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("ProjectFile was not found.", Controller.Message);
+
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestRemovePostWhenIdFoundRedirectsToProjectControllerFilesTab()
+        {
+            #region Arrange
+            Controller.ControllerContext.HttpContext.Response.Expect(a => a.ApplyAppPathModifier(null))
+                .IgnoreArguments().Return("http://Test.com/").Repeat.Any();
+            Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext
+                .RequestContext);
+
+            FakeProjects(Projects, 3);
+            FakeProjectFiles(ProjectFiles, 1);
+            ProjectFiles[0].Project = Projects[1];
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+
+            #endregion Arrange
+
+            #region Act
+            var result = Controller.Remove(1, ProjectFiles[0])
+                .AssertHttpRedirect();
+
+            #endregion Act
+
+            #region Assert
+            ProjectFileRepository.AssertWasCalled(a => a.Remove(ProjectFiles[0]));
+            Assert.AreEqual("http://Test.com/#tab-4", result.Url);
+            Assert.AreEqual("ProjectFile has been removed successfully.", Controller.Message);
+            Assert.IsTrue(Controller.ModelState.IsValid);
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestRemovePostWithInvalidDataWillStillRemove()
+        {
+            #region Arrange
+            Controller.ControllerContext.HttpContext.Response.Expect(a => a.ApplyAppPathModifier(null))
+                .IgnoreArguments().Return("http://Test.com/").Repeat.Any();
+            Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext
+                .RequestContext);
+
+            FakeProjects(Projects, 3);
+            FakeProjectFiles(ProjectFiles, 1);
+            ProjectFiles[0].Project = Projects[1];
+            ProjectFiles[0].FileContents = null; //Invalid, but we don't care
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+
+            #endregion Arrange
+
+            #region Act
+            var result = Controller.Remove(1, ProjectFiles[0])
+                .AssertHttpRedirect();
+
+            #endregion Act
+
+            #region Assert
+            ProjectFileRepository.AssertWasCalled(a => a.Remove(ProjectFiles[0]));
+            Assert.AreEqual("http://Test.com/#tab-4", result.Url);
+            Assert.AreEqual("ProjectFile has been removed successfully.", Controller.Message);
+            Assert.IsTrue(Controller.ModelState.IsValid);
+            #endregion Assert				
+        }
 
         #endregion Remove Tests
 
         #region ViewFile Tests
-        //TODO: Test Tests
+
+        [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestViewFileThrowsExceptionIfIdNotFound()
+        {
+            #region Arrange
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            
+            #endregion Arrange
+
+            try
+            {
+                #region Act
+                Controller.ViewFile(1);
+
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Invalid ProjectFile identifier", ex.Message);
+                #endregion Assert
+                throw;
+            }  		
+        }
+
+
+        [TestMethod]
+        public void TestViewFileReturnsFile()
+        {
+            #region Arrange
+
+            FakeProjectFiles(ProjectFiles, 1);
+            ProjectFiles[0].FileContents = new byte[]{1,2,3,4,5,6};
+            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+
+            #endregion Arrange
+
+            #region Act
+            var result = Controller.ViewFile(1).AssertResultIs<FileResult>();
+
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("image/jpg", result.ContentType);
+            #endregion Assert		
+        }
         
 
         #endregion ViewFile Tests

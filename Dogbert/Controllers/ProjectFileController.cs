@@ -172,19 +172,10 @@ namespace Dogbert.Controllers
 
             var saveProjectId = projectFileToRemove.Project.Id;
 
-            projectFileToRemove.TransferValidationMessagesTo(ModelState);
-
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<ProjectFile>().Remove(projectFileToRemove);
-                Message = string.Format(NotificationMessages.STR_ObjectRemoved, "ProjectFile");
-                return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_ProjectFiles));
-            }
-
-            var viewModel = ProjectFileViewModel.Create(Repository, projectFileToRemove.Project);
-            viewModel.ProjectFile = projectFile;
-
-            return View(viewModel);
+            Repository.OfType<ProjectFile>().Remove(projectFileToRemove);
+            Message = string.Format(NotificationMessages.STR_ObjectRemoved, "ProjectFile");
+            return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_ProjectFiles));
+            
         }
 
         public ActionResult ViewFile(int id)
