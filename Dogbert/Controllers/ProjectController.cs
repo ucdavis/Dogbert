@@ -12,6 +12,7 @@ using MvcContrib;
 using UCDArch.Web.Helpers;
 using UCDArch.Web.Validator;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Dogbert.Controllers
 {
@@ -73,8 +74,8 @@ namespace Dogbert.Controllers
         [AcceptPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Project project)
-        {           
-           //set project Status
+        {
+            //set project Status
             project.StatusCode = Repository.OfType<StatusCode>().Queryable.Where(p => p.Name == "Pending").FirstOrDefault();
             project.Deadline = project.ProjectedEnd;
             project.DateAdded = DateTime.Now;
@@ -82,16 +83,27 @@ namespace Dogbert.Controllers
    
             project.TransferValidationMessagesTo(ModelState);
 
-            //LD: workaround for validating dates (cause I don't now to validate dates : )
-     
-            //Validate input
-            if (project.ProjectedEnd < project.ProjectedStart)
-            {
-                ModelState.AddModelError("ProjectedEnd", "End Date must be > Project Start Date");
+            //Validate input:  Create and Edit
+            if (project.ProjectedStart.HasValue &&
+                !Regex.IsMatch(project.ProjectedStart.Value.ToShortDateString(), @"((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d"))
+            {    //make sure date is valid format: (mm or m) /(dd or d) /(yy or YYYY)
+                  ModelState.AddModelError("Project.ProjectedStart", "Invalid Date (format: mm/dd/yy)");
             }
-           
+            if (project.ProjectedEnd.HasValue &&
+                !Regex.IsMatch(project.ProjectedEnd.Value.ToShortDateString(), @"((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d"))
+            {    //make sure date is valid format: (mm or m) /(dd or d) /(yy or YYYY)
+                ModelState.AddModelError("Project.ProjectedEnd", "Invalid Date (format: mm/dd/yy)");
+            }
+            if (project.ProjectedEnd.HasValue && project.ProjectedStart.HasValue && project.ProjectedEnd < project.ProjectedStart)
+            {
+                ModelState.AddModelError("Project.ProjectedEnd", "End Date must be > Project Start Date");
+            }
+            if (!Regex.IsMatch(project.ContactEmail, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+            {
+                ModelState.AddModelError("Project.ContactEmail", "Email format is invalid.");
+            }
 
-
+            
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(project);
@@ -101,10 +113,8 @@ namespace Dogbert.Controllers
             else
             {
                 _projectRepository.DbContext.RollbackTransaction();
-
                 var viewModel = ProjectViewModel.Create(Repository);
                 viewModel.Project = project;
-
                 return View(viewModel);
             }
         }
@@ -113,13 +123,9 @@ namespace Dogbert.Controllers
         public ActionResult Edit(int id)
         {
             var existingProject = _projectRepository.GetNullableByID(id);
-
             if (existingProject == null) return RedirectToAction("Create");
-
             var viewModel = ProjectViewModel.CreateEdit(Repository);
-
             viewModel.Project = existingProject;
-
             return View(viewModel);
         }
 
@@ -152,12 +158,26 @@ namespace Dogbert.Controllers
             var projectToUpdate = _projectRepository.GetByID(project.Id);
             //TransferValuesTo(projectToUpdate, project);
             
-            //Validate input
-            if(project.ProjectedEnd < project.ProjectedStart)
-            {
-                ModelState.AddModelError("ProjectedEnd", "End Date must be > Project Start Date");
+            //Validate input:  Create and Edit
+            if (project.ProjectedStart.HasValue &&
+                !Regex.IsMatch(project.ProjectedStart.Value.ToShortDateString(), @"((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d"))
+            {    //make sure date is valid format: (mm or m) /(dd or d) /(yy or YYYY)
+                ModelState.AddModelError("Project.ProjectedStart", "Invalid Date (format: mm/dd/yy)");
             }
-           
+            if (project.ProjectedEnd.HasValue &&
+                !Regex.IsMatch(project.ProjectedEnd.Value.ToShortDateString(), @"((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d"))
+            {    //make sure date is valid format: (mm or m) /(dd or d) /(yy or YYYY)
+                ModelState.AddModelError("Project.ProjectedEnd", "Invalid Date (format: mm/dd/yy)");
+            }
+            if (project.ProjectedEnd.HasValue && project.ProjectedStart.HasValue && project.ProjectedEnd < project.ProjectedStart)
+            {
+                ModelState.AddModelError("Project.ProjectedEnd", "End Date must be > Project Start Date");
+            }
+            if (!Regex.IsMatch(project.ContactEmail, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+            {
+                ModelState.AddModelError("Project.ContactEmail", "Email format is invalid.");
+            }
+            //----------------------------
 
             if (ModelState.IsValid)
             {//if values are valid, transfer to project
@@ -175,10 +195,10 @@ namespace Dogbert.Controllers
             }
             else
             {
+               // _projectRepository.DbContext.RollbackTransaction();
                 var viewModel = ProjectViewModel.CreateEdit(Repository);
-                viewModel.Project = project;
+                viewModel.Project = projectToUpdate;
                 return View(viewModel);
-                //return RedirectToAction("Edit", projectToUpdate);
             }
         }
 

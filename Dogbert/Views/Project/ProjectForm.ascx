@@ -18,6 +18,7 @@
         <fieldset>
             <legend>Fields</legend>
             <p>
+                <label for="Project.Name">Project Name:</label>
                 <%= Html.TextBox("Project.Name")%>
             </p>
             <p>
@@ -37,40 +38,44 @@
                 .HideFirstOptionWhen(Model.Project != null)
                 .Label("Project Status:")%>
            </p>
-           <p>
-           
+           <p>    
+                <label for="Project.Contact">Contact:</label>
                 <%= Html.TextBox("Project.Contact")%>
                     <%--.Label("Contact:")--%>
            </p>
            <p>
+                <label for="Project.ContactEmail">Contact Email:</label>
                 <%= Html.TextBox("Project.ContactEmail")%>
-                            <%--.Label("ContactEmail:")--%>
+                <%= Html.ValidationMessage("Project.ContactEmail", "*Email format is not Valid")%>
+
            </p>
+            
             <p>
+                <label for="Project.Unit">Unit:</label>
                 <%= Html.TextBox("Project.Unit")%>
                     <%--.Label("Unit:")--%>
             </p>
             <p>
+                <label for="Project.Complexity">Complexity:</label>
                 <%= Html.TextBox("Project.Complexity")%>
                 <%--.Label("Complexity:")--%>
             </p>
             <p>
-                
+                <label for="Project.ProjectedStart">Projected Start:</label>
                <%= Html.TextBox("Project.ProjectedStart")%>
+               <%= Html.ValidationMessage("Project.ProjectedStart", "*Invalid Date (format: mm/dd/yy)")%>
                     <%--.Format("{0:d}").Label("Start Date:")                   --%>
-                   
-            <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" 
-                runat="server" ErrorMessage="RequiredFieldValidator" 
-                ControlToValidate="Project_ProjectedStart"></asp:RequiredFieldValidator>--%>
                 
             </p>
             <p>
+                <label for="Project.ProjectedEnd">Projected End:</label>
                 <%= Html.TextBox("Project.ProjectedEnd")%>
+                <%= Html.ValidationMessage("Project.ProjectedEnd", "*Invalid Date (format: mm/dd/yy)")%>
                     <%--.Format("{0:d}").Label("End Date/Deadline:")--%>
             </p>
             
           
-                 <p>
+            <p>
                     <%-- <select id="Select1">
                          <option></option>
                      </select>--%>

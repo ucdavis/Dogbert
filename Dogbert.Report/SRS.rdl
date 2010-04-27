@@ -44,7 +44,7 @@ WHERE     (ProjectTexts.ProjectID = @projectid)
 ORDER BY TextTypes.Priority</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
-            <Value>41</Value>
+            <Value>=Parameters!projectid.Value</Value>
           </QueryParameter>
         </QueryParameters>
       </Query>
@@ -67,7 +67,7 @@ FROM      Projects
 WHERE     (id = @projectid)</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
-            <Value>41</Value>
+            <Value>=Parameters!projectid.Value</Value>
           </QueryParameter>
         </QueryParameters>
       </Query>
@@ -111,7 +111,7 @@ WHERE     (Requirements.ProjectID = @projectid)
 ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
-            <Value>41</Value>
+            <Value>=Parameters!projectid.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
@@ -186,7 +186,7 @@ WHERE     (UseCases.ProjectID = @projectid)
 ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
-            <Value>41</Value>
+            <Value>=Parameters!projectid.Value</Value>
           </QueryParameter>
         </QueryParameters>
       </Query>
@@ -207,6 +207,55 @@ WHERE ProjectID = 41
 
 select 'Results' =  + @reqList</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="Figures">
+      <Fields>
+        <Field Name="ProjectId">
+          <DataField>ProjectId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileName">
+          <DataField>FileName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="FileContentType">
+          <DataField>FileContentType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileContents">
+          <DataField>FileContents</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="DateAdded">
+          <DataField>DateAdded</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DateChanged">
+          <DataField>DateChanged</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>SELECT     ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
+                      ProjectFiles.DateChanged
+FROM         ProjectFiles INNER JOIN
+                      FileTypes ON ProjectFiles.FileTypeId = FileTypes.id
+WHERE     (ProjectFiles.ProjectId = @projectid)</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
       </Query>
     </DataSet>
   </DataSets>
@@ -327,8 +376,7 @@ select 'Results' =  + @reqList</CommandText>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
-        <Top>0.97583in</Top>
-        <Left>0in</Left>
+        <Top>3.30916in</Top>
         <Height>0.64583in</Height>
         <Width>7.12167in</Width>
         <Style>
@@ -778,8 +826,8 @@ select 'Results' =  + @reqList</CommandText>
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>2.23263in</Top>
-        <Left>0in</Left>
+        <Top>4.60764in</Top>
+        <Left>0.0175in</Left>
         <Height>1.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>1</ZIndex>
@@ -794,8 +842,8 @@ select 'Results' =  + @reqList</CommandText>
         </Style>
       </Tablix>
       <Line Name="Line7">
-        <Top>2.08868in</Top>
-        <Left>0in</Left>
+        <Top>4.46369in</Top>
+        <Left>0.0175in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>2</ZIndex>
@@ -808,8 +856,8 @@ select 'Results' =  + @reqList</CommandText>
         </Style>
       </Line>
       <Line Name="Line8">
-        <Top>4.02256in</Top>
-        <Left>0in</Left>
+        <Top>6.27257in</Top>
+        <Left>0.0175in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>3</ZIndex>
@@ -1580,8 +1628,8 @@ select 'Results' =  + @reqList</CommandText>
             <Value>=Fields!Order.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>4.11645in</Top>
-        <Left>0.08in</Left>
+        <Top>6.36646in</Top>
+        <Left>0.0975in</Left>
         <Height>2.2625in</Height>
         <Width>7.04167in</Width>
         <ZIndex>4</ZIndex>
@@ -1625,29 +1673,14 @@ select 'Results' =  + @reqList</CommandText>
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Rectangle Name="Rectangle7">
-            <PageBreak>
-              <BreakLocation>Start</BreakLocation>
-            </PageBreak>
-            <KeepTogether>true</KeepTogether>
-            <Height>0.29167in</Height>
-            <Width>7.12167in</Width>
-            <ZIndex>1</ZIndex>
-            <DocumentMapLabel>Requirements</DocumentMapLabel>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Rectangle>
         </ReportItems>
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
         <KeepTogether>true</KeepTogether>
-        <Top>1.78646in</Top>
-        <Left>0in</Left>
-        <Height>0.29167in</Height>
+        <Top>4.16147in</Top>
+        <Left>0.0175in</Left>
+        <Height>0.27084in</Height>
         <Width>7.15125in</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -1674,8 +1707,8 @@ select 'Results' =  + @reqList</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Name</rd:DefaultName>
-        <Top>3.717in</Top>
-        <Left>0in</Left>
+        <Top>5.96701in</Top>
+        <Left>0.0175in</Left>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>6</ZIndex>
@@ -1827,7 +1860,7 @@ select 'Results' =  + @reqList</CommandText>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
-        <Top>0.51042in</Top>
+        <Top>2.84375in</Top>
         <Left>0.10083in</Left>
         <Height>0.25521in</Height>
         <Width>5.61034in</Width>
@@ -1856,7 +1889,7 @@ select 'Results' =  + @reqList</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>0.15764in</Top>
+        <Top>2.49097in</Top>
         <Left>0.0175in</Left>
         <Height>0.27431in</Height>
         <Width>7.10417in</Width>
@@ -1872,7 +1905,7 @@ select 'Results' =  + @reqList</CommandText>
         </Style>
       </Textbox>
       <Line Name="Line9">
-        <Top>0.44098in</Top>
+        <Top>2.77431in</Top>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>9</ZIndex>
@@ -1908,7 +1941,7 @@ select 'Results' =  + @reqList</CommandText>
       <Prompt>projectid</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.5in</Width>
+  <Width>7.5175in</Width>
   <Page>
     <PageHeader>
       <Height>0.50708in</Height>
@@ -1935,7 +1968,7 @@ select 'Results' =  + @reqList</CommandText>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.24111in</Top>
-          <Left>0in</Left>
+          <Left>0.0175in</Left>
           <Height>0.25in</Height>
           <Width>1.82291in</Width>
           <Style>
@@ -1968,7 +2001,7 @@ select 'Results' =  + @reqList</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name1</rd:DefaultName>
-          <Left>1.87847in</Left>
+          <Left>1.89597in</Left>
           <Height>0.5in</Height>
           <Width>5.2432in</Width>
           <ZIndex>1</ZIndex>
@@ -1985,7 +2018,7 @@ select 'Results' =  + @reqList</CommandText>
         </Textbox>
         <Line Name="Line12">
           <Top>0.505in</Top>
-          <Left>0in</Left>
+          <Left>0.0175in</Left>
           <Height>0in</Height>
           <Width>7.12167in</Width>
           <ZIndex>2</ZIndex>
@@ -2031,7 +2064,7 @@ select 'Results' =  + @reqList</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Left>0in</Left>
+          <Left>0.0175in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
           <Style>
@@ -2059,7 +2092,7 @@ select 'Results' =  + @reqList</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox296</rd:DefaultName>
-          <Left>1.34042in</Left>
+          <Left>1.35792in</Left>
           <Height>0.25in</Height>
           <Width>5.78125in</Width>
           <ZIndex>1</ZIndex>

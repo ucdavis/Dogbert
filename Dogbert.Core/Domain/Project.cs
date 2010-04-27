@@ -31,8 +31,8 @@ namespace Dogbert.Core.Domain
         public virtual string Unit { get; set; }
         
         public virtual int Complexity { get; set; }
-        public virtual DateTime ProjectedStart { get; set; }
-        public virtual DateTime ProjectedEnd { get; set; }
+        public virtual DateTime? ProjectedStart { get; set; }
+        public virtual DateTime? ProjectedEnd { get; set; }
         public virtual DateTime? BeginDate { get; set; }
         public virtual DateTime? EndDate { get; set; }
         public virtual DateTime? DateAdded { get; set; }
@@ -61,12 +61,18 @@ namespace Dogbert.Core.Domain
 
 
         public virtual int? Duration {
+            
+                   
             get{
-                if ((ProjectedStart.ToString() == null) || (ProjectedEnd.ToString() == null))
+                DateTime start, end;  //to cast nullable date
+                if ((ProjectedStart.HasValue) && (ProjectedEnd.HasValue))
                 {
-                    return null;
+                    start = (DateTime)ProjectedStart;
+                    end = (DateTime)ProjectedEnd;
+                    return end.Month -  start.Month;
                 }
-                else return ProjectedEnd.Month - ProjectedStart.Month;
+                else
+                    return null;
             }
         }
 
@@ -102,9 +108,10 @@ namespace Dogbert.Core.Domain
                 if (BeginDate.HasValue){
                     return BeginDate.Value.ToShortDateString();
                 }
-                if (ProjectedStart.ToString() != null)
+                if (ProjectedStart.HasValue)
                 {
-                    return string.Format("{0} (proj.)", ProjectedStart.ToShortDateString());
+                    return ProjectedStart.Value.ToShortDateString();
+                    //return string.Format("{0} (proj.)", start.ToShortDateString());
                 }
                 return "N/A";
             }
@@ -116,9 +123,10 @@ namespace Dogbert.Core.Domain
                 if (EndDate.HasValue){
                     return EndDate.Value.ToShortDateString();
                 }
-                if (ProjectedEnd.ToString() != null)
+                if (ProjectedEnd.HasValue)
                 {
-                    return string.Format("{0} (proj.)", ProjectedEnd.ToShortDateString());
+                    return ProjectedEnd.Value.ToShortDateString();
+                    //return string.Format("{0} (proj.)", ProjectedEnd.ToShortDateString());
                 }
                 return "N/A";
             }
