@@ -22,12 +22,14 @@ namespace Dogbert.Tests.Core
         protected bool BoolRestoreValue;
 
         public IRepositoryWithTypedId<RequirementType, string> RequirementTypeRepository { get; set; }
+        public IRepositoryWithTypedId<TextType, string> TextTypeRepository { get; set; }
 
         #region Init
 
         public AbstractRepositoryTests()
         {
             RequirementTypeRepository = new RepositoryWithTypedId<RequirementType, string>();
+            TextTypeRepository = new RepositoryWithTypedId<TextType, string>();
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace Dogbert.Tests.Core
         public void CanSaveValidEntity()
         {
             var validEntity = GetValid(null);
-            Repository.OfType<T>().EnsurePersistent(validEntity);
+            Repository.OfType<T>().EnsurePersistent(validEntity, true);
 
             Assert.AreEqual(false, validEntity.IsTransient());
         }
@@ -98,7 +100,7 @@ namespace Dogbert.Tests.Core
         {
             var validEntity = GetValid(null);
             Repository.OfType<T>().DbContext.BeginTransaction();
-            Repository.OfType<T>().EnsurePersistent(validEntity);
+            Repository.OfType<T>().EnsurePersistent(validEntity, true);
             Assert.IsFalse(validEntity.IsTransient());
             Repository.OfType<T>().DbContext.CommitTransaction();
         }
@@ -129,12 +131,11 @@ namespace Dogbert.Tests.Core
             FoundEntityComparison(foundEntry[0], 3);
         }
 
-
         /// <summary>
-        /// Determines whether this instance [can get entity using get by id where id is int].
+        /// Determines whether this instance [can get entity using get by id].
         /// </summary>
         [TestMethod]
-        public virtual void CanGetEntityUsingGetByIdWhereIdIsInt()
+        public virtual void CanGetEntityUsingGetById()
         {
             if (typeof(IdT) == typeof(int))
             {
@@ -142,14 +143,20 @@ namespace Dogbert.Tests.Core
                 var foundEntity = Repository.OfType<T>().GetById(2);
                 FoundEntityComparison(foundEntity, 2);
             }
+            else
+            {
+                IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
+                Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
+                var foundEntity = typedStringRepository.GetById("2");
+                FoundEntityComparison(foundEntity, 2);
+            }
         }
 
-
         /// <summary>
-        /// Determines whether this instance [can get entity using get by nullable with valid id where id is int].
+        /// Determines whether this instance [can get entity using get by nullable with valid id].
         /// </summary>
         [TestMethod]
-        public virtual void CanGetEntityUsingGetByNullableWithValidIdWhereIdIsInt()
+        public virtual void CanGetEntityUsingGetByNullableWithValidId()
         {
             if (typeof(IdT) == typeof(int))
             {
@@ -157,52 +164,102 @@ namespace Dogbert.Tests.Core
                 var foundEntity = Repository.OfType<T>().GetNullableByID(2);
                 FoundEntityComparison(foundEntity, 2);
             }
+            else
+            {
+                IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
+                Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
+                var foundEntity = typedStringRepository.GetNullableByID("2");
+                FoundEntityComparison(foundEntity, 2);
+            }
         }
 
         /// <summary>
-        /// Determines whether this instance [can get null value using get by nullable with invalid id where id is int].
+        /// Determines whether this instance [can get null value using get by nullable with invalid id].
         /// </summary>
         [TestMethod]
-        public virtual void CanGetNullValueUsingGetByNullableWithInvalidIdWhereIdIsInt()
+        public virtual void CanGetNullValueUsingGetByNullableWithInvalidId()
         {
             if (typeof(IdT) == typeof(int))
             {
                 var foundEntity = Repository.OfType<T>().GetNullableByID(EntriesAdded + 1);
                 Assert.IsNull(foundEntity);
             }
+            else
+            {
+                IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
+                var foundEntity = typedStringRepository.GetNullableByID((EntriesAdded + 1).ToString());
+                Assert.IsNull(foundEntity);
+            }
         }
 
         public void CanUpdateEntity(bool doesItAllowUpdate)
         {
-            //Get an entity to update
-            var foundEntity = Repository.OfType<T>().GetAll()[2];
-
-            //Update and commit entity
-            Repository.OfType<T>().DbContext.BeginTransaction();
-            UpdateUtility(foundEntity, ARTAction.Update);
-            Repository.OfType<T>().EnsurePersistent(foundEntity);
-            Repository.OfType<T>().DbContext.CommitTransaction();
-
-            NHibernateSessionManager.Instance.GetSession().Evict(foundEntity);
-
-            if (doesItAllowUpdate)
+            if (typeof(IdT) == typeof(int))
             {
-                //Compare entity
-                var compareEntity = Repository.OfType<T>().GetAll()[2];
-                UpdateUtility(compareEntity, ARTAction.Compare);
+                //Get an entity to update
+                var foundEntity = Repository.OfType<T>().GetAll()[2];
 
-                //Restore entity, do not commit, then get entity to make sure it isn't restored.            
-                UpdateUtility(compareEntity, ARTAction.Restore);
-                NHibernateSessionManager.Instance.GetSession().Evict(compareEntity);
-                //For testing at least, this is required to clear the changes from memory.
-                var checkNotUpdatedEntity = Repository.OfType<T>().GetAll()[2];
-                UpdateUtility(checkNotUpdatedEntity, ARTAction.Compare);
+                //Update and commit entity
+                Repository.OfType<T>().DbContext.BeginTransaction();
+                UpdateUtility(foundEntity, ARTAction.Update);
+                Repository.OfType<T>().EnsurePersistent(foundEntity);
+                Repository.OfType<T>().DbContext.CommitTransaction();
+
+                NHibernateSessionManager.Instance.GetSession().Evict(foundEntity);
+
+                if (doesItAllowUpdate)
+                {
+                    //Compare entity
+                    var compareEntity = Repository.OfType<T>().GetAll()[2];
+                    UpdateUtility(compareEntity, ARTAction.Compare);
+
+                    //Restore entity, do not commit, then get entity to make sure it isn't restored.            
+                    UpdateUtility(compareEntity, ARTAction.Restore);
+                    NHibernateSessionManager.Instance.GetSession().Evict(compareEntity);
+                    //For testing at least, this is required to clear the changes from memory.
+                    var checkNotUpdatedEntity = Repository.OfType<T>().GetAll()[2];
+                    UpdateUtility(checkNotUpdatedEntity, ARTAction.Compare);
+                }
+                else
+                {
+                    //Compare entity
+                    var compareEntity = Repository.OfType<T>().GetAll()[2];
+                    UpdateUtility(compareEntity, ARTAction.CompareNotUpdated);
+                }
             }
             else
             {
-                //Compare entity
-                var compareEntity = Repository.OfType<T>().GetAll()[2];
-                UpdateUtility(compareEntity, ARTAction.CompareNotUpdated);
+                IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
+                //Get an entity to update
+                var foundEntity = typedStringRepository.GetAll()[2];
+
+                //Update and commit entity
+                typedStringRepository.DbContext.BeginTransaction();
+                UpdateUtility(foundEntity, ARTAction.Update);
+                typedStringRepository.EnsurePersistent(foundEntity, true);
+                typedStringRepository.DbContext.CommitTransaction();
+
+                NHibernateSessionManager.Instance.GetSession().Evict(foundEntity);
+
+                if (doesItAllowUpdate)
+                {
+                    //Compare entity
+                    var compareEntity = typedStringRepository.GetAll()[2];
+                    UpdateUtility(compareEntity, ARTAction.Compare);
+
+                    //Restore entity, do not commit, then get entity to make sure it isn't restored.            
+                    UpdateUtility(compareEntity, ARTAction.Restore);
+                    NHibernateSessionManager.Instance.GetSession().Evict(compareEntity);
+                    //For testing at least, this is required to clear the changes from memory.
+                    var checkNotUpdatedEntity = typedStringRepository.GetAll()[2];
+                    UpdateUtility(checkNotUpdatedEntity, ARTAction.Compare);
+                }
+                else
+                {
+                    //Compare entity
+                    var compareEntity = typedStringRepository.GetAll()[2];
+                    UpdateUtility(compareEntity, ARTAction.CompareNotUpdated);
+                }
             }
         }
 
@@ -339,6 +396,20 @@ namespace Dogbert.Tests.Core
             }
             Repository.OfType<FileType>().DbContext.CommitTransaction();
         }
+
+        protected void LoadTextTypes(int entriesToAdd)
+        {
+            TextTypeRepository.DbContext.BeginTransaction();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.TextType(i + 1);
+                //validEntity.SetIdTo((i + 1).ToString());
+                validEntity.setID((i+1).ToString());
+                Repository.OfType<TextType>().EnsurePersistent(validEntity, true);
+            }
+            TextTypeRepository.DbContext.CommitTransaction();
+        }
+        
 
         /// <summary>
         /// Abstract Repository Tests Action

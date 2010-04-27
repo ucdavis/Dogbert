@@ -10,9 +10,9 @@ namespace Dogbert.Core.Domain
     {
         [Required]
         public virtual string Text { get; set; }
-        [Required]
+        [NotNull]
         public virtual TextType TextType { get; set; }
-        [Required]
+        [NotNull]
         public virtual Project Project { get; set; }
 
    
