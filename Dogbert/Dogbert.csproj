@@ -128,11 +128,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
+    <Compile Include="Controllers\UseCaseController.cs" />
     <Compile Include="Controllers\Helpers\Copiers.cs" />
     <Compile Include="Controllers\Helpers\ReturnUrlGenerator.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
+    <Compile Include="Controllers\ViewModels\UseCaseViewModel.cs" />
     <Compile Include="Controllers\ViewModels\ProjectsViewModel.cs" />
     <Compile Include="Controllers\ViewModels\RequirementViewModel.cs" />
     <Compile Include="Default.aspx.cs">
@@ -167,6 +169,10 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
+    <Content Include="Views\Project\UseCaseListForm.ascx" />
+    <Content Include="Views\UseCase\Create.aspx" />
+    <Content Include="Views\UseCase\Edit.aspx" />
+    <Content Include="Views\UseCase\UseCaseForm.ascx" />
     <Content Include="Views\Project\ProjectUseCaseForm.ascx" />
     <Content Include="Views\Project\ProjectEditUseCaseForm.ascx" />
     <Content Include="Views\Project\DynamicIndex.aspx" />

@@ -22,8 +22,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Edit</h2>
-    
+    <h2>View/Edit Project: <%= this.Label("Project.Name")%> </h2>
+       <div>
+        <%=Html.ActionLink("Back to List", "DynamicIndex")%>
+       </div>
+        
     <div id="tabs">
         <ul>
             <li><a href="#<%= StaticValues.Tab_ProjectDetails %>"><span>Project Details</span></a></li>
@@ -48,8 +51,10 @@
         </div>
 
         <div id="<%= StaticValues.Tab_UseCases %>">
-            Use Case Tab Starts Here
-            <% Html.RenderPartial("ProjectUseCaseForm"); %>
+            <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
+             <p>
+                <%= Html.ActionLink<UseCaseController>(a => a.Create(Model.Project.Id), "Create UseCase") %>
+            </p>
         </div>
     
     </div> <%--//end tabs--%> 

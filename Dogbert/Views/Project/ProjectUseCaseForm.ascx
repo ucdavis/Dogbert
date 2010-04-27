@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Dogbert.Controllers.ViewModels.ProjectViewModel>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Dogbert.Controllers.ViewModels.UseCaseViewModel>" %>
 <%@ Import Namespace="xVal.Html"%>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Helpers"%>
@@ -19,7 +19,7 @@
                       col.Add(pUseCase =>
                           { %>
                             <%=
-                                Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.EditUseCase(pUseCase.Id), "Edit")
+                                Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.Edit(pUseCase.Id), "Edit")
                             %>
                             <% });
                                 col.Add(pUseCase => pUseCase.Name);
@@ -28,45 +28,14 @@
                   
                             })
                 .Render(); %>
-            
-             <h3>Add New Use Case</h3>
-            <% using (Html.BeginForm("CreateUseCase", "Project", FormMethod.Post))
-               { %>
-                <%= Html.AntiForgeryToken() %>
-                <%= Html.Hidden("projectId", Model.Project.Id) %>
-                <p>
-                    <%= this.TextBox("Name").Label("Use Case Name:")%>
-                </p>
-                <p>
-                    <%= this.TextArea("Description").Label("Description:")%>
-               </p>
-      
-                <p>
-                    <%= this.TextArea("Precondition").Label("Precondition:")%>
-               </p>
-      
-                <p>
-                    <%= this.TextArea("Postcondition").Label("Postcondition:")%>
-               </p>
-           
-                <p>
-                 <%= this.Select("RequirementCategory")
-                    .Options(Model.RequirementCategories, x=>x.Id, x=>x.Name)
-                     .Selected(Model.UseCase != null && Model.UseCase.RequirementCategory != null ? Model.UseCase.RequirementCategory.Id : 1)
-                    .FirstOption("--Requirement Category--")
-                    .HideFirstOptionWhen(Model.RequirementCategories!= null)
-                    .Label("Requirement Category:")%>
-               </p>
-               
          
-           
-                <p>
-                    <input type="submit" value="Save" />
-                </p>
+       
+                </fieldset>
+                    
             <%} %>
             
          
-        </fieldset>
+
 
 
     

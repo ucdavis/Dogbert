@@ -51,7 +51,7 @@ namespace Dogbert.Controllers
         public ActionResult UpdateProjectPriority(int[] projects) 
         {
             Project p;
-            for (int i = 0; i < projects.Length; i++)
+            for (int i = 1; i <= projects.Length; i++)
             {
                 p = Repository.OfType<Project>().GetById(projects[i]);
                 p.Priority = i + 1;
@@ -279,149 +279,10 @@ namespace Dogbert.Controllers
             return this.RedirectToAction(a => a.Edit(projectId));
         }
 
-    //--------------------------------------------------------------------------------------------------------
-    //Project Requirements
-    //--------------------------------------------------------------------------------------------------------
         
 
 
-    //--------------------------------------------------------------------------------------------------------
-    //Project Use Cases
-    //--------------------------------------------------------------------------------------------------------
-        // POST: /Project/CreateUseCase/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Project Id</param>
-        /// <param name="projectUseCase"></param>
-        [AcceptPost]
-        public ActionResult CreateUseCase(int projectId, [Bind(Exclude = "Id")]UseCase useCase)
-        {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
-
-            //set values
-            useCase.DateAdded = DateTime.Now;
-            useCase.LastModified = DateTime.Now;
-
-            if (project == null)
-            {
-                return RedirectToAction("DynamicIndex");
-            }
-
-            project.AddUseCase(useCase);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCase.ValidationResults());
-
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<UseCase>().EnsurePersistent(useCase);
-                //_projectRepository.EnsurePersistent(projectText);//which repository
-                Message = "New Text Created Successfully";
-                //return RedirectToAction("DynamicIndex");
-            }
-
-            var viewModel = ProjectViewModel.CreateEdit(Repository);
-            viewModel.Project = project;
-            return this.RedirectToAction(a => a.Edit(projectId));
-        }
-
-        // GET: /Project/EditUseCase/
-        public ActionResult EditUseCase(int Id)
-        {
-            var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
-            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
-
-            if (existingUseCase == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
-
-            
-            var viewModel = ProjectViewModel.CreateEditUseCase(Repository);
-            viewModel.UseCase = existingUseCase;
-            viewModel.UseCaseStep = existingUCSteps;
-            return View(viewModel);
-        }
-
-        // POST: /Project/EditUseCase/
-        [AcceptPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditUseCase(int id, UseCase UseCase)
-        {
-            var pt = Repository.OfType<UseCase>().GetNullableByID(id);
-
-            TransferValuesTo(pt, UseCase);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, pt.ValidationResults());
-
-            var proj = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
-
-
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<UseCase>().EnsurePersistent(pt);
-                Message = "Project Use Case edited successfully";
-
-            }
-            var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
-            return RedirectToAction("Edit", project);
-            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
-
-        }
-
-        //Transfer Values: For  /Project/EditUseCase/
-        private static void TransferValuesTo(UseCase UseCaseToUpdate, UseCase UseCase)
-        {
-            UseCaseToUpdate.Name = UseCase.Name;
-            UseCaseToUpdate.Description = UseCase.Description;
-            UseCaseToUpdate.Precondition = UseCase.Precondition;
-            UseCaseToUpdate.Postcondition = UseCase.Postcondition;
-            UseCaseToUpdate.RequirementCategory = UseCase.RequirementCategory;
-            
-            UseCaseToUpdate.LastModified = DateTime.Now;
-        }
-
-
-        // /Project/EditUseCase/UseCaseSteps
-        [AcceptPost]
-        public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
-        {
-            var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
-
-            //set values
-            useCaseStep.DateAdded = DateTime.Now;
-            useCaseStep.LastModified = DateTime.Now;
-
-            if (useCase == null)
-            {
-                return RedirectToAction("DynamicIndex");
-            }
-
-            useCase.AddSteps(useCaseStep);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCaseStep.ValidationResults());
-
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<UseCaseStep>().EnsurePersistent(useCaseStep);
-                //_projectRepository.EnsurePersistent(projectText);//which repository
-                Message = "New Text Created Successfully";
-                //return RedirectToAction("DynamicIndex");
-            }
-
-            var viewModel = ProjectViewModel.CreateEditUseCase(Repository);
-            viewModel.UseCase = useCase;
-            return this.RedirectToAction(a => a.EditUseCase(useCaseId));
-        }
-
-        // GET: /Project/EditUseCase/EditUseCaseSteps/
-        public ActionResult EditUseCaseSteps(int Id)
-        {
-            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
-
-            if (existingUCSteps == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
-
-            var viewModel = ProjectViewModel.CreateEditUseCase (Repository);
-            viewModel.UseCaseStep = existingUCSteps;
-            return View(viewModel);
-        }
+  
     }
    
 }

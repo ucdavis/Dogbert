@@ -76,7 +76,6 @@ namespace Dogbert.Controllers
 
             var viewModel = RequirementViewModel.Create(Repository, project);
             viewModel.Requirement = requirement;
-
             return View(viewModel);
         }
 
@@ -92,7 +91,7 @@ namespace Dogbert.Controllers
             }
             var requirementViewModel = RequirementViewModel.Create(Repository, requirement.Project);
             requirementViewModel.Requirement = requirement;
-
+           
             return View(requirementViewModel);
 
         }

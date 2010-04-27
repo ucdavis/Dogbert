@@ -10,9 +10,7 @@
     <% using (Html.BeginForm()) {%>
         <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
  
-        <div>
-        <%=Html.ActionLink("Back to List", "DynamicIndex")%>
-        </div>
+     
 
         <fieldset>
             <legend>Fields</legend>

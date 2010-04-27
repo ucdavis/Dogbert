@@ -30,14 +30,17 @@
              onDragClass: "myDragClass",
              onDrop: function(table, row) {
 
-                 var rows = $(table).find("tBody tr");
-                 //debugger;
+             var rows = $(table).find("tBody tr");
+            // var rid = $(table).find("tBody th[name=Id]")
+             //var  rid = $("tbody#id").find("tr:gt(0)");
+            
+                 debugger;
                  var newOrder = new Array();
 
                  for (i = 0; i < rows.length; i++) {
                      newOrder[i] = rows[i].id;
                  }
-
+                 debugger;
                  var url = '<%= Url.Action("UpdateProjectPriority", "Project") %>';
                  $.post(url, { projects: newOrder  }, 
                             function(result) { // refresh the calendar
