@@ -409,6 +409,23 @@ namespace Dogbert.Tests.Core
             }
             TextTypeRepository.DbContext.CommitTransaction();
         }
+
+        /// <summary>
+        /// Loads the requirement categories.
+        /// Requires Project
+        /// </summary>
+        /// <param name="entriesToAdd">The entries to add.</param>
+        protected void LoadRequirementCategories(int entriesToAdd)
+        {
+            Repository.OfType<RequirementCategory>().DbContext.BeginTransaction();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.RequirementCategory(i + 1);
+                validEntity.Project = Repository.OfType<Project>().GetNullableByID(1);
+                Repository.OfType<RequirementCategory>().EnsurePersistent(validEntity);
+            }
+            Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();
+        }
         
 
         /// <summary>

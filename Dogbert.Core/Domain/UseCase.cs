@@ -20,12 +20,12 @@ namespace Dogbert.Core.Domain
         public virtual string Name { get; set; }
         [Required]
         public virtual string Description { get; set; }
-        [Required]
+  
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastModified { get; set; }
-        [Required]
+        [NotNull]
         public virtual Project Project { get; set; }
-        [Required]
+        [NotNull]
         public virtual RequirementCategory RequirementCategory { get; set; }
         [Required]
         public virtual string Precondition { get; set; }

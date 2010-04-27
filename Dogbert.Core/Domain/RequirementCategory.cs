@@ -11,9 +11,9 @@ namespace Dogbert.Core.Domain
         [Length(50)]
         [Required]
         public virtual string Name { get; set; }
-        [Required]
+
         public virtual bool IsActive { get; set; }
-        [Required]
+        [NotNull]
         public virtual Project Project { get; set; }
     }
 }
