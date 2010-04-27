@@ -35,7 +35,7 @@ namespace Dogbert.Core.Domain
                 if (Projects != null)
                 {
                     return from p in Projects.AsQueryable()
-                           where p.Status.IsComplete == false && p.Status.IsActive
+                           where p.StatusCode.IsComplete == false && p.StatusCode.IsActive
                            orderby p.Priority
                            select p;
                 }

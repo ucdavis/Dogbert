@@ -66,8 +66,12 @@
     <Compile Include="Domain\Person.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="Domain\ProjectFile.cs" />
+    <Compile Include="Domain\ProjectText.cs" />
     <Compile Include="Domain\Requirement.cs" />
     <Compile Include="Domain\RequirementBase.cs" />
+    <Compile Include="Domain\RequirementCategory.cs" />
+    <Compile Include="Domain\StatusCode.cs" />
+    <Compile Include="Domain\TextType.cs" />
     <Compile Include="Domain\UseCase.cs" />
     <Compile Include="Domain\UseCaseStep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +85,12 @@
     <EmbeddedResource Include="Domain\Requirement.hbm.xml" />
     <EmbeddedResource Include="Domain\UseCase.hbm.xml" />
     <EmbeddedResource Include="Domain\UseCaseStep.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Domain\ProjectText.hbm.xml" />
+    <Content Include="Domain\RequirementCategory.hbm.xml" />
+    <Content Include="Domain\StatusCode.hbm.xml" />
+    <Content Include="Domain\TextType.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

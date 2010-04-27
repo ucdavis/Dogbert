@@ -1,23 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    assembly="Dogbert.Core" namespace="Dogbert.Core.Domain">
+  <class
+    name="UseCase"
+    table="UseCases" >
+    <id name="Id" column="ID" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
 
-	<class name="Dogbert.Core.Domain.UseCase, Dogbert.Core" table="UseCases" >
-		<id name="Id" column="id" unsaved-value="0">
-			<generator class="identity" />
-		</id>
 
-		<property name="Name" column="Name" />
-		<property name="Description" column="Description" />
-		<property name="DateAdded" column="DateAdded" />
-		<many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
-		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
-		<many-to-one name="Category" class="Dogbert.Core.Domain.Category, Dogbert.Core" column="CategoryID" cascade="none" />
-		
-		<bag name="Steps" table="UseCaseSteps">
-			<key column="UseCaseID" />
-			<one-to-many class="Dogbert.Core.Domain.UseCaseStep, Dogbert.Core"/>
-		</bag>
 
-	</class>
+    <property name="Name" column="Name" />
+    <property name="Description" column="Description" />
+    <property name="DateAdded" column="DateAdded" />
+    <property name="LastModified" column="LastModified" />
+    <property name="Precondition" column="Precondition" />
+    <property name="Postcondition" column="Postcondition" />
 
+    <many-to-one name="Project" class="Project" column="ProjectID" cascade="none" />
+    <many-to-one name="RequirementCategory" class="RequirementCategory" column="CategoryID" cascade="none" />
+
+    <bag name="Actors" table="UseCaseXActor" cascade="all-delete-orphan">
+      <key column="UseCaseID" />
+      <many-to-many column="ActorID" class="Dogbert.Core.Domain.Actor, Dogbert.Core" />
+    </bag>
+
+    <bag name="Requirements" table="UseCaseXRequirements" cascade="all-delete-orphan">
+      <key column="UseCaseID" />
+      <many-to-many column="RequirementID" class="Dogbert.Core.Domain.Requirement, Dogbert.Core" />
+    </bag>
+
+    <bag name="Parents" table="UseCaseXUseCase">
+      <key column="ChildUseCaseID" />
+      <many-to-many column="ParentUseCaseID" class="Dogbert.Core.Domain.UseCase, Dogbert.Core" />
+    </bag>
+
+    <bag name="Children" table="UseCaseXUseCase">
+      <key column="ParentUseCaseID" />
+      <many-to-many column="ChildUseCaseID" class="Dogbert.Core.Domain.UseCase, Dogbert.Core" />
+    </bag>
+
+    <bag name="Steps" table="UseCaseSteps" cascade="all-delete-orphan">
+      <key column="UseCaseID"></key>
+      <one-to-many class="Dogbert.Core.Domain.UseCaseStep, Dogbert.Core"></one-to-many>
+    </bag>
+
+
+
+
+
+
+  </class>
 </hibernate-mapping>
