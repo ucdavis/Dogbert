@@ -7,9 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Edit</h2>
     
-    <% Html.RenderPartial("ProjectForm"); %>
-    
-    <% Html.RenderPartial("ProjectEditForm"); %>
+    <% Html.RenderPartial("ProjectEditTextForm"); %>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">

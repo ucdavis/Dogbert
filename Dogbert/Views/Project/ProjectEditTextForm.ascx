@@ -3,21 +3,26 @@
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Helpers"%>
 
+
+
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
     <%= Html.ValidationSummary() %>
 
-   
+        <div>
+        <%=Html.ActionLink("Back to List", "Index") %>
+        </div>
+        
         <fieldset>
             <legend>Project Text</legend>
-            <% using (Html.BeginForm("CreateText", "Project", FormMethod.Post))
+            <% using (Html.BeginForm())
                { %>
                 <%= Html.AntiForgeryToken() %>
-                <%= Html.Hidden("projectId", Model.Project.Id) %>
+                <%= Html.Hidden("Id", Model.ProjectText.Id) %>
                 <p>
-                    <%= this.TextArea("Text").Label("Text:")%>
+                    <%= this.TextBox("ProjectText.Text").Label("Text:")%>
                 </p>
                 <p>
-                 <%= this.Select("TextType")
+                 <%= this.Select("ProjectText.TextType")
                     .Options(Model.TextTypes, x=>x.Id, x=>x.Name)
                     .Selected(Model.ProjectText != null && Model.ProjectText.TextType != null ? Model.ProjectText.TextType.Id : "DE")             
                     .FirstOption("--Text Type--")
@@ -30,23 +35,6 @@
                 </p>
             <%} %>
             
-               <% Html.Grid(Model.Project.ProjectTexts)
-               .Transactional()
-               .Name("Texts")
-               .PrefixUrlParameters(false)
-               .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
-               .Columns(col =>
-                  {
-                      col.Add(pText =>
-                          { %>
-                            <%=
-                                Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.EditText(pText.Id), "Edit")
-                            %>
-                            <% });
-                            col.Add(pText => pText.TextType.Name);
-                            col.Add(pText => pText.Text);
-                            })
-                .Render(); %>
             
         </fieldset>
 

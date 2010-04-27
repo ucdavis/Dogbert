@@ -11,7 +11,10 @@
         <%= Html.AntiForgeryToken() %>
         <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
  
-        
+        <div>
+        <%=Html.ActionLink("Back to List", "Index") %>
+        </div>
+
         <fieldset>
             <legend>Fields</legend>
             <p>
@@ -73,8 +76,4 @@
 
     <% } %>
 
-    <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
-    </div>
-    
    

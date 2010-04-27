@@ -21,12 +21,14 @@
  
  <script type="text/javascript" src="<%= Request.ApplicationPath + @"Scripts/jquery.tablednd_0_5.js" %>"></script>
  <script type="text/javascript">
+     
      $(document).ready(function() {
-         $("#tabs").tabs();
+         
 
-         $("#WebApplications").tableDnD({
+         $("#WebApplications").find("table").tableDnD({
              onDragClass: "myDragClass",
              onDrop: function(table, row) {
+
                  var rows = $(table).find("tBody tr");
                  //debugger;
                  var newOrder = new Array();
@@ -49,7 +51,13 @@
 
 </script>
 
+<script type="text/javascript">
+    $(function() {
+        var tabs = $("#tabs");
+        $("#tabs").tabs();
+    });
 
+</script>
 
      
  
