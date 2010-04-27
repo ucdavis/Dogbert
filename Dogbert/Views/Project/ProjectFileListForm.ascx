@@ -21,7 +21,7 @@
         <tr>
             <td>
                 <%ProjectFile projectFile = item;%>
-                <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Edit")%> |
+                <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Update")%> |
                 <%= Html.ActionLink<ProjectFileController>(a => a.Remove(projectFile.Id), "Remove") %>
             </td>
             <td>

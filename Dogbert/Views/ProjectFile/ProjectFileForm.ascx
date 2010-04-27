@@ -5,11 +5,6 @@
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="xVal.Html"%>
 
-    <%= Html.AntiForgeryToken() %>
-    <%= Html.Hidden("projectId", Model.Project.Id) %>
-    <fieldset>
-        <legend>Fields</legend>
-
         <p>
             <%= this.Select("ProjectFile.Type").Options(Model.FileTypes, x => x.Id, x => x.Name)
                     .FirstOption("--Select a File Type--")
@@ -19,10 +14,6 @@
             %>
             <%= Html.ValidationMessage("ProjectFile.Type", "*")%>
         </p>
-
-        <p>
-            <label for="file">Project File:</label>
-            <input type="file" name="file" id="file" />
-        </p>
+        
        
-    </fieldset>
+    
