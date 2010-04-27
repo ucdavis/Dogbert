@@ -13,10 +13,12 @@
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
 
     <% Html.RenderPartial("RequirementForm"); %>
+    
     <% using (Html.BeginForm()) {%>
 
-
     <% } %>
+    
+    
 
     <div>
        <%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_Requirements)%>

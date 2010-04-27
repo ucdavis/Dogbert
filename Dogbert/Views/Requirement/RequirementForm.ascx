@@ -5,7 +5,7 @@
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="xVal.Html"%>
 
-    <%= Html.ClientSideValidation<Requirement>() %>
+    <%= Html.ClientSideValidation<RequirementViewModel>()%>
 
     <% using (Html.BeginForm()) {%>
     <%= Html.AntiForgeryToken() %>
@@ -14,7 +14,7 @@
             <p>
                 <label for="Description">Description:</label>
                 <%= this.TextBox("Requirement.Description")%>
-                <%= Html.ValidationMessage("Requirement.Description", "*")%>
+                <%= Html.ValidationMessage("Requirement.Description", "*")%> 
             </p>
             <p>
                 <label for="TechnicalDifficulty">Technical Difficulty:</label>

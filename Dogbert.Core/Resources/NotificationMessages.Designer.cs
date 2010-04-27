@@ -61,16 +61,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {ObjectType}.
-        /// </summary>
-        public static string ObjectType {
-            get {
-                return ResourceManager.GetString("ObjectType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {ObjectType} has been created successfully..
+        ///   Looks up a localized string similar to {0} has been created successfully..
         /// </summary>
         public static string STR_ObjectCreated {
             get {
@@ -79,7 +70,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {ObjectType} was not found..
+        ///   Looks up a localized string similar to {0} was not found..
         /// </summary>
         public static string STR_ObjectNotFound {
             get {
@@ -88,7 +79,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {ObjectType} has been updated successfully..
+        ///   Looks up a localized string similar to {0} has been updated successfully..
         /// </summary>
         public static string STR_ObjectUpdated {
             get {

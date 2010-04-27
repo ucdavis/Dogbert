@@ -23,7 +23,7 @@ namespace Dogbert.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return this.RedirectToAction<ProjectController>(a => a.Index());
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
-                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Project");
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
 
@@ -59,7 +59,7 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
-                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Project");
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }            
 
@@ -69,7 +69,7 @@ namespace Dogbert.Controllers
             if(ModelState.IsValid)
             {
                 Repository.OfType<Requirement>().EnsurePersistent(requirement);
-                Message = NotificationMessages.STR_ObjectCreated.Replace(NotificationMessages.ObjectType, "Requirement");
+                Message = string.Format(NotificationMessages.STR_ObjectCreated, "Requirement");
                 //return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
                 return Redirect(Url.EditProjectUrl(projectId, StaticValues.Tab_Requirements));
             }
@@ -87,7 +87,7 @@ namespace Dogbert.Controllers
             
             if (requirement == null)
             {
-                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Requirement");
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
             var requirementViewModel = RequirementViewModel.Create(Repository, requirement.Project);
@@ -104,7 +104,7 @@ namespace Dogbert.Controllers
 
             if (requirement == null)
             {
-                Message = NotificationMessages.STR_ObjectNotFound.Replace(NotificationMessages.ObjectType, "Requirement");
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
             Copiers.CopyRequirement(requirement, dest);
@@ -112,7 +112,7 @@ namespace Dogbert.Controllers
             if (ModelState.IsValid)
             {
                 Repository.OfType<Requirement>().EnsurePersistent(dest);
-                Message = NotificationMessages.STR_ObjectUpdated.Replace(NotificationMessages.ObjectType, "Requirement");
+                Message = string.Format(NotificationMessages.STR_ObjectUpdated, "Requirement");
                 //return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
                 return Redirect(Url.EditProjectUrl(dest.Project.Id, StaticValues.Tab_Requirements));
             }
