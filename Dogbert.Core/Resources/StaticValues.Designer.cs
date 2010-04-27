@@ -79,6 +79,15 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to tab-5.
+        /// </summary>
+        public static string Tab_RequirementCategories {
+            get {
+                return ResourceManager.GetString("Tab_RequirementCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tab-2.
         /// </summary>
         public static string Tab_Requirements {

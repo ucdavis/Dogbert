@@ -40,7 +40,7 @@
                 <%= Html.ValidationMessage("Requirement.PriorityType", "*")%>                
             </p>
             <p>
-                <%= this.Select("Requirement.Category").Options(Model.Categories, x => x.Id, x => x.Name)
+                <%= this.Select("Requirement.Category").Options(Model.Project.RequirementCategories.Where(a => a.IsActive), x => x.Id, x => x.Name)
                         .FirstOption("--Select a Category--")
                         .HideFirstOptionWhen(Model.Requirement.Category != null && Model.Requirement.Category.IsActive)
                         .Label("Category Type:")

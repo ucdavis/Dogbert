@@ -68,7 +68,7 @@
 		<property name="IsActive" column="IsActive" />
 	</class>
 
-	<class name="Dogbert.Core.Domain.Category, Dogbert.Core" table="RequirementCategories" >
+	<!--<class name="Dogbert.Core.Domain.RequirementCategory, Dogbert.Core" table="RequirementCategories" >
     <id name="Id" column="id" unsaved-value="0">
 			<generator class="identity" />
 		</id>
@@ -77,7 +77,7 @@
 		<property name="IsActive" column="IsActive" />
 
 		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
-	</class>
+	</class>-->
 
 
 

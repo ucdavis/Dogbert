@@ -24,8 +24,8 @@ namespace Dogbert.Tests.Controllers
         protected IRepository<Project> ProjectRepository { get; set; }
         protected List<RequirementType> RequirementTypes { get; set; }
         protected IRepository<RequirementType> RequirementTypeRepository { get; set; }
-        protected List<Category> Categories { get; set; }
-        protected IRepository<Category> CategoryRepository { get; set; }
+        protected List<RequirementCategory> Categories { get; set; }
+        protected IRepository<RequirementCategory> CategoryRepository { get; set; }
         protected List<PriorityType> PriorityTypes { get; set; }
         protected IRepository<PriorityType> PriorityTypeRepository { get; set; }
         protected List<Requirement> Requirements { get; set; }
@@ -43,9 +43,9 @@ namespace Dogbert.Tests.Controllers
             RequirementTypeRepository = FakeRepository<RequirementType>();
             Controller.Repository.Expect(a => a.OfType<RequirementType>()).Return(RequirementTypeRepository).Repeat.Any();
 
-            Categories = new List<Category>();
-            CategoryRepository = FakeRepository<Category>();
-            Controller.Repository.Expect(a => a.OfType<Category>()).Return(CategoryRepository).Repeat.Any();
+            Categories = new List<RequirementCategory>();
+            CategoryRepository = FakeRepository<RequirementCategory>();
+            Controller.Repository.Expect(a => a.OfType<RequirementCategory>()).Return(CategoryRepository).Repeat.Any();
 
             PriorityTypes = new List<PriorityType>();
             PriorityTypeRepository = FakeRepository<PriorityType>();

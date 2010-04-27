@@ -125,6 +125,10 @@
     <value>tab-4</value>
     <comment>Tab Used in Edit Projects to show Uploaded files related to a project</comment>
   </data>
+  <data name="Tab_RequirementCategories" xml:space="preserve">
+    <value>tab-5</value>
+    <comment>Tab used in Edit Projects</comment>
+  </data>
   <data name="Tab_Requirements" xml:space="preserve">
     <value>tab-2</value>
     <comment>Tab used in Edit Projects</comment>

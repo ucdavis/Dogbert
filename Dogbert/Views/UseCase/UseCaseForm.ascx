@@ -32,7 +32,7 @@
                
                 <p>
                  <%= this.Select("UseCase.RequirementCategory")
-                    .Options(Model.RequirementCategories, x=>x.Id, x=>x.Name)
+                    .Options(Model.Project.RequirementCategories.Where(a => a.IsActive), x=>x.Id, x=>x.Name)
                     .Selected(Model.UseCase != null && Model.UseCase.RequirementCategory != null ? Model.UseCase.RequirementCategory.Id : 1)
                     .FirstOption("--Requirement Category--")
                     .HideFirstOptionWhen(Model.RequirementCategories!= null)

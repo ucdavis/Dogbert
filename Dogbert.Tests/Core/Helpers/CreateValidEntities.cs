@@ -113,9 +113,9 @@ namespace Dogbert.Tests.Core.Helpers
         /// </summary>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public static Category Category(int? count)
+        public static RequirementCategory Category(int? count)
         {
-            var rtValue = new Category();
+            var rtValue = new RequirementCategory();
             rtValue.Name = "Name" + count.Extra();
             rtValue.IsActive = true;
 
@@ -238,7 +238,7 @@ namespace Dogbert.Tests.Core.Helpers
             rtValue.RequirementType = new RequirementType();
             rtValue.PriorityType = new PriorityType();
             rtValue.Project = new Project();
-            rtValue.Category = new Category();
+            rtValue.Category = new RequirementCategory();
             rtValue.DateAdded = SystemTime.Now();
             rtValue.LastModified = SystemTime.Now();
 

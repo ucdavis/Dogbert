@@ -12,7 +12,7 @@ namespace Dogbert.Core.Domain
             SetDefaults();
         }
 
-        public Requirement(string description, RequirementType requirementType, PriorityType priorityType, int technicalDifficulty, Project project, Category category)
+        public Requirement(string description, RequirementType requirementType, PriorityType priorityType, int technicalDifficulty, Project project, RequirementCategory category)
         {
             Description = description;
             RequirementType = requirementType;
@@ -40,7 +40,7 @@ namespace Dogbert.Core.Domain
         [NotNull]
         public virtual Project Project { get; set; }
         [NotNull]
-        public virtual Category Category { get; set; }
+        public virtual RequirementCategory Category { get; set; }
         public virtual bool IsComplete { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastModified { get; set; }

@@ -50,7 +50,7 @@ namespace Dogbert.Tests.Core
             }
         }
 
-        protected virtual void FakeCategories(List<Category> entities, int entitiesToAdd)
+        protected virtual void FakeCategories(List<RequirementCategory> entities, int entitiesToAdd)
         {
             var offSet = entities.Count;
             for (int i = 0; i < entitiesToAdd; i++)

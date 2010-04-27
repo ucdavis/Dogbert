@@ -351,13 +351,13 @@ namespace Dogbert.Tests.Core
         /// <param name="entriesToAdd">The entries to add.</param>
         protected void LoadCategories(int entriesToAdd)
         {
-            Repository.OfType<Category>().DbContext.BeginTransaction();
+            Repository.OfType<RequirementCategory>().DbContext.BeginTransaction();
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.Category(i + 1);
-                Repository.OfType<Category>().EnsurePersistent(validEntity);
+                Repository.OfType<RequirementCategory>().EnsurePersistent(validEntity);
             }
-            Repository.OfType<Category>().DbContext.CommitTransaction();
+            Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();
         }
 
         /// <summary>

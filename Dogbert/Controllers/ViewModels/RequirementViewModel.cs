@@ -9,7 +9,7 @@ namespace Dogbert.Controllers.ViewModels
     public class RequirementViewModel
     {
         public IEnumerable<RequirementType> RequirementTypes { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<RequirementCategory> Categories { get; set; }
         public IEnumerable<PriorityType> PriorityTypes { get; set; }
         public Project Project { get; set; }
         public Requirement Requirement { get; set; }
@@ -21,7 +21,7 @@ namespace Dogbert.Controllers.ViewModels
             var viewModel = new RequirementViewModel
                 {                                    
                     RequirementTypes = repository.OfType<RequirementType>().Queryable.Where(a => a.IsActive).ToList(),                                    
-                    Categories = repository.OfType<Category>().Queryable.Where(a => a.IsActive).ToList(),
+                    Categories = repository.OfType<RequirementCategory>().Queryable.Where(a => a.IsActive).ToList(),
                     PriorityTypes = repository.OfType<PriorityType>().Queryable.Where(a => a.IsActive).ToList(),
                     Project = project
                 };

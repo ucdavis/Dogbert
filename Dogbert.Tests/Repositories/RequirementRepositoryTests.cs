@@ -45,7 +45,7 @@ namespace Dogbert.Tests.Repositories
             rtValue.RequirementType = RequirementTypeRepository.GetNullableByID("1");
             rtValue.PriorityType = Repository.OfType<PriorityType>().Queryable.FirstOrDefault();
             rtValue.Project = Repository.OfType<Project>().Queryable.FirstOrDefault();
-            rtValue.Category = Repository.OfType<Category>().Queryable.FirstOrDefault();
+            rtValue.Category = Repository.OfType<RequirementCategory>().Queryable.FirstOrDefault();
 
             return rtValue;
         }

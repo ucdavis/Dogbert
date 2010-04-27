@@ -60,10 +60,10 @@ namespace Dogbert.Core.Domain
         public virtual IList<UseCase> UseCases { get; set; }
     }
 
-    public class Category : LookupBase
-    {
-        public virtual Project Project { get; set; }
-    }
+    //public class Category : LookupBase
+    //{
+    //    public virtual Project Project { get; set; }
+    //}
 
     public class FileType : LookupBase
     {

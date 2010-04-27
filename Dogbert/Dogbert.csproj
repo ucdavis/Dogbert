@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
     <Compile Include="Controllers\ProjectFileController.cs" />
+    <Compile Include="Controllers\RequirementCategoryController.cs" />
     <Compile Include="Controllers\UseCaseController.cs" />
     <Compile Include="Controllers\Helpers\Copiers.cs" />
     <Compile Include="Controllers\Helpers\ReturnUrlGenerator.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\ViewModels\ProjectFileViewModel.cs" />
+    <Compile Include="Controllers\ViewModels\RequirementCategoryViewModel.cs" />
     <Compile Include="Controllers\ViewModels\UseCaseViewModel.cs" />
     <Compile Include="Controllers\ViewModels\ProjectsViewModel.cs" />
     <Compile Include="Controllers\ViewModels\RequirementViewModel.cs" />
@@ -176,7 +178,9 @@
     <Content Include="Views\ProjectFile\ProjectFileForm.ascx" />
     <Content Include="Views\ProjectFile\Remove.aspx" />
     <Content Include="Views\Project\ProjectFileListForm.ascx" />
+    <Content Include="Views\Project\RequirementCategoryForm.ascx" />
     <Content Include="Views\Project\UseCaseListForm.ascx" />
+    <Content Include="Views\RequirementCategory\Create.aspx" />
     <Content Include="Views\UseCase\EditChildren.aspx" />
     <Content Include="Views\UseCase\RelatedUseCaseListForm.ascx" />
     <Content Include="Views\UseCase\UseCaseChildForm.ascx" />

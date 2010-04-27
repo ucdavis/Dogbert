@@ -13,13 +13,13 @@ namespace Dogbert.Tests.Repositories
     /// LookupFieldName:	Name
     /// </summary>
     [TestClass]
-    public class CategoryRepositoryTests : AbstractRepositoryTests<Category, int>
+    public class CategoryRepositoryTests : AbstractRepositoryTests<RequirementCategory, int>
     {
         /// <summary>
         /// Gets or sets the Category repository.
         /// </summary>
         /// <value>The Category repository.</value>
-        public IRepository<Category> CategoryRepository { get; set; }
+        public IRepository<RequirementCategory> CategoryRepository { get; set; }
 		
         #region Init and Overrides
 
@@ -28,7 +28,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         public CategoryRepositoryTests()
         {
-            CategoryRepository = new Repository<Category>();
+            CategoryRepository = new Repository<RequirementCategory>();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         /// <param name="counter">The counter.</param>
         /// <returns>A valid entity of type T</returns>
-        protected override Category GetValid(int? counter)
+        protected override RequirementCategory GetValid(int? counter)
         {
             return CreateValidEntities.Category(counter);
         }
@@ -46,7 +46,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         /// <param name="numberAtEnd"></param>
         /// <returns></returns>
-        protected override IQueryable<Category> GetQuery(int numberAtEnd)
+        protected override IQueryable<RequirementCategory> GetQuery(int numberAtEnd)
         {
             return CategoryRepository.Queryable.Where(a => a.Name.EndsWith(numberAtEnd.ToString()));
         }
@@ -57,7 +57,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="counter"></param>
-        protected override void FoundEntityComparison(Category entity, int counter)
+        protected override void FoundEntityComparison(RequirementCategory entity, int counter)
         {
             Assert.AreEqual("Name" + counter, entity.Name);
         }
@@ -67,7 +67,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="action">The action.</param>
-        protected override void UpdateUtility(Category entity, ARTAction action)
+        protected override void UpdateUtility(RequirementCategory entity, ARTAction action)
         {
             const string updateValue = "Updated";
             switch (action)

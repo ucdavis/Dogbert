@@ -6,13 +6,10 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
 <script type="text/javascript">
     $(function() {
-        var tabs = $("#tabs");
         $("#tabs").tabs();
-    });
 
-    $(function() {
-    $("#" + "Project_ProjectedStart").datepicker(); //TextBox("Project.ProjectedStart")
-    $("#" + "Project_ProjectedEnd").datepicker(); //TextBox("Project.ProjectedStart")
+        $("#" + "Project_ProjectedStart").datepicker(); //TextBox("Project.ProjectedStart")
+        $("#" + "Project_ProjectedEnd").datepicker(); //TextBox("Project.ProjectedStart")
     });
 
 </script>
@@ -34,6 +31,7 @@
             <li><a href="#<%= StaticValues.Tab_Requirements %>"><span>Requirements</span></a></li>
             <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
             <li><a href="#<%= StaticValues.Tab_ProjectFiles %>"><span>Files</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_RequirementCategories %>"><span>Requirement Categories</span></a></li>
         </ul>
         
         <div id="<%= StaticValues.Tab_ProjectDetails %>">
@@ -64,6 +62,12 @@
             <p>
                 <%= Html.ActionLink<ProjectFileController>(a => a.Create(Model.Project.Id), "Create ProjectFile") %>
             </p>
+        </div>
+    
+        <div id="<%= StaticValues.Tab_RequirementCategories %>">
+        
+            <% Html.RenderPartial("RequirementCategoryForm", Model.Project); %>
+        
         </div>
     
     </div> <%--//end tabs--%> 
