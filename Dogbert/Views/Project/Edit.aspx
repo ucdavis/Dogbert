@@ -2,6 +2,7 @@
 <%@ Import Namespace="Dogbert.Core.Resources"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
 
+<%--PROJECT/EDIT--%>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
 <script type="text/javascript">
     $(function() {

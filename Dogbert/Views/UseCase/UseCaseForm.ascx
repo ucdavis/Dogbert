@@ -5,9 +5,7 @@
 
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
      <%= Html.ValidationSummary() %>
-
-        
-        <h4>Project: <%= this.Label("UseCase.Project.Name")%></h4>     
+      
         <fieldset>
             <legend>Use Case</legend>
             <% using (Html.BeginForm())

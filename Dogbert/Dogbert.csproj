@@ -170,6 +170,9 @@
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Project\UseCaseListForm.ascx" />
+    <Content Include="Views\UseCase\EditUseCaseSteps.aspx" />
+    <Content Include="Views\UseCase\CreateUseCaseStep.aspx" />
+    <Content Include="Views\UseCase\UseCaseStepForm.ascx" />
     <Content Include="Views\UseCase\UseCaseStepListForm.ascx" />
     <Content Include="Views\UseCase\Create.aspx" />
     <Content Include="Views\UseCase\Edit.aspx" />
@@ -177,7 +180,6 @@
     <Content Include="Views\Project\DynamicIndex.aspx" />
     <Content Include="Views\Project\ProjectUseCaseStepsForm.ascx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
-    <Content Include="Views\Project\ProjectRequirmentsForm.ascx" />
     <Content Include="Views\Project\EditText.aspx" />
     <Content Include="Views\Project\ProjectEditForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />

@@ -35,7 +35,7 @@ namespace Dogbert.Controllers
             if (project == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
             var viewModel = UseCaseViewModel.Create(Repository, project);
@@ -136,7 +136,24 @@ namespace Dogbert.Controllers
         }
 
 
-        // POST: /EditUseCase/UseCaseSteps
+        // GET: /EditUseCase/CreateUseCaseStep
+        /// </summary>
+        /// <param name="id">Use Case ID to link to</param>
+        /// <returns></returns>
+        public ActionResult CreateUseCaseStep(int useCaseId)
+        {
+            var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
+            if (useCase == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+
+            var viewModel = UseCaseViewModel.Create(Repository, useCase.Project);
+            return View(viewModel);
+        }
+
+        // POST: /EditUseCase/CreateUseCaseStep
         [AcceptPost]
         public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
         {
@@ -159,7 +176,7 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<UseCaseStep>().EnsurePersistent(useCaseStep);
                 //_projectRepository.EnsurePersistent(projectText);//which repository
-                Message = "New Text Created Successfully";
+                Message = "Use Case Step Created Successfully";
                 //return RedirectToAction("DynamicIndex");
             }
 
@@ -178,6 +195,40 @@ namespace Dogbert.Controllers
             var viewModel = UseCaseViewModel.Create(Repository, existingUCSteps.UseCase.Project);
             viewModel.UseCaseStep = existingUCSteps;
             return View(viewModel);
+        }
+
+        // POST: /EditUseCase/EditUseCaseSteps/
+        [AcceptPost]
+        public ActionResult EditUseCaseSteps(int Id, UseCaseStep useCaseStep)
+        {
+            var existingUCS = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
+
+            TransferValuesTo(existingUCS, useCaseStep);
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, existingUCS.ValidationResults());
+
+            var uc = Repository.OfType<UseCase>().GetNullableByID(existingUCS.UseCase.Id);
+
+
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCaseStep>().EnsurePersistent(existingUCS);
+                Message = "Use Case edited successfully";
+                return Redirect(Url.EditProjectUrl(existingUCS.UseCase.Project.Id, StaticValues.Tab_UseCases));
+                //?? fix: redirect to use case edit page
+            }
+            var project = Repository.OfType<Project>().GetNullableByID(existingUCS.UseCase.Project.Id);
+            return RedirectToAction("Edit", project);
+            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
+        }
+
+        //Transfer Values: For  /Project/EditUseCase/
+        private static void TransferValuesTo(UseCaseStep StepToUpdate, UseCaseStep Step)
+        {
+            StepToUpdate.Description = Step.Description;
+            StepToUpdate.Optional = Step.Optional;
+            StepToUpdate.LastModified =  DateTime.Now;
+
         }
 
        
