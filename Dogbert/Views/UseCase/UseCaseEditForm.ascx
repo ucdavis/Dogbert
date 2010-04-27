@@ -5,13 +5,10 @@
 
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
      <%= Html.ValidationSummary() %>
-      
+     <%= Html.AntiForgeryToken() %>
+
         <fieldset>
             <legend>Use Case</legend>
-            <% using (Html.BeginForm())
-               { %>
-                   
-                    <%= Html.AntiForgeryToken() %>
                    <%-- <%= Html.Hidden("Id", Model.UseCase.Id) %>
                     <%= Html.Hidden("projectID", Model.UseCase.Project.Id) %>--%>
                 <p>
@@ -38,8 +35,18 @@
                     .HideFirstOptionWhen(Model.RequirementCategories!= null)
                     .Label("Requirement Category:")%>
                </p>
-           
                
+               <p>
+                   <%--List Actors--%>
+                   <% Html.Grid(Model.UseCase.Actors)
+                   .Transactional()
+                   .Name("UseCaseActors")
+                   .PrefixUrlParameters(false)
+                   .Columns(col =>
+                      {             col.Add(a => a.Name);
+                                })
+                    .Render(); %>
+                </p>
                 <p>
                  <%= this.MultiSelect("UseCase.Actors")
                     .Options(Model.Actors, x=>x.Id, x=>x.Name)
@@ -47,13 +54,10 @@
                     .Selected(Model.UseCase != null && Model.UseCase.Actors != null ? Model.UseCase.Actors : new List<Actor>()) 
                     .FirstOption("--Actors--")
                     .HideFirstOptionWhen(Model.Actors!= null)
-                    .Label("Select Actors:")%>
-                   
-                    
+                    .Label("Re-Select Actors:")%>
                </p>
-       
-            <%} %>
-                      
+               
+   
         </fieldset>
          
 

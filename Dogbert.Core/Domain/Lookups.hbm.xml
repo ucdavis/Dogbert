@@ -58,7 +58,13 @@
 			<generator class="identity" />
 		</id>
 
-		<property name="Name" column="Name" />
+    <bag name="UseCases" table="UseCaseXActor">
+      <key column="ActorID" />
+      <many-to-many column="UseCaseID" class="Dogbert.Core.Domain.UseCase, Dogbert.Core" />
+    </bag>
+
+
+    <property name="Name" column="Name" />
 		<property name="IsActive" column="IsActive" />
 	</class>
 
@@ -73,11 +79,15 @@
 		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
 	</class>
 
-	<class name="Dogbert.Core.Domain.FileType, Dogbert.Core" table="FileTypes" >
+
+
+
+  <class name="Dogbert.Core.Domain.FileType, Dogbert.Core" table="FileTypes" >
     <id name="Id" column="id" unsaved-value="0">
 			<generator class="identity" />
 		</id>
 
+    
 		<property name="Name" column="Name" />
 		<property name="IsActive" column="IsActive" />
 

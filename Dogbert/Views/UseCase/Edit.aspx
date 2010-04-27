@@ -22,15 +22,17 @@
         <ul>
             <li><a href="#tab-1"><span>Use Case Details</span></a></li>
             <li><a href="#tab-2"><span>Use Case Steps</span></a></li>
+            <li><a href="#tab-3"><span>Related Uses Cases</span></a></li>
         </ul>
         
         <div id="tab-1">
-        <% using (Html.BeginForm()) {%>
-            <% Html.RenderPartial("UseCaseForm"); %>
+         <% using (Html.BeginForm()) {%>
+            <% Html.RenderPartial("UseCaseStepListForm"); %>
             <p>
                 <input type="submit" value="Save" />
             </p>
-        <% } %>
+
+            <% } %>
         </div>
         
         
@@ -39,6 +41,14 @@
              <p>
                 <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.CreateUseCaseStep(Model.UseCase.Id), "Create UseCaseStep")%>
             </p>
+         </div>
+         
+         <div id= "tab-3">
+            <% Html.RenderPartial("RelateduseCaseListForm"); %>
+            <p>
+                <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditChildren (Model.UseCase.Id), "Update Related Use Cases")%>
+            </p> 
+            
          </div>
     
     <div>

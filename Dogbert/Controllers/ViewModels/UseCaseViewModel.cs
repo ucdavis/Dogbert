@@ -22,9 +22,11 @@ namespace Dogbert.Controllers.ViewModels
             var viewModel = new UseCaseViewModel
             {
                 //populate the stuff needed for use cases
-                Actors = repository.OfType<Actor>().Queryable.ToList(),
+                Actors = repository.OfType<Actor>().Queryable.Where(a => a.IsActive).ToList(),
                 RequirementCategories = repository.OfType<RequirementCategory>().Queryable.ToList(),
+                UseCases = repository.OfType<UseCase>().Queryable.ToList(),
                 Project = project
+
             };
             return viewModel;
         }

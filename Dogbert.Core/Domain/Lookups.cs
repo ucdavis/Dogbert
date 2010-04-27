@@ -57,6 +57,7 @@ namespace Dogbert.Core.Domain
 
     public class Actor : LookupBase
     {
+        public virtual IList<UseCase> UseCases { get; set; }
     }
 
     public class Category : LookupBase

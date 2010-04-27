@@ -177,6 +177,10 @@
     <Content Include="Views\ProjectFile\Remove.aspx" />
     <Content Include="Views\Project\ProjectFileListForm.ascx" />
     <Content Include="Views\Project\UseCaseListForm.ascx" />
+    <Content Include="Views\UseCase\EditChildren.aspx" />
+    <Content Include="Views\UseCase\RelatedUseCaseListForm.ascx" />
+    <Content Include="Views\UseCase\UseCaseChildForm.ascx" />
+    <Content Include="Views\UseCase\UseCaseEditForm.ascx" />
     <Content Include="Views\UseCase\EditUseCaseSteps.aspx" />
     <Content Include="Views\UseCase\CreateUseCaseStep.aspx" />
     <Content Include="Views\UseCase\UseCaseStepForm.ascx" />

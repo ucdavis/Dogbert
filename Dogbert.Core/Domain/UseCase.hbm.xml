@@ -20,7 +20,7 @@
     <many-to-one name="Project" class="Project" column="ProjectID" cascade="none" />
     <many-to-one name="RequirementCategory" class="RequirementCategory" column="CategoryID" cascade="none" />
 
-    <bag name="Actors" table="UseCaseXActor" cascade="all-delete-orphan">
+    <bag name="Actors" table="UseCaseXActor" cascade="save-update">
       <key column="UseCaseID" />
       <many-to-many column="ActorID" class="Dogbert.Core.Domain.Actor, Dogbert.Core" />
     </bag>

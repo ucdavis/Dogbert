@@ -38,7 +38,21 @@ namespace Dogbert.Core.Domain
             Steps = new List<UseCaseStep>();
             Actors = new List<Actor>();
             Requirements = new List<Requirement>();
+            Children = new List<UseCase>();
+            Parents = new List<UseCase>();
         }
+
+        public virtual void addChild(UseCase Child)
+        {
+            this.Children.Add(Child);
+        }
+
+        public virtual void AddActors(Actor Actor)
+        {
+                this.Actors.Add(Actor);
+        }
+
+       
 
         public virtual void AddSteps(UseCaseStep UseCaseStep)
         {

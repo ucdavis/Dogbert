@@ -65,6 +65,12 @@ namespace Dogbert.Controllers
 
             project.AddUseCase(useCase);
 
+            var uc = Repository.OfType<UseCase>().GetNullableByID (project.Id);
+            foreach (Actor i in useCase.Actors)
+            {
+                uc.AddActors(i);
+            }
+
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCase.ValidationResults());
 
             if (ModelState.IsValid)
@@ -101,23 +107,30 @@ namespace Dogbert.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, UseCase UseCase)
         {
-            var pt = Repository.OfType<UseCase>().GetNullableByID(id);
+            var uc = Repository.OfType<UseCase>().GetNullableByID(id);
 
-            TransferValuesTo(pt, UseCase);
+            TransferValuesTo(uc, UseCase);
 
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, pt.ValidationResults());
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, uc.ValidationResults());
 
-            var proj = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+            var proj = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
 
+            uc.Actors.Clear();    //clear list of actors
+            foreach (Actor i in UseCase.Actors) //update list of actors
+            {
+                uc.AddActors(i);
+            }
+
+   
 
             if (ModelState.IsValid)
             {
-                Repository.OfType<UseCase>().EnsurePersistent(pt);
+                Repository.OfType<UseCase>().EnsurePersistent(uc);
                 Message = "Use Case edited successfully";
-                return Redirect(Url.EditProjectUrl(pt.Project.Id, StaticValues.Tab_UseCases));
+                return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
 
             }
-            var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+            var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
             return RedirectToAction("Edit", project);
             // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
 
@@ -231,6 +244,45 @@ namespace Dogbert.Controllers
 
         }
 
+        // GET: /EditUseCase/EditChildren
+        public ActionResult EditChildren(int ucid)
+        {
+            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            if (uc == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+
+            var viewModel = UseCaseViewModel.Create(Repository, uc.Project);
+            return View(viewModel);
+        }
+
+        // POST: /EditUseCase/EditChildren
+        [AcceptPost]
+        public ActionResult EditChildren(int ucid, List<UseCase> children)
+        {
+            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+
+            uc.Children.Clear();    //clear list of children
+            foreach (UseCase i in children) //update list of children
+            {
+                uc.addChild (i);
+            }
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, uc.ValidationResults());
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCase>().EnsurePersistent(uc);
+                Message = "Use Case edited successfully";
+                return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
+                //?? fix: redirect to use case edit page
+            }
+           // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            return RedirectToAction("Edit", uc);
+        
+        }
+
+        
        
     }
 }
