@@ -12,6 +12,7 @@ namespace Dogbert.Core.Domain
         public virtual IList<ProjectText> ProjectTexts { get; set; }
         public virtual IList<RequirementCategory> RequirementCategories { get; set; }
         public virtual IList<UseCase> UseCases { get; set; }
+        public virtual ICollection<ProjectFile> ProjectFiles { get; set; }
 
         [Required]
         [Length(50)]

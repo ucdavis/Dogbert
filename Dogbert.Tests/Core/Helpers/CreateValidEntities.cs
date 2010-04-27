@@ -121,6 +121,7 @@ namespace Dogbert.Tests.Core.Helpers
             rtValue.Type = new FileType();
             rtValue.Project = new Project();
             rtValue.DateAdded = SystemTime.Now();
+            rtValue.FileContents = new byte[] {1,2,3};
 
             return rtValue;
         }

@@ -6,10 +6,11 @@
 			<generator class="identity" />
 		</id>
 
-		<property name="FileName" column="FileName" />
-		<many-to-one name="Type" class="Dogbert.Core.Domain.FileType, Dogbert.Core" column="FileTypeID" cascade="none" />
+		<property name="FileName" column="FileName" />    
+		<many-to-one name="Type" class="Dogbert.Core.Domain.FileType, Dogbert.Core" column="FileTypeId" cascade="none" />
+    <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectId" cascade="none" />
 		<property name="DateAdded" column="DateAdded" />
-		<many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
-
+    <property name="DateChanged" column="DateChanged" />
+    <property name="FileContents" column="FileContents" />
 	</class>
 </hibernate-mapping>
