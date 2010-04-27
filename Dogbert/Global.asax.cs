@@ -12,17 +12,17 @@ namespace Dogbert
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        //public static void RegisterRoutes(RouteCollection routes)
+        //{
+        //    routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "Default",                                              // Route name
-                "{controller}/{action}/{id}",                           // URL with parameters
-                new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
-                );
+        //    routes.MapRoute(
+        //        "Default",                                              // Route name
+        //        "{controller}/{action}/{id}",                           // URL with parameters
+        //        new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
+        //        );
 
-        }
+        //}
 
         protected void Application_Start()
         {
@@ -32,7 +32,8 @@ namespace Dogbert
 
             xVal.ActiveRuleProviders.Providers.Add(new ValidatorRulesProvider());
 
-            RegisterRoutes(RouteTable.Routes);
+            //RegisterRoutes(RouteTable.Routes);
+            new RouteConfigurator().RegisterRoutes();
 
             ModelBinders.Binders.DefaultBinder = new UCDArchModelBinder();
 
