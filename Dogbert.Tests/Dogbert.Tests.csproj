@@ -120,9 +120,11 @@
     <Compile Include="Repositories\ProjectTypeRepositoryTests.cs" />
     <Compile Include="Repositories\RequirementCategoryRepositoryTests.cs" />
     <Compile Include="Repositories\RequirementRepositoryTests.cs" />
+    <Compile Include="Repositories\RequirementTypeRepositoryTests.cs" />
     <Compile Include="Repositories\StatusRepositoryTests.cs" />
     <Compile Include="Repositories\TextTypeRepositoryTests.cs" />
     <Compile Include="Repositories\UseCaseRepositoryTests.cs" />
+    <Compile Include="Repositories\WorkerRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
