@@ -51,7 +51,7 @@ namespace Dogbert.Controllers
         public ActionResult UpdateProjectPriority(int[] projects) 
         {
             Project p;
-            for (int i = 1; i <= projects.Length; i++)
+            for (int i = 0; i < projects.Length; i++)
             {
                 p = Repository.OfType<Project>().GetByID(projects[i]);
                 p.Priority = i + 1;

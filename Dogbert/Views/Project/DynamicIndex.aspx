@@ -30,23 +30,18 @@
              onDragClass: "myDragClass",
              onDrop: function(table, row) {
 
-             var rows = $(table).find("tBody tr");
-            // var rid = $(table).find("tBody th[name=Id]")
-             //var  rid = $("tbody#id").find("tr:gt(0)");
-            
-                 debugger;
+                 var rows = $(table).find("tBody tr");
+
                  var newOrder = new Array();
 
                  for (i = 0; i < rows.length; i++) {
-                     newOrder[i] = rows[i].id;
+                     newOrder[i] = $(rows[i]).find("input[type='hidden']").val();
                  }
-                 debugger;
                  var url = '<%= Url.Action("UpdateProjectPriority", "Project") %>';
-                 $.post(url, { projects: newOrder  }, 
-                            function(result) { // refresh the calendar
-                                alert("Completed Update");
-                            });
-                 //                  debugger;
+                 $.post(url, { projects: newOrder },
+                        function(result) { // refresh the calendar
+                            alert("Completed Update");
+                        });
              }
          }); //tableDnD
      });
@@ -90,6 +85,9 @@
                             {
                                 col.Add(project =>
                                             { %>
+                                            
+                                                <%= Html.Hidden("projectId", project.Id) %>
+                                            
                                                 <%=
                                                     Html.ActionLink<ProjectController>(a => a.Edit(project.Id), "Edit")
                                                 %>
