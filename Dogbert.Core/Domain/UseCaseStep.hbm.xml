@@ -11,6 +11,8 @@
     <property name="Description" column="Description" />
     <property name="Order" column="[Order]" />
     <property name="Optional" column="Optional" />
+    <property name="DateAdded" column="DateAdded" />
+    <property name="LastModified" column="LastModified" />
 
     <many-to-one name="UseCase" class="UseCase" column="UseCaseID" cascade="none" />
 

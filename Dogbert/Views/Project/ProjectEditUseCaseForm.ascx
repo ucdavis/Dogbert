@@ -9,15 +9,14 @@
     <%= Html.ValidationSummary() %>
 
         <div>
-        
-        <%=Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.Edit(Model.UseCase.Project.Id), "Back to Project")%>
-                       
-        </div>
-        
+             <%=Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.Edit(Model.UseCase.Project.Id), "Back to Project")%>
+          </div>
+        <h4> <%= this.Label("UseCase.Project.Name")%></h4>     
         <fieldset>
-            <legend>Project Use Case</legend>
+            <legend>Use Case</legend>
             <% using (Html.BeginForm())
                { %>
+                   
                     <%= Html.AntiForgeryToken() %>
                     <%= Html.Hidden("Id", Model.UseCase.Id) %>
                     <%= Html.Hidden("projectID", Model.UseCase.Project.Id) %>

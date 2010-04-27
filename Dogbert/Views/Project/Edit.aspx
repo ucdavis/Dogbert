@@ -7,6 +7,11 @@
         $("#tabs").tabs();
     });
 
+    $(function() {
+    $("#" + "Project_ProjectedStart").datepicker(); //TextBox("Project.ProjectedStart")
+    $("#" + "Project_ProjectedEnd").datepicker(); //TextBox("Project.ProjectedStart")
+    });
+
 </script>
 </asp:Content>
 

@@ -9,10 +9,31 @@
 <%--<%          Add Project Text%>      --%>
         <fieldset>
             <legend>Project Text</legend>
+              
+              <% Html.Grid(Model.Project.ProjectTexts)
+               .Transactional()
+               .Name("Texts")
+               .PrefixUrlParameters(false)
+               .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
+               .Columns(col =>
+                  {
+                      col.Add(pText =>
+                          { %>
+                            <%=
+                                Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.EditText(pText.Id), "Edit")
+                            %>
+                            <% });
+                            col.Add(pText => pText.TextType.Name);
+                            col.Add(pText => pText.Text);
+                            })
+                .Render(); %>
+             
+              <h3>Add New Text</h3>
             <% using (Html.BeginForm("CreateText", "Project", FormMethod.Post))
                { %>
                 <%= Html.AntiForgeryToken() %>
                 <%= Html.Hidden("projectId", Model.Project.Id) %>
+                
                 <p>
                     <%= this.TextArea("Text").Label("Text:")%>
                 </p>
@@ -30,23 +51,7 @@
                 </p>
             <%} %>
             
-               <% Html.Grid(Model.Project.ProjectTexts)
-               .Transactional()
-               .Name("Texts")
-               .PrefixUrlParameters(false)
-               .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
-               .Columns(col =>
-                  {
-                      col.Add(pText =>
-                          { %>
-                            <%=
-                                Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.EditText(pText.Id), "Edit")
-                            %>
-                            <% });
-                            col.Add(pText => pText.TextType.Name);
-                            col.Add(pText => pText.Text);
-                            })
-                .Render(); %>
+             
             
         </fieldset>
 

@@ -2,17 +2,16 @@
 <%@ Import Namespace="xVal.Html"%>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 
+
 <%= Html.ClientSideValidation<Project>("Project") %>
     <%= Html.ValidationSummary() %>
-
+    <%= Html.AntiForgeryToken() %>
 
     <% using (Html.BeginForm()) {%>
-
-        <%= Html.AntiForgeryToken() %>
         <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
  
         <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Back to List", "DynamicIndex")%>
         </div>
 
         <fieldset>
@@ -28,6 +27,15 @@
                 .HideFirstOptionWhen(Model.Project != null)
                 .Label("Project Type:")%>
            </p>
+           
+             <p>
+             <%= this.Select("Project.StatusCode")
+                .Options(Model.StatusCode, x=>x.Id, x=>x.Name)
+                .Selected(Model.Project != null && Model.Project.StatusCode  != null ? Model.Project.StatusCode.Id : "PE")
+                .FirstOption("--Select Status--")
+                .HideFirstOptionWhen(Model.Project != null)
+                .Label("Project Status:")%>
+           </p>
            <p>
            
                 <%= this.TextBox("Project.Contact").Label("Contact:")%>
@@ -42,7 +50,10 @@
                 <%= this.TextBox("Project.Complexity").Label("Complexity:")%>
             </p>
             <p>
-                <%= this.TextBox("Project.ProjectedStart").Format("{0:d}").Label("Start Date:")%>
+                
+               <%= this.TextBox("Project.ProjectedStart").Format("{0:d}").Label("Start Date:")%>
+
+                
             </p>
             <p>
                 <%= this.TextBox("Project.ProjectedEnd").Format("{0:d}").Label("End Date/Deadline:")%>

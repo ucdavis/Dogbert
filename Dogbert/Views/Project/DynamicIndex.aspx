@@ -39,7 +39,7 @@
                  }
 
                  var url = '<%= Url.Action("UpdateProjectPriority", "Project") %>';
-                 $.post(url, { projects: newOrder },
+                 $.post(url, { projects: newOrder  }, 
                             function(result) { // refresh the calendar
                                 alert("Completed Update");
                             });
@@ -78,7 +78,7 @@
     <div id="tab-<%= i %>">
         
         <h2><%= Html.Encode(projectType) %></h2>
-        
+    
         <%      
                 Html.Grid(Model.Projects.Where(p => p.ProjectType.Name == projectType))
                .Transactional()
@@ -91,6 +91,7 @@
                                                     Html.ActionLink<ProjectController>(a => a.Edit(project.Id), "Edit")
                                                 %>
                                             <% });
+                                             
                                 col.Add(project => project.Id);
                                 col.Add(project => project.Name);
                                 col.Add(project => project.Contact);
@@ -101,12 +102,14 @@
                                 col.Add(project => project.Deadline).Format("{0:d}");
                                 col.Add(project => project.StatusCode.Name);
                             })
+                        
                 .Render(); %>
         
         
     </div>
 
 <% } %>
+</div>
  
 </asp:Content>
 

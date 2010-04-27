@@ -24,6 +24,7 @@ namespace Dogbert.Controllers.ViewModels
         public Project Project { get; set; }
         public IList<ProjectType> ProjectTypes { get; set; }
         public IList<User> Users { get; set; }
+        public IList<StatusCode> StatusCode { get; set; }
 
         // used for editing
         public ProjectText ProjectText { get; set; }
@@ -69,7 +70,7 @@ namespace Dogbert.Controllers.ViewModels
             {
                 //populate the stuff needed for editing
                 TextTypes = repository.OfType<TextType>().Queryable.ToList(),
-
+     
             };
             return viewModel;
         }
@@ -92,20 +93,20 @@ namespace Dogbert.Controllers.ViewModels
                 //populate the stuff needed for use cases
                 Actors = repository.OfType<Actor>().Queryable.ToList(),
                 RequirementCategories = repository.OfType<RequirementCategory>().Queryable.ToList()
-                
+              
             };
             return viewModel;
         }
 
-        public static ProjectViewModel CreateEditUseCaseSteps(IRepository repository)
-        {
-            var viewModel = new ProjectViewModel
-            {
-                //populate the stuff needed for use cases steps
+        //public static ProjectViewModel CreateEditUseCaseSteps(IRepository repository)
+        //{
+        //    var viewModel = new ProjectViewModel
+        //    {
+        //        //populate the stuff needed for use cases steps
                
-            };
-            return viewModel;
-        }
+        //    };
+        //    return viewModel;
+        //}
         
         private static ProjectViewModel CreateBasic(IRepository repository)
         {
@@ -113,6 +114,7 @@ namespace Dogbert.Controllers.ViewModels
             var viewModel = new ProjectViewModel();
                 viewModel.ProjectTypes = repository.OfType<ProjectType>().Queryable.ToList();
                 viewModel.Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).ToList();
+                viewModel.StatusCode = repository.OfType<StatusCode>().Queryable.Where(s => s.IsActive).ToList();
                //Where(p => p.ProjectType.Name == "Web Application")
             return viewModel;
         }

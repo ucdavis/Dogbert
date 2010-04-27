@@ -162,12 +162,13 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
-    <Content Include="Views\Project\DynamicIndex.aspx" />
-    <Content Include="Views\Project\ProjectRequirementsForm.ascx" />
+    <Content Include="Views\Project\ProjectUseCaseForm.ascx" />
     <Content Include="Views\Project\ProjectEditUseCaseForm.ascx" />
+    <Content Include="Views\Project\DynamicIndex.aspx" />
+    <Content Include="Views\Project\ProjectUseCaseStepsForm.ascx" />
     <Content Include="Views\Project\EditUseCase.aspx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
-    <Content Include="Views\Project\ProjectUseCaseForm.ascx" />
+    <Content Include="Views\Project\ProjectRequirmentsForm.ascx" />
     <Content Include="Views\Project\EditText.aspx" />
     <Content Include="Views\Project\ProjectEditForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />

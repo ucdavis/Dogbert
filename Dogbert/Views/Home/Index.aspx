@@ -8,6 +8,6 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%= Html.Encode(ViewData["Message"]) %></h2>
     
-    <%= Html.ActionLink<ProjectController>(a => a.Index(), "Projects") %>
+    <%= Html.ActionLink<ProjectController>(a => a.DynamicIndex(), "Projects")%>
     
 </asp:Content>

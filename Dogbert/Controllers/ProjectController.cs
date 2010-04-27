@@ -47,7 +47,8 @@ namespace Dogbert.Controllers
         }
 
         [AcceptPost]
-        public ActionResult UpdateProjectPriority(int[] projects)
+        [BypassAntiForgeryToken]
+        public ActionResult UpdateProjectPriority(int[] projects) 
         {
             Project p;
             for (int i = 0; i < projects.Length; i++)
@@ -82,7 +83,7 @@ namespace Dogbert.Controllers
             {
                 _projectRepository.EnsurePersistent(project);
                 Message = "New Project Created Successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("DynamicIndex");
             }
             else
             {
@@ -119,9 +120,12 @@ namespace Dogbert.Controllers
             projectToUpdate.Unit = project.Unit;
             projectToUpdate.Complexity = project.Complexity;
             projectToUpdate.ProjectedStart = project.ProjectedStart;
+            projectToUpdate.StatusCode = project.StatusCode;
+            projectToUpdate.LeadProgrammer = project.LeadProgrammer;
+            projectToUpdate.ProjectManager = project.ProjectManager;
+            projectToUpdate.ProjectedStart = project.ProjectedStart;
+            projectToUpdate.ProjectedEnd= project.ProjectedEnd;
             //Deadline
-            //ProjectManager
-            //LeadProgrammer
             //Description
             projectToUpdate.LastModified = DateTime.Now;
    
@@ -132,22 +136,45 @@ namespace Dogbert.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Project project)
         {
+            DateTime mindate = new DateTime(1999, 1, 1);
+            DateTime maxdate = new DateTime(9999, 12, 31);
             var projectToUpdate = _projectRepository.GetById(project.Id);
-            TransferValuesTo(projectToUpdate, project);
+            //TransferValuesTo(projectToUpdate, project);
+            
+            //Validate input
+            if(project.ProjectedEnd < project.ProjectedStart)
+            {
+                ModelState.AddModelError("ProjectedEnd", "End Date must be > Project Start Date");
+            }
+            if ((project.ProjectedEnd < mindate) || (project.ProjectedEnd > maxdate))
+            {
+                ModelState.AddModelError("ProjectedEnd", "End Date must be valid date");
+            }
+            if ((project.ProjectedStart < mindate) || (project.ProjectedStart > maxdate))
+            {
+                ModelState.AddModelError("ProjectedStart", "Start Date must be valid date");
+            }
 
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectToUpdate.ValidationResults());
+            if (ModelState.IsValid)
+            {//if values are valid, transfer to project
+                TransferValuesTo(projectToUpdate, project);
 
+            }
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectToUpdate.ValidationResults()); 
+        
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(projectToUpdate);
                 Message = "Project edited successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("DynamicIndex");
             }
             else
             {
-                var viewModel = ProjectViewModel.Create(Repository);
+                var viewModel = ProjectViewModel.CreateEdit(Repository);
                 viewModel.Project = project;
                 return View(viewModel);
+                //return RedirectToAction("Edit", projectToUpdate);
             }
         }
 
@@ -223,7 +250,7 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("DynamicIndex");
             }
 
             project.AddProjectTexts(projectText);
@@ -244,7 +271,7 @@ namespace Dogbert.Controllers
                 Repository.OfType<ProjectText>().EnsurePersistent(projectText);
                 //_projectRepository.EnsurePersistent(projectText);//which repository
                 Message = "New Text Created Successfully";
-                //return RedirectToAction("Index");
+                //return RedirectToAction("DynamicIndex");
             }
 
             var viewModel = ProjectViewModel.CreateEdit(Repository);
@@ -278,7 +305,7 @@ namespace Dogbert.Controllers
 
             if (project == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("DynamicIndex");
             }
 
             project.AddUseCase(useCase);
@@ -290,7 +317,7 @@ namespace Dogbert.Controllers
                 Repository.OfType<UseCase>().EnsurePersistent(useCase);
                 //_projectRepository.EnsurePersistent(projectText);//which repository
                 Message = "New Text Created Successfully";
-                //return RedirectToAction("Index");
+                //return RedirectToAction("DynamicIndex");
             }
 
             var viewModel = ProjectViewModel.CreateEdit(Repository);
@@ -302,12 +329,14 @@ namespace Dogbert.Controllers
         public ActionResult EditUseCase(int Id)
         {
             var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
 
             if (existingUseCase == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
             
             var viewModel = ProjectViewModel.CreateEditUseCase(Repository);
             viewModel.UseCase = existingUseCase;
+            viewModel.UseCaseStep = existingUCSteps;
             return View(viewModel);
         }
 
@@ -348,9 +377,51 @@ namespace Dogbert.Controllers
             
             UseCaseToUpdate.LastModified = DateTime.Now;
         }
-  
-    
-    
+
+
+        // /Project/EditUseCase/UseCaseSteps
+        [AcceptPost]
+        public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
+        {
+            var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
+
+            //set values
+            useCaseStep.DateAdded = DateTime.Now;
+            useCaseStep.LastModified = DateTime.Now;
+
+            if (useCase == null)
+            {
+                return RedirectToAction("DynamicIndex");
+            }
+
+            useCase.AddSteps(useCaseStep);
+
+            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, useCaseStep.ValidationResults());
+
+            if (ModelState.IsValid)
+            {
+                Repository.OfType<UseCaseStep>().EnsurePersistent(useCaseStep);
+                //_projectRepository.EnsurePersistent(projectText);//which repository
+                Message = "New Text Created Successfully";
+                //return RedirectToAction("DynamicIndex");
+            }
+
+            var viewModel = ProjectViewModel.CreateEditUseCase(Repository);
+            viewModel.UseCase = useCase;
+            return this.RedirectToAction(a => a.EditUseCase(useCaseId));
+        }
+
+        // GET: /Project/EditUseCase/EditUseCaseSteps/
+        public ActionResult EditUseCaseSteps(int Id)
+        {
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
+
+            if (existingUCSteps == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
+
+            var viewModel = ProjectViewModel.CreateEditUseCase (Repository);
+            viewModel.UseCaseStep = existingUCSteps;
+            return View(viewModel);
+        }
     }
    
 }

@@ -9,6 +9,8 @@
     <h2>View/Edit Use Case</h2>
     
     <% Html.RenderPartial("ProjectEditUseCaseForm"); %>
+     <h3>Use Case Steps</h3>
+    <% Html.RenderPartial("ProjectUseCaseStepsForm"); %>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptContent" runat="server">

@@ -38,7 +38,7 @@
                  }
 
                  var url = '<%= Url.Action("UpdateProjectPriority", "Project") %>';
-                 $.post(url, { projects: newOrder },
+                 $.post(url, { projects: newOrder }, 
                             function(result) { // refresh the calendar
                                 alert("Completed Update");
                             });
@@ -74,6 +74,7 @@
 <%--Web Aps-----------------------------------------------------------------------------------%>   
     <div id="tab-1">
         <% using (Html.BeginForm()) {%>
+         <%= Html.AntiForgeryToken() %>
         <h2>Web Applications</h2>
         <% Html.Grid(Model.Where(p => p.ProjectType.Name == "Web Application"))
                .Transactional()

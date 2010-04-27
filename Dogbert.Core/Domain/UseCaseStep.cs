@@ -10,11 +10,10 @@ namespace Dogbert.Core.Domain
     {
         [Required]
         public virtual string Description { get; set; }
-        [Required]
         public virtual UseCase UseCase { get; set; }
-        [Required]
         public virtual int Order { get; set; }
-        [Required]
         public virtual bool Optional { get; set; }
+        public virtual DateTime? DateAdded { get; set; }
+        public virtual DateTime? LastModified { get; set; }
     }
 }
