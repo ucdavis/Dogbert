@@ -11,6 +11,7 @@
     <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectId" cascade="none" />
 		<property name="DateAdded" column="DateAdded" />
     <property name="DateChanged" column="DateChanged" />
+    <property name="FileContentType" column="FileContentType" />
     <property name="FileContents" column="FileContents" />
 	</class>
 </hibernate-mapping>

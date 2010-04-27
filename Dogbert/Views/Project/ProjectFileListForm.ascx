@@ -9,6 +9,9 @@
                 File Name
             </th>
             <th>
+                File Type
+            </th>
+            <th>
                 Date Added
             </th>
             <th>
@@ -21,11 +24,15 @@
         <tr>
             <td>
                 <%ProjectFile projectFile = item;%>
+                <%= Html.ActionLink<ProjectFileController>(a => a.ViewFile(projectFile.Id), "View") %> |
                 <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Update")%> |
                 <%= Html.ActionLink<ProjectFileController>(a => a.Remove(projectFile.Id), "Remove") %>
             </td>
             <td>
                 <%= Html.Encode(item.FileName) %>
+            </td>
+            <td>
+                <%= Html.Encode(item.Type.Name) %>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.DateAdded)) %>

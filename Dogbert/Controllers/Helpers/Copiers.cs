@@ -45,6 +45,7 @@ namespace Dogbert.Controllers.Helpers
             //destination.FileContents = source.FileContents;   //Grabbed from the Request
             //destination.FileName = source.FileName;           //Grabbed from the Request
             //destination.Project = source.Project;
+            // destination.FileContentType = source.FileContentType; //Grabbed from the Request
             destination.Type = source.Type;
 
             return destination;

@@ -36,6 +36,8 @@ namespace Dogbert.Core.Domain
         public virtual Project Project { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime DateChanged { get; set; }
+        [Required]
+        public virtual string FileContentType { get; set; }
         [NotNull]
         public virtual byte[] FileContents { get; set; }
 

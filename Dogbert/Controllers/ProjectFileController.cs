@@ -1,14 +1,12 @@
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
 using Dogbert.Core.Resources;
 using MvcContrib;
 using MvcContrib.Attributes;
-using UCDArch.Data.NHibernate;
+using UCDArch.Core.Utils;
 using UCDArch.Web.Controller;
 using UCDArch.Web.Helpers;
 
@@ -62,24 +60,25 @@ namespace Dogbert.Controllers
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
-
-            var foundFile = false;
-            for (int i = 0; i < Request.Files.Count; i++)
-            {
-                if (Request.Files[i].ContentLength > 0)
-                {
-                    if (foundFile)
-                    {
-                        ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
-                        break;
-                    }
-                    foundFile = true;
-                    var file = Request.Files[i];
-                    var reader = new BinaryReader(file.InputStream);
-                    projectFile.FileContents = reader.ReadBytes(file.ContentLength);
-                    projectFile.FileName = file.FileName;
-                }
-            }
+            LoadFileContents(projectFile);
+            //var foundFile = false;
+            //for (int i = 0; i < Request.Files.Count; i++)
+            //{
+            //    if (Request.Files[i].ContentLength > 0)
+            //    {
+            //        if (foundFile)
+            //        {
+            //            ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
+            //            break;
+            //        }
+            //        foundFile = true;
+            //        var file = Request.Files[i];
+            //        var reader = new BinaryReader(file.InputStream);
+            //        projectFile.FileContents = reader.ReadBytes(file.ContentLength);
+            //        projectFile.FileName = file.FileName;
+            //        projectFile.FileContentType = file.ContentType;
+            //    }
+            //}
 
             projectFile.Project = project;
 
@@ -113,7 +112,6 @@ namespace Dogbert.Controllers
             }
             var projectFileViewModel = ProjectFileViewModel.Create(Repository, projectFile.Project);
             projectFileViewModel.ProjectFile = projectFile;
-            //TODO: In here, some how populate the file?
 
 
             return View(projectFileViewModel);
@@ -137,24 +135,25 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
             Copiers.CopyProjectFile(projectFile, dest);
-
-            var foundFile = false;
-            for (int i = 0; i < Request.Files.Count; i++)
-            {
-                if (Request.Files[i].ContentLength > 0)
-                {
-                    if (foundFile)
-                    {
-                        ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
-                        break;
-                    }
-                    foundFile = true;
-                    var file = Request.Files[i];
-                    var reader = new BinaryReader(file.InputStream);
-                    dest.FileContents = reader.ReadBytes(file.ContentLength);
-                    dest.FileName = file.FileName;
-                }
-            }
+            LoadFileContents(dest);
+            //var foundFile = false;
+            //for (int i = 0; i < Request.Files.Count; i++)
+            //{
+            //    if (Request.Files[i].ContentLength > 0)
+            //    {
+            //        if (foundFile)
+            //        {
+            //            ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
+            //            break;
+            //        }
+            //        foundFile = true;
+            //        var file = Request.Files[i];
+            //        var reader = new BinaryReader(file.InputStream);
+            //        dest.FileContents = reader.ReadBytes(file.ContentLength);
+            //        dest.FileName = file.FileName;
+            //        dest.FileContentType = file.ContentType;
+            //    }
+            //}
 
             dest.TransferValidationMessagesTo(ModelState);
 
@@ -187,8 +186,6 @@ namespace Dogbert.Controllers
             }
             var projectFileViewModel = ProjectFileViewModel.Create(Repository, projectFile.Project);
             projectFileViewModel.ProjectFile = projectFile;
-            //TODO: In here, some how populate the file?
-
 
             return View(projectFileViewModel);
         }
@@ -225,6 +222,42 @@ namespace Dogbert.Controllers
             viewModel.ProjectFile = projectFile;
 
             return View(viewModel);
+        }
+
+        public ActionResult ViewFile(int id)
+        {
+            var projectFile = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            Check.Require(projectFile != null, "Invalid ProjectFile identifier");
+
+            // ReSharper disable PossibleNullReferenceException
+            return File(projectFile.FileContents, projectFile.FileContentType, projectFile.FileName);
+            // ReSharper restore PossibleNullReferenceException
+        }
+
+        /// <summary>
+        /// Loads the file contents.
+        /// </summary>
+        /// <param name="projectFile">The project file.</param>
+        public virtual void LoadFileContents(ProjectFile projectFile)
+        {
+            var foundFile = false;
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                if (Request.Files[i].ContentLength > 0)
+                {
+                    if (foundFile)
+                    {
+                        ModelState.AddModelError("FileName", "More than 1 upload file was detected.");
+                        break;
+                    }
+                    foundFile = true;
+                    var file = Request.Files[i];
+                    var reader = new BinaryReader(file.InputStream);
+                    projectFile.FileContents = reader.ReadBytes(file.ContentLength);
+                    projectFile.FileName = file.FileName;
+                    projectFile.FileContentType = file.ContentType;
+                }
+            }
         }
     }
 }
