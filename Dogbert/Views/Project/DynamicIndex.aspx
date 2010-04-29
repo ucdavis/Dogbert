@@ -91,6 +91,10 @@
                                                 <%=
                                                     Html.ActionLink<ProjectController>(a => a.Edit(project.Id), "Edit")
                                                 %>
+                                                
+                                                |
+                                                
+                                                <%= Html.ActionLink<ReportController>(a=>a.Index(project.Id), "SRS") %>
                                             <% });
                                              
                                 col.Add(project => project.Id);

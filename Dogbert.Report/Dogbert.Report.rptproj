@@ -26,7 +26,8 @@
       <Name>DebugLocal</Name>
       <Platform>Win32</Platform>
       <Options>
-        <TargetFolder>Dogbert.Report</TargetFolder>
+        <TargetServerURL>http://lou/reportserver</TargetServerURL>
+        <TargetFolder>Dogbert</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
     </Configuration>

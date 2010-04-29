@@ -32,7 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{78CFAECA-891
 		Bin\Spring.Core.dll = Bin\Spring.Core.dll
 		Bin\System.Data.SQLite.DLL = Bin\System.Data.SQLite.DLL
 		Bin\Telerik.Web.Mvc.dll = Bin\Telerik.Web.Mvc.dll
-		Bin\Telerik.Web.Mvc.xml = Bin\Telerik.Web.Mvc.xml
 		Bin\UCDArch.Core.dll = Bin\UCDArch.Core.dll
 		Bin\UCDArch.Core.NHibernateValidator.dll = Bin\UCDArch.Core.NHibernateValidator.dll
 		Bin\UCDArch.Data.dll = Bin\UCDArch.Data.dll
@@ -88,7 +87,6 @@ Global
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
