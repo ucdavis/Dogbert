@@ -13,7 +13,21 @@
                     .Selected(Model.ProjectFile.Type != null ? Model.ProjectFile.Type.Id.ToString() : string.Empty )
             %>
             <%= Html.ValidationMessage("ProjectFile.Type", "*")%>
-        </p>
-        
+        </p>    
+        <p> 
+           <%= this.Select("ProjectFile.TextType").Options(Model.TextTypes, x => x.Id, x => x.Name)
+            .FirstOption("--Select a Text Type--")
+            .HideFirstOptionWhen(Model.ProjectFile.TextType != null && Model.ProjectFile.TextType.IsActive)                
+            .Label("File Text Type:")
+            .Selected(Model.ProjectFile.TextType != null ? Model.ProjectFile.TextType.Id.ToString() : string.Empty )
+            %>
+            <%= Html.ValidationMessage("ProjectFile.TextType", "*")%>
+         </p> 
+         <p>
+            <label for="ProjectFile.Caption">Caption:</label>
+            <%= Html.TextBox("ProjectFile.Caption")%>
+            <%= Html.ValidationMessage("ProjectFile.Caption")%>
+         </p>
+      
        
     

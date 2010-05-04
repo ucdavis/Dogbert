@@ -9,6 +9,7 @@ namespace Dogbert.Controllers.ViewModels
     public class ProjectFileViewModel
     {
         public IEnumerable<FileType> FileTypes { get; set; }
+        public IEnumerable<TextType> TextTypes { get; set; }
         public Project Project { get; set; }
         public ProjectFile ProjectFile { get; set; }
 
@@ -17,10 +18,11 @@ namespace Dogbert.Controllers.ViewModels
             Check.Require(repository != null, "Repository is required");
             // ReSharper disable PossibleNullReferenceException
             var viewModel = new ProjectFileViewModel
-                                {
-                                    FileTypes = repository.OfType<FileType>().Queryable.Where(a => a.IsActive).ToList(),
-                                    Project = project
-                                };
+                    {
+                        FileTypes = repository.OfType<FileType>().Queryable.Where(a => a.IsActive).ToList(),
+                        TextTypes = repository.OfType<TextType>().Queryable.Where(a => a.IsActive && a.hasImage).ToList(),
+                        Project = project
+                    };
             // ReSharper restore PossibleNullReferenceException
             if (viewModel.ProjectFile == null)
             {

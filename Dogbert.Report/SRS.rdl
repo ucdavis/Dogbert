@@ -40,7 +40,7 @@
         <CommandText>SELECT     ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
 FROM         ProjectTexts INNER JOIN
                       TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE     (ProjectTexts.ProjectID = @projectid)
+WHERE     (ProjectTexts.ProjectID = @projectid) AND (isnumeric(TextTypes.id) &lt;&gt; 0)
 ORDER BY TextTypes.Priority</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
@@ -266,33 +266,117 @@ select 'Results' =  + @reqList</CommandText>
           <DataField>DateChanged</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextType">
+          <DataField>TextType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>Dogbert</DataSourceName>
         <CommandText>SELECT     ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
-                      ProjectFiles.DateChanged
-FROM         ProjectFiles INNER JOIN
-                      FileTypes ON ProjectFiles.FileTypeId = FileTypes.id
+                      ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType
+FROM         TextTypes INNER JOIN
+                      ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
+                      ProjectFiles INNER JOIN
+                      FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
 WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp') OR
-                      (ProjectFiles.FileName LIKE '%.jpg')OR
-                      (ProjectFiles.FileName LIKE '%.gif')OR
+                      (ProjectFiles.FileName LIKE '%.jpg') OR
+                      (ProjectFiles.FileName LIKE '%.gif') OR
                       (ProjectFiles.FileName LIKE '%.png')</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
             <Value>=Parameters!projectid.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="Appendix">
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>SELECT     ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
+FROM         ProjectTexts INNER JOIN
+                      TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE     (ProjectTexts.ProjectID = @projectid) AND (TextTypes.id LIKE 'A%')
+ORDER BY TextTypes.Priority</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="TOCtext">
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>SELECT     ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority, ProjectTexts.TextTypeID
+FROM         ProjectTexts INNER JOIN
+                      TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE     (ProjectTexts.ProjectID = @projectid) AND (NOT (ProjectTexts.TextTypeID LIKE 'A%'))
+ORDER BY TextTypes.Priority</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
       </Query>
     </DataSet>
   </DataSets>
   <Body>
     <ReportItems>
-      <Tablix Name="Tablix1">
+      <Tablix Name="TablixProjectText">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.12167in</Width>
+              <Width>7.04188in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -305,6 +389,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                       <ReportItems>
                         <Line Name="Line1">
                           <Top>0.24292in</Top>
+                          <Left>0.01373in</Left>
                           <Height>0in</Height>
                           <Width>6.96542in</Width>
                           <Style>
@@ -334,7 +419,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                           </Paragraphs>
                           <rd:DefaultName>Name</rd:DefaultName>
                           <Height>0.25in</Height>
-                          <Width>6.96542in</Width>
+                          <Width>7.04188in</Width>
                           <ZIndex>1</ZIndex>
                           <DocumentMapLabel>=Fields!Name.Value</DocumentMapLabel>
                           <Style>
@@ -342,7 +427,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                               <Style>None</Style>
                             </Border>
                             <BottomBorder>
-                              <Color>DarkGreen</Color>
+                              <Color>DarkOliveGreen</Color>
                               <Style>Solid</Style>
                               <Width>3pt</Width>
                             </BottomBorder>
@@ -369,8 +454,9 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                           </Paragraphs>
                           <rd:DefaultName>Textbox12</rd:DefaultName>
                           <Top>0.23958in</Top>
+                          <Left>0.01373in</Left>
                           <Height>0.25in</Height>
-                          <Width>6.96542in</Width>
+                          <Width>7.02815in</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
@@ -409,10 +495,10 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>ProjectTexts</DataSetName>
-        <Top>9.80916in</Top>
-        <Left>0.0175in</Left>
+        <Top>10.93416in</Top>
+        <Left>0.06273in</Left>
         <Height>0.64583in</Height>
-        <Width>7.12167in</Width>
+        <Width>7.04188in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -443,7 +529,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                               <Style>
                                 <FontSize>12pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <Color>DarkOliveGreen</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -459,7 +545,13 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                           <Color>DarkOliveGreen</Color>
                           <Style>Solid</Style>
                         </BottomBorder>
-                        <BackgroundColor>DimGray</BackgroundColor>
+                        <LeftBorder>
+                          <Color>DarkOliveGreen</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>DarkOliveGreen</Color>
+                        </RightBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <VerticalAlign>Middle</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -510,7 +602,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -521,9 +613,10 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>   ID   Priority      Description</Value>
+                              <Value>   ID  Priority      Description</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -543,7 +636,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                           <Color>DarkOliveGreen</Color>
                           <Style>Solid</Style>
                         </BottomBorder>
-                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <BackgroundColor>DarkOliveGreen</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>1pt</PaddingTop>
@@ -869,9 +962,9 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>11.10764in</Top>
-        <Left>0.035in</Left>
-        <Height>1.25in</Height>
+        <Top>16.70139in</Top>
+        <Left>0.06613in</Left>
+        <Height>1.21875in</Height>
         <Width>7.12167in</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -885,8 +978,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Style>
       </Tablix>
       <Line Name="Line7">
-        <Top>10.96369in</Top>
-        <Left>0.035in</Left>
+        <Top>16.55744in</Top>
+        <Left>0.06613in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>2</ZIndex>
@@ -899,8 +992,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Style>
       </Line>
       <Line Name="Line8">
-        <Top>12.77257in</Top>
-        <Left>0.035in</Left>
+        <Top>18.36632in</Top>
+        <Left>0.06613in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
         <ZIndex>3</ZIndex>
@@ -1675,8 +1768,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
             <Value>=Fields!Order.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>12.86646in</Top>
-        <Left>0.115in</Left>
+        <Top>18.46021in</Top>
+        <Left>0.14613in</Left>
         <Height>2.2625in</Height>
         <Width>7.04167in</Width>
         <ZIndex>4</ZIndex>
@@ -1725,8 +1818,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
         <KeepTogether>true</KeepTogether>
-        <Top>10.66147in</Top>
-        <Left>0.035in</Left>
+        <Top>16.25522in</Top>
+        <Left>0.06613in</Left>
         <Height>0.27084in</Height>
         <Width>7.15125in</Width>
         <ZIndex>5</ZIndex>
@@ -1754,8 +1847,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Name</rd:DefaultName>
-        <Top>12.46701in</Top>
-        <Left>0.035in</Left>
+        <Top>18.06076in</Top>
+        <Left>0.06613in</Left>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>6</ZIndex>
@@ -1770,7 +1863,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Tablix Name="Tablix2">
+      <Tablix Name="TablixTOC">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
@@ -1885,6 +1978,305 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                 </TablixCell>
               </TablixCells>
             </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber(Nothing)+1</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>.</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox15">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Requirements</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox15</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox16">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox16</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox17">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber(Nothing)+2</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>.</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox19">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Use Cases</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox19</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox20">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox20</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox33">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox33</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox34">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Appendix</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox34</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox36">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox36</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
@@ -1903,13 +2295,30 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                   <Value>=Fields!Priority.Value</Value>
                 </SortExpression>
               </SortExpressions>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>ProjectTexts</DataSetName>
+        <DataSetName>TOCtext</DataSetName>
+        <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!Priority.Value</Value>
+          </SortExpression>
+        </SortExpressions>
         <Top>9.34375in</Top>
-        <Left>0.11833in</Left>
-        <Height>0.25521in</Height>
+        <Left>0.16356in</Left>
+        <Height>1.00521in</Height>
         <Width>5.61034in</Width>
         <ZIndex>7</ZIndex>
         <Style>
@@ -1937,9 +2346,9 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
         <Top>8.99097in</Top>
-        <Left>0.035in</Left>
+        <Left>0.08023in</Left>
         <Height>0.27431in</Height>
-        <Width>7.10417in</Width>
+        <Width>7.02438in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -1953,9 +2362,9 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
       </Textbox>
       <Line Name="Line9">
         <Top>9.27431in</Top>
-        <Left>0.0175in</Left>
+        <Left>0.04899in</Left>
         <Height>0in</Height>
-        <Width>7.12167in</Width>
+        <Width>7.05561in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -1974,30 +2383,38 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.26563in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Name6">
+                    <Textbox Name="TextType">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>= "Figure " &amp; RowNumber("Figures") &amp; ": " &amp; Fields!FileName.Value</Value>
+                              <Value>=Fields!TextType.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Name6</rd:DefaultName>
-                      <DocumentMapLabel>Figures</DocumentMapLabel>
+                      <rd:DefaultName>TextType</rd:DefaultName>
+                      <DocumentMapLabel>=Fields!TextType.Value</DocumentMapLabel>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>DarkOliveGreen</Color>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>DarkOliveGreen</Color>
+                          <Width>3pt</Width>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2028,6 +2445,80 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
                 </TablixCell>
               </TablixCells>
             </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>= "Figure " &amp; RowNumber("Figures") &amp; ": " &amp; Fields!FileName.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkOliveGreen</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Text">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Text.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Text</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
@@ -2044,6 +2535,8 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
               <TablixMembers>
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
@@ -2052,9 +2545,9 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         <FixedRowHeaders>true</FixedRowHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>Figures</DataSetName>
-        <Top>15.375in</Top>
-        <Left>0.12688in</Left>
-        <Height>3.59375in</Height>
+        <Top>12.11459in</Top>
+        <Left>0.04523in</Left>
+        <Height>4.07812in</Height>
         <Width>7.05938in</Width>
         <ZIndex>10</ZIndex>
         <Style>
@@ -2084,7 +2577,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>Name1</rd:DefaultName>
         <Top>1.61944in</Top>
-        <Left>0.0209in</Left>
+        <Left>0.06613in</Left>
         <Height>2.0316in</Height>
         <Width>7.13577in</Width>
         <ZIndex>11</ZIndex>
@@ -2134,7 +2627,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>Name1</rd:DefaultName>
         <Top>0.90799in</Top>
-        <Left>0.0175in</Left>
+        <Left>0.06273in</Left>
         <Height>0.39965in</Height>
         <Width>4.35785in</Width>
         <ZIndex>12</ZIndex>
@@ -2168,7 +2661,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>LeadProgrammer</rd:DefaultName>
         <Top>1.33125in</Top>
-        <Left>0.0209in</Left>
+        <Left>0.06613in</Left>
         <Height>0.26042in</Height>
         <Width>3.69118in</Width>
         <ZIndex>13</ZIndex>
@@ -2201,7 +2694,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>LeadProgrammer</rd:DefaultName>
         <Top>3.72916in</Top>
-        <Left>0.04691in</Left>
+        <Left>0.09214in</Left>
         <Height>0.16667in</Height>
         <Width>3.69118in</Width>
         <ZIndex>14</ZIndex>
@@ -2234,7 +2727,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>LeadProgrammer</rd:DefaultName>
         <Top>3.89167in</Top>
-        <Left>0.04691in</Left>
+        <Left>0.09214in</Left>
         <Height>0.22917in</Height>
         <Width>3.69118in</Width>
         <ZIndex>15</ZIndex>
@@ -2253,10 +2746,10 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
         <KeepTogether>true</KeepTogether>
-        <Top>8.90139in</Top>
-        <Left>0.0175in</Left>
+        <Top>8.8986in</Top>
+        <Left>0.04899in</Left>
         <Height>0.02292in</Height>
-        <Width>7.10417in</Width>
+        <Width>7.04188in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -2284,6 +2777,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>LeadProgrammer</rd:DefaultName>
         <Top>7.98402in</Top>
+        <Left>0.00401in</Left>
         <Height>0.57292in</Height>
         <Width>7.12167in</Width>
         <ZIndex>17</ZIndex>
@@ -2328,7 +2822,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
         </Paragraphs>
         <rd:DefaultName>ExecutionTime</rd:DefaultName>
         <Top>0.23438in</Top>
-        <Left>0.0209in</Left>
+        <Left>0.06613in</Left>
         <Height>0.66667in</Height>
         <Width>4.35445in</Width>
         <ZIndex>18</ZIndex>
@@ -2344,8 +2838,202 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Tablix Name="Tablix5">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>7.14915in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.64583in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Rectangle Name="Rectangle2">
+                      <ReportItems>
+                        <Line Name="Line2">
+                          <Top>0.24292in</Top>
+                          <Left>0.02748in</Left>
+                          <Height>0in</Height>
+                          <Width>6.96542in</Width>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                        </Line>
+                        <Textbox Name="Name9">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Name.Value</Value>
+                                  <Style>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Name</rd:DefaultName>
+                          <Height>0.25in</Height>
+                          <Width>6.96542in</Width>
+                          <ZIndex>1</ZIndex>
+                          <DocumentMapLabel>=Fields!Name.Value</DocumentMapLabel>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Color>DarkOliveGreen</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Color>DarkOliveGreen</Color>
+                              <Style>Solid</Style>
+                              <Width>3pt</Width>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Text.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Top>0.23958in</Top>
+                          <Left>0.02748in</Left>
+                          <Height>0.25in</Height>
+                          <Width>6.96542in</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Rectangle>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details5" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>Appendix</DataSetName>
+        <Top>20.8073in</Top>
+        <Left>0.01775in</Left>
+        <Height>0.64583in</Height>
+        <Width>7.14915in</Width>
+        <ZIndex>19</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Rectangle Name="Rectangle7">
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
+        <KeepTogether>true</KeepTogether>
+        <Top>10.80916in</Top>
+        <Height>0.02in</Height>
+        <Width>7.04188in</Width>
+        <ZIndex>20</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BackgroundColor>DarkOliveGreen</BackgroundColor>
+        </Style>
+      </Rectangle>
+      <Textbox Name="Textbox21">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Figures</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox18</rd:DefaultName>
+        <Top>11.78472in</Top>
+        <Left>0.04899in</Left>
+        <Height>0.27431in</Height>
+        <Width>7.05561in</Width>
+        <ZIndex>21</ZIndex>
+        <DocumentMapLabel>Figures</DocumentMapLabel>
+        <Style>
+          <Border>
+            <Color>DarkOliveGreen</Color>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Solid</Style>
+            <Width>3pt</Width>
+          </BottomBorder>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>19.21875in</Height>
+    <Height>21.5677in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -2368,7 +3056,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
       <Prompt>projectid</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.40292in</Width>
+  <Width>7.44815in</Width>
   <Page>
     <PageHeader>
       <Height>0.51611in</Height>
@@ -2394,7 +3082,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.22861in</Top>
-          <Left>0.035in</Left>
+          <Left>0.08023in</Left>
           <Height>0.25in</Height>
           <Width>1.82291in</Width>
           <Style>
@@ -2427,7 +3115,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Name1</rd:DefaultName>
-          <Left>1.91347in</Left>
+          <Left>1.9587in</Left>
           <Height>0.47229in</Height>
           <Width>5.2432in</Width>
           <ZIndex>1</ZIndex>
@@ -2480,7 +3168,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.5in</Top>
-          <Left>0.035in</Left>
+          <Left>0.08023in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
           <Style>
@@ -2509,7 +3197,7 @@ WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE 
           </Paragraphs>
           <rd:DefaultName>Textbox296</rd:DefaultName>
           <Top>0.5in</Top>
-          <Left>1.37542in</Left>
+          <Left>1.42065in</Left>
           <Height>0.25in</Height>
           <Width>5.78125in</Width>
           <ZIndex>1</ZIndex>

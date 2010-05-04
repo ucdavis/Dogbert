@@ -8,10 +8,12 @@
 
 		<property name="FileName" column="FileName" />    
 		<many-to-one name="Type" class="Dogbert.Core.Domain.FileType, Dogbert.Core" column="FileTypeId" cascade="none" />
+    <many-to-one name="TextType" class="Dogbert.Core.Domain.TextType, Dogbert.Core" column="TextTypeID" cascade="none" />
     <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectId" cascade="none" />
 		<property name="DateAdded" column="DateAdded" />
     <property name="DateChanged" column="DateChanged" />
     <property name="FileContentType" column="FileContentType" />
     <property name="FileContents" column="FileContents" />
+    <property name="Caption" column="Caption" />
 	</class>
 </hibernate-mapping>

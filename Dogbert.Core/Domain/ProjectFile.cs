@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dogbert.Core.Abstractions;
 using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
@@ -28,9 +30,14 @@ namespace Dogbert.Core.Domain
         [Required]
         [Length(200)]
         public virtual string FileName { get; set; }
+        [Length(200)]
+        public virtual string Caption { get; set; }
 
         [NotNull]
-        public virtual FileType Type { get; set; }                
+        public virtual FileType Type { get; set; }
+
+        //For Caption
+        public virtual TextType TextType { get; set; }
 
         [NotNull]
         public virtual Project Project { get; set; }

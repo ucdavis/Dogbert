@@ -62,7 +62,7 @@ namespace Dogbert.Controllers
             LoadFileContents(projectFile, fileUpload);
            
             projectFile.Project = project;
-
+            
             projectFile.TransferValidationMessagesTo(ModelState);
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace Dogbert.Controllers
             }
             Copiers.CopyProjectFile(projectFile, dest);
             LoadFileContents(dest, fileUpload);
-
+            
             dest.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
