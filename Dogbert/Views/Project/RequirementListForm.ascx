@@ -1,9 +1,44 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<Dogbert.Core.Domain.Requirement>>" %>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
+<%@ Import Namespace="Dogbert.Helpers" %>
+
+    
+    <% Html.Grid(Model.OrderBy(a => a.Category.Id))
+            .Name("Requirements")
+            .CellAction(cell =>
+                            {
+                                switch (cell.Column.Member)
+                                {
+                                    case "DateAdded":
+                                        cell.Text = string.Format("{0:d}", cell.DataItem.DateAdded);
+                                        break;
+                                    case "LastModified":
+                                        cell.Text = string.Format("{0:d}", cell.DataItem.LastModified);
+                                        break;
+                                    case "IsComplete":
+                                        cell.Text = cell.DataItem.IsComplete ? "x" : string.Empty;
+                                        break;
+                                }
+                            })
+            .Columns(col =>
+                   {
+                       col.Add(a =>
+                                   {%>
+                                    <%= Html.ActionLink<RequirementController>(b => b.Edit(a.Id), "Edit")%>
+                                   <%});
+                       col.Add(a => a.Description);
+                       col.Add(a => a.TechnicalDifficulty);
+                       col.Add(a => a.IsComplete);
+                       col.Add(a => a.DateAdded);
+                       col.Add(a => a.LastModified);
+                       //col.Add(a => a.Category.Name).Title("Category");
+                   })
+            .Groupable(settings => settings.Groups(groups=>{ groups.Add(a => a.Category.Name);}))
+            .Render(); %>
 
 
-    <table>
+  <%--  <table>
         <tr>
             <th></th>
             <th>
@@ -56,6 +91,6 @@
     
     <% } %>
 
-    </table>
+    </table>--%>
 
 

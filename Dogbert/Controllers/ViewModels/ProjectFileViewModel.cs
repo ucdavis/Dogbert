@@ -20,7 +20,7 @@ namespace Dogbert.Controllers.ViewModels
             var viewModel = new ProjectFileViewModel
                     {
                         FileTypes = repository.OfType<FileType>().Queryable.Where(a => a.IsActive).ToList(),
-                        TextTypes = repository.OfType<TextType>().Queryable.Where(a => a.IsActive && a.hasImage).ToList(),
+                        TextTypes = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).ToList && a.hasImage).ToList(),
                         Project = project
                     };
             // ReSharper restore PossibleNullReferenceException
