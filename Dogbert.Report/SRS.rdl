@@ -277,16 +277,17 @@ select 'Results' =  + @reqList</CommandText>
       </Fields>
       <Query>
         <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
-                      ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType
-FROM         TextTypes INNER JOIN
-                      ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
-                      ProjectFiles INNER JOIN
-                      FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
-WHERE     (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp') OR
-                      (ProjectFiles.FileName LIKE '%.jpg') OR
-                      (ProjectFiles.FileName LIKE '%.gif') OR
-                      (ProjectFiles.FileName LIKE '%.png')</CommandText>
+        <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
+                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType
+FROM            TextTypes INNER JOIN
+                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
+                         ProjectFiles INNER JOIN
+                         FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND 
+                         ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
+WHERE        (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp' OR
+                         ProjectFiles.FileName LIKE '%.jpg' OR
+                         ProjectFiles.FileName LIKE '%.gif' OR
+                         ProjectFiles.FileName LIKE '%.png')</CommandText>
         <QueryParameters>
           <QueryParameter Name="@projectid">
             <Value>=Parameters!projectid.Value</Value>
