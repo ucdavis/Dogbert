@@ -53,5 +53,9 @@ namespace Dogbert.Controllers
             return File(bytes, "application/pdf");
         }
 
+        //public ActionResult View(int id)
+        //{
+        //    return View();
+        //}
     }
 }
