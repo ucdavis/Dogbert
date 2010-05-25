@@ -12,6 +12,10 @@
       <Name>SRS.rdl</Name>
       <FullPath>SRS.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>Requirements.rdl</Name>
+      <FullPath>Requirements.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
