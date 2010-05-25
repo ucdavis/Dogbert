@@ -3058,15 +3058,16 @@ ORDER BY TextTypes.Priority</CommandText>
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>23.33855in</Height>
+    <Height>23.39844in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
-      <BottomBorder>
-        <Color>Brown</Color>
+      <TopBorder>
         <Style>Solid</Style>
-        <Width>0.75pt</Width>
+      </TopBorder>
+      <BottomBorder>
+        <Style>Solid</Style>
       </BottomBorder>
     </Style>
   </Body>
@@ -3130,7 +3131,7 @@ ORDER BY TextTypes.Priority</CommandText>
                   <Value>=First(Fields!Name.Value, "Projects")</Value>
                   <Style>
                     <FontSize>14pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
+                    <Color>DarkOliveGreen</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -3166,7 +3167,7 @@ ORDER BY TextTypes.Priority</CommandText>
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>0.48958in</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="PageNumber">
@@ -3192,7 +3193,7 @@ ORDER BY TextTypes.Priority</CommandText>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.5in</Top>
+          <Top>0.125in</Top>
           <Left>0.08023in</Left>
           <Height>0.25in</Height>
           <Width>1.21528in</Width>
@@ -3214,14 +3215,16 @@ ORDER BY TextTypes.Priority</CommandText>
               <TextRuns>
                 <TextRun>
                   <Value>Collage of Agricultural &amp; Environmental Sciences Dean's Office Computing Resources Unit</Value>
-                  <Style />
+                  <Style>
+                    <Color>DarkOliveGreen</Color>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox296</rd:DefaultName>
-          <Top>0.5in</Top>
+          <Top>0.125in</Top>
           <Left>1.42065in</Left>
           <Height>0.25in</Height>
           <Width>5.78125in</Width>
