@@ -2564,23 +2564,6 @@ ORDER BY TextTypes.Priority</CommandText>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Rectangle Name="Rectangle3">
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
-        <KeepTogether>true</KeepTogether>
-        <Top>8.8986in</Top>
-        <Left>0.04899in</Left>
-        <Height>0.02292in</Height>
-        <Width>7.04188in</Width>
-        <ZIndex>15</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <BackgroundColor>DarkOliveGreen</BackgroundColor>
-        </Style>
-      </Rectangle>
       <Textbox Name="LeadProgrammer4">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -2603,7 +2586,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.00401in</Left>
         <Height>0.57292in</Height>
         <Width>7.12167in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2648,7 +2631,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.06613in</Left>
         <Height>0.66667in</Height>
         <Width>4.35445in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2793,7 +2776,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.01775in</Left>
         <Height>0.64583in</Height>
         <Width>7.14915in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2808,12 +2791,11 @@ ORDER BY TextTypes.Priority</CommandText>
         <Top>10.80916in</Top>
         <Height>0.02in</Height>
         <Width>7.04188in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>DarkOliveGreen</BackgroundColor>
         </Style>
       </Rectangle>
       <Textbox Name="Textbox21">
@@ -2838,7 +2820,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.04899in</Left>
         <Height>0.27431in</Height>
         <Width>7.05561in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>19</ZIndex>
         <DocumentMapLabel>Figures</DocumentMapLabel>
         <Style>
           <Border>
@@ -3050,13 +3032,29 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.09571in</Left>
         <Height>5.8125in</Height>
         <Width>7.1062in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>20</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Rectangle Name="Rectangle3">
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
+        <KeepTogether>true</KeepTogether>
+        <Top>8.70833in</Top>
+        <Left>0.08023in</Left>
+        <Height>0.02083in</Height>
+        <Width>7.04545in</Width>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Rectangle>
     </ReportItems>
     <Height>23.39844in</Height>
     <Style>
@@ -3160,7 +3158,6 @@ ORDER BY TextTypes.Priority</CommandText>
             <Border>
               <Color>DarkOliveGreen</Color>
               <Style>Solid</Style>
-              <Width>2pt</Width>
             </Border>
           </Style>
         </Line>
@@ -3256,7 +3253,6 @@ ORDER BY TextTypes.Priority</CommandText>
             <Border>
               <Color>DarkOliveGreen</Color>
               <Style>Solid</Style>
-              <Width>2pt</Width>
             </Border>
           </Style>
         </Line>
