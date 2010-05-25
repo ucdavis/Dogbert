@@ -274,11 +274,15 @@ select 'Results' =  + @reqList</CommandText>
           <DataField>TextType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Caption">
+          <DataField>Caption</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>Dogbert</DataSourceName>
         <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
-                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType
+                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType, ProjectFiles.Caption
 FROM            TextTypes INNER JOIN
                          ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
                          ProjectFiles INNER JOIN
@@ -963,7 +967,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>16.70139in</Top>
+        <Top>18.45139in</Top>
         <Left>0.06613in</Left>
         <Height>1.21875in</Height>
         <Width>7.12167in</Width>
@@ -979,7 +983,7 @@ ORDER BY TextTypes.Priority</CommandText>
         </Style>
       </Tablix>
       <Line Name="Line7">
-        <Top>16.55744in</Top>
+        <Top>18.30744in</Top>
         <Left>0.06613in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
@@ -993,7 +997,7 @@ ORDER BY TextTypes.Priority</CommandText>
         </Style>
       </Line>
       <Line Name="Line8">
-        <Top>18.36632in</Top>
+        <Top>20.11632in</Top>
         <Left>0.06613in</Left>
         <Height>0in</Height>
         <Width>7.12167in</Width>
@@ -1769,7 +1773,7 @@ ORDER BY TextTypes.Priority</CommandText>
             <Value>=Fields!Order.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>18.46021in</Top>
+        <Top>20.21021in</Top>
         <Left>0.14613in</Left>
         <Height>2.2625in</Height>
         <Width>7.04167in</Width>
@@ -1819,7 +1823,7 @@ ORDER BY TextTypes.Priority</CommandText>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
         <KeepTogether>true</KeepTogether>
-        <Top>16.25522in</Top>
+        <Top>18.00522in</Top>
         <Left>0.06613in</Left>
         <Height>0.27084in</Height>
         <Width>7.15125in</Width>
@@ -1848,7 +1852,7 @@ ORDER BY TextTypes.Priority</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Name</rd:DefaultName>
-        <Top>18.06076in</Top>
+        <Top>19.81076in</Top>
         <Left>0.06613in</Left>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
@@ -2375,188 +2379,6 @@ ORDER BY TextTypes.Priority</CommandText>
           </Border>
         </Style>
       </Line>
-      <Tablix Name="Tablix4">
-        <TablixBody>
-          <TablixColumns>
-            <TablixColumn>
-              <Width>7.05938in</Width>
-            </TablixColumn>
-          </TablixColumns>
-          <TablixRows>
-            <TablixRow>
-              <Height>0.25in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="TextType">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!TextType.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>TextType</rd:DefaultName>
-                      <DocumentMapLabel>=Fields!TextType.Value</DocumentMapLabel>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <TopBorder>
-                          <Color>DarkOliveGreen</Color>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <BottomBorder>
-                          <Color>DarkOliveGreen</Color>
-                          <Width>3pt</Width>
-                        </BottomBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>3.32812in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Image Name="Image3">
-                      <Source>Database</Source>
-                      <Value>=Fields!FileContents.Value</Value>
-                      <MIMEType>image/jpeg</MIMEType>
-                      <Sizing>FitProportional</Sizing>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                      </Style>
-                    </Image>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>0.25in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox4">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>= "Figure " &amp; RowNumber("Figures") &amp; ": " &amp; Fields!FileName.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>DarkOliveGreen</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox4</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>0.25in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Text">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Text.Value</Value>
-                              <MarkupType>HTML</MarkupType>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Text</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-          </TablixRows>
-        </TablixBody>
-        <TablixColumnHierarchy>
-          <TablixMembers>
-            <TablixMember>
-              <KeepTogether>true</KeepTogether>
-            </TablixMember>
-          </TablixMembers>
-        </TablixColumnHierarchy>
-        <TablixRowHierarchy>
-          <TablixMembers>
-            <TablixMember>
-              <Group Name="Details4" />
-              <TablixMembers>
-                <TablixMember />
-                <TablixMember />
-                <TablixMember />
-                <TablixMember />
-              </TablixMembers>
-            </TablixMember>
-          </TablixMembers>
-        </TablixRowHierarchy>
-        <FixedColumnHeaders>true</FixedColumnHeaders>
-        <FixedRowHeaders>true</FixedRowHeaders>
-        <KeepTogether>true</KeepTogether>
-        <DataSetName>Figures</DataSetName>
-        <Top>12.11459in</Top>
-        <Left>0.04523in</Left>
-        <Height>4.07812in</Height>
-        <Width>7.05938in</Width>
-        <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Tablix>
       <Textbox Name="Name7">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -2581,7 +2403,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.06613in</Left>
         <Height>2.0316in</Height>
         <Width>7.13577in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2631,7 +2453,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.06273in</Left>
         <Height>0.39965in</Height>
         <Width>4.35785in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2665,7 +2487,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.06613in</Left>
         <Height>0.26042in</Height>
         <Width>3.69118in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2698,7 +2520,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.09214in</Left>
         <Height>0.16667in</Height>
         <Width>3.69118in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2731,7 +2553,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.09214in</Left>
         <Height>0.22917in</Height>
         <Width>3.69118in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2751,7 +2573,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.04899in</Left>
         <Height>0.02292in</Height>
         <Width>7.04188in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2781,7 +2603,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.00401in</Left>
         <Height>0.57292in</Height>
         <Width>7.12167in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2826,7 +2648,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.06613in</Left>
         <Height>0.66667in</Height>
         <Width>4.35445in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2967,11 +2789,11 @@ ORDER BY TextTypes.Priority</CommandText>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Appendix</DataSetName>
-        <Top>20.8073in</Top>
+        <Top>22.5573in</Top>
         <Left>0.01775in</Left>
         <Height>0.64583in</Height>
         <Width>7.14915in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2986,7 +2808,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Top>10.80916in</Top>
         <Height>0.02in</Height>
         <Width>7.04188in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>19</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3016,7 +2838,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Left>0.04899in</Left>
         <Height>0.27431in</Height>
         <Width>7.05561in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>20</ZIndex>
         <DocumentMapLabel>Figures</DocumentMapLabel>
         <Style>
           <Border>
@@ -3033,8 +2855,210 @@ ORDER BY TextTypes.Priority</CommandText>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Tablix Name="Tablix7">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>1.77655in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.77655in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.77655in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>4.60417in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Image Name="Image5">
+                      <Source>Database</Source>
+                      <Value>=Fields!FileContents.Value</Value>
+                      <MIMEType>image/jpeg</MIMEType>
+                      <Sizing>FitProportional</Sizing>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Image>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.23958in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox112">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Caption.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkOliveGreen</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox112</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>DarkOliveGreen</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.96875in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Text">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Text.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Text</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Group3">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!TextType.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!TextType.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <TablixHeader>
+                <Size>1.77655in</Size>
+                <CellContents>
+                  <Textbox Name="Group32">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>=Fields!TextType.Value</Value>
+                            <Style />
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Group32</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details4" />
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
+                </TablixMember>
+              </TablixMembers>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>Figures</DataSetName>
+        <Top>12.12847in</Top>
+        <Left>0.09571in</Left>
+        <Height>5.8125in</Height>
+        <Width>7.10619in</Width>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
     </ReportItems>
-    <Height>21.5677in</Height>
+    <Height>23.33855in</Height>
     <Style>
       <Border>
         <Style>None</Style>
