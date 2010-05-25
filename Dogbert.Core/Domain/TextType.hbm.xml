@@ -10,6 +10,8 @@
 
     <property name="Name" column="Name" />
     <property name="IsActive" column="IsActive" />
+    <property name="HasImage" column="HasImage" />
+    <property name="Priority" column="Priority" />
 
   </class>
 </hibernate-mapping>
