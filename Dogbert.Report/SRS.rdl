@@ -3049,7 +3049,7 @@ ORDER BY TextTypes.Priority</CommandText>
         <Top>12.12847in</Top>
         <Left>0.09571in</Left>
         <Height>5.8125in</Height>
-        <Width>7.10619in</Width>
+        <Width>7.1062in</Width>
         <ZIndex>21</ZIndex>
         <Style>
           <Border>
@@ -3063,12 +3063,6 @@ ORDER BY TextTypes.Priority</CommandText>
       <Border>
         <Style>None</Style>
       </Border>
-      <TopBorder>
-        <Style>Solid</Style>
-      </TopBorder>
-      <BottomBorder>
-        <Style>Solid</Style>
-      </BottomBorder>
     </Style>
   </Body>
   <ReportParameters>
@@ -3085,7 +3079,7 @@ ORDER BY TextTypes.Priority</CommandText>
   <Width>7.44815in</Width>
   <Page>
     <PageHeader>
-      <Height>0.51611in</Height>
+      <Height>0.59042in</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="ExecutionTime">
@@ -3156,6 +3150,20 @@ ORDER BY TextTypes.Priority</CommandText>
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Line Name="Line3">
+          <Top>0.52792in</Top>
+          <Left>0.08023in</Left>
+          <Height>0in</Height>
+          <Width>7.13715in</Width>
+          <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Color>DarkOliveGreen</Color>
+              <Style>Solid</Style>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
       </ReportItems>
       <Style>
         <Border>
@@ -3167,7 +3175,7 @@ ORDER BY TextTypes.Priority</CommandText>
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.48958in</Height>
+      <Height>0.42708in</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="PageNumber">
@@ -3239,6 +3247,19 @@ ORDER BY TextTypes.Priority</CommandText>
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Line Name="Line4">
+          <Left>0.08023in</Left>
+          <Height>0in</Height>
+          <Width>7.13715in</Width>
+          <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Color>DarkOliveGreen</Color>
+              <Style>Solid</Style>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
       </ReportItems>
       <Style>
         <Border>
