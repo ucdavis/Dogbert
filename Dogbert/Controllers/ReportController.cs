@@ -90,10 +90,5 @@ namespace Dogbert.Controllers
 
             return File(bytes, "application/excel");
         }
-
-        //public ActionResult View(int id)
-        //{
-        //    return View();
-        //}
     }
 }
