@@ -13,7 +13,8 @@
             <legend>Fields</legend>
             <p>
                 <label for="Description">Description:</label>
-                <%= this.TextArea("Requirement.Description")%>
+                <%--<%= this.TextArea("Requirement.Description") %>--%>
+                <%= Html.TextArea("Requirement.Description", new { style = "width: 500px; height: 300px" })%>
                 <%= Html.ValidationMessage("Requirement.Description", "*")%> 
             </p>
             <p>
@@ -40,7 +41,7 @@
                 <%= Html.ValidationMessage("Requirement.PriorityType", "*")%>                
             </p>
             <p>
-                <%= this.Select("Requirement.Category").Options(Model.Project.RequirementCategories.Where(a => a.IsActive), x => x.Id, x => x.Name)
+                <%= this.Select("Requirement.Category").Options(Model.Project.RequirementCategories.Where(a => a.IsActive).OrderBy(a=>a.Name), x => x.Id, x => x.Name)
                         .FirstOption("--Select a Category--")
                         .HideFirstOptionWhen(Model.Requirement.Category != null && Model.Requirement.Category.IsActive)
                         .Label("Category Type:")
