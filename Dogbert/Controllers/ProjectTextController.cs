@@ -57,8 +57,8 @@ namespace Dogbert.Controllers
                 Message = "New Text Created Successfully";
             }
 
-            var viewModel = CreateProjectTextViewModel.Create(Repository, project);
-            return this.RedirectToAction(a => a.Edit(id));
+            //var viewModel = CreateProjectTextViewModel.Create(Repository, project);
+            return this.RedirectToAction<ProjectController>(a => a.Edit(id));
         }
 
         public ActionResult Edit(int id)
