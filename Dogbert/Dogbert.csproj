@@ -495,6 +495,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ConnectionStrings-Prod.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConnectionStrings-Test.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Report\" />

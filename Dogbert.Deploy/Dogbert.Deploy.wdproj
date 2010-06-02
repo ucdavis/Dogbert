@@ -25,22 +25,38 @@
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
     <SingleAssemblyName>Dogbert.Deploy</SingleAssemblyName>
+    <UseWebConfigReplacement>true</UseWebConfigReplacement>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
     <OutputPath>.\Release</OutputPath>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
-    <SingleAssemblyName>Dogbert.Deploy</SingleAssemblyName>
+    <SingleAssemblyName>Dogbert</SingleAssemblyName>
+    <UseWebConfigReplacement>true</UseWebConfigReplacement>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <AssemblyAttributes Include="AssemblyFileVersion">
-      <Value>1.2.23.2010</Value>
+      <Value>1.6.2.2010</Value>
     </AssemblyAttributes>
     <AssemblyAttributes Include="AssemblyVersion">
-      <Value>1.2.23.2010</Value>
+      <Value>1.6.2.2010</Value>
+    </AssemblyAttributes>
+    <WebConfigReplacementFiles Include="ConnectionStrings-Test.config">
+      <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <WebConfigReplacementFiles Include="ConnectionStrings-Prod.config">
+      <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>1.6.2.2010</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>1.6.2.2010</Value>
     </AssemblyAttributes>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
