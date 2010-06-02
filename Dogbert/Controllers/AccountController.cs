@@ -1,6 +1,9 @@
+using System;
 using System.Web.Mvc;
+using System.Web.Security;
 using UCDArch.Web.Authentication;
 using UCDArch.Web.Controller;
+using MvcContrib;
 
 namespace Dogbert.Controllers
 {
@@ -22,7 +25,13 @@ namespace Dogbert.Controllers
 
         public ActionResult LogOff()
         {
-            return Redirect("https://cas.ucdavis.edu/cas/logout");
+            FormsAuthentication.SignOut();
+
+            // build a return url
+            var returnUrl = String.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Action("Index", "Home"));
+
+            // figure out if the user is cas? or openid
+            return Redirect("https://cas.ucdavis.edu/cas/logout?service=" + returnUrl);
         }
 
     }

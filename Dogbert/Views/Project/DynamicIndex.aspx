@@ -102,10 +102,10 @@
                                 col.Add(project => project.Contact);
                                 col.Add(project => project.Unit);
                                 col.Add(project => project.Complexity);
-                                col.Add(project => project.StartDateString);
-                                col.Add(project => project.EndDateString);
+                                col.Add(project => project.StartDateString).Title("Start");
+                                col.Add(project => project.EndDateString).Title("End");
                                 col.Add(project => project.Deadline).Format("{0:d}");
-                                col.Add(project => project.StatusCode.Name);
+                                col.Add(project => project.StatusCode.Name).Title("Status");
                             })
                         
                 .Render(); %>

@@ -62,6 +62,7 @@
             <div id="logindisplay">
                 <ul class="top_head_empty"><li></li></ul>
                 <ul>
+                    <li><% Html.RenderPartial("LogOnUserControl"); %></li>
                     <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
                     <li><%= Html.ActionLink<ProjectController>(a => a.DynamicIndex(), "Manage")%></li>
                 </ul>
