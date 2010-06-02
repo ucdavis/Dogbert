@@ -44,11 +44,17 @@
     <AssemblyAttributes Include="AssemblyVersion">
       <Value>1.6.2.2010</Value>
     </AssemblyAttributes>
+    <WebConfigReplacementFiles Include="AppSettings-Test.config">
+      <Section>appSettings</Section>
+    </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="ConnectionStrings-Test.config">
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <WebConfigReplacementFiles Include="AppSettings-Prod.config">
+      <Section>appSettings</Section>
+    </WebConfigReplacementFiles>
     <WebConfigReplacementFiles Include="ConnectionStrings-Prod.config">
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
