@@ -9,12 +9,12 @@
   </DataSources>
   <Reports>
     <ProjectItem>
-      <Name>SRS.rdl</Name>
-      <FullPath>SRS.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>Requirements.rdl</Name>
       <FullPath>Requirements.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>SRS.rdl</Name>
+      <FullPath>SRS.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
@@ -39,7 +39,8 @@
       <Name>Release</Name>
       <Platform>Win32</Platform>
       <Options>
-        <TargetFolder>Dogbert.Report</TargetFolder>
+        <TargetServerURL>http://reports.caes.ucdavis.edu/reportserver</TargetServerURL>
+        <TargetFolder>Dogbert</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
     </Configuration>
