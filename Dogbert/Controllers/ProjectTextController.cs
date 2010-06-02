@@ -22,7 +22,7 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
-            var viewmodel = CreateProjectTextViewModel.Create(Repository, project);
+            var viewmodel = CreateProjectTextViewModel.Create(Repository, project, true);
 
             return View(viewmodel);
         }
@@ -55,10 +55,12 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<ProjectText>().EnsurePersistent(projectText);
                 Message = "New Text Created Successfully";
+                return this.RedirectToAction<ProjectController>(a => a.Edit(id));
             }
 
-            //var viewModel = CreateProjectTextViewModel.Create(Repository, project);
-            return this.RedirectToAction<ProjectController>(a => a.Edit(id));
+            var viewModel = CreateProjectTextViewModel.Create(Repository, project, true);
+            return View(viewModel);
+            
         }
 
         public ActionResult Edit(int id)
@@ -67,7 +69,7 @@ namespace Dogbert.Controllers
 
             if (existingProjectText == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
-            var viewModel = CreateProjectTextViewModel.Create(Repository, existingProjectText.Project);
+            var viewModel = CreateProjectTextViewModel.Create(Repository, existingProjectText.Project, false);
             viewModel.ProjectText = existingProjectText;
             return View(viewModel);
         }
@@ -107,7 +109,7 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Edit(pt.Project.Id));
             }
 
-            var viewModel = CreateProjectTextViewModel.Create(Repository, pt.Project);
+            var viewModel = CreateProjectTextViewModel.Create(Repository, pt.Project, false);
             viewModel.ProjectText = pt;
             return View(viewModel);
         }
@@ -125,15 +127,28 @@ namespace Dogbert.Controllers
         public ProjectText ProjectText { get; set; }
         public Project Project { get; set; }
 
-        public static CreateProjectTextViewModel Create(IRepository repository, Project project)
+        public static CreateProjectTextViewModel Create(IRepository repository, Project project, bool create)
         {
             Check.Require(repository != null, "Repository is required.");
 
             var viewModel = new CreateProjectTextViewModel()
                                 {
-                                    TextType = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).OrderBy(a => a.Priority).ToList(),
+                                    //TextType = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).OrderBy(a => a.Priority).ToList(),
                                     Project = project
                                 };
+
+            if (create)
+            {
+                var usedTypes = project.ProjectTexts.Select(a => a.TextType).ToList();
+                var allTypes = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).ToList();
+
+                viewModel.TextType = allTypes.Where(a => !usedTypes.Contains(a)).ToList();
+            }
+            else
+            {
+                viewModel.TextType = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).ToList();
+
+            }
 
             return viewModel;
         }
