@@ -16,6 +16,10 @@
     <%
         Html.Grid(Model.Where(a=>a.ProjectType.IsActive).OrderBy(a=>a.Priority).ToList())
             .Name("Projects")
+            .CellAction(cell=>
+                            {
+                                //cell.Text = cell.Column.Member;
+                            })
             .Columns(col =>
                    {
                        col.Add(a => a.Name);

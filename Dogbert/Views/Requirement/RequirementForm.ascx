@@ -1,9 +1,4 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<RequirementViewModel>" %>
-<%@ Import Namespace="Dogbert.Core.Resources"%>
-<%@ Import Namespace="Dogbert.Controllers.Helpers"%>
-<%@ Import Namespace="Dogbert.Controllers.ViewModels"%>
-<%@ Import Namespace="Dogbert.Core.Domain"%>
-<%@ Import Namespace="xVal.Html"%>
 
    
 

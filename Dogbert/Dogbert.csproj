@@ -167,6 +167,10 @@
     <Compile Include="RouteConfigurator.asax.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\telerik.common.min.css" />
+    <Content Include="Content\telerik.vista.min.css" />
+    <Content Include="Content\Vista\loading.gif" />
+    <Content Include="Content\Vista\sprite.png" />
     <Content Include="Content\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
     <Content Include="Content\images\ui-bg_flat_15_cd0a0a_40x100.png" />
     <Content Include="Content\images\ui-bg_glass_100_e4f1fb_1x400.png" />
@@ -182,8 +186,10 @@
     <Content Include="Content\images\ui-icons_72a7cf_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jquery-ui-1.7.2.custom.css" />
+    <Content Include="Content\quicksandstylesheet.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\caes-logo.jpg" />
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\tiny_mce\jquery.tinymce.js" />
     <Content Include="Scripts\tiny_mce\langs\en.js" />
