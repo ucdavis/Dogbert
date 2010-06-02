@@ -29,8 +29,8 @@
        %>
 --%>
 
-
-<table border="solid">
+<div class="t-widget t-grid norightborder" style="border:none;">
+<table cellpadding="0" cellspacing="0" style="border:0px;">
     <thead>
         <tr>
             
@@ -41,8 +41,8 @@
         <!-- Get the category names -->
         <% foreach(var cat in Model.OrderBy(a=>a.RequirementCategory.Name).Select(a=>a.RequirementCategory).Distinct()) { %>
         
-            <tr>
-                <th colspan="5" style="text-align:left;"><%= Html.Encode(cat.Name) %></th>
+            <tr style="border-collapse:collapse;">
+                <th colspan="5" class="t-header" style="text-align:left; border-collapse:collapse;"><%= Html.Encode(cat.Name) %></th>
             </tr>
             
             <!-- Go through and deal with the use cases them selves -->
@@ -51,7 +51,7 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td><%= Html.Encode(uc.Id) %></td>
+                    <td class="space_on_the_right"><%= Html.Encode(uc.Id) %></td>
                     <td><%= Html.Encode(uc.Name) %></td>
                     <td><%= Html.Encode(uc.LastModified) %></td>
                 </tr>
@@ -75,16 +75,16 @@
                         
                         <div class="steps">
                         
-                            <table class="steps_table">
+                            <ol class="steps_table">
                             
                                 <% foreach (var step in uc.Steps) { %>
-                                    <tr>
-                                        <td><%= Html.Encode(step.Order) %></td>
-                                        <td><%= Html.HtmlEncode(step.Description) %></td>
-                                    </tr>
+                                    <li>
+                                        <!-- <td><%= Html.Encode(step.Order) %></td> -->
+                                        <%= Html.HtmlEncode(step.Description) %>
+                                    </li>
                                 <% } %>
                             
-                            </table>
+                            </ol>
                         
                         </div>
                     </td>
@@ -93,9 +93,10 @@
             <% } %>
         
         <% } %>
-        
+            
     </tbody>
 </table>
+</div>
 
 
  <%--<table>
