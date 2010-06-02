@@ -140,7 +140,10 @@
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Controllers\Helpers\StringExtension.cs" />
     <Compile Include="Controllers\ProjectFileController.cs" />
+    <Compile Include="Controllers\ProjectTextController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequirementCategoryController.cs" />
     <Compile Include="Controllers\UseCaseController.cs" />
@@ -462,7 +465,6 @@
     <Content Include="Views\Project\DynamicIndex.aspx" />
     <Content Include="Views\Project\ProjectUseCaseStepsForm.ascx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
-    <Content Include="Views\Project\EditText.aspx" />
     <Content Include="Views\Project\ProjectEditForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />
     <Content Include="Views\Project\Edit.aspx" />
@@ -499,6 +501,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConnectionStrings-Test.config" />
+    <Content Include="Views\ProjectText\Create.aspx" />
+    <Content Include="Views\ProjectText\Edit.aspx" />
+    <Content Include="Views\ProjectText\ProjectTextForm.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

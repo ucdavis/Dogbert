@@ -126,6 +126,7 @@ namespace Dogbert.Controllers
             if (existingProject == null) return RedirectToAction("Create");
             var viewModel = ProjectViewModel.CreateEdit(Repository);
             viewModel.Project = existingProject;
+            viewModel.UseCaseSteps = Repository.OfType<UseCaseStep>().Queryable.Where(a => a.UseCase.Project == existingProject).ToList();
             return View(viewModel);
         }
 
@@ -198,6 +199,7 @@ namespace Dogbert.Controllers
                // _projectRepository.DbContext.RollbackTransaction();
                 var viewModel = ProjectViewModel.CreateEdit(Repository);
                 viewModel.Project = projectToUpdate;
+                viewModel.UseCaseSteps = Repository.OfType<UseCaseStep>().Queryable.Where(a => a.UseCase.Project == projectToUpdate).ToList();
                 return View(viewModel);
             }
         }
@@ -208,103 +210,7 @@ namespace Dogbert.Controllers
     //Project Texts
     //--------------------------------------------------------------------------------------------------------
         // GET: /Project/EditText/
-        public ActionResult EditText(int Id)
-        {
-            var existingProjectText = Repository.OfType<ProjectText>().GetNullableByID(Id);
-            
-            if (existingProjectText == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
-            var viewModel = ProjectViewModel.CreateEditText(Repository);
-            viewModel.ProjectText = existingProjectText;
-            return View(viewModel);
-        }
-
-        // POST: /Project/EditText/
-        [AcceptPost]
-        [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult EditText(int id, ProjectText projectText)
-        {
-            var pt = Repository.OfType<ProjectText>().GetNullableByID(id);
-
-            TransferValuesTo(pt, projectText);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, pt.ValidationResults());
-
-            var proj =  Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
-        
-            if (proj.ProjectTexts.Any(a => a.TextType == pt.TextType && a.Id  !=  pt.Id)  )
-            {//Ensure project text does not already exist for record other than self
-
-                ////NEED to update.  TextType can be the same if it's on the ProjectText being updated.
-                ModelState.AddModelError("Text Type", "Text type already exists in this project");
-               
-            }
-            else if (pt.Text.Length  < 1)
-            {
-                 ModelState.AddModelError("Text Type", "No text entered");
-            }
-
-
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<ProjectText>().EnsurePersistent(pt);
-                Message = "Project text edited successfully";
-
-            }
-            var project = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
-            return RedirectToAction("Edit", project);
-            // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
-      
-        }
-
-        //Transfer Values: For  /Project/EditText/
-        private static void TransferValuesTo(ProjectText projectTextToUpdate, ProjectText projectText)
-        {
-            projectTextToUpdate.TextType = projectText.TextType;
-            projectTextToUpdate.Text = projectText.Text;
-        }
-
-        // POST: /Project/CreateText/
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Project Id</param>
-        /// <param name="projectText"></param>
-        [AcceptPost]
-        [ValidateInput(false)]
-        public ActionResult CreateText(int projectId, [Bind(Exclude="Id")]ProjectText projectText)
-        {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
-
-            if (project == null)
-            {
-                return RedirectToAction("DynamicIndex");
-            }
-           
-            if (project.ProjectTexts.Any(a => a.TextType == projectText.TextType))
-            {
-                ModelState.AddModelError("Text Type", "Text type already exists in this project");
-            }
-            else if (projectText.Text.Length < 1)
-            {
-                 ModelState.AddModelError("Text Type", "No text entered");
-            }
-
-            project.AddProjectTexts(projectText);
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, projectText.ValidationResults());
-            if (ModelState.IsValid)
-            {
-                Repository.OfType<ProjectText>().EnsurePersistent(projectText);
-                //_projectRepository.EnsurePersistent(projectText);//which repository
-                Message = "New Text Created Successfully";
-                //return RedirectToAction("DynamicIndex");
-            }
-
-            var viewModel = ProjectViewModel.CreateEdit(Repository);
-            viewModel.Project = project;
-            return this.RedirectToAction(a => a.Edit(projectId));
-        }
 
         
 

@@ -30,7 +30,8 @@ namespace Dogbert.Controllers.ViewModels
         public ProjectText ProjectText { get; set; }
         public IList<TextType> TextTypes { get; set; }
         public IList<RequirementCategory> RequirementCategories { get; set; }
-        
+        public IList<UseCaseStep> UseCaseSteps { get; set; }
+
         //used for requirements
         public Requirement Requirement { get; set; }
         public IList<RequirementType> RequirementTypes { get; set; }
@@ -60,7 +61,7 @@ namespace Dogbert.Controllers.ViewModels
             //populate the stuff needed for use cases
            // viewModel.Actors = repository.OfType<Actor>().Queryable.ToList();
             viewModel.RequirementCategories = repository.OfType<RequirementCategory>().Queryable.Where(r =>r.IsActive).ToList();
-
+            
             return viewModel;
         }
 
