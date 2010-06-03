@@ -9,13 +9,30 @@ namespace Dogbert.Controllers.ViewModels
 {
     public class ProjectIndexViewModel
     {
-        public static ProjectIndexViewModel Create()
+        public static ProjectIndexViewModel Create(IRepository repository)
         {
-            return new ProjectIndexViewModel();
+            Check.Require(repository != null, "Repository is required.");
+
+            var viewModel = new ProjectIndexViewModel()
+                                {
+                                    ProjectTypes =
+                                        repository.OfType<ProjectType>().Queryable.Where(a => a.IsActive).ToList(),
+                                    Projects =
+                                        repository.OfType<Project>().Queryable.Where(a => !a.StatusCode.IsComplete).
+                                        ToList(),
+                                    DesignerProjects =
+                                        repository.OfType<Project>().Queryable.Where(
+                                            a =>
+                                            (a.ProjectType.Id == "WA" || a.ProjectType.Id == "WS") && a.DesignerShow).
+                                        OrderBy(a => a.DesignerOrder).ToList()
+                                };
+
+            return viewModel;
         }
 
         public IList<ProjectType> ProjectTypes { get; set; }
         public IList<Project> Projects { get; set; }
+        public IList<Project> DesignerProjects { get; set; }
     }
 
     public class ProjectViewModel

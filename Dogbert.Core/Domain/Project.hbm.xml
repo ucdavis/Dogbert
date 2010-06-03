@@ -52,6 +52,9 @@
       <key column="ProjectId"/>
       <one-to-many class="ProjectFile"/>
     </bag>
+
+    <property name="DesignerOrder" column="DesignerOrder" />
+    <property name="DesignerShow" column="DesignerShow" />
     
   </class>
 </hibernate-mapping>

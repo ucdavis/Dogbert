@@ -42,10 +42,10 @@ namespace Dogbert.Controllers
 
         public ActionResult DynamicIndex()
         {
-            var viewModel = ProjectIndexViewModel.Create();
+            var viewModel = ProjectIndexViewModel.Create(Repository);
 
-            viewModel.Projects = _projectRepository.GetAll();
-            viewModel.ProjectTypes = Repository.OfType<ProjectType>().Queryable.Where(x => x.IsActive).ToList();
+            //viewModel.Projects = _projectRepository.GetAll();
+            //viewModel.ProjectTypes = Repository.OfType<ProjectType>().Queryable.Where(x => x.IsActive).ToList();
 
             return View(viewModel);
         }
@@ -61,6 +61,34 @@ namespace Dogbert.Controllers
                 p.Priority = i + 1;
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
+            return new JsonNetResult(true);
+        }
+
+        [AcceptPost]
+        [BypassAntiForgeryToken]
+        public ActionResult UpdateDesignerPriority(int[] projects)
+        {
+            Project p;
+            for (int i = 0; i < projects.Length; i++)
+            {
+                p = Repository.OfType<Project>().GetByID(projects[i]);
+                p.DesignerOrder = i + 1;
+                Repository.OfType<Project>().EnsurePersistent(p);
+            }
+            return new JsonNetResult(true);            
+        }
+
+        [AcceptPost]
+        [BypassAntiForgeryToken]
+        public ActionResult RemoveFromDesignerProjects(int id)
+        {
+            var project = Repository.OfType<Project>().GetNullableByID(id);
+
+            if (project == null) return new JsonNetResult(false);
+
+            project.DesignerShow = false;
+            Repository.OfType<Project>().EnsurePersistent(project);
+
             return new JsonNetResult(true);
         }
 

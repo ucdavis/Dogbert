@@ -42,6 +42,9 @@ namespace Dogbert.Core.Domain
         public virtual User LeadProgrammer { get; set; }
         public virtual ProjectType ProjectType { get; set; }
 
+        public virtual int DesignerOrder { get; set; }
+        public virtual bool DesignerShow { get; set; }
+
         
         public virtual string ProjectedStartString
         {
@@ -139,6 +142,9 @@ namespace Dogbert.Core.Domain
             RequirementCategories = new List<RequirementCategory>();
             Requirements = new List<Requirement>();
             UseCases = new List<UseCase>();
+
+            DesignerOrder = 99;
+            DesignerShow = true;
         }
 
         public virtual void AddUseCase(UseCase UseCase)
