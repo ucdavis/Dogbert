@@ -51,6 +51,10 @@
                     <%= Html.SubmitButton("Submit", "Search") %>
                 </p>
             <% } %>--%>
+            
+            <p id="search_box" class="search_box">
+            <% Html.RenderPartial("LogOnUserControl"); %>
+            </p>
         </div>
     </div>
 
@@ -62,8 +66,9 @@
             <div id="logindisplay">
                 <ul class="top_head_empty"><li></li></ul>
                 <ul>
-                    <li><% Html.RenderPartial("LogOnUserControl"); %></li>
-                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
+                    <li></li>
+                    <li><%= Html.ActionLink("Projects", "Index", "Home")%></li>
+                    <li><%= Html.ActionLink<HomeController>(a=>a.Designer(), "Designer Projects") %></li>
                     <li><%= Html.ActionLink<ProjectController>(a => a.DynamicIndex(), "Manage")%></li>
                 </ul>
             </div> 

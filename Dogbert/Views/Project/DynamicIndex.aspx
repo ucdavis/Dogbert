@@ -64,10 +64,14 @@
          });
 
          $(".remove-designer").click(function(action) {
-            var url = '<%= Url.Action("RemoveFromDesignerProjects", "Project") %>';
-             $.post(url, { projects: $(this).attr("pid") },
+             var url = '<%= Url.Action("RemoveFromDesignerProjects", "Project") %>';
+             var $row = $(this);
+             var pid = $row.attr("pid");
+             $.post(url, { id: pid },
                             function(result) { // refresh the calendar
-                                if (result == "True") $(this).remove();
+                                if (result == "true") {
+                                    $row.parents("tr").remove();
+                                }
                             });
          });
 
@@ -168,7 +172,7 @@
                                                     
                                                     |
                                                     
-                                                    <a href="#" class="remove-designer" pid="<%= Html.Encode(project.Id)%>">Remove</a>
+                                                    <a href="javascript:;" class="remove-designer" pid="<%= Html.Encode(project.Id)%>">Remove</a>
                                                     
                                                 <% });
                                                  

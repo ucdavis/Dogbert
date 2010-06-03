@@ -16,6 +16,16 @@ namespace Dogbert.Controllers
             return View(projects);
         }
 
+        public ActionResult Designer()
+        {
+            var projects =
+                Repository.OfType<Project>().Queryable.Where(
+                    a => (a.ProjectType.Id == "WA" || a.ProjectType.Id == "WS") && a.DesignerShow).
+                    OrderBy(a => a.DesignerOrder).ToList();
+
+            return View(projects);
+        }
+
         [HandleTransactionsManually]
         public ActionResult About()
         {
