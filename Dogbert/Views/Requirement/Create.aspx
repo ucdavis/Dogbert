@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<RequirementViewModel>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Dogbert.Controllers.ViewModels.RequirementViewModel>" %>
 <%@ Import Namespace="Dogbert.Core.Resources"%>
 <%@ Import Namespace="Dogbert.Controllers.Helpers"%>
 <%@ Import Namespace="Dogbert.Controllers.ViewModels"%>
