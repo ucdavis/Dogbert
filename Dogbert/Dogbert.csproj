@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Controllers\Helpers\StringExtension.cs" />
     <Compile Include="Controllers\ProjectFileController.cs" />
@@ -510,6 +511,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppSettings-Test.config" />
+    <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Home\Designer.aspx" />
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,7 @@
     </p>
     <% } %>
     <div>
-        <%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_ProjectFiles)%>
+        <%--<%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_ProjectFiles)%>--%>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
