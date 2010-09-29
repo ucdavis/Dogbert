@@ -2,12 +2,14 @@ using System.Linq;
 using Dogbert.Core.Domain;
 using Dogbert.Tests.Core;
 using Dogbert.Tests.Core.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UCDArch.Core.PersistanceSupport;
-using UCDArch.Data.NHibernate;
 using Dogbert.Tests.Core.Extensions;
-using Dogbert.Tests.Core.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UCDArch.Data.NHibernate;
+using UCDArch.Core.PersistanceSupport;
 using UCDArch.Testing.Extensions;
+
+using System;
+
 
 namespace Dogbert.Tests.Repositories
 {
@@ -102,13 +104,13 @@ namespace Dogbert.Tests.Repositories
 		
         #region Name test
 
-            #region invalid tests
+        #region invalid tests
         /// <summary>
         /// Tests the code with null does not save.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(System.ApplicationException))]
-        public void TestCodeWithNullDoesNotSave()
+        public void TestNameWithNullDoesNotSave()
         {
             Actor actor = null;
             try
@@ -130,7 +132,7 @@ namespace Dogbert.Tests.Repositories
                 Assert.IsNotNull(actor);
                 var results = actor.ValidationResults().AsMessageList();
                 results.AssertErrorsAre(
-                    "Actor: may not be null or empty");
+                    "Name: may not be null or empty");
                 Assert.IsTrue(actor.IsTransient());
                 Assert.IsFalse(actor.IsValid());
                 #endregion Assert
@@ -139,16 +141,222 @@ namespace Dogbert.Tests.Repositories
             }
         }
 
-            #endregion invalid tests
+        /// <summary>
+        /// Tests the code with empty string does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestNameWithEmptyStringDoesNotSave()
+        {
+            Actor actor= null;
+            try
+            {
+                #region Arrange
+                actor = GetValid(9);
+                actor.Name = string.Empty;
+                #endregion Arrange
+
+                #region Act
+                ActorRepository.DbContext.BeginTransaction();
+                ActorRepository.EnsurePersistent(actor);
+                ActorRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception)
+            {
+                #region Assert
+                Assert.IsNotNull(actor);
+                var results = actor.ValidationResults().AsMessageList();
+                results.AssertErrorsAre(
+                    "Name: may not be null or empty");
+
+                Assert.IsTrue(actor.IsTransient());
+                Assert.IsFalse(actor.IsValid());
+                #endregion Assert
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestNameTooLongDoesNotSave()
+        {
+            Actor actor = null;
+            try
+            {
+                #region Arrange
+                actor = GetValid(9);
+                actor.Name = "x".RepeatTimes(51);
+                #endregion Arrange
+
+                #region Act
+                ActorRepository.DbContext.BeginTransaction();
+                ActorRepository.EnsurePersistent(actor);
+                ActorRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }//end try
+            catch
+            {
+                #region Assert
+                Assert.IsNotNull(actor);
+                var results = actor.ValidationResults().AsMessageList();
+                results.AssertErrorsAre("Name: length must be between 0 and 50");
+                Assert.IsTrue(actor.IsTransient());
+                Assert.IsFalse(actor.IsValid());
+                #endregion Assert
+                
+                throw;
+            }//end  catch
 
 
-            #region valid tests
 
+        }//end TestStringTooLongDoesNotSave
 
-            #endregion valid tests
+        #endregion invalid tests
+    
+        #region valid tests
+        [TestMethod]
+        public void TestNameWithOneCharSaves()
+        {
+            Actor actor = null;
 
+            #region Arrange
+            actor = GetValid(9);
+            actor.Name = "x";
+            #endregion Arrange
+
+            #region act
+            ActorRepository.DbContext.BeginTransaction();
+            ActorRepository.EnsurePersistent(actor);
+            ActorRepository.DbContext.CommitTransaction();
+            #endregion act
+
+            #region Assert
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(actor.Name.Length, 1);
+            Assert.IsFalse(actor.IsTransient());
+            Assert.IsTrue(actor.IsValid());
+            #endregion Assert
+
+        }//end TestNameWithOneCharSaves
+
+        [TestMethod]
+        public void TestNameWithMaxCharSaves()
+        {
+            Actor actor = null;
+
+            #region Arrange
+            actor = GetValid(9);
+            actor.Name = "x".RepeatTimes(50);
+            #endregion Arrange
+
+            #region act
+            ActorRepository.DbContext.BeginTransaction();
+            ActorRepository.EnsurePersistent(actor);
+            ActorRepository.DbContext.CommitTransaction();
+            #endregion act
+
+            #region Assert
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(actor.Name.Length, 50);
+            Assert.IsFalse(actor.IsTransient());
+            Assert.IsTrue(actor.IsValid());
+            #endregion Assert
+
+        }//end TestNameWithOneCharSaves
+
+        #endregion valid tests
 
         #endregion Name test
+
+        #region IsActive
+
+        #region valid tests
+        [TestMethod]
+        public void IsActiveFalseSaves()
+        {
+            Actor actor = null;
+
+            #region Arrange
+            actor = GetValid(9);
+            actor.IsActive = false;
+            #endregion Arrange
+
+            #region Act
+            ActorRepository.DbContext.BeginTransaction();
+            ActorRepository.EnsurePersistent(actor);
+            ActorRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(actor.IsActive, false);
+            Assert.IsFalse(actor.IsTransient());
+            Assert.IsTrue(actor.IsValid());
+            #endregion Assert
+        }//end IsActiveFalseSaves
+
+        [TestMethod]
+        public void IsActiveTrueSaves()
+        {
+            Actor actor = null;
+
+            #region Arrange
+            actor = GetValid(9);
+            actor.IsActive = true;
+            #endregion Arrange
+
+            #region Act
+            ActorRepository.DbContext.BeginTransaction();
+            ActorRepository.EnsurePersistent(actor);
+            ActorRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(actor.IsActive, true);
+            Assert.IsFalse(actor.IsTransient());
+            Assert.IsTrue(actor.IsValid());
+            #endregion Assert
+        }//end IsActiveFalseSaves
+
+        #endregion valid tests
+        #endregion IsActive
+
+        #region UseCases
+        #region valid tests
+        [TestMethod]
+        public void TestAddActorFromUseCasetoActor()
+        {
+            ////5 actors in repository to start with
+            //Assert.AreEqual(5, ActorRepository.GetAll().Count);
+
+            //Actor actor = null;
+            //var UseCaseRepository = new Repository<UseCase>();
+            
+            //#region Arrange
+            //UseCase usecase = CreateValidEntities.UseCase(9); //get usecase entity
+            //actor = GetValid(9); //get actor entity
+            //actor.UseCases = null;
+            //usecase.AddActors(actor);
+            //#endregion Arrange
+
+            //#region Act
+            //UseCaseRepository.DbContext.BeginTransaction();
+            //UseCaseRepository.EnsurePersistent(usecase);
+            //UseCaseRepository.DbContext.CommitTransaction();
+            //#endregion Act
+
+            //#region Asserts
+            //Assert.AreEqual(6, ActorRepository.GetAll().Count);
+            //#endregion Asserts
+
+
+        }//end UseCaseSave
+
+        #endregion valid tests
+        #endregion UseCases
 
     }
 }

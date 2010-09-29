@@ -346,6 +346,19 @@ namespace Dogbert.Tests.Core
         }
 
         /// <summary>
+        /// Loads the Use Cases.
+        /// </summary>
+        /// <param name="entriesToAdd">The entries to add.</param>
+        protected void LoadUseCase(int entriesToAdd)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.UseCase(i + 1);
+                Repository.OfType<UseCase>().EnsurePersistent(validEntity);
+            }
+        }
+
+        /// <summary>
         /// Loads the categories.
         /// </summary>
         /// <param name="entriesToAdd">The entries to add.</param>
@@ -427,6 +440,7 @@ namespace Dogbert.Tests.Core
             }
             Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();
         }
+
         
 
         /// <summary>

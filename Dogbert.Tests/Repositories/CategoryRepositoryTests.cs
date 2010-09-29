@@ -2,9 +2,12 @@ using System.Linq;
 using Dogbert.Core.Domain;
 using Dogbert.Tests.Core;
 using Dogbert.Tests.Core.Helpers;
+using Dogbert.Tests.Core.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
+using UCDArch.Testing.Extensions;
+using System;
 
 namespace Dogbert.Tests.Repositories
 {
@@ -20,6 +23,7 @@ namespace Dogbert.Tests.Repositories
         /// </summary>
         /// <value>The Category repository.</value>
         public IRepository<RequirementCategory> CategoryRepository { get; set; }
+        public IRepository<Project> ProjectRepository { get; set; }
 		
         #region Init and Overrides
 
@@ -100,6 +104,243 @@ namespace Dogbert.Tests.Repositories
 
         #endregion Init and Overrides		
 		
-        
+        #region Name test
+
+        #region invalid tests
+        /// <summary>
+        /// Tests the code with null does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(System.ApplicationException))]
+        public void TestNameWithNullDoesNotSave()
+        {
+            RequirementCategory requirementcategory = null;
+            try
+            {
+                #region Arrange
+                requirementcategory = GetValid(9);
+                requirementcategory.Name = null;
+                #endregion Arrange
+
+                #region Act
+                CategoryRepository.DbContext.BeginTransaction();
+                CategoryRepository.EnsurePersistent(requirementcategory);
+                CategoryRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (System.Exception)
+            {
+                #region Assert
+                Assert.IsNotNull(requirementcategory);
+                var results = requirementcategory.ValidationResults().AsMessageList();
+                results.AssertErrorsAre(
+                    "Name: may not be null or empty");
+                Assert.IsTrue(requirementcategory.IsTransient());
+                Assert.IsFalse(requirementcategory.IsValid());
+                #endregion Assert
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tests the code with empty string does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestNameWithEmptyStringDoesNotSave()
+        {
+            RequirementCategory requirementcategory = null;
+            try
+            {
+                #region Arrange
+                requirementcategory = GetValid(9);
+                requirementcategory.Name = string.Empty;
+                #endregion Arrange
+
+                #region Act
+                CategoryRepository.DbContext.BeginTransaction();
+                CategoryRepository.EnsurePersistent(requirementcategory);
+                CategoryRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception)
+            {
+                #region Assert
+                Assert.IsNotNull(requirementcategory);
+                var results = requirementcategory.ValidationResults().AsMessageList();
+                results.AssertErrorsAre(
+                    "Name: may not be null or empty");
+
+                Assert.IsTrue(requirementcategory.IsTransient());
+                Assert.IsFalse(requirementcategory.IsValid());
+                #endregion Assert
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestNameTooLongDoesNotSave()
+        {
+            RequirementCategory requirementcategory = null;
+            try
+            {
+                #region Arrange
+                requirementcategory = GetValid(9);
+                requirementcategory.Name = "x".RepeatTimes(51);
+                #endregion Arrange
+
+                #region Act
+                CategoryRepository.DbContext.BeginTransaction();
+                CategoryRepository.EnsurePersistent(requirementcategory);
+                CategoryRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }//end try
+            catch
+            {
+                #region Assert
+                Assert.IsNotNull(requirementcategory);
+                var results = requirementcategory.ValidationResults().AsMessageList();
+                results.AssertErrorsAre("Name: length must be between 0 and 50");
+                Assert.IsTrue(requirementcategory.IsTransient());
+                Assert.IsFalse(requirementcategory.IsValid());
+                #endregion Assert
+
+                throw;
+            }//end  catch
+
+
+
+        }//end TestStringTooLongDoesNotSave
+
+        #endregion invalid tests
+
+        #region valid tests
+        [TestMethod]
+        public void TestNameWithOneCharSaves()
+        {
+            RequirementCategory requirementcategory = null;
+
+            #region Arrange
+            requirementcategory = GetValid(9);
+            requirementcategory.Name = "x";
+            #endregion Arrange
+
+            #region act
+            CategoryRepository.DbContext.BeginTransaction();
+            CategoryRepository.EnsurePersistent(requirementcategory);
+            CategoryRepository.DbContext.CommitTransaction();
+            #endregion act
+
+            #region Assert
+            Assert.IsNotNull(requirementcategory);
+            Assert.AreEqual(requirementcategory.Name.Length, 1);
+            Assert.IsFalse(requirementcategory.IsTransient());
+            Assert.IsTrue(requirementcategory.IsValid());
+            #endregion Assert
+
+        }//end TestNameWithOneCharSaves
+
+        [TestMethod]
+        public void TestNameWithMaxCharSaves()
+        {
+            RequirementCategory requirementcategory = null;
+
+            #region Arrange
+            requirementcategory = GetValid(9);
+            requirementcategory.Name = "x".RepeatTimes(50);
+            #endregion Arrange
+
+            #region act
+            CategoryRepository.DbContext.BeginTransaction();
+            CategoryRepository.EnsurePersistent(requirementcategory);
+            CategoryRepository.DbContext.CommitTransaction();
+            #endregion act
+
+            #region Assert
+            Assert.IsNotNull(requirementcategory);
+            Assert.AreEqual(requirementcategory.Name.Length, 50);
+            Assert.IsFalse(requirementcategory.IsTransient());
+            Assert.IsTrue(requirementcategory.IsValid());
+            #endregion Assert
+
+        }//end TestNameWithOneCharSaves
+
+        #endregion valid tests
+
+        #endregion Name test
+
+        #region IsActive
+
+        #region valid tests
+        [TestMethod]
+        public void IsActiveFalseSaves()
+        {
+            RequirementCategory requirementcategory = null;
+
+            #region Arrange
+            requirementcategory = GetValid(9);
+            requirementcategory.IsActive = false;
+            #endregion Arrange
+
+            #region Act
+            CategoryRepository.DbContext.BeginTransaction();
+            CategoryRepository.EnsurePersistent(requirementcategory);
+            CategoryRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(requirementcategory);
+            Assert.AreEqual(requirementcategory.IsActive, false);
+            Assert.IsFalse(requirementcategory.IsTransient());
+            Assert.IsTrue(requirementcategory.IsValid());
+            #endregion Assert
+        }//end IsActiveFalseSaves
+
+        [TestMethod]
+        public void IsActiveTrueSaves()
+        {
+            RequirementCategory requirementcategory = null;
+
+            #region Arrange
+            requirementcategory = GetValid(9);
+            requirementcategory.IsActive = true;
+            #endregion Arrange
+
+            #region Act
+            CategoryRepository.DbContext.BeginTransaction();
+            CategoryRepository.EnsurePersistent(requirementcategory);
+            CategoryRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(requirementcategory);
+            Assert.AreEqual(requirementcategory.IsActive, true);
+            Assert.IsFalse(requirementcategory.IsTransient());
+            Assert.IsTrue(requirementcategory.IsValid());
+            #endregion Assert
+        }//end IsActiveFalseSaves
+
+        #endregion valid tests
+        #endregion IsActive
+
+        #region Project
+        #region validTests
+        [TestMethod]
+        public void TestProjectSaveValid()
+        {
+            LoadProjects(3);
+            #region Arrange
+            var category = GetValid(9);
+            //category.Project = ProjectRepository.GetNullableByID(3);
+            //to be completed (LD)
+            #endregion Arrange
+
+        }//end TestProjectSaveValid
+        #endregion validTests
+        #endregion Project
+
     }
 }
