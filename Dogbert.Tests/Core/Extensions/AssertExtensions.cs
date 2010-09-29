@@ -35,8 +35,18 @@ namespace Dogbert.Tests.Core.Extensions
             Assert.AreEqual(resultsList.Count, errors.Length, "Number of error messages do not match");
             foreach (var error in errors)
             {
-                Assert.IsTrue(resultsList.Contains(error), "Expected error \"" + error + "\" not found");
+                Assert.IsTrue(resultsList.Contains(error), "Expected error \"" + error + "\" not found." + "Found:" + resultsList.ParseList());
             }
+        }
+
+        private static string ParseList(this IEnumerable<string> source)
+        {
+            var rtValue = "";
+            foreach (var s in source)
+            {
+                rtValue = rtValue + "\n" + s;
+            }
+            return rtValue;
         }
     }
 }

@@ -5,6 +5,9 @@ using Dogbert.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
+using Dogbert.Tests.Core.Extensions;
+using Dogbert.Tests.Core.Helpers;
+using UCDArch.Testing.Extensions;
 
 namespace Dogbert.Tests.Repositories
 {
@@ -97,6 +100,55 @@ namespace Dogbert.Tests.Repositories
 
         #endregion Init and Overrides		
 		
-        
+        #region Name test
+
+            #region invalid tests
+        /// <summary>
+        /// Tests the code with null does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(System.ApplicationException))]
+        public void TestCodeWithNullDoesNotSave()
+        {
+            Actor actor = null;
+            try
+            {
+                #region Arrange
+                actor = GetValid(9);
+                actor.Name = null;
+                #endregion Arrange
+
+                #region Act
+                ActorRepository.DbContext.BeginTransaction();
+                ActorRepository.EnsurePersistent(actor);
+                ActorRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (System.Exception)
+            {
+                #region Assert
+                Assert.IsNotNull(actor);
+                var results = actor.ValidationResults().AsMessageList();
+                results.AssertErrorsAre(
+                    "Actor: may not be null or empty");
+                Assert.IsTrue(actor.IsTransient());
+                Assert.IsFalse(actor.IsValid());
+                #endregion Assert
+
+                throw;
+            }
+        }
+
+            #endregion invalid tests
+
+
+            #region valid tests
+
+
+            #endregion valid tests
+
+
+        #endregion Name test
+
     }
 }
