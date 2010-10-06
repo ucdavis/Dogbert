@@ -340,6 +340,7 @@ namespace Dogbert.Tests.Core
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.Project(i + 1);
+              //  validEntity.SetIdTo((i + 1));
                 Repository.OfType<Project>().EnsurePersistent(validEntity);
             }
             Repository.OfType<Project>().DbContext.CommitTransaction();

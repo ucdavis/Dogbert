@@ -33,6 +33,7 @@ namespace Dogbert.Tests.Repositories
         public CategoryRepositoryTests()
         {
             CategoryRepository = new Repository<RequirementCategory>();
+            ProjectRepository = new Repository<Project>();
         }
 
         /// <summary>
@@ -210,9 +211,6 @@ namespace Dogbert.Tests.Repositories
 
                 throw;
             }//end  catch
-
-
-
         }//end TestStringTooLongDoesNotSave
 
         #endregion invalid tests
@@ -327,16 +325,71 @@ namespace Dogbert.Tests.Repositories
         #endregion IsActive
 
         #region Project
+        #region invalid tests
+        /// <summary>
+        /// Tests that a null project does not save.
+        /// </summary>
+        /// 
+        [ExpectedException(typeof(ApplicationException))]
+        [TestMethod]
+        public void TestNullProjectDoesNotSave()
+        {
+            var category = GetValid(9);
+            try
+            {
+                #region Arrange
+               
+                category.Project = null;
+                #endregion Arrange
+
+                #region act
+                CategoryRepository.DbContext.BeginTransaction();
+                CategoryRepository.EnsurePersistent(category);
+                CategoryRepository.DbContext.CommitTransaction();
+                #endregion act
+            }
+            catch{
+
+                #region assert
+                Assert.IsNotNull(category);
+                var result = category.ValidationResults().AsMessageList();
+                result.AssertErrorsAre("Project: may not be empty");
+                Assert.IsTrue(category.IsTransient());
+                Assert.IsFalse(category.IsValid());
+                #endregion assert
+               
+                throw;
+            }
+        }
+
+        #endregion invalid tests
+
         #region validTests
+
+        /// <summary>
+        /// Tests that valid project saves in category.
+        /// </summary>
         [TestMethod]
         public void TestProjectSaveValid()
         {
             LoadProjects(3);
             #region Arrange
             var category = GetValid(9);
-            category.Project = ProjectRepository.GetNullableByID(3);
-            //to be completed (LD)
+            category.Project = ProjectRepository.GetNullableByID(2);
             #endregion Arrange
+
+            #region act
+            CategoryRepository.DbContext.BeginTransaction();
+            CategoryRepository.EnsurePersistent(category);
+            CategoryRepository.DbContext.CommitTransaction();
+            #endregion act
+
+            #region assert
+            Assert.IsFalse(category.IsTransient());
+            Assert.IsTrue(category.IsValid());
+
+            #endregion assert
+           
 
         }//end TestProjectSaveValid
         #endregion validTests

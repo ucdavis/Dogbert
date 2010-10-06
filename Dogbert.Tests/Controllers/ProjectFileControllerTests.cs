@@ -24,6 +24,8 @@ namespace Dogbert.Tests.Controllers
         protected IRepository<Project> ProjectRepository { get; set; }
         protected List<FileType> FileTypes { get; set; }
         protected IRepository<FileType> FileTypeRepository { get; set; }
+        protected List<TextType> TextTypes { get; set; } //LD added 10/06
+        protected IRepository<TextType> TextTypeRepository { get; set; } //LD added 10/06
         protected List<ProjectFile> ProjectFiles { get; set; }
         protected IRepository<ProjectFile> ProjectFileRepository { get; set; }
 
@@ -36,6 +38,10 @@ namespace Dogbert.Tests.Controllers
             FileTypes = new List<FileType>();
             FileTypeRepository = FakeRepository<FileType>();
             Controller.Repository.Expect(a => a.OfType<FileType>()).Return(FileTypeRepository).Repeat.Any();
+
+            TextTypes = new List<TextType>();
+            TextTypeRepository = FakeRepository<TextType>();
+            Controller.Repository.Expect(a => a.OfType<TextType>()).Return(TextTypeRepository).Repeat.Any();
 
             Projects = new List<Project>();
             ProjectRepository = FakeRepository<Project>();
@@ -149,9 +155,13 @@ namespace Dogbert.Tests.Controllers
         {
             FakeProjects(Projects, 1);
             FakeFileTypes(FileTypes, 3);
+            FakeTextTypes(TextTypes, 3);
             FileTypes[1].IsActive = false;
+            TextTypes[1].IsActive = true;
+            TextTypes[1].HasImage = true;  //else text type comes back null and causes error
             ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
+            TextTypeRepository.Expect(a => a.Queryable).Return(TextTypes.AsQueryable()).Repeat.Any();
 
             var result = Controller.Create(1)
                 .AssertViewRendered()
@@ -223,12 +233,14 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestCreatePostWithInvalidDataDoesNotSave()
         {
-            
-
+    
             FakeProjects(Projects, 1);
             FakeFileTypes(FileTypes, 1);
             ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
+            
+            FakeTextTypes(TextTypes, 3);
+            TextTypeRepository.Expect(a => a.Queryable).Return(TextTypes.AsQueryable()).Repeat.Any();
 
             //var fakeUploadFile = new FakeHttpPostedFileBase("TestFile.jpg", "image/jpg", new byte[] { 9, 8, 7, 6, 5 });
 
@@ -237,6 +249,8 @@ namespace Dogbert.Tests.Controllers
             projectFileToCreate.FileContents = null;
             projectFileToCreate.FileContentType = null;
             projectFileToCreate.Type = FileTypes[0];
+            projectFileToCreate.TextType = TextTypes[0];
+
 
             Controller.Create(projectFileToCreate, 1, null)
                 .AssertViewRendered()

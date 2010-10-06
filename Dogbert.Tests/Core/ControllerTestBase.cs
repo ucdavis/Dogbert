@@ -96,6 +96,21 @@ namespace Dogbert.Tests.Core
         }
 
         /// <summary>
+        /// Fakes the text types.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        /// <param name="entitiesToAdd">The entities to add.</param>
+        protected virtual void FakeTextTypes(List<TextType> entities, int entitiesToAdd)
+        {
+            var offSet = entities.Count;
+            for (int i = 0; i < entitiesToAdd; i++)
+            {
+                entities.Add(CreateValidEntities.TextType(offSet + i + 1));
+                entities[offSet + i].SetIdTo((offSet + i + 1).ToString());
+            }
+        }
+
+        /// <summary>
         /// Fakes the project files.
         /// </summary>
         /// <param name="entities">The entities.</param>

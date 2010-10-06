@@ -190,6 +190,7 @@ namespace Dogbert.Tests.Core.Helpers
             var rtValue = new ProjectFile();
             rtValue.FileName = "FileName" + count.Extra();
             rtValue.Type = new FileType();
+            rtValue.TextType = new TextType(); //LD added 10/06
             rtValue.Project = new Project();
             rtValue.DateAdded = SystemTime.Now();
             rtValue.FileContents = new byte[] {1,2,3};
