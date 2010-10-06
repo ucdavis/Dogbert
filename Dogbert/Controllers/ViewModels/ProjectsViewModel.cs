@@ -124,7 +124,8 @@ namespace Dogbert.Controllers.ViewModels
             var viewModel = new ProjectViewModel();
                 
                 viewModel.ProjectTypes = repository.OfType<ProjectType>().Queryable.ToList();
-                viewModel.Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).ToList();
+                viewModel.Users = repository.OfType<User>().Queryable.Where(u => u.Inactive == false).
+                                        OrderBy(u => u.LastName).OrderBy(u => u.FirstName).ToList();
                 viewModel.StatusCode = repository.OfType<StatusCode>().Queryable.Where(s => s.IsActive).ToList();
                //Where(p => p.ProjectType.Name == "Web Application")
             return viewModel;
