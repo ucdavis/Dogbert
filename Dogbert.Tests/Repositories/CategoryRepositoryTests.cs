@@ -334,7 +334,7 @@ namespace Dogbert.Tests.Repositories
             LoadProjects(3);
             #region Arrange
             var category = GetValid(9);
-            //category.Project = ProjectRepository.GetNullableByID(3);
+            category.Project = ProjectRepository.GetNullableByID(3);
             //to be completed (LD)
             #endregion Arrange
 
