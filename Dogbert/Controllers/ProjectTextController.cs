@@ -38,22 +38,26 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a=>a.DynamicIndex());
             }
 
-            if (project.ProjectTexts.Any(a => a.TextType == projectText.TextType))
+            var newProjectText = new ProjectText();
+            newProjectText.Text = projectText.Text;
+            newProjectText.TextType = projectText.TextType;
+
+            if (project.ProjectTexts.Any(a => a.TextType == newProjectText.TextType))
             {
                 ModelState.AddModelError("Text Type", "Text type already exists in this project");
             }
-            else if (projectText.Text.Length < 1)
+            else if (newProjectText.Text.Length < 1)
             {
                 ModelState.AddModelError("Text Type", "No text entered");
             }
 
-            project.AddProjectTexts(projectText);
+            project.AddProjectTexts(newProjectText);
 
-            projectText.TransferValidationMessagesTo(ModelState);
+            newProjectText.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
             {
-                Repository.OfType<ProjectText>().EnsurePersistent(projectText);
+                Repository.OfType<Project>().EnsurePersistent(project);
                 Message = "New Text Created Successfully";
                 return this.RedirectToAction<ProjectController>(a => a.Edit(id));
             }

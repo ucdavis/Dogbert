@@ -4,7 +4,7 @@
   <class
     name="ProjectText"
     table="ProjectTexts" >
-    <id name="Id" column="ID" unsaved-value="0" >
+    <id name="Id" column="id" unsaved-value="0" >
       <generator class="identity" />
     </id>
 
