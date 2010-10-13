@@ -23,15 +23,14 @@
                .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
                .Columns(col =>
                   {
-                      col.Add(steps =>
-                          { %>
-                            <%=
-                                Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditUseCaseSteps(steps.Id), "Edit")
-                            %>
-                            <% });
-                                col.Add(steps => steps.Order);
-                                col.Add(steps => steps.Description);
-                                col.Add(steps => steps.Optional);
+                      col.Add(steps =>{ %>
+                                        <%=Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditUseCaseSteps(steps.Id), "Edit")%>
+                                        <% });
+                       col.Add(steps => steps.Order);
+                       col.Add(steps =>{ %>
+                                         <%=Html.HtmlEncode(steps.Description)%>
+                                         <% }).Title("Description");
+                       col.Add(steps => steps.Optional);
                       
                             })
                 .Render(); %>

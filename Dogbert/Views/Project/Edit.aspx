@@ -33,6 +33,7 @@
             <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
             <li><a href="#<%= StaticValues.Tab_ProjectFiles %>"><span>Files</span></a></li>
             <li><a href="#<%= StaticValues.Tab_RequirementCategories %>"><span>Requirement Categories</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_Actors %>"><span>Actors</span></a></li>
         </ul>
         
         <div id="<%= StaticValues.Tab_ProjectDetails %>">
@@ -46,20 +47,19 @@
             <%= Html.ActionLink<ReportController>(a=>a.Requirements(Model.Project.Id), "Export to Excel") %>
             
             <% Html.RenderPartial("RequirementListForm", Model.Project.Requirements); %>
-            
             <p>
                 <%= Html.ActionLink<RequirementController>(a => a.Create(Model.Project.Id), "Create Requirement") %>
             </p>
             
         </div>
-
+        
         <div id="<%= StaticValues.Tab_UseCases %>">
-            <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
+              <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
              <p>
                 <%= Html.ActionLink<UseCaseController>(a => a.Create(Model.Project.Id), "Create UseCase") %>
             </p>
         </div>
-        
+  
         <div id="<%= StaticValues.Tab_ProjectFiles %>">
             <% Html.RenderPartial("ProjectFileListForm", Model.Project.ProjectFiles); %>
             <p>
@@ -69,11 +69,17 @@
         </div>
     
         <div id="<%= StaticValues.Tab_RequirementCategories %>">
-        
             <% Html.RenderPartial("RequirementCategoryForm", Model.Project); %>
-        
         </div>
     
+        <div id="<%= StaticValues.Tab_Actors %>">
+            <p>
+                <%= Html.ActionLink<ActorController>(a => a.Create(Model.Project.Id), "Create Actor") %>
+            </p>
+            <% Html.RenderPartial("ActorListForm", Model.Actors); %>
+        </div>
+
+
     </div> <%--//end tabs--%> 
 </asp:Content>
 

@@ -33,6 +33,7 @@ namespace Dogbert.Controllers.ViewModels
         public IList<ProjectType> ProjectTypes { get; set; }
         public IList<Project> Projects { get; set; }
         public IList<Project> DesignerProjects { get; set; }
+        public IList<Actor> Actors { get; set; }
     }
 
     public class ProjectViewModel
@@ -57,7 +58,7 @@ namespace Dogbert.Controllers.ViewModels
         ////used for use cases
         //public UseCase UseCase { get; set; }
         //public IList<UseCase> UseCases { get; set; }
-        //public IList<Actor> Actors { get; set; }
+        public IList<Actor> Actors { get; set; }
         //public UseCaseStep UseCaseStep { get; set; }
         
         public static ProjectViewModel Create(IRepository repository)
@@ -76,7 +77,7 @@ namespace Dogbert.Controllers.ViewModels
             viewModel.RequirementTypes= repository.OfType<RequirementType>().Queryable.Where(r => r.IsActive).ToList();
             viewModel.PriorityTypes = repository.OfType<PriorityType>().Queryable.Where(r => r.IsActive).ToList();
             //populate the stuff needed for use cases
-           // viewModel.Actors = repository.OfType<Actor>().Queryable.ToList();
+            viewModel.Actors = repository.OfType<Actor>().Queryable.ToList();
             viewModel.RequirementCategories = repository.OfType<RequirementCategory>().Queryable.Where(r =>r.IsActive).ToList();
             
             return viewModel;
@@ -128,6 +129,7 @@ namespace Dogbert.Controllers.ViewModels
                                         OrderBy(u => u.LastName).OrderBy(u => u.FirstName).ToList();
                 viewModel.StatusCode = repository.OfType<StatusCode>().Queryable.Where(s => s.IsActive).ToList();
                //Where(p => p.ProjectType.Name == "Web Application")
+                
             return viewModel;
         }
 

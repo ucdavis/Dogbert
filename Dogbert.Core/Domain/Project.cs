@@ -165,6 +165,7 @@ namespace Dogbert.Core.Domain
             this.RequirementCategories.Add(RequirementCategory);
         }
 
+  
         public virtual void AddProjectTexts(ProjectText ProjectText)
         {
             ProjectText.Project = this;

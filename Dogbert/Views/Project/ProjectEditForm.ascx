@@ -24,7 +24,8 @@
                             %>
                             <% });
                             col.Add(pText => pText.TextType.Name);
-                            col.Add(pText => pText.Text);
+                            col.Add(pText =>{ %> <%=Html.HtmlEncode(pText.Text)%>
+                                <% }).Title("Text");
                             })
                 .Render(); %>
              

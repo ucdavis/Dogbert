@@ -16,11 +16,6 @@ namespace Dogbert.Controllers
         //
         // GET: /RequirementCategory/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Create(int projectId)
         {
             var project = Repository.OfType<Project>().GetNullableByID(projectId);

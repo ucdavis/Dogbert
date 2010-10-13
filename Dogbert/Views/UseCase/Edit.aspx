@@ -73,14 +73,12 @@
 
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">
-    <script src='../../Scripts/tiny_mce/jquery.tinymce.js' type="text/javascript"></script>
+
     <script type="text/javascript">
         $(function() {
             var tabs = $("#tabs");
             $("#tabs").tabs();
         });
-
-       
     </script>
 
     

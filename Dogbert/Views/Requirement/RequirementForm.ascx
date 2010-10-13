@@ -1,7 +1,14 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<Dogbert.Controllers.ViewModels.RequirementViewModel>" %>
 
-   
+    <script src="<%= Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js") %>" type="text/javascript"></script>
+    <script src="<%= Url.Content("~/Scripts/jquery.enableTinyMce.js") %>" type="text/javascript"></script>
+ 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("textarea#Requirement_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
+    });//end ready
 
+</script>
     
     <%= Html.AntiForgeryToken() %>
         <fieldset>
