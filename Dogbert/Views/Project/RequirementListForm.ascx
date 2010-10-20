@@ -27,7 +27,11 @@
                                    {%>
                                     <%= Html.ActionLink<RequirementController>(b => b.Edit(a.Id), "Edit")%>
                                    <%});
-                       col.Add(a => a.Description);
+                       col.Add(a =>
+                                   {%>
+                                    <%=Html.HtmlEncode(a.Description)%>
+                                    <%}
+                           ).Title(("Description"));
                        col.Add(a => a.TechnicalDifficulty);
                        col.Add(a => a.IsComplete);
                        col.Add(a => a.DateAdded);

@@ -48,6 +48,7 @@ namespace Dogbert.Controllers
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
         [AcceptPost]
+        [ValidateInput(false)]
         public ActionResult Create(Requirement requirement, int projectId)
         {
             var project = Repository.OfType<Project>().GetNullableByID(projectId);
@@ -102,6 +103,7 @@ namespace Dogbert.Controllers
         /// <param name="requirement">The requirement.</param>
         /// <returns></returns>
         [AcceptPost]
+        [ValidateInput(false)]
         public ActionResult Edit(int id, Requirement requirement)
         {
             var dest = Repository.OfType<Requirement>().GetNullableByID(id);

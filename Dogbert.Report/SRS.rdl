@@ -1,380 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="Dogbert">
-      <DataSourceReference>Dogbert</DataSourceReference>
-      <rd:DataSourceID>eb153489-9d21-4f1a-a81c-95367d59a71f</rd:DataSourceID>
-      <rd:SecurityType>None</rd:SecurityType>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="ProjectTexts">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
-FROM         ProjectTexts INNER JOIN
-                      TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE     (ProjectTexts.ProjectID = @projectid) AND (isnumeric(TextTypes.id) &lt;&gt; 0)
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Projects">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Contact">
-          <DataField>Contact</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-        <Field Name="LeadProgrammer">
-          <DataField>LeadProgrammer</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Manager">
-          <DataField>Manager</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Unit">
-          <DataField>Unit</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ContactEmail">
-          <DataField>ContactEmail</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     Projects.Name, Projects.Contact, vLeads.FirstName + ' ' + vLeads.LastName AS LeadProgrammer, vManagers.FirstName + ' ' + vManagers.LastName AS Manager, 
-                      Projects.ContactEmail, Projects.Unit
-FROM         Projects LEFT OUTER JOIN
-                      vUsers AS vLeads ON Projects.LeadProgrammerID = vLeads.UserID LEFT OUTER JOIN
-                      vUsers AS vManagers ON Projects.ProjectManagerID = vManagers.UserID
-WHERE     (Projects.id = @projectid)</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Requirements">
-      <Fields>
-        <Field Name="ReqType">
-          <DataField>ReqType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReqCategory">
-          <DataField>ReqCategory</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PriorityType">
-          <DataField>PriorityType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     RequirementTypes.Name AS ReqType, RequirementCategories.Name AS ReqCategory, PriorityTypes.Name AS PriorityType, Requirements.Description, 
-                      Requirements.id, Requirements.ProjectID
-FROM         Requirements INNER JOIN
-                      RequirementTypes ON Requirements.RequirementTypeID = RequirementTypes.id INNER JOIN
-                      RequirementCategories ON Requirements.CategoryID = RequirementCategories.id INNER JOIN
-                      PriorityTypes ON Requirements.PriorityTypeID = PriorityTypes.id
-WHERE     (Requirements.ProjectID = @projectid)
-ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="UseCases">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Precondition">
-          <DataField>Precondition</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Postcondition">
-          <DataField>Postcondition</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Order">
-          <DataField>Order</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Step">
-          <DataField>Step</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Optional">
-          <DataField>Optional</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="UCStepID">
-          <DataField>UCStepID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="RequirementID">
-          <DataField>RequirementID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="RequirementsList">
-          <DataField>RequirementsList</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RelatedUseCaseList">
-          <DataField>RelatedUseCaseList</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
-                      UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
-                      UseCases.RelatedUseCaseList
-FROM         UseCaseXRequirements RIGHT OUTER JOIN
-                      UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
-                      UseCases LEFT OUTER JOIN
-                      UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
-                      UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
-WHERE     (UseCases.ProjectID = @projectid)
-ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="ReqList">
-      <Fields>
-        <Field Name="Results">
-          <DataField>Results</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>declare @reqList varchar(1000)
-select @reqList = COALESCE(@reqList + ', ', '') + CAST(id AS varchar(50))
-FROM Requirements
-WHERE ProjectID = 41
-
-select 'Results' =  + @reqList</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="Figures">
-      <Fields>
-        <Field Name="ProjectId">
-          <DataField>ProjectId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FileName">
-          <DataField>FileName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="FileContentType">
-          <DataField>FileContentType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FileContents">
-          <DataField>FileContents</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
-        </Field>
-        <Field Name="DateAdded">
-          <DataField>DateAdded</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DateChanged">
-          <DataField>DateChanged</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextType">
-          <DataField>TextType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Caption">
-          <DataField>Caption</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
-                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType, ProjectFiles.Caption
-FROM            TextTypes INNER JOIN
-                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
-                         ProjectFiles INNER JOIN
-                         FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND 
-                         ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
-WHERE        (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp' OR
-                         ProjectFiles.FileName LIKE '%.jpg' OR
-                         ProjectFiles.FileName LIKE '%.gif' OR
-                         ProjectFiles.FileName LIKE '%.png')</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Appendix">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
-FROM         ProjectTexts INNER JOIN
-                      TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE     (ProjectTexts.ProjectID = @projectid) AND (TextTypes.id LIKE 'A%')
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="TOCtext">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT     ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority, ProjectTexts.TextTypeID
-FROM         ProjectTexts INNER JOIN
-                      TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE     (ProjectTexts.ProjectID = @projectid) AND (NOT (ProjectTexts.TextTypeID LIKE 'A%'))
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TablixProjectText">
@@ -518,6 +143,56 @@ ORDER BY TextTypes.Priority</CommandText>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
+            <TablixRow>
+              <Height>0.03125in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox30">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>DarkOliveGreen</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox30</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Color>DarkOliveGreen</Color>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>DarkOliveGreen</Color>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>DarkOliveGreen</Color>
+                        </RightBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
             <TablixRow>
               <Height>0.25in</Height>
               <TablixCells>
@@ -723,6 +398,7 @@ ORDER BY TextTypes.Priority</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Description.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -750,6 +426,10 @@ ORDER BY TextTypes.Priority</CommandText>
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                       </Style>
                     </Rectangle>
                   </CellContents>
@@ -804,28 +484,28 @@ ORDER BY TextTypes.Priority</CommandText>
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
-              <Group Name="Group1">
-                <DocumentMapLabel>=Fields!ReqType.Value</DocumentMapLabel>
+              <Group Name="Group4">
+                <DocumentMapLabel>="Requirements"</DocumentMapLabel>
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ReqType.Value</GroupExpression>
+                  <GroupExpression>="Requirements"</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!ReqType.Value</Value>
+                  <Value>="Requirements"</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.13194in</Size>
+                <Size>0.03125in</Size>
                 <CellContents>
-                  <Textbox Name="Group1">
+                  <Textbox Name="Group4">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value />
+                            <Value>="Requirements"</Value>
                             <Style>
                               <FontSize>12pt</FontSize>
                               <FontWeight>Bold</FontWeight>
@@ -835,7 +515,7 @@ ORDER BY TextTypes.Priority</CommandText>
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Group1</rd:DefaultName>
+                    <rd:DefaultName>Group4</rd:DefaultName>
                     <Style>
                       <Border>
                         <Style>None</Style>
@@ -853,7 +533,7 @@ ORDER BY TextTypes.Priority</CommandText>
                   <TablixHeader>
                     <Size>0.03125in</Size>
                     <CellContents>
-                      <Textbox Name="Textbox95">
+                      <Textbox Name="Textbox28">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
@@ -870,7 +550,7 @@ ORDER BY TextTypes.Priority</CommandText>
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox95</rd:DefaultName>
+                        <rd:DefaultName>Textbox28</rd:DefaultName>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -884,26 +564,11 @@ ORDER BY TextTypes.Priority</CommandText>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
-                    <TablixMember />
-                  </TablixMembers>
-                </TablixMember>
-                <TablixMember>
-                  <TablixMembers>
                     <TablixMember>
-                      <Group Name="Group2">
-                        <GroupExpressions>
-                          <GroupExpression>=Fields!ReqCategory.Value</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <SortExpressions>
-                        <SortExpression>
-                          <Value>=Fields!ReqCategory.Value</Value>
-                        </SortExpression>
-                      </SortExpressions>
                       <TablixHeader>
                         <Size>0.03125in</Size>
                         <CellContents>
-                          <Textbox Name="Group2">
+                          <Textbox Name="Textbox29">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -920,7 +585,94 @@ ORDER BY TextTypes.Priority</CommandText>
                                 <Style />
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Group2</rd:DefaultName>
+                            <rd:DefaultName>Textbox29</rd:DefaultName>
+                            <Style>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixHeader>
+                    </TablixMember>
+                  </TablixMembers>
+                  <Visibility>
+                    <Hidden>true</Hidden>
+                  </Visibility>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Group1">
+                    <DocumentMapLabel>=Fields!ReqType.Value</DocumentMapLabel>
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!ReqType.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!ReqType.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>0.03125in</Size>
+                    <CellContents>
+                      <Textbox Name="Group1">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>12pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Group1</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>None</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <TablixHeader>
+                        <Size>0.03125in</Size>
+                        <CellContents>
+                          <Textbox Name="Textbox95">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value />
+                                    <Style>
+                                      <FontSize>12pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style />
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Textbox95</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>None</Style>
@@ -934,25 +686,75 @@ ORDER BY TextTypes.Priority</CommandText>
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
-                        <TablixMember>
-                          <RepeatOnNewPage>true</RepeatOnNewPage>
-                        </TablixMember>
-                        <TablixMember>
-                          <RepeatOnNewPage>true</RepeatOnNewPage>
-                        </TablixMember>
-                        <TablixMember>
-                          <TablixMembers>
-                            <TablixMember>
-                              <Group Name="Details3" />
-                            </TablixMember>
-                          </TablixMembers>
-                          <RepeatOnNewPage>true</RepeatOnNewPage>
-                        </TablixMember>
                         <TablixMember />
                       </TablixMembers>
                     </TablixMember>
+                    <TablixMember>
+                      <TablixMembers>
+                        <TablixMember>
+                          <Group Name="Group2">
+                            <GroupExpressions>
+                              <GroupExpression>=Fields!ReqCategory.Value</GroupExpression>
+                            </GroupExpressions>
+                          </Group>
+                          <SortExpressions>
+                            <SortExpression>
+                              <Value>=Fields!ReqCategory.Value</Value>
+                            </SortExpression>
+                          </SortExpressions>
+                          <TablixHeader>
+                            <Size>0.03125in</Size>
+                            <CellContents>
+                              <Textbox Name="Group2">
+                                <CanGrow>true</CanGrow>
+                                <KeepTogether>true</KeepTogether>
+                                <Paragraphs>
+                                  <Paragraph>
+                                    <TextRuns>
+                                      <TextRun>
+                                        <Value />
+                                        <Style>
+                                          <FontSize>12pt</FontSize>
+                                          <FontWeight>Bold</FontWeight>
+                                        </Style>
+                                      </TextRun>
+                                    </TextRuns>
+                                    <Style />
+                                  </Paragraph>
+                                </Paragraphs>
+                                <rd:DefaultName>Group2</rd:DefaultName>
+                                <Style>
+                                  <Border>
+                                    <Style>None</Style>
+                                  </Border>
+                                  <PaddingLeft>2pt</PaddingLeft>
+                                  <PaddingRight>2pt</PaddingRight>
+                                  <PaddingTop>2pt</PaddingTop>
+                                  <PaddingBottom>2pt</PaddingBottom>
+                                </Style>
+                              </Textbox>
+                            </CellContents>
+                          </TablixHeader>
+                          <TablixMembers>
+                            <TablixMember>
+                              <RepeatOnNewPage>true</RepeatOnNewPage>
+                            </TablixMember>
+                            <TablixMember>
+                              <RepeatOnNewPage>true</RepeatOnNewPage>
+                            </TablixMember>
+                            <TablixMember>
+                              <TablixMembers>
+                                <TablixMember>
+                                  <Group Name="Details3" />
+                                </TablixMember>
+                              </TablixMembers>
+                            </TablixMember>
+                            <TablixMember />
+                          </TablixMembers>
+                        </TablixMember>
+                      </TablixMembers>
+                    </TablixMember>
                   </TablixMembers>
-                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
               </TablixMembers>
             </TablixMember>
@@ -967,10 +769,10 @@ ORDER BY TextTypes.Priority</CommandText>
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>18.45139in</Top>
+        <Top>18.40139in</Top>
         <Left>0.06613in</Left>
-        <Height>1.21875in</Height>
-        <Width>7.12167in</Width>
+        <Height>1.25in</Height>
+        <Width>7.05223in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1786,14 +1588,19 @@ ORDER BY TextTypes.Priority</CommandText>
       </Tablix>
       <Rectangle Name="Rectangle5">
         <ReportItems>
-          <Textbox Name="Name2">
+          <Textbox Name="RequirementLabel">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Requirements</Value>
+                    <Value>=(RowNumber("ProjectTexts")+1)
++(countDistinct(Fields!ProjectId.Value, "Figures"))&amp; ". Requirements" 
+ 
+ 'section number:
+ 'Add 1 to projectText row count
+ 'Add 1 if Figures section exists</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1803,11 +1610,14 @@ ORDER BY TextTypes.Priority</CommandText>
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Name</rd:DefaultName>
-            <Top>0.02084in</Top>
+            <Top>0.01055in</Top>
             <Left>0.02958in</Left>
             <Height>0.25in</Height>
             <Width>7.12167in</Width>
+            <Visibility>
+              <Hidden>=Not(IsNumeric(Sum(Fields!ProjectID.Value, "Requirements")))
+ 'show=false, hide=true</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1834,14 +1644,22 @@ ORDER BY TextTypes.Priority</CommandText>
           </Border>
         </Style>
       </Rectangle>
-      <Textbox Name="Name3">
+      <Textbox Name="UseCaseLable">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Use Case</Value>
+                <Value>=(RowNumber("ProjectTexts")+1)
++(countDistinct(Fields!ProjectId.Value, "Figures"))
++(countDistinct(Fields!ProjectID.Value, "Requirements"))
+&amp; ". Use Cases" 
+ 
+ 'section number:
+ 'Add 1 to projectText row count
+ 'Add 1 if Figures section exists
+ 'Add 1 if Requirements section exists</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1851,12 +1669,15 @@ ORDER BY TextTypes.Priority</CommandText>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Name</rd:DefaultName>
         <Top>19.81076in</Top>
         <Left>0.06613in</Left>
         <Height>0.25in</Height>
         <Width>7.12167in</Width>
         <ZIndex>6</ZIndex>
+        <Visibility>
+          <Hidden>=Not((IsNumeric(Sum(Fields!ProjectID.Value, "UseCases"))))
+ 'show=false, hide=true</Hidden>
+        </Visibility>
         <DocumentMapLabel>Use Cases</DocumentMapLabel>
         <Style>
           <Border>
@@ -2379,7 +2200,7 @@ ORDER BY TextTypes.Priority</CommandText>
           </Border>
         </Style>
       </Line>
-      <Textbox Name="Name7">
+      <Textbox Name="ReportTitletxtbox">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -2398,8 +2219,7 @@ ORDER BY TextTypes.Priority</CommandText>
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Name1</rd:DefaultName>
-        <Top>1.61944in</Top>
+        <Top>1.60556in</Top>
         <Left>0.06613in</Left>
         <Height>2.0316in</Height>
         <Width>7.13577in</Width>
@@ -2549,7 +2369,7 @@ ORDER BY TextTypes.Priority</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LeadProgrammer</rd:DefaultName>
-        <Top>3.89167in</Top>
+        <Top>3.93334in</Top>
         <Left>0.09214in</Left>
         <Height>0.22917in</Height>
         <Width>3.69118in</Width>
@@ -2805,7 +2625,7 @@ ORDER BY TextTypes.Priority</CommandText>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Figures</Value>
+                <Value>=(RowNumber("ProjectTexts")+1) &amp; ".  Figures"</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -2816,11 +2636,15 @@ ORDER BY TextTypes.Priority</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>11.78472in</Top>
-        <Left>0.04899in</Left>
+        <Top>11.7986in</Top>
+        <Left>0.06273in</Left>
         <Height>0.27431in</Height>
         <Width>7.05561in</Width>
         <ZIndex>19</ZIndex>
+        <Visibility>
+          <Hidden>=Not((IsNumeric(Sum(Fields!ProjectId.Value, "Figures"))))
+ 'show=false, hide=true</Hidden>
+        </Visibility>
         <DocumentMapLabel>Figures</DocumentMapLabel>
         <Style>
           <Border>
@@ -3063,18 +2887,7 @@ ORDER BY TextTypes.Priority</CommandText>
       </Border>
     </Style>
   </Body>
-  <ReportParameters>
-    <ReportParameter Name="projectid">
-      <DataType>Integer</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>41</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>projectid</Prompt>
-    </ReportParameter>
-  </ReportParameters>
-  <Width>7.44815in</Width>
+  <Width>7.33363in</Width>
   <Page>
     <PageHeader>
       <Height>0.59042in</Height>
@@ -3190,7 +3003,7 @@ ORDER BY TextTypes.Priority</CommandText>
                   <Style />
                 </TextRun>
                 <TextRun>
-                  <Value>=Globals!TotalPages</Value>
+                  <Value>=Globals!OverallTotalPages</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -3271,6 +3084,393 @@ ORDER BY TextTypes.Priority</CommandText>
     <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
-  <rd:ReportID>f1ef1a75-5099-4e97-9c9f-f24b6748a1ea</rd:ReportID>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Dogbert">
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>f2ec3914-061c-4c83-80bf-4d9b6df23dfc</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ProjectTexts">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (isnumeric(TextTypes.id) &lt;&gt; 0)
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Projects">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        Projects.Name, Projects.Contact, vLeads.FirstName + ' ' + vLeads.LastName AS LeadProgrammer, vManagers.FirstName + ' ' + vManagers.LastName AS Manager, 
+                         Projects.ContactEmail, Projects.Unit, Projects.id
+FROM            Projects LEFT OUTER JOIN
+                         vUsers AS vLeads ON Projects.LeadProgrammerID = vLeads.UserID LEFT OUTER JOIN
+                         vUsers AS vManagers ON Projects.ProjectManagerID = vManagers.UserID
+WHERE        (Projects.id = @projectid)</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Contact">
+          <DataField>Contact</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="LeadProgrammer">
+          <DataField>LeadProgrammer</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Manager">
+          <DataField>Manager</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Unit">
+          <DataField>Unit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ContactEmail">
+          <DataField>ContactEmail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Requirements">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        RequirementTypes.Name AS ReqType, RequirementCategories.Name AS ReqCategory, PriorityTypes.Name AS PriorityType, Requirements.Description, 
+                         Requirements.id, Requirements.ProjectID
+FROM            Requirements LEFT OUTER JOIN
+                         RequirementCategories ON Requirements.CategoryID = RequirementCategories.id LEFT OUTER JOIN
+                         PriorityTypes ON Requirements.PriorityTypeID = PriorityTypes.id LEFT OUTER JOIN
+                         RequirementTypes ON Requirements.RequirementTypeID = RequirementTypes.id
+WHERE        (Requirements.ProjectID = @projectid)
+ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ReqType">
+          <DataField>ReqType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReqCategory">
+          <DataField>ReqCategory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PriorityType">
+          <DataField>PriorityType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="UseCases">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT     UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
+                      UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
+                      UseCases.RelatedUseCaseList
+FROM         UseCaseXRequirements RIGHT OUTER JOIN
+                      UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
+                      UseCases LEFT OUTER JOIN
+                      UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
+                      UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
+WHERE     (UseCases.ProjectID = @projectid)
+ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Precondition">
+          <DataField>Precondition</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Postcondition">
+          <DataField>Postcondition</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Order">
+          <DataField>Order</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Step">
+          <DataField>Step</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Optional">
+          <DataField>Optional</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="UCStepID">
+          <DataField>UCStepID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequirementID">
+          <DataField>RequirementID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequirementsList">
+          <DataField>RequirementsList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RelatedUseCaseList">
+          <DataField>RelatedUseCaseList</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ReqList">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>declare @reqList varchar(1000)
+select @reqList = COALESCE(@reqList + ', ', '') + CAST(id AS varchar(50))
+FROM Requirements
+WHERE ProjectID = 41
+
+select 'Results' =  + @reqList</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Results">
+          <DataField>Results</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Figures">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
+                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType, ProjectFiles.Caption
+FROM            TextTypes INNER JOIN
+                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
+                         ProjectFiles INNER JOIN
+                         FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND 
+                         ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
+WHERE        (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp' OR
+                         ProjectFiles.FileName LIKE '%.jpg' OR
+                         ProjectFiles.FileName LIKE '%.gif' OR
+                         ProjectFiles.FileName LIKE '%.png')</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectId">
+          <DataField>ProjectId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileName">
+          <DataField>FileName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="FileContentType">
+          <DataField>FileContentType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileContents">
+          <DataField>FileContents</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="DateAdded">
+          <DataField>DateAdded</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DateChanged">
+          <DataField>DateChanged</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextType">
+          <DataField>TextType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Caption">
+          <DataField>Caption</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Appendix">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (TextTypes.id LIKE 'A%')
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TOCtext">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority, ProjectTexts.TextTypeID
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (NOT (ProjectTexts.TextTypeID LIKE 'A%'))
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="projectid">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>41</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>projectid</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>f1ef1a75-5099-4e97-9c9f-f24b6748a1ea</rd:ReportID>
 </Report>

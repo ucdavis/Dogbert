@@ -1,5 +1,6 @@
 using System;
 using System.Web.Mvc;
+using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
 using Dogbert.Core.Resources;
@@ -35,14 +36,17 @@ namespace Dogbert.Controllers
         //
         // POST: /Actor/Create
         [AcceptPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(int projectId, [Bind(Exclude = "Id, IsActive")] Actor actor)
         {
+            actor.IsActive = true;
             actor.TransferValidationMessagesTo(ModelState);
             if (ModelState.IsValid)
             {
+
                 _actorRepository.EnsurePersistent(actor);
                 Message = "New Actor Created Successfully";
-                return this.RedirectToAction<ProjectController>(a => a.Edit(projectId));
+                return Redirect(Url.EditProjectUrl(projectId, StaticValues.Tab_Actors));
                 
             }
             else
