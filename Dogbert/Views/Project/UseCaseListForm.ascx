@@ -2,6 +2,13 @@
 <%@ Import Namespace="Dogbert.Controllers.Helpers" %>
 <%@ Import Namespace="Dogbert.Controllers" %>
 
+<style type="text/css">
+    .style1
+    {
+        width: 169px;
+    }
+</style>
+
 <div class="t-widget t-grid norightborder" style="border:none;">
 <table cellpadding="0" cellspacing="0" style="border:0px;">
     <thead>
@@ -22,10 +29,11 @@
             <% foreach(var uc in Model.Where(a=>a.RequirementCategory == cat).OrderBy(a=>a.Id)) { %>
           
                 <tr class="t-grid-header">
-                    <td><%= Html.ActionLink<UseCaseController>(a => a.Edit(uc.Id), "Edit")%></td>
+                    <td><%= Html.ActionLink<UseCaseController>(a => a.Edit(uc.Id), "Edit")%>
+                    </td>
                     <td class="space_on_the_right"><strong>Id: </strong><%= Html.Encode(uc.Id) %></td>
                     <td> <%= Html.Encode(uc.Name) %></td>
-                    <td>Modified: <%= Html.Encode(uc.LastModified)%></td>
+                    <td class="style1"> <%= "Modified: " + Html.Encode(uc.LastModified.ToShortDateString())%></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -33,7 +41,7 @@
                     <td>
                         <%= Html.HtmlEncode(uc.Description) %>
                     </td>
-                    <td></td>
+                    <td class="style1"></td>
                 </tr>
                 <tr>
                    
@@ -51,7 +59,7 @@
                                 </ol>
                             </div>
                     </td>
-                     <td></td>
+                     <td class="style1"></td>
                     <td></td>
                 </tr>
               

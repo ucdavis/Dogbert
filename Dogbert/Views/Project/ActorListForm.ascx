@@ -2,7 +2,7 @@
 <%@ Import Namespace="Dogbert.Controllers"%>
 <%@ Import Namespace="Dogbert.Helpers"%>
 
-    <h3>Changes to Actor list applies to all projects </h3>
+    <h3>Changes to Actor list apply to all projects </h3>
      
     <%      
         Html.Grid(Model.OrderBy(a => a.Name).Where(a => a.IsActive))

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dogbert.Controllers.Helpers;
 using Dogbert.Controllers.ViewModels;
@@ -41,6 +42,13 @@ namespace Dogbert.Controllers
         {
             actor.IsActive = true;
             actor.TransferValidationMessagesTo(ModelState);
+
+            var actors = _actorRepository.GetAll().ToList();
+            if (actors.Any(a => a.Name == actor.Name))
+            {
+                ModelState.AddModelError("Actor", "Actor already exists");
+            }
+
             if (ModelState.IsValid)
             {
 

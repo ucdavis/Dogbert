@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
@@ -43,7 +44,10 @@ namespace Dogbert.Controllers
             project.AddRequirementCategory(requirementCategory);
 
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, requirementCategory.ValidationResults());
-
+            if (project.RequirementCategories.Any(a => a.Name == requirementCategory.Name))
+            {
+                ModelState.AddModelError("Text Type", "Requirement Category already exists in this project");
+            }
             if (ModelState.IsValid)
             {
                 Repository.OfType<Project>().EnsurePersistent(project);

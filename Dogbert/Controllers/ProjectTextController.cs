@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert.Controllers.Helpers;
 using Dogbert.Core.Domain;
+using Dogbert.Core.Resources;
 using MvcContrib.Attributes;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
@@ -59,7 +61,7 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<Project>().EnsurePersistent(project);
                 Message = "New Text Created Successfully";
-                return this.RedirectToAction<ProjectController>(a => a.Edit(id));
+                return Redirect(Url.EditProjectUrl(id, StaticValues.Tab_ProjectText));
             }
 
             var viewModel = CreateProjectTextViewModel.Create(Repository, project, true);
@@ -110,7 +112,7 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<ProjectText>().EnsurePersistent(pt);
                 Message = "Project text edited successfully";
-                return this.RedirectToAction<ProjectController>(a => a.Edit(pt.Project.Id));
+                return Redirect(Url.EditProjectUrl(id, StaticValues.Tab_ProjectText));
             }
 
             var viewModel = CreateProjectTextViewModel.Create(Repository, pt.Project, false);

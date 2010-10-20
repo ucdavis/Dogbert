@@ -12,7 +12,7 @@
     
     <%= Html.AntiForgeryToken() %>
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Requirements</legend>
             <p>
                 <label for="Description">Description:</label>
                 <%--<%= this.TextArea("Requirement.Description") %>--%>

@@ -11,8 +11,10 @@ body, h3, h1 {margin:0; padding:0;}
 #logindisplay li {display:inline; list-style-type:none; padding-left:50px;}
 #logindisplay ul { margin:0; padding:0 1em 1em 1em;}
 
-a {text-decoration:none; color:#394032;}
+/* a {text-decoration:none; color:#394032;} */
+a {text-decoration:none; color:blue;}
 a img {border:none;}
+
 
 /* top bar */
 #brand_bar {height:56px; padding:4px 0 0; border-bottom:1px solid #000000;}
@@ -117,3 +119,5 @@ fieldset {font-size:100%;border: 1px solid #0D548A;}
 
 .space_on_the_right {margin-right:1em; border-collapse:collapse;}
 .norightborder.t-grid td {border-right:none;} 
+
+

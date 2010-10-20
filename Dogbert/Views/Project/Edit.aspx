@@ -29,6 +29,7 @@
     <div id="tabs">
         <ul>
             <li><a href="#<%= StaticValues.Tab_ProjectDetails %>"><span>Project Details</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_ProjectText %>"><span>Project Text</span></a></li>
             <li><a href="#<%= StaticValues.Tab_Requirements %>"><span>Requirements</span></a></li>
             <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
             <li><a href="#<%= StaticValues.Tab_ProjectFiles %>"><span>Files</span></a></li>
@@ -38,9 +39,11 @@
         
         <div id="<%= StaticValues.Tab_ProjectDetails %>">
         <% Html.RenderPartial("ProjectForm"); %>
-        
-        <% Html.RenderPartial("ProjectEditForm"); %>
-        </div>
+         </div>
+         
+        <div id="<%= StaticValues.Tab_ProjectText%>">
+        <% Html.RenderPartial("ProjectTextListForm"); %>
+       </div>
     
         <div id="<%= StaticValues.Tab_Requirements %>">
             

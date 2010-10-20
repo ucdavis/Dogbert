@@ -24,7 +24,8 @@
                .Columns(col =>
                   {
                                 col.Add(a => a.Id);
-                                col.Add(a => a.Description);
+                                col.Add(a =>{ %> <%=Html.HtmlEncode(a.Description)%>
+                                         <% }).Title("Description");
                             })
                 .Render(); %>
               

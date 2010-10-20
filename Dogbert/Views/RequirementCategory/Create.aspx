@@ -9,13 +9,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Create</h2>
-
+    <h4>Project: <%= this.Label("Project.Name")%> </h4>
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
 
     <% using (Html.BeginForm()) {%>
         <%= Html.AntiForgeryToken() %>
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Requirement Category</legend>
             <p>
                 <label for="Name">Name:</label>
                 <%= Html.TextBox("RequirementCategory.Name") %>

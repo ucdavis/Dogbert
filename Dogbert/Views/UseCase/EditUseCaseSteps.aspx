@@ -23,7 +23,10 @@
     <% } %>
     
     <div>
-        <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
+       <%= string.Format("<a href='{0}#{1}'>Back to Use Case</a>", Url.RouteUrl(new { controller = "UseCase", action = "Edit", id = Model.UseCaseStep.UseCase.Id }), StaticValues.UCTab_UCSteps)%>
+    </div>
+    <div>
+       <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
     </div>
 
 </asp:Content>

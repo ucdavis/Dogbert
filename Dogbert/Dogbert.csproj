@@ -468,7 +468,7 @@
     <Content Include="Views\Project\DynamicIndex.aspx" />
     <Content Include="Views\Project\xxxxProjectUseCaseStepsForm.ascx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
-    <Content Include="Views\Project\ProjectEditForm.ascx" />
+    <Content Include="Views\Project\ProjectTextListForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />
     <Content Include="Views\Project\Edit.aspx" />
     <Content Include="Views\Project\ProjectForm.ascx" />

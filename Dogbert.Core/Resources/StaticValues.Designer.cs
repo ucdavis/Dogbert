@@ -61,7 +61,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-6.
+        ///   Looks up a localized string similar to tab-7.
         /// </summary>
         public static string Tab_Actors {
             get {
@@ -79,7 +79,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-4.
+        ///   Looks up a localized string similar to tab-5.
         /// </summary>
         public static string Tab_ProjectFiles {
             get {
@@ -88,7 +88,16 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-5.
+        ///   Looks up a localized string similar to tab-2.
+        /// </summary>
+        public static string Tab_ProjectText {
+            get {
+                return ResourceManager.GetString("Tab_ProjectText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-6.
         /// </summary>
         public static string Tab_RequirementCategories {
             get {
@@ -97,7 +106,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-2.
+        ///   Looks up a localized string similar to tab-3.
         /// </summary>
         public static string Tab_Requirements {
             get {
@@ -106,11 +115,47 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-3.
+        ///   Looks up a localized string similar to tab-4.
         /// </summary>
         public static string Tab_UseCases {
             get {
                 return ResourceManager.GetString("Tab_UseCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-1.
+        /// </summary>
+        public static string UCTab_UCDetails {
+            get {
+                return ResourceManager.GetString("UCTab_UCDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-4.
+        /// </summary>
+        public static string UCTab_UCRelatedRequirements {
+            get {
+                return ResourceManager.GetString("UCTab_UCRelatedRequirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-3.
+        /// </summary>
+        public static string UCTab_UCRelatedUseCases {
+            get {
+                return ResourceManager.GetString("UCTab_UCRelatedUseCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-2.
+        /// </summary>
+        public static string UCTab_UCSteps {
+            get {
+                return ResourceManager.GetString("UCTab_UCSteps", resourceCulture);
             }
         }
     }

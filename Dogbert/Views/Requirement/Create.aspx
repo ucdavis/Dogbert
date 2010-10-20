@@ -12,7 +12,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <%= Html.ClientSideValidation<Requirement>("Requirement")%>
     <h2>Create</h2>
-
+    <h4>Project: <%= this.Label("Project.Name")%> </h4>
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm()) {%>
     <% Html.RenderPartial("RequirementForm"); %>

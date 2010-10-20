@@ -13,7 +13,7 @@
 
     <%= Html.ClientSideValidation<Requirement>("Requirement")%>
     <h2>Edit</h2>
-
+    <h4>Project: <%= this.Label("Project.Name")%> </h4>
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
 
     <% using (Html.BeginForm()) {%>

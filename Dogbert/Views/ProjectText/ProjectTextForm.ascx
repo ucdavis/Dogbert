@@ -16,7 +16,6 @@
         <%= Html.Hidden("projectId", Model.Project.Id) %>
         
         <p>
-            <%--<%= this.TextArea("Text").Label("Text:")%>--%>
             <label for="Text">Text:</label>
             <%= Html.TextArea("Text", Model.ProjectText != null ? Model.ProjectText.Text : string.Empty) %>
         </p>

@@ -15,7 +15,7 @@
               <p>
                  <%= this.MultiSelect("UseCase.Requirements")
                     .Options(Model.Project.Requirements, x => x.Id,  x => x.Description)
-                    .Selected(Model.UseCase != null && Model.UseCase.Requirements  != null ? Model.UseCase.Requirements : new List<Requirement>()) 
+                    .Selected(Model.UseCase != null && Model.UseCase.Requirements != null ? Model.UseCase.Requirements : new List<Requirement>()) 
                     .FirstOption("--Related Requirements--")
                     .HideFirstOptionWhen(Model.Project.Requirements != null)
                     .Label("Select All Related Requirements: (use cntl to select multiple)")%>
