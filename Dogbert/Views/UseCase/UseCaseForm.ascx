@@ -3,6 +3,7 @@
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Helpers"%>
 
+<script src="<%= Url.Content("~/Scripts/tiny_mce/jquery.tinymce.js") %>" type="text/javascript"></script>
 <script src="<%= Url.Content("~/Scripts/jquery.enableTinyMce.js") %>" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -50,8 +51,7 @@
                
                 <p>
                  <%= this.MultiSelect("UseCase.Actors")
-                    .Options(Model.Actors, x=>x.Id, x=>x.Name)
-                    .Selected(Model.UseCase != null && Model.UseCase.Actors != null ? Model.UseCase.Actors : new List<Actor>()) 
+                    .Options(Model.Actors)
                     .FirstOption("--Actors--")
                     .HideFirstOptionWhen(Model.Actors!= null)
                     .Label("Select Actors:")%>

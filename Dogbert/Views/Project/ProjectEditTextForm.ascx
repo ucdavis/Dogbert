@@ -11,14 +11,11 @@
     });
 
 </script>
-
+    <div>
+        <%=Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.Edit(Model.ProjectText.Project.Id), "Back to Project")%>
+    </div>
 <%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
     <%= Html.ValidationSummary() %>
-
-        <div>
-        <%=Html.ActionLink<Dogbert.Controllers.ProjectController>(a => a.Edit(Model.ProjectText.Project.Id), "Back to Project")%>
-        </div>
-        
         <fieldset>
             <legend>Project Text</legend>
             <% using (Html.BeginForm())

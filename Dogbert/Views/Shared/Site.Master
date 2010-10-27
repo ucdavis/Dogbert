@@ -65,7 +65,7 @@
               
             <div id="logindisplay">
                 <ul class="top_head_empty"><li></li></ul>
-                <ul>
+                <ul id="menu">
                     <li></li>
                     <li><%= Html.ActionLink("Projects", "Index", "Home")%></li>
                     <li><%= Html.ActionLink<HomeController>(a=>a.Designer(), "Designer Projects") %></li>

@@ -12,16 +12,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <%= Html.ClientSideValidation<UseCase>("UseCase")%>
     <h2>Edit Related Requirements</h2>
-
+     <div>
+       <%= string.Format("<a href='{0}#{1}'>Back to Use Case</a>", Url.RouteUrl(new { controller = "UseCase", action = "Edit", id = Model.UseCase.Id }), StaticValues.UCTab_UCRelatedRequirements)%>
+    </div>
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm()) {%>
     <% Html.RenderPartial("RelatedRequirementsForm"); %>
    
     <% } %>
     
-    <div>
-       <%= string.Format("<a href='{0}#{1}'>Back to Use Case</a>", Url.RouteUrl(new { controller = "UseCase", action = "Edit", id = Model.UseCase.Id }), StaticValues.UCTab_UCRelatedRequirements)%>
-    </div>
+   
   
 
 </asp:Content>

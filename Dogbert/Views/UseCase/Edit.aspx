@@ -18,6 +18,10 @@
 
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
 
+    <div>
+       <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
+    </div>
+    
     <div id="tabs">
         <ul>
             <li><a href="#tab-1"><span>Use Case Details</span></a></li>
@@ -63,9 +67,7 @@
             
          </div>
     
-    <div>
-       <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
-    </div>
+
     
   </div> <%-- end tabs--%>
 </asp:Content>

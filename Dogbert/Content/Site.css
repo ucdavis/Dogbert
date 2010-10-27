@@ -12,8 +12,38 @@ body, h3, h1 {margin:0; padding:0;}
 #logindisplay ul { margin:0; padding:0 1em 1em 1em;}
 
 /* a {text-decoration:none; color:#394032;} */
+#logindisplay a:link {
+        color:Black;
+        text-decoration:underline;
+        text-align:right;
+}
+
+#logindisplay  {
+    color:Black;
+    font-size:1.1em;
+    text-align:right;
+}
+
 a {text-decoration:none; color:blue;}
 a img {border:none;}
+
+ul#menu li a {
+    background-color:#E8EEF4;
+    color:#034AF3;
+    font-weight:bold;
+    line-height:2.8em;
+    padding:10px 20px;
+    text-decoration:none;
+}
+ul#menu {
+    text-align:right;
+}
+
+ul#menu li {
+    list-style:none outside none;
+    padding-left:1px;
+}
+
 
 
 /* top bar */
@@ -65,6 +95,7 @@ fieldset ul li label {margin-bottom:0em;}
 .ui-state-default:hover {background-color: #FFFFFF !important;}
 .ui-tabs-selected {background-color:#FFFFFF !important;}
 .ui-widget-content {border:1px solid #2A2829;}
+.ui-widget-content a {color:#FFFFFF;}
 .t-header, t-grid-header {background-color: #0D548A !important; background-image:none !important; color:#FFF !important;}
 .t-footer {background-color:#FFF !important; color:#000 !important;}
 #Items.t-widget.t-grid {border:1px solid #0D548A;}
@@ -76,6 +107,10 @@ fieldset ul li label {margin-bottom:0em;}
 .t-grid .t-header .t-link {padding:0.3em 0.5em;}
 #Items a{}
 
+.subheader{
+    background-color:#F1F5FB;
+    border-color:#AEC5D1;
+}
 
 /* details view */
 .itemdetailsimg img{margin:0 0 1m 1em; height:auto; width:292px;}

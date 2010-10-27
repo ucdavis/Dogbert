@@ -466,7 +466,6 @@
     <Content Include="Views\UseCase\Edit.aspx" />
     <Content Include="Views\UseCase\UseCaseForm.ascx" />
     <Content Include="Views\Project\DynamicIndex.aspx" />
-    <Content Include="Views\Project\xxxxProjectUseCaseStepsForm.ascx" />
     <Content Include="Views\Project\ProjectEditTextForm.ascx" />
     <Content Include="Views\Project\ProjectTextListForm.ascx" />
     <Content Include="Views\Project\Create.aspx" />
@@ -518,7 +517,6 @@
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Home\Designer.aspx" />
     <Content Include="Views\Project\ActorListForm.ascx" />
-    <Content Include="Views\Project\xxTestForm.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,15 +28,18 @@
             <!-- Go through and deal with the use cases them selves -->
             <% foreach(var uc in Model.Where(a=>a.RequirementCategory == cat).OrderBy(a=>a.Id)) { %>
           
-                <tr class="t-grid-header">
-                    <td><%= Html.ActionLink<UseCaseController>(a => a.Edit(uc.Id), "Edit")%>
+               
+                <tr class="subheader">
+                    <td>   <%--<a class="t-icon t-refresh" href="#"></a>--%> <%= Html.ActionLink<UseCaseController>(a => a.Edit(uc.Id), "Edit")%>
                     </td>
                     <td class="space_on_the_right"><strong>Id: </strong><%= Html.Encode(uc.Id) %></td>
                     <td> <%= Html.Encode(uc.Name) %></td>
                     <td class="style1"> <%= "Modified: " + Html.Encode(uc.LastModified.ToShortDateString())%></td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td>
+                   
+                    </td>
                     <td> <p><strong>Description:</strong></p></td>
                     <td>
                         <%= Html.HtmlEncode(uc.Description) %>
@@ -44,7 +47,6 @@
                     <td class="style1"></td>
                 </tr>
                 <tr>
-                   
                     <td></td>
                     <td colspan="2">
                             <p><strong>Steps:</strong></p>
@@ -60,8 +62,21 @@
                             </div>
                     </td>
                      <td class="style1"></td>
-                    <td></td>
+                    <td> </td>
+                   
                 </tr>
+                <tr>  
+                 <td class="t-footer" colspan="4"> 
+                   <div class="t-status">
+                            <a class="t-icon t-refresh" href="#"></a>
+                    </div>
+                 </td>
+               </tr>
+               <tr>  
+                 <td class="t-footer" colspan="4"> 
+                  
+                 </td>
+               </tr>
               
             <% } %><!-- end use case loop-->
          

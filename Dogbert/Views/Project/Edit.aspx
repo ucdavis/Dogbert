@@ -57,17 +57,18 @@
         </div>
         
         <div id="<%= StaticValues.Tab_UseCases %>">
-              <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
-             <p>
+            <p>
                 <%= Html.ActionLink<UseCaseController>(a => a.Create(Model.Project.Id), "Create UseCase") %>
             </p>
+              <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
+            
         </div>
   
         <div id="<%= StaticValues.Tab_ProjectFiles %>">
-            <% Html.RenderPartial("ProjectFileListForm", Model.Project.ProjectFiles); %>
             <p>
                 <%= Html.ActionLink<ProjectFileController>(a => a.Create(Model.Project.Id), "Create ProjectFile") %>
             </p>
+            <% Html.RenderPartial("ProjectFileListForm", Model.Project.ProjectFiles); %>
             <p>Images (*.bmp, *.jpg, *.png, *.gif) will be included in reporting</p>
         </div>
     

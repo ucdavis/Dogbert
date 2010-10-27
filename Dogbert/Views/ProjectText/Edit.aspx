@@ -10,12 +10,13 @@
 
     <h2>Edit</h2>
     <h4>Project: <%= this.Label("Project.Name")%> </h4>
-    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
-    <% Html.RenderPartial("ProjectTextForm"); %>
-
     <div>
         <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new { controller = "Project", action = "Edit", id = Model.Project.Id }), StaticValues.Tab_ProjectText)%>
     </div>
+    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
+    <% Html.RenderPartial("ProjectTextForm"); %>
+
+
 
 </asp:Content>
 

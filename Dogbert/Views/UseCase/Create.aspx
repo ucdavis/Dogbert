@@ -12,7 +12,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <%= Html.ClientSideValidation<UseCase>("UseCase")%>
     <h4>Project: <%= this.Label("Project.Name")%> </h4>
-
+    <div>
+        <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
+    </div>
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm()) {%>
     <% Html.RenderPartial("UseCaseForm"); %>
@@ -23,9 +25,7 @@
 
     <% } %>
     
-    <div>
-        <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_UseCases) %>
-    </div>
+
 
 </asp:Content>
 

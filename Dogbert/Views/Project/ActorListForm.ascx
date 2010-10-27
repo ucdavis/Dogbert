@@ -10,12 +10,6 @@
        .Name("Actors")
        .Columns(col =>
                     {
-                        col.Add(at =>
-                                    {%>
-                                    
-                                        <%--<%= Html.ActionLink<ActorController>(a => a.Edit(Model.Id)) %>--%>
-                                    
-                                    <%});
                         col.Add(a => a.Name);
                     })
                 
