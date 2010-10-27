@@ -61,7 +61,7 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<Project>().EnsurePersistent(project);
                 Message = "New Text Created Successfully";
-                return Redirect(Url.EditProjectUrl(id, StaticValues.Tab_ProjectText));
+                return Redirect(Url.EditProjectUrl(project.Id, StaticValues.Tab_ProjectText));
             }
 
             var viewModel = CreateProjectTextViewModel.Create(Repository, project, true);
@@ -112,7 +112,7 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<ProjectText>().EnsurePersistent(pt);
                 Message = "Project text edited successfully";
-                return Redirect(Url.EditProjectUrl(id, StaticValues.Tab_ProjectText));
+                return Redirect(Url.EditProjectUrl(pt.Project.Id, StaticValues.Tab_ProjectText));
             }
 
             var viewModel = CreateProjectTextViewModel.Create(Repository, pt.Project, false);

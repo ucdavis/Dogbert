@@ -7,7 +7,7 @@
 
         <fieldset>
             <legend>Project Text</legend>
-    
+      
               <%= Html.ActionLink<ProjectTextController>(a=>a.Create(Model.Project.Id), "Create New") %>
               
               <% Html.Grid(Model.Project.ProjectTexts.OrderBy(a => a.TextType.Id))

@@ -98,8 +98,7 @@ namespace Dogbert.Controllers
 
             if (existingUseCase == null) return RedirectToAction("Create");
 
-
-            var viewModel = UseCaseViewModel.Create(Repository, existingUseCase.Project);
+            var viewModel = UseCaseViewModel.Edit(Repository, existingUseCase.Project, Id);
             viewModel.UseCase = existingUseCase;
             viewModel.UseCaseStep = existingUCSteps;
             return View(viewModel);
@@ -127,8 +126,6 @@ namespace Dogbert.Controllers
                     uc.AddActors(i);
                 }
             }
-
-   
 
             if (ModelState.IsValid)
             {

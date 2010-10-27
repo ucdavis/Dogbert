@@ -906,6 +906,44 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ActorList">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Actors: </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!ActorsList.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ActorList</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>1pt</PaddingTop>
+                        <PaddingBottom>1pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
               <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
@@ -999,7 +1037,7 @@
                               <Style />
                             </TextRun>
                             <TextRun>
-                              <Value>=Fields!RequirementsList.Value</Value>
+                              <Value>=iif( IsNothing(Fields!RequirementsList.Value), "None", Fields!RequirementsList.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -1037,7 +1075,7 @@
                               <Style />
                             </TextRun>
                             <TextRun>
-                              <Value>=Fields!RelatedUseCaseList.Value</Value>
+                              <Value>=iif( IsNothing(Fields!RelatedUseCaseList.Value), "None",Fields!RelatedUseCaseList.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -1553,6 +1591,7 @@
                           </TablixMembers>
                         </TablixMember>
                         <TablixMember />
+                        <TablixMember />
                       </TablixMembers>
                     </TablixMember>
                     <TablixMember />
@@ -1577,7 +1616,7 @@
         </SortExpressions>
         <Top>20.21021in</Top>
         <Left>0.14613in</Left>
-        <Height>2.2625in</Height>
+        <Height>2.5125in</Height>
         <Width>7.04167in</Width>
         <ZIndex>4</ZIndex>
         <Style>
@@ -3233,15 +3272,15 @@ ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
             <Value>=Parameters!projectid.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT     UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
-                      UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
-                      UseCases.RelatedUseCaseList
-FROM         UseCaseXRequirements RIGHT OUTER JOIN
-                      UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
-                      UseCases LEFT OUTER JOIN
-                      UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
-                      UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
-WHERE     (UseCases.ProjectID = @projectid)
+        <CommandText>SELECT        UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
+                         UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
+                         UseCases.RelatedUseCaseList, UseCases.ActorsList
+FROM            UseCaseXRequirements RIGHT OUTER JOIN
+                         UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
+                         UseCases LEFT OUTER JOIN
+                         UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
+                         UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
+WHERE        (UseCases.ProjectID = @projectid)
 ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
       </Query>
       <Fields>
@@ -3296,6 +3335,10 @@ ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
         <Field Name="RelatedUseCaseList">
           <DataField>RelatedUseCaseList</DataField>
           <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ActorsList">
+          <DataField>ActorsList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
