@@ -8,28 +8,26 @@
 <script src="<%= Url.Content("~/Scripts/jquery.enableTinyMce.js") %>" type="text/javascript"></script>
 
 
-
 <script type="text/javascript">
-    $(function() {
+    $(document).ready(function() {
         $("#tabs").tabs();
 
         $("#" + "Project_ProjectedStart").datepicker(); //TextBox("Project.ProjectedStart")
         $("#" + "Project_ProjectedEnd").datepicker(); //TextBox("Project.ProjectedStart")
-        $("#" + "Project_Complexity").slider(); //
+    
 
-
-        $("#slider-range-min").slider({
+        $("#slider").slider({
             range: "min",
-            value: 37,
+            value: $("#" + "Project_Complexity").val(),
             min: 1,
-            max: 700,
+            max: 10,
             slide: function(event, ui) {
-            $("#" + "Project_Complexity").val("$" + ui.value);
+            $("#" + "Project_Complexity").val(ui.value);
             }
         });
-        $("#" + "Project_Complexity").val("$" + $("#slider-range-min").slider("value"));
-
-       
+        
+        //set value on proj complexity
+        $("#" + "Project_Complexity").val($("#slider").slider("value"));
         
     });
 
