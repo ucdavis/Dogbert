@@ -62,14 +62,15 @@
             </p>
             <p>
                 <label for="Project.ProjectedStart">Projected Start:</label>
-               <%= Html.TextBox("Project.ProjectedStart")%>
+               <%= Html.TextBox("Project.ProjectedStart", String.Format("{0:d}", Model.Project.ProjectedStart))%>
                <%= Html.ValidationMessage("Project.ProjectedStart", "*Invalid Date (format: mm/dd/yy)")%>
                     <%--.Format("{0:d}").Label("Start Date:")                   --%>
                 
             </p>
             <p>
                 <label for="Project.ProjectedEnd">Projected End:</label>
-                <%= Html.TextBox("Project.ProjectedEnd")%>
+                <%= Html.TextBox("Project.ProjectedEnd", String.Format("{0:d}", Model.Project.ProjectedEnd))%>
+                <%--<%= Html.TextBox("Project.ProjectedEnd", (Model.Project.ProjectedEnd.HasValue ? Model.Project.ProjectedEnd.Value.ToShortDateString() : string.Empty), new { @class = "datePicker" })%>--%>
                 <%= Html.ValidationMessage("Project.ProjectedEnd", "*Invalid Date (format: mm/dd/yy)")%>
                     <%--.Format("{0:d}").Label("End Date/Deadline:")--%>
             </p>

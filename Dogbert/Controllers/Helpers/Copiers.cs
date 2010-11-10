@@ -28,6 +28,7 @@ namespace Dogbert.Controllers.Helpers
             destination.IsComplete = source.IsComplete;
             //destination.DateAdded = source.DateAdded;
             destination.LastModified = SystemTime.Now();
+            destination.VersionCompleted = source.VersionCompleted;
 
             return destination;
         }

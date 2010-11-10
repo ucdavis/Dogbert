@@ -57,6 +57,11 @@
                 <%= this.CheckBox("Requirement.IsComplete")%>
                 <%= Html.ValidationMessage("Requirement.IsComplete", "*")%>
             </p>
+             <p>
+                <label for="VersionCompleted">Version Completed:</label>
+                <%= this.TextBox("Requirement.VersionCompleted")%>
+                <%= Html.ValidationMessage("Requirement.VersionCompleted", "*")%>
+            </p>
             
         </fieldset>
 

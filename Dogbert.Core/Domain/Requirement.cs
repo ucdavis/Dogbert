@@ -44,5 +44,6 @@ namespace Dogbert.Core.Domain
         public virtual bool IsComplete { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastModified { get; set; }
+        public virtual string VersionCompleted { get; set; }
     }
 }

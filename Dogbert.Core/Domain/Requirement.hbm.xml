@@ -17,7 +17,7 @@
 
     <property name="DateAdded" column="DateAdded" />
     <property name="LastModified" column="LastModified" />
-
+    <property name="VersionCompleted" column="VersionCompleted" />
 
 	</class>
 </hibernate-mapping>
