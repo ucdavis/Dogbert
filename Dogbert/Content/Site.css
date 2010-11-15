@@ -155,4 +155,24 @@ fieldset {font-size:100%;border: 1px solid #0D548A;}
 .space_on_the_right {margin-right:1em; border-collapse:collapse;}
 .norightborder.t-grid td {border-right:none;} 
 
+.failed
+{
+    border: 1px solid #ff0000;    
+	color:Red;
+}
+.failed.valid
+{
+	border: none;    
+	color:inherit;
+}
+.field-validation-error
+{
+	border: 1px solid #ff0000;    
+	color:Red;
+}
+.field-validation-error.valid
+{
+	border: none;    
+	color:inherit;
+}
 

@@ -6,7 +6,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("textarea#Requirement_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
-    });//end ready
+    }); //end ready
+    $("form").submit(function() {
+        tinyMCE.triggerSave();
+    });
 
 </script>
     
@@ -17,12 +20,12 @@
                 <label for="Description">Description:</label>
                 <%--<%= this.TextArea("Requirement.Description") %>--%>
                 <%= Html.TextArea("Requirement.Description", new { style = "width: 500px; height: 300px" })%>
-                <%= Html.ValidationMessage("Requirement.Description", "*")%> 
+                <%= Html.ValidationMessage("Requirement.Description")%> 
             </p>
             <p>
                 <label for="TechnicalDifficulty">Technical Difficulty:</label>
                 <%= this.TextBox("Requirement.TechnicalDifficulty")%>
-                <%= Html.ValidationMessage("Requirement.TechnicalDifficulty", "*")%>
+                <%= Html.ValidationMessage("Requirement.TechnicalDifficulty")%>
             </p>
             <p>
                 <%= this.Select("Requirement.RequirementType").Options(Model.RequirementTypes, x => x.Id, x => x.Name)
@@ -31,7 +34,7 @@
                         .Label("Requirement Type:")
                         .Selected(Model.Requirement.RequirementType != null ? Model.Requirement.RequirementType.Id : string.Empty )
                 %>
-                <%= Html.ValidationMessage("Requirement.RequirementType", "*")%>
+                <%= Html.ValidationMessage("Requirement.RequirementType")%>
             </p>
             <p>
                 <%= this.Select("Requirement.PriorityType").Options(Model.PriorityTypes, x => x.Id, x => x.Name)
@@ -40,7 +43,7 @@
                         .Label("Priority Type:")
                         .Selected(Model.Requirement.PriorityType != null ? Model.Requirement.PriorityType.Id.ToString() : string.Empty)
                 %>
-                <%= Html.ValidationMessage("Requirement.PriorityType", "*")%>                
+                <%= Html.ValidationMessage("Requirement.PriorityType")%>                
             </p>
             <p>
                 <%= this.Select("Requirement.Category").Options(Model.Project.RequirementCategories.Where(a => a.IsActive).OrderBy(a=>a.Name), x => x.Id, x => x.Name)
@@ -50,17 +53,17 @@
                         .Selected(Model.Requirement.Category != null ? Model.Requirement.Category.Id.ToString(): string.Empty)
                                                                     
                 %>
-                <%= Html.ValidationMessage("Requirement.Category", "*")%>                               
+                <%= Html.ValidationMessage("Requirement.Category")%>                               
             </p>
             <p>
                 <label for="IsComplete">IsComplete:</label>
                 <%= this.CheckBox("Requirement.IsComplete")%>
-                <%= Html.ValidationMessage("Requirement.IsComplete", "*")%>
+                <%= Html.ValidationMessage("Requirement.IsComplete")%>
             </p>
              <p>
                 <label for="VersionCompleted">Version Completed:</label>
                 <%= this.TextBox("Requirement.VersionCompleted")%>
-                <%= Html.ValidationMessage("Requirement.VersionCompleted", "*")%>
+                <%= Html.ValidationMessage("Requirement.VersionCompleted")%>
             </p>
             
         </fieldset>
