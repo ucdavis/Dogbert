@@ -66,11 +66,11 @@
         <div id="<%= StaticValues.Tab_Requirements %>">
             
             <%= Html.ActionLink<ReportController>(a=>a.Requirements(Model.Project.Id), "Export to Excel") %>
-            
-            <% Html.RenderPartial("RequirementListForm", Model.Project.Requirements); %>
-            <p>
+              <p>
                 <%= Html.ActionLink<RequirementController>(a => a.Create(Model.Project.Id), "Create Requirement") %>
             </p>
+            <% Html.RenderPartial("RequirementListForm", Model.Project.Requirements); %>
+          
             
         </div>
         

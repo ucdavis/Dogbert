@@ -12,12 +12,14 @@
         $("textarea#UseCase_Precondition").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
         $("textarea#UseCase_Postcondition").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
     }); //end ready
-
+    
+    $("form").submit(function() {
+        tinyMCE.triggerSave();
+    });
 </script>
 
-<%--<%= Html.ClientSideValidation<Project>("Project") %>--%>
- <%--    <%= Html.ValidationSummary() %>
- --%>     
+<%= Html.ClientSideValidation<Project>("Project") %>
+
         <%= Html.AntiForgeryToken() %>
         <fieldset>
             <legend>Use Case</legend>
@@ -25,9 +27,11 @@
                     <%= Html.Hidden("projectID", Model.UseCase.Project.Id) %>--%>
                 <p>
                     <%= this.TextBox("UseCase.Name").Label("Use Case Name:")%>
+                    <%= Html.ValidationMessage("UseCase.Name")%> 
                 </p>
                 <p>
                     <%= this.TextArea("UseCase.Description").Label("Description:")%>
+                    <%= Html.ValidationMessage("UseCase.Description")%> 
                </p>
       
                 <p>

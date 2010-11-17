@@ -8,13 +8,12 @@
             var settings = $.extend({
                 script_location: "../../Scripts/tiny_mce/tiny_mce.js",
                 overrideHeight: "400",
-                overrideWidth: "400"
+                overrideWidth: "400",
+                overrideOnchange: ""
             }, options);
-            
 
             // iterate through each of the objects passed in to generate the calendar
             return this.each(function(index, item) {
-
                 // add the rich text editor
                 $(item).tinymce({
                     script_url: settings.script_location,
@@ -42,11 +41,18 @@
                     template_external_list_url: "js/template_list.js",
                     external_link_list_url: "js/link_list.js",
                     external_image_list_url: "js/image_list.js",
-                    media_external_list_url: "js/media_list.js"
-                });
+                    media_external_list_url: "js/media_list.js",
+                    
+                    //onchange for submit
+                    onchange_callback: settings.overrideOnchange,
 
-            });
+                }); //end $(item).tinymce
+                
+        
+            }); // end  return this.each
 
+            
         } // end of gooCal
+ 
     }); // end of $.fn.extend
 })(jQuery);

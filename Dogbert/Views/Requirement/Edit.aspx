@@ -12,7 +12,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <%= Html.ClientSideValidation<Requirement>("Requirement")%>
-    <h2>Edit</h2>
+    <h2>Edit Requirement</h2>
     <h4>Project: <%= this.Label("Project.Name")%> </h4>
     <div>
        <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new {controller="Project", action="Edit", id=Model.Project.Id}), StaticValues.Tab_Requirements) %>
