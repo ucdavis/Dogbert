@@ -24,8 +24,16 @@ body, h3, h1 {margin:0; padding:0;}
     text-align:right;
 }
 
-a {text-decoration:none; color:blue;}
+.link{text-decoration:none; color:blue;}
+a:link {color:#FF0000;}   
+a {text-decoration:none; color:blue; border-bottom:1px solid #39c;}
 a img {border:none;}
+a:hover, a:active 
+{
+   
+    color:white; 
+    border-bottom:1px dashed Blue; 
+    background:LightGoldenRodYellow }
 
 ul#menu li a {
     background-color:#E8EEF4;
@@ -119,13 +127,6 @@ fieldset ul li label {margin-bottom:0em;}
 -webkit-border-radius: 10px; border:3px solid #F8F8F8; padding: 0.2em 0;}
 /* .reg_btn h3:hover{background-color:#FFF; color:#0D548A;} */
 .reg_btn h3:hover{font: 22px/30px 'QuicksandBold', Arial, sans-serif; border:3px solid #000;}
-
-
-
-
-
-
-
 
 
 .validation-summary-errors { border-bottom:1px #e6e6e6 solid; font-weight:bold;}

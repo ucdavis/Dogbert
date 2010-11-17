@@ -15,20 +15,20 @@
         <%= Html.AntiForgeryToken() %>
         <%= Html.Hidden("projectId", Model.Project.Id) %>
         
-        <p>
+        <div>
             <label for="Text">Text:</label>
             <%= Html.TextArea("Text", Model.ProjectText != null ? Model.ProjectText.Text : string.Empty) %>
-        </p>
-        <p>
+        </div>
+        <div>
          <%= this.Select("TextType")
             .Options(Model.TextType, x=>x.Id, x=>x.Name)
             .Selected(Model.ProjectText != null && Model.ProjectText.TextType != null ? Model.ProjectText.TextType.Id : "DE")             
             .FirstOption("--Text Type--")
             .HideFirstOptionWhen(Model.TextType != null)
             .Label("Text Type:")%>
-       </p>
+       </div>
 
-        <p>
+        <div>
             <input type="submit" value="Save" />
-        </p>
+        </div>
     <%} %>

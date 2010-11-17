@@ -25,8 +25,19 @@ namespace Dogbert.Controllers
             }
 
             var viewmodel = CreateProjectTextViewModel.Create(Repository, project, true);
+            if (viewmodel.AllUsed)
+            {
+                return this.RedirectToAction(a => a.AllUsed(project.Id));
+            }
 
             return View(viewmodel);
+        }
+
+
+        public ActionResult AllUsed(int projectId)
+        {
+            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            return View(project);
         }
 
         [ValidateInput(false)]
@@ -132,6 +143,7 @@ namespace Dogbert.Controllers
         public IEnumerable<TextType> TextType { get; set; }
         public ProjectText ProjectText { get; set; }
         public Project Project { get; set; }
+        public bool AllUsed { get; set; }
 
         public static CreateProjectTextViewModel Create(IRepository repository, Project project, bool create)
         {
@@ -147,8 +159,13 @@ namespace Dogbert.Controllers
             {
                 var usedTypes = project.ProjectTexts.Select(a => a.TextType).ToList();
                 var allTypes = repository.OfType<TextType>().Queryable.Where(a => a.IsActive).ToList();
-
+                 //show only unused types in drop
                 viewModel.TextType = allTypes.Where(a => !usedTypes.Contains(a)).ToList();
+
+                if (usedTypes.Count == allTypes.Count) //no more descriptions availble
+                {
+                    viewModel.AllUsed = true;
+                }
             }
             else
             {
