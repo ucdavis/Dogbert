@@ -1,6 +1,6 @@
 ﻿/* */
 body, h3, h1 {margin:0; padding:0;}
-#brand_bar_content, .page, #main {max-width:1000px; margin:0 auto;}
+#brand_bar_content, .page, #main {max-width:1200px; margin:0 auto;}
 .page {text-align:right;}
 #main {margin-top:-1em;}
 .itembrowsetable td a img {float:left; margin-right:1em; width:200px;}
@@ -26,14 +26,12 @@ body, h3, h1 {margin:0; padding:0;}
 
 .link{text-decoration:none; color:blue;}
 a:link {color:#FF0000;}   
-a {text-decoration:none; color:blue; border-bottom:1px solid #39c;}
+a {text-decoration:none;}
 a img {border:none;}
 a:hover, a:active 
 {
    
-    color:white; 
-    border-bottom:1px dashed Blue; 
-    background:LightGoldenRodYellow }
+}
 
 ul#menu li a {
     background-color:#E8EEF4;
@@ -50,6 +48,11 @@ ul#menu {
 ul#menu li {
     list-style:none outside none;
     padding-left:1px;
+}
+
+ul#menu li a:hover 
+{
+    background-color:#ddd;
 }
 
 
@@ -177,3 +180,21 @@ fieldset {font-size:100%;border: 1px solid #0D548A;}
 	color:inherit;
 }
 
+
+.projectform label
+{
+    display:inline-block;
+    width:150px;
+    margin-left:350px;
+}
+
+.projectform select
+{
+    margin-left:4px;
+    min-width:227px;
+}
+
+.projectform input
+{
+    width:222px;
+}

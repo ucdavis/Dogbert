@@ -26,7 +26,7 @@
         <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
  
 
-        <fieldset>
+        <fieldset class="projectform">
             <legend>Fields</legend>
             <p>
                 <label for="Project.Name">Project Name:</label>
@@ -125,7 +125,7 @@
             </p>
            
             <p>
-                <input type="submit" value="Save" />
+                <input style="width:390px; margin-left:346px;" type="submit" value="Save" />
             </p>
         </fieldset>
 
