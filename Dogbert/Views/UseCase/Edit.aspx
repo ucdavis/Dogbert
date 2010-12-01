@@ -45,26 +45,24 @@
         
         
           <div id= "tab-2">
-            <% Html.RenderPartial("UseCaseStepListForm"); %>
              <p>
                 <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.CreateUseCaseStep(Model.UseCase.Id), "Create UseCaseStep")%>
             </p>
+            <% Html.RenderPartial("UseCaseStepListForm"); %>
          </div>
          
          <div id= "tab-3">
-            <% Html.RenderPartial("RelateduseCaseListForm"); %>
             <p>
                 <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditChildren (Model.UseCase.Id), "Update Related Use Cases")%>
             </p> 
-            
+            <% Html.RenderPartial("RelateduseCaseListForm"); %>
          </div>
          
          <div id= "tab-4">
-            <% Html.RenderPartial("RelatedRequirementsListForm"); %>
             <p>
                 <%= Html.ActionLink<Dogbert.Controllers.UseCaseController>(a => a.EditRelatedRequirements (Model.UseCase.Id), "Update Related Requirements")%>
             </p> 
-            
+            <% Html.RenderPartial("RelatedRequirementsListForm"); %>    
          </div>
     
 
