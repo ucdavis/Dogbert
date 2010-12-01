@@ -4,9 +4,11 @@ using System.Web.Mvc;
 using Dogbert.Controllers.ViewModels;
 using Dogbert.Core.Domain;
 using Dogbert.Core.Resources;
+using Dogbert.Controllers.Helpers;
 using MvcContrib.Attributes;
 using UCDArch.Web.Controller;
 using MvcContrib;
+using UCDArch.Web.Helpers;
 using UCDArch.Web.Validator;
 
 namespace Dogbert.Controllers
@@ -41,18 +43,22 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
-            project.AddRequirementCategory(requirementCategory);
-
-            MvcValidationAdapter.TransferValidationMessagesTo(ModelState, requirementCategory.ValidationResults());
             if (project.RequirementCategories.Any(a => a.Name == requirementCategory.Name))
             {
                 ModelState.AddModelError("Text Type", "Requirement Category already exists in this project");
             }
+            else
+            {//if requirmentcategory is not already in project, add to project
+                project.AddRequirementCategory(requirementCategory);
+                MvcValidationAdapter.TransferValidationMessagesTo(ModelState, requirementCategory.ValidationResults());
+            }
+            
             if (ModelState.IsValid)
             {
                 Repository.OfType<Project>().EnsurePersistent(project);
                 Message = String.Format(NotificationMessages.STR_ObjectCreated, "Requirement Category");
-                return this.RedirectToAction<ProjectController>(a => a.Edit(project.Id));
+               // return this.RedirectToAction<ProjectController>(a => a.Edit(project.Id));
+                return Redirect(Url.EditProjectUrl(projectId, StaticValues.Tab_RequirementCategories));
             }
 
             var viewModel = RequirementCategoryViewModel.Create(Repository, project);

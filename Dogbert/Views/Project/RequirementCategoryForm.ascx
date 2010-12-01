@@ -12,13 +12,7 @@
        .Name("RequirementCategories")
        .Columns(col =>
                     {
-                        col.Add(project =>
-                                    {%>
-                                    
-                                        <%--<%= Html.ActionLink<RequirementCategoryController>(a => a.Create(Model.Id)) %>--%>
-                                    
-                                    <%});
-                        col.Add(project => project.Id);
+                        col.Add(project => project.Id).Width(15);
                         col.Add(project => project.Name);
                     })
                 
