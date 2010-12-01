@@ -1,50 +1,59 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<ProjectFile>>" %>
 <%@ Import Namespace="Dogbert.Core.Domain"%>
 <%@ Import Namespace="Dogbert.Controllers"%>
+<%@ Import Namespace="Dogbert.Helpers"%>
 
-    <table>
-        <tr>
-            <th></th>
-            <th>
-                File Name
-            </th>
-            <th>
-                File Type
-            </th>
-            <th>
-                Date Added
-            </th>
-            <th>
-                Date Changed
-            </th>
-        </tr>
+    <%= Html.ValidationSummary() %>
 
-    <% foreach (var item in Model) { %>
+        <fieldset>
+            <legend>Project Text</legend>
+      
+              
+              <% Html.Grid(Model.OrderBy(a => a.Type.Name))
+               .Transactional()
+               .Name("Texts")
+               .PrefixUrlParameters(false)
+               .RowAction(r=>r.HtmlAttributes.Add("Id", r.DataItem.Id))
+               .Columns(col =>
+                  {
+                        col.Add(item =>
+                          { %>
+                            <%=Html.ActionLink<ProjectFileController>(a => a.ViewFile(item.Id), "View")
+                            %>
+                            <% }).Width(25);
+                        col.Add(item =>
+                          { %>
+                            <%=Html.ActionLink<ProjectFileController>(a => a.Edit(item.Id), "Update")
+                            %>
+                            <% }).Width(25);
+                        col.Add(item =>
+                          { %>
+                            <%=Html.ActionLink<ProjectFileController>(a => a.Remove(item.Id), "Remove")
+                            %>
+                            <% }).Width(25);
+                         col.Add(item => item.FileName);
+                         col.Add(item =>{ %> <%=Html.HtmlEncode(item.Type.Name)%>
+                                <% }).Title("File Type");
+                         col.Add(item =>
+                          { %>
+                            <%=Html.Encode(String.Format("{0:g}", item.DateAdded))
+                            %>
+                            <% }).Title("Date Added");
+                            
+                         col.Add(item =>
+                          { %>
+                            <%=Html.Encode(String.Format("{0:g}", item.DateChanged))
+                            %>
+                            <% }).Title("Date Changed");
+                            })
+                .Render(); %>
+             
+            
+        </fieldset>
+
+
+
     
-        <tr>
-            <td>
-                <%ProjectFile projectFile = item;%>
-                <%= Html.ActionLink<ProjectFileController>(a => a.ViewFile(projectFile.Id), "View") %> |
-                <%= Html.ActionLink<ProjectFileController>(a => a.Edit(projectFile.Id), "Update")%> |
-                <%= Html.ActionLink<ProjectFileController>(a => a.Remove(projectFile.Id), "Remove") %>
-            </td>
-            <td>
-                <%= Html.Encode(item.FileName) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Type.Name) %>
-            </td>
-            <td>
-                <%= Html.Encode(String.Format("{0:g}", item.DateAdded)) %>
-            </td>
-            <td>
-                <%= Html.Encode(String.Format("{0:g}", item.DateChanged)) %>
-            </td>
-        </tr>
-    
-    <% } %>
-
-    </table>
 
 
 
