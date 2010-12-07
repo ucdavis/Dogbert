@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="Dogbert.Core.Domain.ChangeLog, Dogbert.Core" table="ChangeLogs" >
+    <id name="Id" column="id" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+
+    <property name="Change"></property>
+    <property name="Created"></property>
+    <property name="Updated"></property>
+    <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
+
+  </class>
+
+</hibernate-mapping>

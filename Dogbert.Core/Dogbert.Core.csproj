@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Abstractions\SystemTime.cs" />
     <Compile Include="Domain\CatbertClasses.cs" />
+    <Compile Include="Domain\ChangeLog.cs" />
     <Compile Include="Domain\Lookups.cs" />
     <Compile Include="Domain\Person.cs" />
     <Compile Include="Domain\Project.cs" />
@@ -125,6 +126,9 @@
       <LastGenOutput>StaticValues.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\ChangeLog.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
