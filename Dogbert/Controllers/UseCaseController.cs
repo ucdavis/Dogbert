@@ -21,7 +21,7 @@ namespace Dogbert.Controllers
     {
         public ActionResult Index()
         {
-            return this.RedirectToAction<ProjectController>(a => a.Index());
+            return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
         }
 
         //
@@ -180,7 +180,7 @@ namespace Dogbert.Controllers
             if (ucToRemove == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
             var saveProjectId = ucToRemove.Project.Id;

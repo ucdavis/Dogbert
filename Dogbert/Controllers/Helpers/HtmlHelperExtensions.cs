@@ -70,7 +70,7 @@ namespace Dogbert.Controllers.Helpers
 
             formattedEncodedText = formattedEncodedText.Replace(@"&amp;nbsp;", @"&nbsp;");
             formattedEncodedText = formattedEncodedText.Replace(@"&amp;mdash;", @"&mdash;");
-
+   
             // <span style="text-decoration:underline;">
             ReplaceComplexTag(formattedEncodedText, Span,
                               string.Format(SpanEncodedStyled, Underline),
@@ -110,6 +110,8 @@ namespace Dogbert.Controllers.Helpers
             ReplaceComplexTag(formattedEncodedText, Span,
                               string.Format(SpanEncodedStyled, XXLargeText),
                               string.Format(SpanStyled, XXLargeText));
+
+            formattedEncodedText = formattedEncodedText.Replace(@"&amp;", @"&");
 
             return formattedEncodedText.ToString();
         }

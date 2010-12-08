@@ -127,7 +127,7 @@ namespace Dogbert.Tests.Controllers
         {
             Controller.Index()
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
         }
 
         #endregion Index Tests
@@ -143,7 +143,7 @@ namespace Dogbert.Tests.Controllers
             ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
             Controller.Create(1)
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
             Assert.AreEqual("Project was not found.", Controller.Message);
         }
 
@@ -186,7 +186,7 @@ namespace Dogbert.Tests.Controllers
             ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
             Controller.Create(new ProjectFile(), 1, null)
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
             Assert.AreEqual("Project was not found.", Controller.Message);
         }
 
@@ -282,7 +282,7 @@ namespace Dogbert.Tests.Controllers
             ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
             Controller.Edit(1)
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
             Assert.AreEqual("ProjectFile was not found.", Controller.Message);
         }
 
@@ -328,7 +328,7 @@ namespace Dogbert.Tests.Controllers
             //Act
             Controller.Edit(1, new ProjectFile(), null)
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
 
             //Assert
             Assert.AreEqual("ProjectFile was not found.", Controller.Message);
@@ -467,7 +467,7 @@ namespace Dogbert.Tests.Controllers
 
             Controller.Remove(1)
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
             #endregion Act
 
             #region Assert
@@ -510,7 +510,7 @@ namespace Dogbert.Tests.Controllers
             #region Act
             Controller.Remove(1, ProjectFiles[0])
                 .AssertActionRedirect()
-                .ToAction<ProjectController>(a => a.Index());
+                .ToAction<ProjectController>(a => a.DynamicIndex());
 
             #endregion Act
 

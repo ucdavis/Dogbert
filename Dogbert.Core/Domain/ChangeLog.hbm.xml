@@ -5,10 +5,11 @@
     <id name="Id" column="id" unsaved-value="0">
       <generator class="identity" />
     </id>
-
-    <property name="Change"></property>
-    <property name="Created"></property>
-    <property name="Updated"></property>
+    <property name="Reason" column="Reason"></property>
+    <property name="RequestedBy" column="RequestedBy"></property>
+    <property name="Change" column="Change"></property>
+    <property name="Created" column="Created"></property>
+    <property name="Updated" column="Updated"></property>
     <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
 
   </class>

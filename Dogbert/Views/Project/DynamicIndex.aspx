@@ -29,11 +29,8 @@
          $(".main-tables table").tableDnD({
              onDragClass: "myDragClass",
              onDrop: function(table, row) {
-
                  var rows = $(table).find("tBody tr");
-
                  var newOrder = new Array();
-
                  for (i = 0; i < rows.length; i++) {
                      newOrder[i] = $(rows[i]).find("input[type='hidden']").val();
                  }

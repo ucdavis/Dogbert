@@ -25,7 +25,7 @@ body, h3, h1 {margin:0; padding:0;}
 }
 
 .link{text-decoration:none; color:blue;}
-a:link {color:#FF0000;}   
+a:link {color:#034AF3;}   
 a {text-decoration:none;}
 a img {border:none;}
 a:hover, a:active 
@@ -180,6 +180,16 @@ fieldset {font-size:100%;border: 1px solid #0D548A;}
 	color:inherit;
 }
 
+.changelogform label
+{
+    display:inline-block;
+    width:100px;
+}
+.changelogform div
+{
+   
+    padding:5px;
+}
 
 .projectform label
 {

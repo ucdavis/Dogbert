@@ -15,10 +15,9 @@ namespace Dogbert.Controllers
     {
         //
         // GET: /Requirement/
-
         public ActionResult Index()
         {
-            return this.RedirectToAction<ProjectController>(a => a.Index());
+            return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace Dogbert.Controllers
             if (project == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
             var viewModel = RequirementViewModel.Create(Repository, project);
@@ -56,7 +55,7 @@ namespace Dogbert.Controllers
             if (project == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }            
 
             requirement.Project = project;
@@ -87,7 +86,7 @@ namespace Dogbert.Controllers
             if (requirement == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             var requirementViewModel = RequirementViewModel.Create(Repository, requirement.Project);
             requirementViewModel.Requirement = requirement;
@@ -111,7 +110,7 @@ namespace Dogbert.Controllers
             if (requirement == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             Copiers.CopyRequirement(requirement, dest);
             dest.TransferValidationMessagesTo(ModelState);

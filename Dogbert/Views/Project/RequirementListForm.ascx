@@ -38,7 +38,7 @@
                        col.Add(a => a.LastModified);
                        //col.Add(a => a.Category.Name).Title("Category");
                    })
-            .Groupable(settings => settings.Groups(groups=>{ groups.Add(a => a.Category.Name);}))
+            .Groupable(settings => settings.Groups(groups=>{ groups.Add(a => a.Category.Name);}).Enabled(false))
             .Render(); %>
 
 

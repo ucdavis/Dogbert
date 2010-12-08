@@ -50,6 +50,7 @@
             <li><a href="#<%= StaticValues.Tab_ProjectText %>"><span>Project Text</span></a></li>
             <li><a href="#<%= StaticValues.Tab_Requirements %>"><span>Requirements</span></a></li>
             <li><a href="#<%= StaticValues.Tab_UseCases %>"><span>Use Cases</span></a></li>
+            <li><a href="#<%= StaticValues.Tab_ChangeLog %>"><span>Change Log</span></a></li>
             <li><a href="#<%= StaticValues.Tab_ProjectFiles %>"><span>Files</span></a></li>
             <li><a href="#<%= StaticValues.Tab_RequirementCategories %>"><span>Requirement Categories</span></a></li>
             <li><a href="#<%= StaticValues.Tab_Actors %>"><span>Actors</span></a></li>
@@ -79,6 +80,14 @@
                 <%= Html.ActionLink<UseCaseController>(a => a.Create(Model.Project.Id), "Create UseCase") %>
             </p>
               <% Html.RenderPartial("UseCaseListForm", Model.Project.UseCases); %>
+            
+        </div>
+        
+                <div id="<%= StaticValues.Tab_ChangeLog %>">
+            <p>
+                <%= Html.ActionLink<ChangeLogController>(a => a.Create(Model.Project.Id), "Create Change Log")%>
+            </p>
+              <% Html.RenderPartial("ChangeLogListForm", Model.Project.ChangeLog); %>
             
         </div>
   

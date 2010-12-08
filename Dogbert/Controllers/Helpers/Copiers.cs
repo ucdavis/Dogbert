@@ -34,6 +34,21 @@ namespace Dogbert.Controllers.Helpers
         }
 
         /// <summary>
+        /// Copies the changelog (one entry).
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="destination">The destination.</param>
+        /// <returns></returns>
+        public static ChangeLog CopyChangeLog(ChangeLog source, ChangeLog destination)
+        {
+            destination.Change = source.Change;
+            destination.RequestedBy = source.RequestedBy;
+            destination.Reason = source.Reason;
+            destination.Updated= SystemTime.Now();
+            return destination;
+        }
+
+        /// <summary>
         /// Copies the project file.
         /// </summary>
         /// <param name="source">The source.</param>

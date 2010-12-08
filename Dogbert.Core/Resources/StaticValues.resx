@@ -118,15 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tab_Actors" xml:space="preserve">
-    <value>tab-7</value>
+    <value>tab-8</value>
     <comment>Tab used in Edit Projects</comment>
+  </data>
+  <data name="Tab_ChangeLog" xml:space="preserve">
+    <value>tab-5</value>
+    <comment>Tab Used in Edit Projects</comment>
   </data>
   <data name="Tab_ProjectDetails" xml:space="preserve">
     <value>tab-1</value>
     <comment>Tab used in Edit Projects</comment>
   </data>
   <data name="Tab_ProjectFiles" xml:space="preserve">
-    <value>tab-5</value>
+    <value>tab-6</value>
     <comment>Tab Used in Edit Projects to show Uploaded files related to a project</comment>
   </data>
   <data name="Tab_ProjectText" xml:space="preserve">
@@ -134,7 +138,7 @@
     <comment>Tab used in Edit Projects</comment>
   </data>
   <data name="Tab_RequirementCategories" xml:space="preserve">
-    <value>tab-6</value>
+    <value>tab-7</value>
     <comment>Tab used in Edit Projects</comment>
   </data>
   <data name="Tab_Requirements" xml:space="preserve">

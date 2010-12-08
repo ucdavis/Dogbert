@@ -21,7 +21,7 @@ namespace Dogbert.Controllers
 
         public ActionResult Index()
         {
-            return this.RedirectToAction<ProjectController>(a => a.Index());
+            return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
         }
 
         //
@@ -33,7 +33,7 @@ namespace Dogbert.Controllers
             if (project == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
             var viewModel = ProjectFileViewModel.Create(Repository, project);
@@ -56,7 +56,7 @@ namespace Dogbert.Controllers
             if (project == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Project");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             
             LoadFileContents(projectFile, fileUpload);
@@ -89,7 +89,7 @@ namespace Dogbert.Controllers
             if (projectFile == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             var projectFileViewModel = ProjectFileViewModel.Create(Repository, projectFile.Project);
             projectFileViewModel.ProjectFile = projectFile;
@@ -113,7 +113,7 @@ namespace Dogbert.Controllers
             if (dest == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             Copiers.CopyProjectFile(projectFile, dest);
             LoadFileContents(dest, fileUpload);
@@ -145,7 +145,7 @@ namespace Dogbert.Controllers
             if (projectFile == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
             var projectFileViewModel = ProjectFileViewModel.Create(Repository, projectFile.Project);
             projectFileViewModel.ProjectFile = projectFile;
@@ -167,7 +167,7 @@ namespace Dogbert.Controllers
             if (projectFileToRemove == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ProjectFile");
-                return this.RedirectToAction<ProjectController>(a => a.Index());
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
             var saveProjectId = projectFileToRemove.Project.Id;

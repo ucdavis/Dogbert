@@ -47,6 +47,11 @@
       <key column="ProjectID" />
       <one-to-many class="UseCase" />
     </bag>
+
+    <bag name="ChangeLog" table="ChangeLog" cascade="all-delete-orphan" inverse="true" >
+      <key column="ProjectID" />
+      <one-to-many class="ChangeLog" />
+    </bag>
     
     <bag name="ProjectFiles" table="ProjectFiles" cascade="all-delete-orphan" inverse="true">
       <key column="ProjectId"/>

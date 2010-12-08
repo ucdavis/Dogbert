@@ -33,6 +33,7 @@
     </p>
     <% } %>
     <div>
+        <%= string.Format("<a href='{0}#{1}'>Back to Project</a>", Url.RouteUrl(new { controller = "Project", action = "Edit", id = Model.Project.Id }), StaticValues.Tab_ProjectFiles)%>
         <%--<%=Html.EditProjectUrl(Model.Project.Id, StaticValues.Tab_ProjectFiles)%>--%>
     </div>
 </asp:Content>

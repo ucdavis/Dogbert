@@ -61,11 +61,20 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-7.
+        ///   Looks up a localized string similar to tab-8.
         /// </summary>
         public static string Tab_Actors {
             get {
                 return ResourceManager.GetString("Tab_Actors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tab-5.
+        /// </summary>
+        public static string Tab_ChangeLog {
+            get {
+                return ResourceManager.GetString("Tab_ChangeLog", resourceCulture);
             }
         }
         
@@ -79,7 +88,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-5.
+        ///   Looks up a localized string similar to tab-6.
         /// </summary>
         public static string Tab_ProjectFiles {
             get {
@@ -97,7 +106,7 @@ namespace Dogbert.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tab-6.
+        ///   Looks up a localized string similar to tab-7.
         /// </summary>
         public static string Tab_RequirementCategories {
             get {

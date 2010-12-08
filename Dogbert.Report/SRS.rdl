@@ -1,384 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="Dogbert">
-      <DataSourceReference>DataSource1</DataSourceReference>
-      <rd:DataSourceID>f2ec3914-061c-4c83-80bf-4d9b6df23dfc</rd:DataSourceID>
-      <rd:SecurityType>None</rd:SecurityType>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="ProjectTexts">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
-FROM            ProjectTexts INNER JOIN
-                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE        (ProjectTexts.ProjectID = @projectid) AND (isnumeric(TextTypes.id) &lt;&gt; 0)
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Projects">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Contact">
-          <DataField>Contact</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-        <Field Name="LeadProgrammer">
-          <DataField>LeadProgrammer</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Manager">
-          <DataField>Manager</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Unit">
-          <DataField>Unit</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ContactEmail">
-          <DataField>ContactEmail</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        Projects.Name, Projects.Contact, vLeads.FirstName + ' ' + vLeads.LastName AS LeadProgrammer, vManagers.FirstName + ' ' + vManagers.LastName AS Manager, 
-                         Projects.ContactEmail, Projects.Unit, Projects.id
-FROM            Projects LEFT OUTER JOIN
-                         vUsers AS vLeads ON Projects.LeadProgrammerID = vLeads.UserID LEFT OUTER JOIN
-                         vUsers AS vManagers ON Projects.ProjectManagerID = vManagers.UserID
-WHERE        (Projects.id = @projectid)</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Requirements">
-      <Fields>
-        <Field Name="ReqType">
-          <DataField>ReqType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReqCategory">
-          <DataField>ReqCategory</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PriorityType">
-          <DataField>PriorityType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        RequirementTypes.Name AS ReqType, RequirementCategories.Name AS ReqCategory, PriorityTypes.Name AS PriorityType, Requirements.Description, 
-                         Requirements.id, Requirements.ProjectID
-FROM            Requirements LEFT OUTER JOIN
-                         RequirementCategories ON Requirements.CategoryID = RequirementCategories.id LEFT OUTER JOIN
-                         PriorityTypes ON Requirements.PriorityTypeID = PriorityTypes.id LEFT OUTER JOIN
-                         RequirementTypes ON Requirements.RequirementTypeID = RequirementTypes.id
-WHERE        (Requirements.ProjectID = @projectid)
-ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="UseCases">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Description">
-          <DataField>Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Precondition">
-          <DataField>Precondition</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Postcondition">
-          <DataField>Postcondition</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Order">
-          <DataField>Order</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Step">
-          <DataField>Step</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Optional">
-          <DataField>Optional</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="UCStepID">
-          <DataField>UCStepID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="RequirementID">
-          <DataField>RequirementID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="RequirementsList">
-          <DataField>RequirementsList</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RelatedUseCaseList">
-          <DataField>RelatedUseCaseList</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-        <Field Name="ActorsList">
-          <DataField>ActorsList</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
-                         UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
-                         UseCases.RelatedUseCaseList, UseCases.ActorsList
-FROM            UseCaseXRequirements RIGHT OUTER JOIN
-                         UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
-                         UseCases LEFT OUTER JOIN
-                         UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
-                         UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
-WHERE        (UseCases.ProjectID = @projectid)
-ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="ReqList">
-      <Fields>
-        <Field Name="Results">
-          <DataField>Results</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>declare @reqList varchar(1000)
-select @reqList = COALESCE(@reqList + ', ', '') + CAST(id AS varchar(50))
-FROM Requirements
-WHERE ProjectID = 41
-
-select 'Results' =  + @reqList</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="Figures">
-      <Fields>
-        <Field Name="ProjectId">
-          <DataField>ProjectId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FileName">
-          <DataField>FileName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="FileContentType">
-          <DataField>FileContentType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FileContents">
-          <DataField>FileContents</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
-        </Field>
-        <Field Name="DateAdded">
-          <DataField>DateAdded</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DateChanged">
-          <DataField>DateChanged</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextType">
-          <DataField>TextType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Caption">
-          <DataField>Caption</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
-                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType, ProjectFiles.Caption
-FROM            TextTypes INNER JOIN
-                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
-                         ProjectFiles INNER JOIN
-                         FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND 
-                         ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
-WHERE        (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp' OR
-                         ProjectFiles.FileName LIKE '%.jpg' OR
-                         ProjectFiles.FileName LIKE '%.gif' OR
-                         ProjectFiles.FileName LIKE '%.png')</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="Appendix">
-      <Fields>
-        <Field Name="id">
-          <DataField>id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Text">
-          <DataField>Text</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
-FROM            ProjectTexts INNER JOIN
-                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE        (ProjectTexts.ProjectID = @projectid) AND (TextTypes.id LIKE 'A%')
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-    <DataSet Name="TOCtext">
-      <Fields>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProjectID">
-          <DataField>ProjectID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Priority">
-          <DataField>Priority</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="TextTypeID">
-          <DataField>TextTypeID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Dogbert</DataSourceName>
-        <CommandText>SELECT        ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority, ProjectTexts.TextTypeID
-FROM            ProjectTexts INNER JOIN
-                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE        (ProjectTexts.ProjectID = @projectid) AND (NOT (ProjectTexts.TextTypeID LIKE 'A%'))
-ORDER BY TextTypes.Priority</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@projectid">
-            <Value>=Parameters!projectid.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TablixProjectText">
@@ -1797,7 +1418,7 @@ ORDER BY TextTypes.Priority</CommandText>
                             </Group>
                             <SortExpressions>
                               <SortExpression>
-                                <Value>=Fields!UCStepID.Value</Value>
+                                <Value>=Fields!Order.Value</Value>
                               </SortExpression>
                             </SortExpressions>
                             <TablixHeader>
@@ -3010,7 +2631,7 @@ ORDER BY TextTypes.Priority</CommandText>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Appendix</DataSetName>
-        <Top>22.5573in</Top>
+        <Top>22.8073in</Top>
         <Left>0.01775in</Left>
         <Height>0.64583in</Height>
         <Width>7.14915in</Width>
@@ -3298,24 +2919,13 @@ ORDER BY TextTypes.Priority</CommandText>
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>23.39844in</Height>
+    <Height>24.35677in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <ReportParameters>
-    <ReportParameter Name="projectid">
-      <DataType>Integer</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>41</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>projectid</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <Width>7.33363in</Width>
   <Page>
     <PageHeader>
@@ -3414,7 +3024,7 @@ ORDER BY TextTypes.Priority</CommandText>
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.42708in</Height>
+      <Height>0.47916in</Height>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="PageNumber">
@@ -3513,6 +3123,437 @@ ORDER BY TextTypes.Priority</CommandText>
     <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
-  <rd:ReportID>f1ef1a75-5099-4e97-9c9f-f24b6748a1ea</rd:ReportID>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Dogbert">
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>f2ec3914-061c-4c83-80bf-4d9b6df23dfc</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ProjectTexts">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (isnumeric(TextTypes.id) &lt;&gt; 0)
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Projects">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        Projects.Name, Projects.Contact, vLeads.FirstName + ' ' + vLeads.LastName AS LeadProgrammer, vManagers.FirstName + ' ' + vManagers.LastName AS Manager, 
+                         Projects.ContactEmail, Projects.Unit, Projects.id
+FROM            Projects LEFT OUTER JOIN
+                         vUsers AS vLeads ON Projects.LeadProgrammerID = vLeads.UserID LEFT OUTER JOIN
+                         vUsers AS vManagers ON Projects.ProjectManagerID = vManagers.UserID
+WHERE        (Projects.id = @projectid)</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Contact">
+          <DataField>Contact</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="LeadProgrammer">
+          <DataField>LeadProgrammer</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Manager">
+          <DataField>Manager</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Unit">
+          <DataField>Unit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ContactEmail">
+          <DataField>ContactEmail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Requirements">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        RequirementTypes.Name AS ReqType, RequirementCategories.Name AS ReqCategory, PriorityTypes.Name AS PriorityType, Requirements.Description, 
+                         Requirements.id, Requirements.ProjectID
+FROM            Requirements LEFT OUTER JOIN
+                         RequirementCategories ON Requirements.CategoryID = RequirementCategories.id LEFT OUTER JOIN
+                         PriorityTypes ON Requirements.PriorityTypeID = PriorityTypes.id LEFT OUTER JOIN
+                         RequirementTypes ON Requirements.RequirementTypeID = RequirementTypes.id
+WHERE        (Requirements.ProjectID = @projectid)
+ORDER BY ReqType, ReqCategory, Requirements.id</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ReqType">
+          <DataField>ReqType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReqCategory">
+          <DataField>ReqCategory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PriorityType">
+          <DataField>PriorityType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="UseCases">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        UseCases.id, UseCases.Name, UseCases.Description, UseCases.ProjectID, UseCases.Precondition, UseCases.Postcondition, UseCaseSteps.[Order], 
+                         UseCaseSteps.Description AS Step, UseCaseSteps.Optional, UseCaseXRequirements.RequirementID, UseCaseSteps.id AS UCStepID, UseCases.RequirementsList, 
+                         UseCases.RelatedUseCaseList, UseCases.ActorsList
+FROM            UseCaseXRequirements RIGHT OUTER JOIN
+                         UseCaseXActor ON UseCaseXRequirements.UseCaseID = UseCaseXActor.UseCaseID RIGHT OUTER JOIN
+                         UseCases LEFT OUTER JOIN
+                         UseCaseSteps ON UseCases.id = UseCaseSteps.UseCaseID ON UseCaseXActor.UseCaseID = UseCases.id LEFT OUTER JOIN
+                         UseCaseXUseCase ON UseCases.id = UseCaseXUseCase.ParentUseCaseID AND UseCases.id = UseCaseXUseCase.ChildUseCaseID
+WHERE        (UseCases.ProjectID = @projectid)
+ORDER BY UseCases.id, UseCaseSteps.[Order]</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Precondition">
+          <DataField>Precondition</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Postcondition">
+          <DataField>Postcondition</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Order">
+          <DataField>Order</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Step">
+          <DataField>Step</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Optional">
+          <DataField>Optional</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="UCStepID">
+          <DataField>UCStepID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequirementID">
+          <DataField>RequirementID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequirementsList">
+          <DataField>RequirementsList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RelatedUseCaseList">
+          <DataField>RelatedUseCaseList</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ActorsList">
+          <DataField>ActorsList</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ReqList">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>declare @reqList varchar(1000)
+select @reqList = COALESCE(@reqList + ', ', '') + CAST(id AS varchar(50))
+FROM Requirements
+WHERE ProjectID = 41
+
+select 'Results' =  + @reqList</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Results">
+          <DataField>Results</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Figures">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectFiles.ProjectId, FileTypes.Name, ProjectFiles.FileName, ProjectFiles.id, ProjectFiles.FileContentType, ProjectFiles.FileContents, ProjectFiles.DateAdded, 
+                         ProjectFiles.DateChanged, ProjectTexts.Text, TextTypes.Name AS TextType, ProjectFiles.Caption
+FROM            TextTypes INNER JOIN
+                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
+                         ProjectFiles INNER JOIN
+                         FileTypes ON ProjectFiles.FileTypeId = FileTypes.id ON ProjectTexts.ProjectID = ProjectFiles.ProjectId AND 
+                         ProjectTexts.TextTypeID = ProjectFiles.TextTypeId
+WHERE        (ProjectFiles.ProjectId = @projectid) AND (ProjectFiles.FileName LIKE '%.bmp' OR
+                         ProjectFiles.FileName LIKE '%.jpg' OR
+                         ProjectFiles.FileName LIKE '%.gif' OR
+                         ProjectFiles.FileName LIKE '%.png')</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectId">
+          <DataField>ProjectId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileName">
+          <DataField>FileName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="FileContentType">
+          <DataField>FileContentType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FileContents">
+          <DataField>FileContents</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="DateAdded">
+          <DataField>DateAdded</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DateChanged">
+          <DataField>DateChanged</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextType">
+          <DataField>TextType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Caption">
+          <DataField>Caption</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Appendix">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.id, ProjectTexts.Text, ProjectTexts.TextTypeID, ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (TextTypes.id LIKE 'A%')
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TOCtext">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectid">
+            <Value>=Parameters!projectid.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ProjectTexts.ProjectID, TextTypes.Name, TextTypes.Priority, ProjectTexts.TextTypeID
+FROM            ProjectTexts INNER JOIN
+                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
+WHERE        (ProjectTexts.ProjectID = @projectid) AND (NOT (ProjectTexts.TextTypeID LIKE 'A%'))
+ORDER BY TextTypes.Priority</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectID">
+          <DataField>ProjectID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Priority">
+          <DataField>Priority</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TextTypeID">
+          <DataField>TextTypeID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ChangeLog">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@projectID">
+            <Value>=Parameters!projectID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        ChangeLogs.Change, ChangeLogs.Created, ChangeLogs.Updated, ChangeLogs.ProjectId, ChangeLogs.Reason, ChangeLogs.RequestedBy
+FROM            Projects INNER JOIN
+                         ChangeLogs ON Projects.id = ChangeLogs.ProjectId
+WHERE        (ChangeLogs.ProjectId = @projectID)</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Change">
+          <DataField>Change</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Created">
+          <DataField>Created</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Updated">
+          <DataField>Updated</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ProjectId">
+          <DataField>ProjectId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Reason">
+          <DataField>Reason</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RequestedBy">
+          <DataField>RequestedBy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="projectid">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>41</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>projectid</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>f1ef1a75-5099-4e97-9c9f-f24b6748a1ea</rd:ReportID>
 </Report>
