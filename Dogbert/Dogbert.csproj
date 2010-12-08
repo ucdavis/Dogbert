@@ -524,6 +524,8 @@
     <Content Include="Views\ProjectText\AllUsed.aspx" />
     <Content Include="Views\Project\ActorListForm.ascx" />
     <Content Include="Views\Project\ChangeLogListForm.ascx" />
+    <Content Include="Views\Requirement\RequirementDetailForm.ascx" />
+    <Content Include="Views\Requirement\Delete.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

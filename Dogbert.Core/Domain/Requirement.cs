@@ -2,6 +2,7 @@
 using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
 using UCDArch.Core.NHibernateValidator.Extensions;
+using System.Collections.Generic;
 
 namespace Dogbert.Core.Domain
 {
@@ -45,5 +46,6 @@ namespace Dogbert.Core.Domain
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastModified { get; set; }
         public virtual string VersionCompleted { get; set; }
+        public virtual IList<UseCase> UseCases { get; set; }
     }
 }

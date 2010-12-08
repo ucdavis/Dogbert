@@ -7,6 +7,7 @@ using MvcContrib;
 using MvcContrib.Attributes;
 using UCDArch.Web.Controller;
 using UCDArch.Web.Helpers;
+using UCDArch.Core.Utils;
 
 namespace Dogbert.Controllers
 {
@@ -128,5 +129,53 @@ namespace Dogbert.Controllers
 
             return View(viewModel);
         }
+
+        /// <summary>
+        /// Gets the specified id to Delete.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        public ActionResult Delete(int id)
+        {
+            var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
+
+            if (requirement == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+            var requirementViewModel = RequirementViewModel.Create(Repository, requirement.Project);
+            requirementViewModel.Requirement = requirement;
+
+            return View(requirementViewModel);
+        }
+
+        /// <summary>
+        /// Deletes the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="requirement">The requirement.</param>
+        /// <returns></returns>
+        [AcceptPost]
+        [ValidateInput(false)]
+        public ActionResult Delete(int id, Requirement requirement)
+        {
+            var requirementToDelete = Repository.OfType<Requirement>().GetNullableByID(id);
+
+            if (requirementToDelete == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "Requirement");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+
+            var saveProjectId = requirementToDelete.Project.Id;
+
+            Repository.OfType<Requirement>().Remove(requirementToDelete);
+            Message = string.Format(NotificationMessages.STR_ObjectRemoved, "Requirement");
+            return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_Requirements));
+
+        }
+
+      
     }
 }

@@ -25,8 +25,9 @@
                    {
                        col.Add(a =>
                                    {%>
-                                    <%= Html.ActionLink<RequirementController>(b => b.Edit(a.Id), "Edit")%>
-                                   <%});
+                                    <%= Html.ActionLink<RequirementController>(b => b.Edit(a.Id), "Edit")%> |
+                                    <%= Html.ActionLink<RequirementController>(b => b.Delete(a.Id), "Delete")%>
+                                   <%}).Width(110);
                        col.Add(a =>
                                    {%>
                                     <%=Html.HtmlEncode(a.Description)%>

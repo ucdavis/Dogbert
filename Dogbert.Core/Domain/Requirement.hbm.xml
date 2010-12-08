@@ -14,7 +14,13 @@
     <many-to-one name="PriorityType" class="Dogbert.Core.Domain.PriorityType, Dogbert.Core" column="PriorityTypeID" cascade="none" />
     <many-to-one name="Project" class="Dogbert.Core.Domain.Project, Dogbert.Core" column="ProjectID" cascade="none" />
     <many-to-one name="Category" class="Dogbert.Core.Domain.RequirementCategory, Dogbert.Core" column="CategoryID" cascade="none" />
-
+    
+    <bag name="UseCases" table="UseCaseXRequirements" cascade="save-update">
+      <key column="RequirementID" />
+      <many-to-many column="UseCaseID" class="Dogbert.Core.Domain.UseCase, Dogbert.Core" />
+    </bag>
+    
+    
     <property name="DateAdded" column="DateAdded" />
     <property name="LastModified" column="LastModified" />
     <property name="VersionCompleted" column="VersionCompleted" />

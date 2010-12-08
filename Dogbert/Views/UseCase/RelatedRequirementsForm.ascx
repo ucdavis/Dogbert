@@ -14,11 +14,12 @@
                     <%= Model.Project!=null ? Html.HiddenFor(p=>p.Project.Id) : ""%>
               <p>
                  <%= this.MultiSelect("UseCase.Requirements")
-                    .Options(Model.Project.Requirements, x => x.Id,  x => x.Description)
+                    .Options(Model.Project.Requirements, x => x.Id, x => x.Description.FormatAsHtmlName())
                     .Selected(Model.UseCase != null && Model.UseCase.Requirements != null ? Model.UseCase.Requirements : new List<Requirement>()) 
                     .FirstOption("--Related Requirements--")
                     .HideFirstOptionWhen(Model.Project.Requirements != null)
-                    .Label("Select All Related Requirements: (use cntl to select multiple)")%>
+                    .Label("Select All Related Requirements: (use cntl to select multiple)")
+                    %>
               </p>
                
                
