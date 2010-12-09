@@ -59,10 +59,10 @@
       <Section>connectionStrings</Section>
     </WebConfigReplacementFiles>
     <AssemblyAttributes Include="AssemblyFileVersion">
-      <Value>1.6.2.2010</Value>
+      <Value>1.2010.12.9</Value>
     </AssemblyAttributes>
     <AssemblyAttributes Include="AssemblyVersion">
-      <Value>1.6.2.2010</Value>
+      <Value>1.2010.12.9</Value>
     </AssemblyAttributes>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
