@@ -258,6 +258,7 @@ namespace Dogbert.Controllers
 
             var viewModel = UseCaseViewModel.Create(Repository, useCase.Project);
             viewModel.UseCase = useCase;
+
             return this.RedirectToAction(a => a.Edit(useCaseId));
         }
 
@@ -350,7 +351,8 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<UseCase>().EnsurePersistent(uc);
                 Message = "Use Case edited successfully";
-                return this.RedirectToAction(a => a.Edit(uc.Id));
+                //return this.RedirectToAction(a => a.Edit(uc.Id));
+                return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedUseCases));
             }
            // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
             return RedirectToAction("Edit", uc);
@@ -367,7 +369,7 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
             }
 
-            var viewModel = UseCaseViewModel.Create(Repository, uc.Project);
+            var viewModel = UseCaseViewModel.CreateRelatedRequirements(Repository, ucid);
             viewModel.UseCase = uc;
             return View(viewModel);
         }
@@ -379,12 +381,12 @@ namespace Dogbert.Controllers
         {
             var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
 
-            if (UseCase.Requirements != null && UseCase.Requirements.Count > 0)
+            if (UseCase.Requirements != null)
             {
                 uc.Requirements.Clear();    //clear list of children
                 foreach (Requirement i in UseCase.Requirements) //update list 
                 {
-                    uc.AddRequirement (i);
+                    uc.AddRequirement(i);
                 }
             }
 
@@ -393,10 +395,12 @@ namespace Dogbert.Controllers
             {
                 Repository.OfType<UseCase>().EnsurePersistent(uc);
                 Message = "Use Case edited successfully";
-                return this.RedirectToAction(a => a.Edit(uc.Id));
+                //return this.RedirectToAction(a => a.Edit(uc.Id));
+                return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedRequirements));
             }
             // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
             return RedirectToAction("Edit", uc);
+            //return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedRequirements));
 
         }
        

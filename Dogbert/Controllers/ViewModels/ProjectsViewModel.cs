@@ -23,7 +23,7 @@ namespace Dogbert.Controllers.ViewModels
                                     DesignerProjects =
                                         repository.OfType<Project>().Queryable.Where(
                                             a =>
-                                            (a.ProjectType.Id == "WA" || a.ProjectType.Id == "WS") && a.DesignerShow).
+                                            (a.ProjectType.Id == "WA" || a.ProjectType.Id == "WS") && a.DesignerShow && !a.StatusCode.IsComplete).
                                         OrderBy(a => a.DesignerOrder).ToList()
                                 };
 

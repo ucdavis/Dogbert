@@ -25,7 +25,8 @@
                    {
                        col.Add(a =>
                                    {%>
-                                    <%= Html.ActionLink<ChangeLogController>(b => b.Edit(a.Id), "Edit")%>
+                                    <%= Html.ActionLink<ChangeLogController>(b => b.Edit(a.Id), "Edit")%> |
+                                    <%= Html.ActionLink<ChangeLogController>(b => b.Delete(a.Id), "Delete")%>
                                    <%});
                        col.Add(a =>
                                    {%>

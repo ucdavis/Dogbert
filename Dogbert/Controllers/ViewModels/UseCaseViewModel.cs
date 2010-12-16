@@ -12,18 +12,19 @@ namespace Dogbert.Controllers.ViewModels
     public class UseCaseViewModel
     {
         //used for use cases
+        public Project Project { get; set; }
         public UseCase UseCase { get; set; }
-       // public IList<UseCase> UseCases { get; set; }
         public MultiSelectList Actors { get; set; }
-  //      public IList<UseCase> Childeren { get; set; }
         public UseCaseStep UseCaseStep { get; set; }
         public IList<RequirementCategory> RequirementCategories { get; set; }
-        public Project Project { get; set; }
+
+        //for editRelateRequirements
+        public MultiSelectList RelatedRequirements{ get; set; }
 
         public static UseCaseViewModel Create(IRepository repository, Project project)
         {
             var actor = repository.OfType<Actor>().Queryable.Where(a => a.IsActive);
-
+       
             var viewModel = new UseCaseViewModel
             {
                 //populate the stuff needed for use cases
@@ -56,7 +57,22 @@ namespace Dogbert.Controllers.ViewModels
             return viewModel;
         }
 
-        
+        public static UseCaseViewModel CreateRelatedRequirements(IRepository repository, int ucid)
+        {
+            var usecase = repository.OfType<UseCase>().GetByID(ucid);
+            var req = repository.OfType<Requirement>().Queryable.Where(a => a.UseCases.Contains(usecase));
+            //var req = repository.OfType<Requirement>().Queryable.ToList();
+            var project = repository.OfType<Project>().GetByID(usecase.Project.Id);
+           
+
+            var viewModel = new UseCaseViewModel
+            {
+                //populate the stuff needed for relating a requirement
+                RelatedRequirements = new MultiSelectList(req, "Id", "ShortDescription"),
+                Project = project
+            };
+            return viewModel;
+        }
 
     }
 }

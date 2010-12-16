@@ -25,7 +25,7 @@
       <many-to-many column="ActorID" class="Dogbert.Core.Domain.Actor, Dogbert.Core" />
     </bag>
 
-    <bag name="Requirements" table="UseCaseXRequirements" cascade="all-delete-orphan">
+    <bag name="Requirements" table="UseCaseXRequirements">
       <key column="UseCaseID" />
       <many-to-many column="RequirementID" class="Dogbert.Core.Domain.Requirement, Dogbert.Core" />
     </bag>

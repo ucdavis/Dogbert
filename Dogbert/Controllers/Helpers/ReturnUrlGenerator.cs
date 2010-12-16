@@ -18,6 +18,14 @@ namespace Dogbert.Controllers.Helpers
 
             return link;
         }
+
+        public static string EditUseCaseUrl(this HtmlHelper html, int usecaseId, string tabName)
+        {
+            var url = Url.RouteUrl(new { controller = "UseCase", action = "Edit", id = usecaseId });// +"#" + tabName;
+            var link = string.Format("<a href='{0}'>Back to Project</a>", url ?? "blank");
+
+            return link;
+        }
     }
 
     /// <summary>
@@ -32,6 +40,14 @@ namespace Dogbert.Controllers.Helpers
 
             return returnUrl;
         }
+
+        public static string EditUseCaseUrl(this UrlHelper url, int useCaseId, string tabName)
+        {
+            //var returnUrl = url.RouteUrl(new { controller = "Project", action = "Edit", id = projectId }) + "#" + tabName;
+            var returnUrl = url.RouteUrl(ControllerGenerator.EditUseCase(useCaseId)) + "#" + tabName;
+
+            return returnUrl;
+        }
     }
 
     internal static class ControllerGenerator
@@ -39,6 +55,11 @@ namespace Dogbert.Controllers.Helpers
         internal static object EditProject(int projectId)
         {
             return new {controller = "Project", action = "Edit", id = projectId};
+        }
+
+        internal static object EditUseCase(int usecaseId)
+        {
+            return new { controller = "UseCase", action = "Edit", id = usecaseId };
         }
     }
 }

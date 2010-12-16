@@ -3,6 +3,7 @@ using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
 using UCDArch.Core.NHibernateValidator.Extensions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Dogbert.Core.Domain
 {
@@ -47,5 +48,21 @@ namespace Dogbert.Core.Domain
         public virtual DateTime LastModified { get; set; }
         public virtual string VersionCompleted { get; set; }
         public virtual IList<UseCase> UseCases { get; set; }
+
+        public virtual string ShortDescription
+        {
+            get
+            {
+                 var len = 50;
+                //using System.Text.RegularExpressions;
+               // Regex regex = new Regex("<p>");
+                //string result = regex.Replace(Description, " ");
+                var result = Description.Replace("<p>", " ");
+                result = result.Replace("</p>", " ");
+                return result.Substring(0, Math.Min(len, result.Length));
+            }
+        }
+
+
     }
 }

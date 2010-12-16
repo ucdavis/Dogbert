@@ -517,7 +517,9 @@
     <Content Include="Scripts\jquery.enableTinyMce.js" />
     <Content Include="Views\Actor\Create.aspx" />
     <Content Include="Views\ChangeLog\ChangeLogForm.ascx" />
+    <Content Include="Views\ChangeLog\ChangeLogDetailForm.ascx" />
     <Content Include="Views\ChangeLog\Create.aspx" />
+    <Content Include="Views\ChangeLog\Delete.aspx" />
     <Content Include="Views\ChangeLog\Edit.aspx" />
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Home\Designer.aspx" />

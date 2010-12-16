@@ -126,6 +126,46 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// // GET: /ChangeLog/Delete/{id}
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        public ActionResult Delete(int id)
+        {
+            var ChangeLog = Repository.OfType<ChangeLog>().GetNullableByID(id);
+
+            if (ChangeLog == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ChangeLog");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+            var viewModel = ChangeLogViewModel.Create(Repository, ChangeLog.Project);
+            viewModel.ChangeLog = ChangeLog;
+
+            return View(viewModel);
+
+        }
+
+        [AcceptPost]
+        [ValidateInput(false)]
+        public ActionResult Delete(int id, ChangeLog entry)
+        {
+            var entryToDelete = Repository.OfType<ChangeLog>().GetNullableByID(id);
+
+            if (entryToDelete == null)
+            {
+                Message = string.Format(NotificationMessages.STR_ObjectNotFound, "ChangeLog");
+                return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
+            }
+
+            var saveProjectId = entryToDelete.Project.Id;
+
+            Repository.OfType<ChangeLog>().Remove(entryToDelete);
+            Message = string.Format(NotificationMessages.STR_ObjectRemoved, "ChangeLog");
+            return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_ChangeLog));
+
+        }
 
     }
 }
