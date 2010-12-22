@@ -87,7 +87,9 @@
 <%--------------------------------------------------------------------------------------------%>   
    <h1>Projects</h1>
     <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+        <%= Html.ActionLink("Create New", "Create") %> |
+        <%= Html.ActionLink<ReportController>(a=>a.Projects(), "Export to Excel") %> 
+
     </p>
 
 <div id="tabs">

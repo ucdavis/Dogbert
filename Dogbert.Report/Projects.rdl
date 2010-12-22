@@ -12,31 +12,31 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.70833in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95833in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.48958in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.85417in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.44792in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.875in</Width>
+              <Width>0.66667in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.875in</Width>
+              <Width>0.78125in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8125in</Width>
+              <Width>0.75in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.75in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -47,6 +47,9 @@
                   <CellContents>
                     <Textbox Name="textbox2">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!Name.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -172,8 +175,6 @@
                               <Value>Priority</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -274,6 +275,9 @@
                   <CellContents>
                     <Textbox Name="textbox7">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!Unit.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -310,16 +314,18 @@
                   <CellContents>
                     <Textbox Name="Textbox61">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!Complexity.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Complexity</Value>
+                              <Value>Complex</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -346,12 +352,15 @@
                   <CellContents>
                     <Textbox Name="textbox8">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ProjectedStart.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Projected Start</Value>
+                              <Value>Proj. Start</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -382,12 +391,15 @@
                   <CellContents>
                     <Textbox Name="textbox9">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ProjectedEnd.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Projected End</Value>
+                              <Value>Proj. End</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -418,6 +430,9 @@
                   <CellContents>
                     <Textbox Name="textbox13">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!Deadline.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -850,7 +865,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
-        <RepeatRowHeaders>true</RepeatRowHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
         <Filters>
           <Filter>
@@ -860,13 +876,27 @@
               <FilterValue>=Parameters!status.Value</FilterValue>
             </FilterValues>
           </Filter>
+          <Filter>
+            <FilterExpression>=Fields!ProjectType.Value</FilterExpression>
+            <Operator>In</Operator>
+            <FilterValues>
+              <FilterValue>=Parameters!projectType.Value</FilterValue>
+            </FilterValues>
+          </Filter>
+          <Filter>
+            <FilterExpression>=Fields!Name.Value</FilterExpression>
+            <Operator>Like</Operator>
+            <FilterValues>
+              <FilterValue>=Parameters!projectName.Value</FilterValue>
+            </FilterValues>
+          </Filter>
         </Filters>
         <SortExpressions>
           <SortExpression>
-            <Value>=Fields!Priority.Value</Value>
+            <Value>=Fields!ProjectType.Value</Value>
           </SortExpression>
           <SortExpression>
-            <Value>=Fields!ProjectType.Value</Value>
+            <Value>=Fields!Priority.Value</Value>
           </SortExpression>
           <SortExpression>
             <Value>=Fields!Status.Value</Value>
@@ -874,7 +904,7 @@
         </SortExpressions>
         <Top>0.36in</Top>
         <Height>0.43in</Height>
-        <Width>10.94792in</Width>
+        <Width>8.87499in</Width>
         <Style />
       </Tablix>
       <Textbox Name="textbox1">
@@ -912,7 +942,7 @@
         </Paragraphs>
         <rd:DefaultName>textbox1</rd:DefaultName>
         <Height>0.36in</Height>
-        <Width>10.94792in</Width>
+        <Width>8.87499in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <PaddingLeft>2pt</PaddingLeft>
@@ -925,7 +955,7 @@
     <Height>0.79in</Height>
     <Style />
   </Body>
-  <Width>10.94792in</Width>
+  <Width>8.87499in</Width>
   <Page>
     <PageFooter>
       <Height>1in</Height>
@@ -937,32 +967,36 @@
         </Border>
       </Style>
     </PageFooter>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
     <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
+    <RightMargin>0.75in</RightMargin>
+    <TopMargin>0.75in</TopMargin>
     <BottomMargin>1in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DataSource1">
-      <DataSourceReference>DataSource1</DataSourceReference>
+    <DataSource Name="Dogbert">
+      <DataSourceReference>Dogbert</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>0f6e02ac-b226-49ee-9aa7-904b67276a1b</rd:DataSourceID>
+      <rd:DataSourceID>a9060d30-866e-42d7-898e-8db1f7b49569</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>DataSource1</DataSourceName>
-        <CommandText>SELECT        Projects.Name, Projects.Priority, Projects.Deadline, Projects.Contact, Projects.ContactEmail, Projects.Unit, Projects.ProjectedStart, Projects.ProjectedEnd, 
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>SELECT DISTINCT 
+                         Projects.Name, Projects.Priority, Projects.Deadline, Projects.Contact, Projects.ContactEmail, Projects.Unit, Projects.ProjectedStart, Projects.ProjectedEnd, 
                          StatusCodes.Name AS Status, ProjectTexts.Text AS Description, ProjectTypes.Name AS ProjectType, Projects.Complexity
-FROM            Projects INNER JOIN
-                         StatusCodes ON Projects.StatusCode = StatusCodes.id INNER JOIN
-                         ProjectTexts ON Projects.id = ProjectTexts.ProjectID INNER JOIN
-                         ProjectTypes ON Projects.ProjectTypeID = ProjectTypes.id INNER JOIN
-                         TextTypes ON ProjectTexts.TextTypeID = TextTypes.id
-WHERE        (TextTypes.Name = 'Description') AND (StatusCodes.IsComplete = 0)</CommandText>
+FROM            TextTypes RIGHT OUTER JOIN
+                         ProjectTexts ON TextTypes.id = ProjectTexts.TextTypeID RIGHT OUTER JOIN
+                         Projects INNER JOIN
+                         ProjectTypes ON Projects.ProjectTypeID = ProjectTypes.id LEFT OUTER JOIN
+                         StatusCodes ON Projects.StatusCode = StatusCodes.id ON ProjectTexts.ProjectID = Projects.id
+WHERE        (TextTypes.Name = 'Description') AND (StatusCodes.IsComplete = 0) OR
+                         (TextTypes.Name IS NULL)</CommandText>
       </Query>
       <Fields>
         <Field Name="Name">
@@ -1017,9 +1051,23 @@ WHERE        (TextTypes.Name = 'Description') AND (StatusCodes.IsComplete = 0)</
     </DataSet>
     <DataSet Name="Status">
       <Query>
-        <DataSourceName>DataSource1</DataSourceName>
+        <DataSourceName>Dogbert</DataSourceName>
         <CommandText>SELECT        Name
 FROM            StatusCodes</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ProjectType">
+      <Query>
+        <DataSourceName>Dogbert</DataSourceName>
+        <CommandText>SELECT        Name
+FROM            ProjectTypes
+WHERE        (IsActive = 1)</CommandText>
       </Query>
       <Fields>
         <Field Name="Name">
@@ -1046,6 +1094,34 @@ FROM            StatusCodes</CommandText>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="projectType">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>ProjectType</DataSetName>
+          <ValueField>Name</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>projectType</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>ProjectType</DataSetName>
+          <ValueField>Name</ValueField>
+          <LabelField>Name</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="projectName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>*</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Project Name</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Language>en-US</Language>

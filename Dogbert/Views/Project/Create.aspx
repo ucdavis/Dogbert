@@ -9,6 +9,8 @@
     <h2>Create Project</h2>
     
     <% Html.RenderPartial("ProjectForm"); %>
+    
+    
 </asp:Content>
 
   <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContent" runat="server">

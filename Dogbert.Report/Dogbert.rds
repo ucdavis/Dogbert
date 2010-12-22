@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="DataSource1">
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dogbert">
   <ConnectionProperties>
     <Extension>SQL</Extension>
-    <ConnectString>Data Source=vogel;Initial Catalog=Dogbert</ConnectString>
+    <ConnectString>Data Source=DONBOT;Initial Catalog=Dogbert</ConnectString>
     <IntegratedSecurity>true</IntegratedSecurity>
   </ConnectionProperties>
   <DataSourceID>d88ac318-37a5-4a84-af8c-9c803ca7586c</DataSourceID>
