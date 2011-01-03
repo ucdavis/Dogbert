@@ -5,7 +5,7 @@
  
 <script type="text/javascript">
     $(document).ready(function() {
-        $("textarea#Requirement_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925', overrideOnchange: 'myCustomOnChangeHandler' });
+        //$("textarea#Requirement_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925', overrideOnchange: 'myCustomOnChangeHandler' });
 
         //set slider
         $("#slider").slider({
@@ -26,7 +26,7 @@
    
    
     $("form").submit(function() {
-    tinyMCE.triggerSave();
+    //tinyMCE.triggerSave();
   
     });
 
