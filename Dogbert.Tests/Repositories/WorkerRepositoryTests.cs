@@ -42,7 +42,7 @@ namespace Dogbert.Tests.Repositories
         {
             var localCount = counter ?? 1;
             var rtValue = CreateValidEntities.Worker(counter);
-            rtValue.User = Repository.OfType<User>().GetNullableByID(localCount);            
+            rtValue.User = Repository.OfType<User>().GetNullableById(localCount);            
 
             return rtValue;
         }

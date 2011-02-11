@@ -40,7 +40,7 @@ namespace Dogbert.Tests.Repositories
         protected override Requirement GetValid(int? counter)
         {
             var rtValue = CreateValidEntities.Requirement(counter);
-            rtValue.RequirementType = RequirementTypeRepository.GetNullableByID("1");
+            rtValue.RequirementType = RequirementTypeRepository.GetNullableById("1");
             rtValue.PriorityType = Repository.OfType<PriorityType>().Queryable.FirstOrDefault();
             rtValue.Project = Repository.OfType<Project>().Queryable.FirstOrDefault();
             rtValue.Category = Repository.OfType<RequirementCategory>().Queryable.FirstOrDefault();

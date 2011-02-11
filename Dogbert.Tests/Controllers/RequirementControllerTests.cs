@@ -130,7 +130,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestCreateWhenIdNotFoundRedirectsToProjectIndex()
         {
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Create(1)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.Index());
@@ -148,7 +148,7 @@ namespace Dogbert.Tests.Controllers
             FakeRequirementTypes(RequirementTypes, 1);
             FakeCategories(Categories, 2);
             FakePriorityTypes(PriorityTypes, 3);
-            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(2)).Return(Projects[1]).Repeat.Any();
             RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
             CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
             PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
@@ -167,7 +167,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestCreateWhenProjectIdIsNotFoundDoesNotSave()
         {
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Create(new Requirement(), 1)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.Index());
@@ -187,7 +187,7 @@ namespace Dogbert.Tests.Controllers
             Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext.RequestContext);
 
             FakeProjects(Projects, 3);
-            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(2)).Return(Projects[1]).Repeat.Any();
             var requirement = CreateValidEntities.Requirement(1);
             requirement.Project = null;
 
@@ -218,7 +218,7 @@ namespace Dogbert.Tests.Controllers
             RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
             CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
             PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
-            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(2)).Return(Projects[1]).Repeat.Any();
 
             var requirement = CreateValidEntities.Requirement(1);
             requirement.Project = null;
@@ -244,7 +244,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestEditWithOneParameterRedirectsToProjectIndexWhenIdNotFound()
         {
-            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Edit(1)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.Index());
@@ -266,8 +266,8 @@ namespace Dogbert.Tests.Controllers
             RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
             CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
             PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
-            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
-            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(Requirements[0]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(2)).Return(Projects[1]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableById(1)).Return(Requirements[0]).Repeat.Any();
 
             var result = Controller.Edit(1)
                 .AssertViewRendered()
@@ -283,7 +283,7 @@ namespace Dogbert.Tests.Controllers
             Controller.Url = MockRepository.GenerateStub<UrlHelper>(Controller.ControllerContext.RequestContext);
 
             FakeRequirements(Requirements, 3);
-            RequirementRepository.Expect(a => a.GetNullableByID(2)).Return(Requirements[1]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableById(2)).Return(Requirements[1]).Repeat.Any();
             var requirementUpdateValues = CreateValidEntities.Requirement(99);
             requirementUpdateValues.Description = "DescriptionUpdated";
             requirementUpdateValues.RequirementType = CreateValidEntities.RequirementType(99);
@@ -328,10 +328,10 @@ namespace Dogbert.Tests.Controllers
             RequirementTypeRepository.Expect(a => a.Queryable).Return(RequirementTypes.AsQueryable()).Repeat.Any();
             CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
             PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();
-            ProjectRepository.Expect(a => a.GetNullableByID(2)).Return(Projects[1]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(2)).Return(Projects[1]).Repeat.Any();
 
             FakeRequirements(Requirements, 3);
-            RequirementRepository.Expect(a => a.GetNullableByID(2)).Return(Requirements[1]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableById(2)).Return(Requirements[1]).Repeat.Any();
             var requirementUpdateValues = CreateValidEntities.Requirement(99);
             requirementUpdateValues.Description = " "; //Invalid
             requirementUpdateValues.RequirementType = CreateValidEntities.RequirementType(99);
@@ -388,8 +388,8 @@ namespace Dogbert.Tests.Controllers
 
             Requirements[1].Description = "";
 
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
-            RequirementRepository.Expect(a => a.GetNullableByID(1)).Return(Requirements[0]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(Projects[0]).Repeat.Any();
+            RequirementRepository.Expect(a => a.GetNullableById(1)).Return(Requirements[0]).Repeat.Any();
 
             CategoryRepository.Expect(a => a.Queryable).Return(Categories.AsQueryable()).Repeat.Any();
             PriorityTypeRepository.Expect(a => a.Queryable).Return(PriorityTypes.AsQueryable()).Repeat.Any();

@@ -39,8 +39,8 @@ namespace Dogbert.Tests.Repositories
         protected override ProjectFile GetValid(int? counter)
         {
             var rtValue = CreateValidEntities.ProjectFile(counter);
-            rtValue.Project = Repository.OfType<Project>().GetNullableByID(1);
-            rtValue.Type = Repository.OfType<FileType>().GetNullableByID(1);
+            rtValue.Project = Repository.OfType<Project>().GetNullableById(1);
+            rtValue.Type = Repository.OfType<FileType>().GetNullableById(1);
             return rtValue;
         }
 

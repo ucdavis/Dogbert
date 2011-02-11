@@ -140,7 +140,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestCreateGetRedirectsToProjectControllerIndexWhenProjectIdNotFound()
         {
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Create(1)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.DynamicIndex());
@@ -159,7 +159,7 @@ namespace Dogbert.Tests.Controllers
             FileTypes[1].IsActive = false;
             TextTypes[1].IsActive = true;
             TextTypes[1].HasImage = true;  //else text type comes back null and causes error
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(Projects[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
             TextTypeRepository.Expect(a => a.Queryable).Return(TextTypes.AsQueryable()).Repeat.Any();
 
@@ -183,7 +183,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestCreatePostRedirectsToProjectControllerIndexWhenProjectIdIsNotFound()
         {
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Create(new ProjectFile(), 1, null)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.DynamicIndex());
@@ -203,7 +203,7 @@ namespace Dogbert.Tests.Controllers
 
             FakeProjects(Projects, 1);
             FakeFileTypes(FileTypes, 1);
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(Projects[0]).Repeat.Any();
 
             var fakeUploadFile = new FakeHttpPostedFileBase("TestFile.jpg", "image/jpg", new byte[] { 9, 8, 7, 6, 5 });
 
@@ -236,7 +236,7 @@ namespace Dogbert.Tests.Controllers
     
             FakeProjects(Projects, 1);
             FakeFileTypes(FileTypes, 1);
-            ProjectRepository.Expect(a => a.GetNullableByID(1)).Return(Projects[0]).Repeat.Any();
+            ProjectRepository.Expect(a => a.GetNullableById(1)).Return(Projects[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
             
             FakeTextTypes(TextTypes, 3);
@@ -279,7 +279,7 @@ namespace Dogbert.Tests.Controllers
         [TestMethod]
         public void TestEditGetRedirectsToProjectControllerIndexWhenProjectFileIdNotFound()
         {
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             Controller.Edit(1)
                 .AssertActionRedirect()
                 .ToAction<ProjectController>(a => a.DynamicIndex());
@@ -296,7 +296,7 @@ namespace Dogbert.Tests.Controllers
             FakeProjects(Projects, 1);
             FakeFileTypes(FileTypes, 3);
             FileTypes[1].IsActive = false;
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(ProjectFiles[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
 
             ProjectFiles[0].Project = Projects[0];
@@ -323,7 +323,7 @@ namespace Dogbert.Tests.Controllers
         public void TestEditPostRedirectsToProjectControllerWhenProjectFileIdIsNotFound()
         {
             //Arrange
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
 
             //Act
             Controller.Edit(1, new ProjectFile(), null)
@@ -367,7 +367,7 @@ namespace Dogbert.Tests.Controllers
 
             var fakeUploadFile = new FakeHttpPostedFileBase("TestFile.jpg", "image/jpg", new byte[] { 9, 8, 7, 6, 5 });
 
-            ProjectFileRepository.Expect(a => a.GetNullableByID(2)).Return(ProjectFiles[1]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(2)).Return(ProjectFiles[1]).Repeat.Any();
             #endregion Arrange
 
             #region Act
@@ -422,7 +422,7 @@ namespace Dogbert.Tests.Controllers
 
             var fakeUploadFile = new FakeHttpPostedFileBase("TestFile.jpg", "image/jpg", new byte[] { 9, 8, 7, 6, 5 });
 
-            ProjectFileRepository.Expect(a => a.GetNullableByID(2)).Return(ProjectFiles[1]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(2)).Return(ProjectFiles[1]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
             #endregion Arrange
 
@@ -459,7 +459,7 @@ namespace Dogbert.Tests.Controllers
         {
             #region Arrange
 
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
 
             #endregion Arrange
 
@@ -481,7 +481,7 @@ namespace Dogbert.Tests.Controllers
             #region Arrange
             FakeProjectFiles(ProjectFiles, 1);
             FakeFileTypes(FileTypes, 1);
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(ProjectFiles[0]).Repeat.Any();
             FileTypeRepository.Expect(a => a.Queryable).Return(FileTypes.AsQueryable()).Repeat.Any();
 
             #endregion Arrange
@@ -503,7 +503,7 @@ namespace Dogbert.Tests.Controllers
         {
             #region Arrange
             FakeProjectFiles(ProjectFiles, 1);
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             
             #endregion Arrange
 
@@ -532,7 +532,7 @@ namespace Dogbert.Tests.Controllers
             FakeProjects(Projects, 3);
             FakeProjectFiles(ProjectFiles, 1);
             ProjectFiles[0].Project = Projects[1];
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(ProjectFiles[0]).Repeat.Any();
 
             #endregion Arrange
 
@@ -563,7 +563,7 @@ namespace Dogbert.Tests.Controllers
             FakeProjectFiles(ProjectFiles, 1);
             ProjectFiles[0].Project = Projects[1];
             ProjectFiles[0].FileContents = null; //Invalid, but we don't care
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(ProjectFiles[0]).Repeat.Any();
 
             #endregion Arrange
 
@@ -590,7 +590,7 @@ namespace Dogbert.Tests.Controllers
         public void TestViewFileThrowsExceptionIfIdNotFound()
         {
             #region Arrange
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(null).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(null).Repeat.Any();
             
             #endregion Arrange
 
@@ -619,7 +619,7 @@ namespace Dogbert.Tests.Controllers
 
             FakeProjectFiles(ProjectFiles, 1);
             ProjectFiles[0].FileContents = new byte[]{1,2,3,4,5,6};
-            ProjectFileRepository.Expect(a => a.GetNullableByID(1)).Return(ProjectFiles[0]).Repeat.Any();
+            ProjectFileRepository.Expect(a => a.GetNullableById(1)).Return(ProjectFiles[0]).Repeat.Any();
 
             #endregion Arrange
 

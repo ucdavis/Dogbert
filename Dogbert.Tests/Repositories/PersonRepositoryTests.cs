@@ -40,8 +40,8 @@ namespace Dogbert.Tests.Repositories
         {
             var localCount = counter ?? 1;
             var rtValue = CreateValidEntities.Person(counter);
-            rtValue.User = Repository.OfType<User>().GetNullableByID(localCount);
-            rtValue.PersonType = Repository.OfType<PersonType>().GetNullableByID(1);
+            rtValue.User = Repository.OfType<User>().GetNullableById(localCount);
+            rtValue.PersonType = Repository.OfType<PersonType>().GetNullableById(1);
 
             return rtValue;
         }

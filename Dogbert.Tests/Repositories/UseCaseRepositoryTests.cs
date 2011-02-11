@@ -40,8 +40,8 @@ namespace Dogbert.Tests.Repositories
         protected override UseCase GetValid(int? counter)
         {
             var rtValue = CreateValidEntities.UseCase(counter);
-            rtValue.Project = Repository.OfType<Project>().GetNullableByID(1);
-            rtValue.RequirementCategory = Repository.OfType<RequirementCategory>().GetNullableByID(1);
+            rtValue.Project = Repository.OfType<Project>().GetNullableById(1);
+            rtValue.RequirementCategory = Repository.OfType<RequirementCategory>().GetNullableById(1);
 
             return rtValue;
         }

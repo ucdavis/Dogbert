@@ -44,7 +44,7 @@ namespace Dogbert.Tests.Repositories
         protected override RequirementCategory GetValid(int? counter)
         {
             var rtValue = CreateValidEntities.Category(counter);
-            rtValue.Project = Repository.OfType<Project>().GetNullableByID(1);
+            rtValue.Project = Repository.OfType<Project>().GetNullableById(1);
             return rtValue;
         }
 
@@ -375,7 +375,7 @@ namespace Dogbert.Tests.Repositories
             LoadProjects(3);
             #region Arrange
             var category = GetValid(9);
-            category.Project = ProjectRepository.GetNullableByID(2);
+            category.Project = ProjectRepository.GetNullableById(2);
             #endregion Arrange
 
             #region act

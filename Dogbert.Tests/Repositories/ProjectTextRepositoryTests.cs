@@ -39,8 +39,8 @@ namespace Dogbert.Tests.Repositories
         protected override ProjectText GetValid(int? counter)
         {
             var rtValue =  CreateValidEntities.ProjectText(counter);
-            rtValue.Project = Repository.OfType<Project>().GetNullableByID(1);
-            rtValue.TextType = TextTypeRepository.GetNullableByID("1");
+            rtValue.Project = Repository.OfType<Project>().GetNullableById(1);
+            rtValue.TextType = TextTypeRepository.GetNullableById("1");
 
             return rtValue;
         }

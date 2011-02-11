@@ -140,14 +140,14 @@ namespace Dogbert.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = Repository.OfType<T>().GetByID(2);
+                var foundEntity = Repository.OfType<T>().GetById(2);
                 FoundEntityComparison(foundEntity, 2);
             }
             else
             {
                 IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = typedStringRepository.GetByID("2");
+                var foundEntity = typedStringRepository.GetById("2");
                 FoundEntityComparison(foundEntity, 2);
             }
         }
@@ -161,14 +161,14 @@ namespace Dogbert.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = Repository.OfType<T>().GetNullableByID(2);
+                var foundEntity = Repository.OfType<T>().GetNullableById(2);
                 FoundEntityComparison(foundEntity, 2);
             }
             else
             {
                 IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
-                var foundEntity = typedStringRepository.GetNullableByID("2");
+                var foundEntity = typedStringRepository.GetNullableById("2");
                 FoundEntityComparison(foundEntity, 2);
             }
         }
@@ -181,13 +181,13 @@ namespace Dogbert.Tests.Core
         {
             if (typeof(IdT) == typeof(int))
             {
-                var foundEntity = Repository.OfType<T>().GetNullableByID(EntriesAdded + 1);
+                var foundEntity = Repository.OfType<T>().GetNullableById(EntriesAdded + 1);
                 Assert.IsNull(foundEntity);
             }
             else
             {
                 IRepositoryWithTypedId<T, string> typedStringRepository = new RepositoryWithTypedId<T, string>();
-                var foundEntity = typedStringRepository.GetNullableByID((EntriesAdded + 1).ToString());
+                var foundEntity = typedStringRepository.GetNullableById((EntriesAdded + 1).ToString());
                 Assert.IsNull(foundEntity);
             }
         }
@@ -290,7 +290,7 @@ namespace Dogbert.Tests.Core
             Assert.AreEqual(count - 1, Repository.OfType<T>().GetAll().ToList().Count());
             if (typeof(IdT) == typeof(int))
             {
-                foundEntity = Repository.OfType<T>().GetNullableByID(3);
+                foundEntity = Repository.OfType<T>().GetNullableById(3);
                 Assert.IsNull(foundEntity);
             }
         }
@@ -369,7 +369,7 @@ namespace Dogbert.Tests.Core
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.Category(i + 1);
-                validEntity.Project = Repository.OfType<Project>().GetNullableByID(1);
+                validEntity.Project = Repository.OfType<Project>().GetNullableById(1);
                 Repository.OfType<RequirementCategory>().EnsurePersistent(validEntity);
             }
             Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();
@@ -436,7 +436,7 @@ namespace Dogbert.Tests.Core
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.RequirementCategory(i + 1);
-                validEntity.Project = Repository.OfType<Project>().GetNullableByID(1);
+                validEntity.Project = Repository.OfType<Project>().GetNullableById(1);
                 Repository.OfType<RequirementCategory>().EnsurePersistent(validEntity);
             }
             Repository.OfType<RequirementCategory>().DbContext.CommitTransaction();
