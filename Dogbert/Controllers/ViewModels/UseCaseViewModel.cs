@@ -42,7 +42,7 @@ namespace Dogbert.Controllers.ViewModels
         public static UseCaseViewModel Edit(IRepository repository, Project project, int ucid)
         {
             var actor = repository.OfType<Actor>().Queryable.Where(a => a.IsActive);
-            var usecase = repository.OfType<UseCase>().GetByID(ucid);
+            var usecase = repository.OfType<UseCase>().GetById(ucid);
           
             var viewModel = new UseCaseViewModel
             {
@@ -59,10 +59,10 @@ namespace Dogbert.Controllers.ViewModels
 
         public static UseCaseViewModel CreateRelatedRequirements(IRepository repository, int ucid)
         {
-            var usecase = repository.OfType<UseCase>().GetByID(ucid);
+            var usecase = repository.OfType<UseCase>().GetById(ucid);
             var req = repository.OfType<Requirement>().Queryable.Where(a => a.UseCases.Contains(usecase));
             //var req = repository.OfType<Requirement>().Queryable.ToList();
-            var project = repository.OfType<Project>().GetByID(usecase.Project.Id);
+            var project = repository.OfType<Project>().GetById(usecase.Project.Id);
            
 
             var viewModel = new UseCaseViewModel

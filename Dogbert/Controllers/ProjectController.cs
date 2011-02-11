@@ -50,39 +50,39 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        [AcceptPost]
+        [HttpPost]
         [BypassAntiForgeryToken]
         public ActionResult UpdateProjectPriority(int[] projects) 
         {
             Project p;
             for (int i = 0; i < projects.Length; i++)
             {
-                p = Repository.OfType<Project>().GetByID(projects[i]);
+                p = Repository.OfType<Project>().GetById(projects[i]);
                 p.Priority = i + 1;
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
             return new JsonNetResult(true);
         }
 
-        [AcceptPost]
+        [HttpPost]
         [BypassAntiForgeryToken]
         public ActionResult UpdateDesignerPriority(int[] projects)
         {
             Project p;
             for (int i = 0; i < projects.Length; i++)
             {
-                p = Repository.OfType<Project>().GetByID(projects[i]);
+                p = Repository.OfType<Project>().GetById(projects[i]);
                 p.DesignerOrder = i + 1;
                 Repository.OfType<Project>().EnsurePersistent(p);
             }
             return new JsonNetResult(true);            
         }
 
-        [AcceptPost]
+        [HttpPost]
         [BypassAntiForgeryToken]
         public ActionResult RemoveFromDesignerProjects(int id)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
+            var project = Repository.OfType<Project>().GetNullableById(id);
 
             if (project == null) return new JsonNetResult(false);
 
@@ -99,7 +99,7 @@ namespace Dogbert.Controllers
         }
         
         //POST: /Project/Create
-        [AcceptPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Project project)
         {
@@ -150,7 +150,7 @@ namespace Dogbert.Controllers
         // GET: /Project/Edit/
         public ActionResult Edit(int id)
         {
-            var existingProject = _projectRepository.GetNullableByID(id);
+            var existingProject = _projectRepository.GetNullableById(id);
             if (existingProject == null) return RedirectToAction("Create");
             var viewModel = ProjectViewModel.CreateEdit(Repository);
             viewModel.Project = existingProject;
@@ -181,10 +181,10 @@ namespace Dogbert.Controllers
 
         // POST: /Project/Edit/5
         [ValidateAntiForgeryToken]
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Edit(Project project)
         {
-            var projectToUpdate = _projectRepository.GetByID(project.Id);
+            var projectToUpdate = _projectRepository.GetById(project.Id);
             //TransferValuesTo(projectToUpdate, project);
             
             //Validate input:  Create and Edit

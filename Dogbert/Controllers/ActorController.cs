@@ -36,7 +36,7 @@ namespace Dogbert.Controllers
 
         //
         // POST: /Actor/Create
-        [AcceptPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(int projectId, [Bind(Exclude = "Id, IsActive")] Actor actor)
         {

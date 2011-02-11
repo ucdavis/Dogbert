@@ -17,7 +17,7 @@ namespace Dogbert.Controllers
     {
         public ActionResult Create(int id)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
+            var project = Repository.OfType<Project>().GetNullableById(id);
 
             if (project == null)
             {
@@ -36,15 +36,15 @@ namespace Dogbert.Controllers
 
         public ActionResult AllUsed(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
             return View(project);
         }
 
         [ValidateInput(false)]
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Create(int id, [Bind(Exclude="Id")]ProjectText projectText)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
+            var project = Repository.OfType<Project>().GetNullableById(id);
 
             if (project == null)
             {
@@ -82,7 +82,7 @@ namespace Dogbert.Controllers
 
         public ActionResult Edit(int id)
         {
-            var existingProjectText = Repository.OfType<ProjectText>().GetNullableByID(id);
+            var existingProjectText = Repository.OfType<ProjectText>().GetNullableById(id);
 
             if (existingProjectText == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
@@ -91,12 +91,12 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        [AcceptPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ActionResult Edit(int id, ProjectText projectText)
         {
-            var pt = Repository.OfType<ProjectText>().GetNullableByID(id);
+            var pt = Repository.OfType<ProjectText>().GetNullableById(id);
 
             Check.Require(pt != null, "Project Text not found.");
 
@@ -104,7 +104,7 @@ namespace Dogbert.Controllers
 
             pt.TransferValidationMessagesTo(ModelState);
 
-            var proj = Repository.OfType<Project>().GetNullableByID(pt.Project.Id);
+            var proj = Repository.OfType<Project>().GetNullableById(pt.Project.Id);
 
             if (proj.ProjectTexts.Any(a => a.TextType == pt.TextType && a.Id != pt.Id))
             {//Ensure project text does not already exist for record other than self

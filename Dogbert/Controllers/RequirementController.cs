@@ -28,7 +28,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Create(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -47,11 +47,11 @@ namespace Dogbert.Controllers
         /// <param name="requirement">The requirement.</param>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(Requirement requirement, int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -82,7 +82,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
+            var requirement = Repository.OfType<Requirement>().GetNullableById(id);
             
             if (requirement == null)
             {
@@ -102,11 +102,11 @@ namespace Dogbert.Controllers
         /// <param name="id">The id.</param>
         /// <param name="requirement">The requirement.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(int id, Requirement requirement)
         {
-            var dest = Repository.OfType<Requirement>().GetNullableByID(id);
+            var dest = Repository.OfType<Requirement>().GetNullableById(id);
 
             if (requirement == null)
             {
@@ -137,7 +137,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var requirement = Repository.OfType<Requirement>().GetNullableByID(id);
+            var requirement = Repository.OfType<Requirement>().GetNullableById(id);
 
             if (requirement == null)
             {
@@ -156,11 +156,11 @@ namespace Dogbert.Controllers
         /// <param name="id">The id.</param>
         /// <param name="requirement">The requirement.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Delete(int id, Requirement requirement)
         {
-            var requirementToDelete = Repository.OfType<Requirement>().GetNullableByID(id);
+            var requirementToDelete = Repository.OfType<Requirement>().GetNullableById(id);
 
             if (requirementToDelete == null)
             {

@@ -1,19 +1,20 @@
-﻿<!-- 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
   Microsoft Visual Studio 2008 Web Deployment Project 
   http://go.microsoft.com/fwlink/?LinkID=104956
 
 -->
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>10.0.30319</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}</ProjectGuid>
     <SourceWebPhysicalPath>..\Dogbert</SourceWebPhysicalPath>
     <SourceWebProject>{4229056C-F883-46AB-A130-D10B4EA01E6F}|Dogbert\Dogbert.csproj</SourceWebProject>
     <SourceWebVirtualPath>/Dogbert.csproj</SourceWebVirtualPath>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -35,7 +36,18 @@
     <SingleAssemblyName>Dogbert.Deploy</SingleAssemblyName>
     <UseWebConfigReplacement>true</UseWebConfigReplacement>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <UseWebConfigReplacement>true</UseWebConfigReplacement>
+    <SingleAssemblyName>Dogbert.Deploy</SingleAssemblyName>
+    <OutputPath>.\Test</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dogbert\Dogbert.csproj">
+      <Project>{4229056C-F883-46AB-A130-D10B4EA01E6F}</Project>
+      <Name>Dogbert</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -65,7 +77,21 @@
       <Value>1.2010.12.9</Value>
     </AssemblyAttributes>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>1.2010.12.9</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>1.2010.12.9</Value>
+    </AssemblyAttributes>
+    <WebConfigReplacementFiles Include="AppSettings-Prod.config">
+      <Section>appSettings</Section>
+    </WebConfigReplacementFiles>
+    <WebConfigReplacementFiles Include="ConnectionStrings-Prod.config">
+      <Section>connectionStrings</Section>
+    </WebConfigReplacementFiles>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v10.0\Microsoft.WebDeployment.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.WebDeployment.targets.
   <Target Name="BeforeBuild">

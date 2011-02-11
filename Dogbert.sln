@@ -1,19 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert", "Dogbert\Dogbert.csproj", "{4229056C-F883-46AB-A130-D10B4EA01E6F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Tests", "Dogbert.Tests\Dogbert.Tests.csproj", "{B3A49428-F194-41AD-86A6-9A818539CF65}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{78CFAECA-8915-4AB9-B593-2B58EB49FF20}"
 	ProjectSection(SolutionItems) = preProject
+		Bin\AutoMapper.dll = Bin\AutoMapper.dll
 		Bin\Castle.Core.dll = Bin\Castle.Core.dll
 		Bin\Castle.DynamicProxy2.dll = Bin\Castle.DynamicProxy2.dll
 		Bin\Castle.MicroKernel.dll = Bin\Castle.MicroKernel.dll
 		Bin\Castle.Windsor.dll = Bin\Castle.Windsor.dll
 		Bin\Common.Logging.dll = Bin\Common.Logging.dll
 		Bin\Elmah.dll = Bin\Elmah.dll
-		Bin\HibernatingRhinos.NHibernate.Profiler.Appender.dll = Bin\HibernatingRhinos.NHibernate.Profiler.Appender.dll
+		Bin\FluentNHibernate.dll = Bin\FluentNHibernate.dll
+		Bin\HibernatingRhinos.Profiler.Appender.dll = Bin\HibernatingRhinos.Profiler.Appender.dll
 		Bin\Iesi.Collections.dll = Bin\Iesi.Collections.dll
 		Bin\log4net.dll = Bin\log4net.dll
 		Bin\Microsoft.Practices.ServiceLocation.dll = Bin\Microsoft.Practices.ServiceLocation.dll
@@ -41,11 +39,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{78CFAECA-891
 		Bin\xVal.dll = Bin\xVal.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert", "Dogbert\Dogbert.csproj", "{4229056C-F883-46AB-A130-D10B4EA01E6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Tests", "Dogbert.Tests\Dogbert.Tests.csproj", "{B3A49428-F194-41AD-86A6-9A818539CF65}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert.Core", "Dogbert.Core\Dogbert.Core.csproj", "{CBD54153-AC7A-4DB3-BA60-4A528AA41050}"
 EndProject
 Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Dogbert.Deploy", "Dogbert.Deploy\Dogbert.Deploy.wdproj", "{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}"
 EndProject
-Project("{4F174C21-8C12-11D0-8340-0000F80270F8}") = "Dogbert.DB", "Dogbert.DB\Dogbert.DB.dbp", "{CE250596-CCAD-4377-BF42-0BED229AACF2}"
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Dogbert.DB", "Dogbert.DB\Dogbert.DB.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
 Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Dogbert.Report", "Dogbert.Report\Dogbert.Report.rptproj", "{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}"
 EndProject
@@ -53,7 +55,7 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs
+		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs/defaultcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = Dogbert.Tests\\Dogbert.Tests.csproj
 		SccProjectName1 = Dogbert.Tests
@@ -67,17 +69,18 @@ Global
 		SccProjectUniqueName4 = Dogbert.Deploy\\Dogbert.Deploy.wdproj
 		SccProjectName4 = Dogbert.Deploy
 		SccLocalPath4 = Dogbert.Deploy
-		SccProjectUniqueName5 = Dogbert.DB\\Dogbert.DB.dbp
-		SccProjectName5 = Dogbert.DB
-		SccLocalPath5 = Dogbert.DB
-		SccProjectUniqueName6 = Dogbert.Report\\Dogbert.Report.rptproj
-		SccProjectName6 = Dogbert.Report
-		SccLocalPath6 = Dogbert.Report
+		SccProjectUniqueName5 = Dogbert.Report\\Dogbert.Report.rptproj
+		SccProjectName5 = Dogbert.Report
+		SccLocalPath5 = Dogbert.Report
+		SccProjectUniqueName6 = Dogbert.DB\\Dogbert.DB.dbproj
+		SccProjectName6 = Dogbert.DB
+		SccLocalPath6 = Dogbert.DB
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		DebugLocal|Any CPU = DebugLocal|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Test|Any CPU = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -86,26 +89,37 @@ Global
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{4229056C-F883-46AB-A130-D10B4EA01E6F}.Test|Any CPU.Build.0 = Test|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{B3A49428-F194-41AD-86A6-9A818539CF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{B3A49428-F194-41AD-86A6-9A818539CF65}.Test|Any CPU.Build.0 = Test|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{CBD54153-AC7A-4DB3-BA60-4A528AA41050}.Test|Any CPU.Build.0 = Test|Any CPU
 		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
 		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2E0D0F3-BFF4-4660-B5F8-83DE9B740521}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Test|Any CPU.ActiveCfg = Test|Any CPU
 		{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}.Debug|Any CPU.ActiveCfg = DebugLocal
 		{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}.DebugLocal|Any CPU.ActiveCfg = DebugLocal
 		{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}.DebugLocal|Any CPU.Build.0 = DebugLocal
 		{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}.Release|Any CPU.ActiveCfg = Release
+		{4F73DBC8-8774-4CA1-B641-9A94A06A1F98}.Test|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

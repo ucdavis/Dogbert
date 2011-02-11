@@ -24,7 +24,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Create(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -43,11 +43,11 @@ namespace Dogbert.Controllers
         /// <param name="changeLog">The Change Log Entry.</param>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(ChangeLog changelog, int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -78,7 +78,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var ChangeLog = Repository.OfType<ChangeLog>().GetNullableByID(id);
+            var ChangeLog = Repository.OfType<ChangeLog>().GetNullableById(id);
 
             if (ChangeLog == null)
             {
@@ -98,11 +98,11 @@ namespace Dogbert.Controllers
         /// <param name="id">The id.</param>
         /// <param name="ChangeLog">The ChangeLog.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(int id, ChangeLog ChangeLog)
         {
-            var dest = Repository.OfType<ChangeLog>().GetNullableByID(id);
+            var dest = Repository.OfType<ChangeLog>().GetNullableById(id);
 
             if (ChangeLog == null)
             {
@@ -133,7 +133,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var ChangeLog = Repository.OfType<ChangeLog>().GetNullableByID(id);
+            var ChangeLog = Repository.OfType<ChangeLog>().GetNullableById(id);
 
             if (ChangeLog == null)
             {
@@ -147,11 +147,11 @@ namespace Dogbert.Controllers
 
         }
 
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Delete(int id, ChangeLog entry)
         {
-            var entryToDelete = Repository.OfType<ChangeLog>().GetNullableByID(id);
+            var entryToDelete = Repository.OfType<ChangeLog>().GetNullableById(id);
 
             if (entryToDelete == null)
             {

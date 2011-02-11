@@ -28,7 +28,7 @@ namespace Dogbert.Controllers
         // GET: /ProjectFile/Create
         public ActionResult Create(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -48,10 +48,10 @@ namespace Dogbert.Controllers
         /// <param name="projectId">The project id.</param>
         /// <param name="fileUpload">The file upload.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Create(ProjectFile projectFile, int projectId, HttpPostedFileBase fileUpload)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -84,7 +84,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var projectFile = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            var projectFile = Repository.OfType<ProjectFile>().GetNullableById(id);
 
             if (projectFile == null)
             {
@@ -105,10 +105,10 @@ namespace Dogbert.Controllers
         /// <param name="projectFile">The project file.</param>
         /// <param name="fileUpload">The file upload.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Edit(int id, ProjectFile projectFile, HttpPostedFileBase fileUpload)
         {
-            var dest = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            var dest = Repository.OfType<ProjectFile>().GetNullableById(id);
 
             if (dest == null)
             {
@@ -140,7 +140,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Remove(int id)
         {
-            var projectFile = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            var projectFile = Repository.OfType<ProjectFile>().GetNullableById(id);
 
             if (projectFile == null)
             {
@@ -159,10 +159,10 @@ namespace Dogbert.Controllers
         /// <param name="id">The id.</param>
         /// <param name="projectFile">The project file.</param>
         /// <returns></returns>
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Remove(int id, ProjectFile projectFile)
         {
-            var projectFileToRemove = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            var projectFileToRemove = Repository.OfType<ProjectFile>().GetNullableById(id);
 
             if (projectFileToRemove == null)
             {
@@ -180,7 +180,7 @@ namespace Dogbert.Controllers
 
         public ActionResult ViewFile(int id)
         {
-            var projectFile = Repository.OfType<ProjectFile>().GetNullableByID(id);
+            var projectFile = Repository.OfType<ProjectFile>().GetNullableById(id);
             Check.Require(projectFile != null, "Invalid ProjectFile identifier");
 
             // ReSharper disable PossibleNullReferenceException

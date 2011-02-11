@@ -25,7 +25,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult SRS(int id)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
+            var project = Repository.OfType<Project>().GetNullableById(id);
 
             if (project == null) return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
 
@@ -62,7 +62,7 @@ namespace Dogbert.Controllers
 
         public ActionResult Requirements(int id)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(id);
+            var project = Repository.OfType<Project>().GetNullableById(id);
 
             if (project == null) return this.RedirectToAction<ProjectController>(a => a.DynamicIndex());
 

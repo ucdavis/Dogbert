@@ -31,7 +31,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult Create(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -50,11 +50,11 @@ namespace Dogbert.Controllers
         /// </summary>
         /// <param name="id">Project Id</param>
         /// <param name="projectUseCase"></param>
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create([Bind(Exclude = "Id")]UseCase useCase, int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             //set values
             useCase.DateAdded = DateTime.Now;
@@ -93,8 +93,8 @@ namespace Dogbert.Controllers
         // GET: Project/UseCase/Edit/
         public ActionResult Edit(int Id)
         {
-            var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
-            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
+            var existingUseCase = Repository.OfType<UseCase>().GetNullableById(Id);
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableById(existingUseCase.Id);
 
             if (existingUseCase == null) return RedirectToAction("Create");
 
@@ -105,18 +105,18 @@ namespace Dogbert.Controllers
         }
 
         // POST: /Project/UseCase/Edit/
-        [AcceptPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ActionResult Edit(int id, UseCase UseCase)
         {
-            var uc = Repository.OfType<UseCase>().GetNullableByID(id);
+            var uc = Repository.OfType<UseCase>().GetNullableById(id);
 
             TransferValuesTo(uc, UseCase);
 
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, uc.ValidationResults());
 
-            var proj = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            var proj = Repository.OfType<Project>().GetNullableById(uc.Project.Id);
 
             if (UseCase.Actors != null && UseCase.Actors.Count > 0)
             {
@@ -134,7 +134,7 @@ namespace Dogbert.Controllers
                 return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
 
             }
-            var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            var project = Repository.OfType<Project>().GetNullableById(uc.Project.Id);
             return RedirectToAction("Edit", project);
             // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
 
@@ -155,8 +155,8 @@ namespace Dogbert.Controllers
         // GET: /RemoveUseCase/
         public ActionResult Remove(int Id)
         {
-            var existingUseCase = Repository.OfType<UseCase>().GetNullableByID(Id);
-            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(existingUseCase.Id);
+            var existingUseCase = Repository.OfType<UseCase>().GetNullableById(Id);
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableById(existingUseCase.Id);
 
             if (existingUseCase == null) return RedirectToAction("Create");
 
@@ -169,12 +169,12 @@ namespace Dogbert.Controllers
 
 
         // POST: /Project/RemoveUseCase/
-        [AcceptPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ActionResult Remove(int id, UseCase UseCase)
         {
-            var ucToRemove = Repository.OfType<UseCase>().GetNullableByID(id);
+            var ucToRemove = Repository.OfType<UseCase>().GetNullableById(id);
 
 
             if (ucToRemove == null)
@@ -190,7 +190,7 @@ namespace Dogbert.Controllers
                 Message = string.Format(NotificationMessages.STR_ObjectRemoved, "UseCase");
                 return Redirect(Url.EditProjectUrl(saveProjectId, StaticValues.Tab_UseCases));
             }
-            var project = Repository.OfType<Project>().GetNullableByID(saveProjectId);
+            var project = Repository.OfType<Project>().GetNullableById(saveProjectId);
             return RedirectToAction("Edit", project);
 
 
@@ -203,7 +203,7 @@ namespace Dogbert.Controllers
             //    return Redirect(Url.EditProjectUrl(uc.Project.Id, StaticValues.Tab_UseCases));
 
             //}
-            //var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            //var project = Repository.OfType<Project>().GetNullableById(uc.Project.Id);
             //return RedirectToAction("Edit", project);
             // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
 
@@ -217,7 +217,7 @@ namespace Dogbert.Controllers
         /// <returns></returns>
         public ActionResult CreateUseCaseStep(int useCaseId)
         {
-            var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
+            var useCase = Repository.OfType<UseCase>().GetNullableById(useCaseId);
             if (useCase == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
@@ -229,11 +229,11 @@ namespace Dogbert.Controllers
         }
 
         // POST: /EditUseCase/CreateUseCaseStep
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult CreateUseCaseStep(int useCaseId, [Bind(Exclude = "Id")]UseCaseStep useCaseStep)
         {
-            var useCase = Repository.OfType<UseCase>().GetNullableByID(useCaseId);
+            var useCase = Repository.OfType<UseCase>().GetNullableById(useCaseId);
 
             //set values
             useCaseStep.DateAdded = DateTime.Now;
@@ -268,7 +268,7 @@ namespace Dogbert.Controllers
         // GET: /EditUseCase/EditUseCaseSteps/
         public ActionResult EditUseCaseSteps(int Id)
         {
-            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
+            var existingUCSteps = Repository.OfType<UseCaseStep>().GetNullableById(Id);
 
             if (existingUCSteps == null) return RedirectToAction("Create");//?Need to redirect to edit screen, but don't have projId.
 
@@ -278,17 +278,17 @@ namespace Dogbert.Controllers
         }
 
         // POST: /EditUseCase/EditUseCaseSteps/
-        [AcceptPost]
+        [HttpPost]
         [ValidateInput (false)]
         public ActionResult EditUseCaseSteps(int Id, UseCaseStep useCaseStep)
         {
-            var existingUCS = Repository.OfType<UseCaseStep>().GetNullableByID(Id);
+            var existingUCS = Repository.OfType<UseCaseStep>().GetNullableById(Id);
 
             TransferValuesTo(existingUCS, useCaseStep);
 
             MvcValidationAdapter.TransferValidationMessagesTo(ModelState, existingUCS.ValidationResults());
 
-            var uc = Repository.OfType<UseCase>().GetNullableByID(existingUCS.UseCase.Id);
+            var uc = Repository.OfType<UseCase>().GetNullableById(existingUCS.UseCase.Id);
 
 
             if (ModelState.IsValid)
@@ -299,7 +299,7 @@ namespace Dogbert.Controllers
                 return this.RedirectToAction(a => a.Edit(uc.Id));
                 
             }
-            var project = Repository.OfType<Project>().GetNullableByID(existingUCS.UseCase.Project.Id);
+            var project = Repository.OfType<Project>().GetNullableById(existingUCS.UseCase.Project.Id);
             return Redirect(Url.EditProjectUrl(existingUCS.UseCase.Project.Id, StaticValues.Tab_UseCases));
             
             // return RedirectToAction("Edit", pt.Project.Id);  //Redirect to edit page
@@ -319,7 +319,7 @@ namespace Dogbert.Controllers
         // GET: /EditUseCase/EditChildren
         public ActionResult EditChildren(int ucid)
         {
-            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            var uc = Repository.OfType<UseCase>().GetNullableById(ucid);
             if (uc == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
@@ -332,10 +332,10 @@ namespace Dogbert.Controllers
         }
 
         // POST: /EditUseCase/EditChildren
-        [AcceptPost]
+        [HttpPost]
         public ActionResult EditChildren(int ucid, UseCase UseCase)
         {
-            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            var uc = Repository.OfType<UseCase>().GetNullableById(ucid);
 
             if (UseCase.Children != null && UseCase.Children.Count > 0)
             {
@@ -354,7 +354,7 @@ namespace Dogbert.Controllers
                 //return this.RedirectToAction(a => a.Edit(uc.Id));
                 return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedUseCases));
             }
-           // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+           // var project = Repository.OfType<Project>().GetNullableById(uc.Project.Id);
             return RedirectToAction("Edit", uc);
         
         }
@@ -362,7 +362,7 @@ namespace Dogbert.Controllers
         // GET: /EditUseCase/EditRelatedRequirements
         public ActionResult EditRelatedRequirements(int ucid)
         {
-            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            var uc = Repository.OfType<UseCase>().GetNullableById(ucid);
             if (uc == null)
             {
                 Message = string.Format(NotificationMessages.STR_ObjectNotFound, "UseCase");
@@ -376,10 +376,10 @@ namespace Dogbert.Controllers
 
 
         // POST: /EditUseCase/EditRelatedRequirements
-        [AcceptPost]
+        [HttpPost]
         public ActionResult EditRelatedRequirements(int ucid, UseCase UseCase)
         {
-            var uc = Repository.OfType<UseCase>().GetNullableByID(ucid);
+            var uc = Repository.OfType<UseCase>().GetNullableById(ucid);
 
             if (UseCase.Requirements != null)
             {
@@ -398,7 +398,7 @@ namespace Dogbert.Controllers
                 //return this.RedirectToAction(a => a.Edit(uc.Id));
                 return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedRequirements));
             }
-            // var project = Repository.OfType<Project>().GetNullableByID(uc.Project.Id);
+            // var project = Repository.OfType<Project>().GetNullableById(uc.Project.Id);
             return RedirectToAction("Edit", uc);
             //return Redirect(Url.EditUseCaseUrl(uc.Id, StaticValues.UCTab_UCRelatedRequirements));
 

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.Windsor;
 using Dogbert.Controllers;
@@ -26,9 +27,9 @@ namespace Dogbert
 
         protected void Application_Start()
         {
-            #if DEBUG
-            HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
-            #endif
+            //#if DEBUG
+            //HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
+            //#endif
 
             xVal.ActiveRuleProviders.Providers.Add(new ValidatorRulesProvider());
 
@@ -38,13 +39,14 @@ namespace Dogbert
             ModelBinders.Binders.DefaultBinder = new UCDArchModelBinder();
 
             IWindsorContainer container = InitializeServiceLocator();
+
         }
 
         private static IWindsorContainer InitializeServiceLocator()
         {
             IWindsorContainer container = new WindsorContainer();
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container));
-
+            
             container.RegisterControllers(typeof(HomeController).Assembly);
             ComponentRegistrar.AddComponentsTo(container);
 

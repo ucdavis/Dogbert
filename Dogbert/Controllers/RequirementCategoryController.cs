@@ -21,7 +21,7 @@ namespace Dogbert.Controllers
 
         public ActionResult Create(int projectId)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
@@ -33,10 +33,10 @@ namespace Dogbert.Controllers
             return View(viewModel);
         }
 
-        [AcceptPost]
+        [HttpPost]
         public ActionResult Create(int projectId, [Bind(Exclude="Id, IsActive")]RequirementCategory requirementCategory)
         {
-            var project = Repository.OfType<Project>().GetNullableByID(projectId);
+            var project = Repository.OfType<Project>().GetNullableById(projectId);
 
             if (project == null)
             {
