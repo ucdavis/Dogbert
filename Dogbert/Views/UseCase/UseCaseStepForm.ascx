@@ -10,7 +10,7 @@
 
     $(document).ready(function() {
 
-        $("textarea#UseCaseStep_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
+        //$("textarea#UseCaseStep_Description").enableTinyMce({ script_location: '<%= Url.Content("~/Scripts/tiny_mce/tiny_mce.js") %>', overrideHeight: '225', overrideWidth: '925' });
       }); //end ready
 
 </script>
