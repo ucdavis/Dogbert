@@ -1,0 +1,80 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="Authorize" priority="0" />
+      <Item value="string" priority="1" />
+      <Item value="if" priority="0" />
+      <Item value="resultUrl" priority="1" />
+      <Item value="return" priority="1" />
+      <Item value="Redirect`0" priority="1" />
+      <Item value="this" priority="0" />
+      <Item value="action" priority="3" />
+      <Item value="a" priority="0" />
+      <Item value="using" priority="0" />
+      <Item value="MvcContrib" priority="0" />
+      <Item value="ctor" priority="0" />
+      <Item value="CASHelper`0" priority="0" />
+      <Item value="TempData" priority="0" />
+      <Item value="returnUrl" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@UCDArch.Web.Authentication.CASHelper">
+      <Item value="Login`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Controllers.AccountController">
+      <Item value="RedirectToAction`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Home/f:Test.cshtml" caret="54" fromTop="11" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="447" fromTop="20" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="785" fromTop="31" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:Index.cshtml" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:NotAuthorized.cshtml" caret="103" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="21" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:CodeTemplates/d:AddView/d:CSHTML/f:ListDatatables.tt" caret="939" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="3509" fromTop="27" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="0" fromTop="0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="872" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="294" fromTop="13" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="455" fromTop="20" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="515" fromTop="26" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="21" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="292" fromTop="11" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="591" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="853" fromTop="32" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:Index.cshtml" caret="114" fromTop="8" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:Index.cshtml" caret="118" fromTop="8" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:Index.cshtml" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:NotAuthorized.cshtml" caret="107" fromTop="8" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:NotAuthorized.cshtml" caret="103" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="326" fromTop="18" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="21" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="3599" fromTop="28" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="3404" fromTop="25" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="0" fromTop="0" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
