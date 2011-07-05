@@ -1,8 +1,7 @@
-﻿
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert2.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
 

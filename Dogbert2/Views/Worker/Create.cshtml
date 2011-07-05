@@ -1,0 +1,14 @@
+﻿@model Dogbert2.Controllers.WorkerViewModel
+
+@{
+	ViewBag.Title = "Create Worker";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to List", "Index")</li>
+	</ul>
+}
+
+@Html.Partial("_Worker")

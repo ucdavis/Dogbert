@@ -7,6 +7,16 @@ namespace Dogbert2.Core.Domain
 {
     public class Department : DomainObjectWithTypedId<string>
     {
+        public Department()
+        {
+            SetDefaults();
+        }
+
+        private void SetDefaults()
+        {
+            Workgroups = new List<Workgroup>();
+        }
+
         [StringLength(50)]
         public virtual string Name { get; set; }
 

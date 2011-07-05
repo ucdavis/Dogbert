@@ -115,13 +115,30 @@ form select, form input[type='text'], form input[type='date'], form input[type='
 .required span, span.required {color:#FF0000;}
 input.button {font-size: 1.2em; padding: 8px 15px 3px;}
 
+/* ---------------- */
+/*   display form   */
+/* ---------------- */
+fieldset.display-form {padding: 10px}
+fieldset.display-form ul {padding: 10px 50px 10px 100px;}
+fieldset.display-form ul ul {padding: 0;}
+.display-form {margin:1em 0; text-align:left;}
+.display-form ul li {list-style-type:none;margin:10px 0;}
+.display-form ul li ul li{margin:2px 0;}
+.display-form div.display-label {display:inline-block; width:120px; vertical-align:top; }
+.display-form div.display-details {display:inline-block; font-weight:bold; vertical-align:top;}
+.display-form fieldset {padding:10px;}
+.display-form fieldset  ul{padding:10px 50px 10px 100px;}
+.display-form fieldset  ul ul{padding:0;}
+.display-form fieldset div.display-label {display:inline-block; width:120px; vertical-align:top;}
+.display-form fieldset div.display-field {display:inline-block; vertical-align:top; font-weight:bold;}
+
 /*   validation     */
 .field-validation-error {padding:2px 10px; margin:-2px 0 0 5px; display:inline-block; vertical-align:top;}
 table thead form .field-validation-error{color:#000000;}
 /* ---------------- */
 /*    table         */
 /* ---------------- */
-table {border:1px solid #003054; border-collapse: collapse; margin:0.5em 0; width:100%;}
+table {border:1px solid #003054; border-collapse: collapse; /*margin:0.5em 0;*/ width:100%;}
 th{text-align:left;}
 thead tr, tfoot tr  {background-color:#014A81; color:#FFFFFF;}
 .main thead a, .main tfoot a {color:#FFFFFF; font-weight:bold;}
@@ -141,6 +158,46 @@ tfoot {text-align:center;}
 .noicon tr  > td:first-child,.noicon tr > td:last-child {width:auto; text-align:left;}
 .nofirsticon tr > td:first-child {width: auto; text-align: left;}
 .nolasticon tr > td:last-child {width: auto; text-align: left;}
+
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+.dataTables_info {
+	width: 60%;
+	float: left;
+}
+
+.dataTables_paginate {
+	width: 44px;
+	float: right;
+	text-align: right;
+}
+
+div.dataTables_wrapper .ui-toolbar
+{
+    padding: 5px;
+}
+
+div.dataTables_wrapper table
+{
+    margin: 0;
+    clear:both;
+}
+
+.DataTables_sort_wrapper
+{
+    cursor:pointer;
+}
+
+.DataTables_sort_wrapper .ui-icon {display:inline-block;}
 
 /* ---------------- */
 /*    footer        */

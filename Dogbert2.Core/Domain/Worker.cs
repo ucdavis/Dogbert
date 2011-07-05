@@ -2,18 +2,20 @@
 using System.ComponentModel.DataAnnotations;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
+using System.Linq;
 
 namespace Dogbert2.Core.Domain
 {
-    public class Worker : DomainObjectWithTypedId<string>
+    public class Worker : DomainObject
     {
         public Worker()
         {
             SetDefaults();
         }
 
-        public Worker(string firstName, string lastName)
+        public Worker(string login, string firstName, string lastName)
         {
+            LoginId = login;
             FirstName = firstName;
             LastName = lastName;
 
@@ -23,25 +25,44 @@ namespace Dogbert2.Core.Domain
         private void SetDefaults()
         {
             IsActive = true;
+
+            Workgroups = new List<Workgroup>();
         }
 
         [Required]
+        [StringLength(10)]
+        [Display(Name="Login Id")]
+        public virtual string LoginId { get; set; }
+        [Required]
         [StringLength(50)]
+        [Display(Name="First Name")]
         public virtual string FirstName { get; set; }
         [Required]
         [StringLength(50)]
+        [Display(Name = "Last Name")]
         public virtual string LastName { get; set; }
         public virtual bool IsActive { get; set; }
 
         public virtual IList<Workgroup> Workgroups { get; set; }
+
+        #region Calculated Fields
+
+        [Display(Name="Workgroups")]
+        public virtual string WorkgroupNames { 
+            get { var names = string.Join(", ", Workgroups.Select(a => a.Name));
+                return !string.IsNullOrWhiteSpace(names) ? names : "n/a";
+            }
+        }
+        #endregion
     }
 
     public class WorkerMap : ClassMap<Worker>
     {
         public WorkerMap()
         {
-            Id(x => x.Id).Length(10);
+            Id(x => x.Id);
 
+            Map(x => x.LoginId);
             Map(x => x.FirstName);
             Map(x => x.LastName);
             Map(x => x.IsActive);

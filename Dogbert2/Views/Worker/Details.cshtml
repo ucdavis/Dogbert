@@ -1,0 +1,55 @@
+﻿@model Dogbert2.Core.Domain.Worker
+
+
+@{
+    ViewBag.Title = "Worker Details";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		
+			<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+			<li>@Html.ActionLink("Back to List", "Index")</li>
+		
+	</ul>
+}
+
+<fieldset class="display-form">
+    <legend>Worker</legend>
+	<ul>
+
+		<li>
+			<div class="display-label">@Html.LabelFor(a=>a.LoginId)</div>
+			<div class="display-details">@Model.LoginId</div>
+		</li>
+
+		<li>
+			<div class="display-label">@Html.LabelFor(a=>a.FirstName)</div>
+			<div class="display-details">@Model.FirstName</div>
+		</li>
+
+		<li>
+			<div class="display-label">@Html.LabelFor(a=>a.LastName)</div>
+			<div class="display-details">@Model.LastName</div>
+		</li>
+
+        <li>
+            <div class="display-label">@Html.LabelFor(a=>a.WorkgroupNames)</div>
+            <div class="display-details">@Model.WorkgroupNames</div>
+        </li>
+
+		<li>
+			<div class="display-label">@Html.LabelFor(a=>a.IsActive)</div>
+			<div class="display-details">@Model.IsActive</div>
+		</li>
+
+	</ul>
+</fieldset>
+
+<fieldset>
+    <legend>Projects</legend>
+
+
+</fieldset>
+
