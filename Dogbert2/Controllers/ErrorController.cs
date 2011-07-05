@@ -7,21 +7,22 @@ using UCDArch.Core.Utils;
 namespace Dogbert2.Controllers
 {
     /// <summary>
-    /// Controller for the Home class
+    /// Controller for the Error class
     /// </summary>
-    public class HomeController : ApplicationController
-    {   
+    public class ErrorController : ApplicationController
+    {
         //
-        // GET: /Home/
+        // GET: /Error/
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
-        public ActionResult Test()
+        public ActionResult NotAuthorized()
         {
             return View();
         }
+
     }
+
 }

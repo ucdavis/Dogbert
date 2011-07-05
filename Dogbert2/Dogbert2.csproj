@@ -119,7 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RegisterClientValidationExtensions.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -129,37 +131,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
-    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\images\ui-bg_glass_0_014a81_1x400.png" />
-    <Content Include="Content\images\ui-bg_glass_0_3182c0_1x400.png" />
-    <Content Include="Content\images\ui-bg_glass_0_fbf7eb_1x400.png" />
-    <Content Include="Content\images\ui-bg_glass_0_ffffff_1x400.png" />
-    <Content Include="Content\images\ui-bg_highlight-soft_0_014a81_1x100.png" />
-    <Content Include="Content\images\ui-bg_inset-soft_0_fcf0f0_1x100.png" />
-    <Content Include="Content\images\ui-icons_014a81_256x240.png" />
-    <Content Include="Content\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\images\ui-icons_c83900_256x240.png" />
-    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\images\ui-icons_fffff_256x240.png" />
-    <Content Include="Content\jquery-ui-1.8.14.caes.css" />
+    <Content Include="Css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Css\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Css\images\ui-bg_glass_0_014a81_1x400.png" />
+    <Content Include="Css\images\ui-bg_glass_0_3182c0_1x400.png" />
+    <Content Include="Css\images\ui-bg_glass_0_fbf7eb_1x400.png" />
+    <Content Include="Css\images\ui-bg_glass_0_ffffff_1x400.png" />
+    <Content Include="Css\images\ui-bg_highlight-soft_0_014a81_1x100.png" />
+    <Content Include="Css\images\ui-bg_inset-soft_0_fcf0f0_1x100.png" />
+    <Content Include="Css\images\ui-icons_014a81_256x240.png" />
+    <Content Include="Css\images\ui-icons_222222_256x240.png" />
+    <Content Include="Css\images\ui-icons_c83900_256x240.png" />
+    <Content Include="Css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Css\images\ui-icons_fffff_256x240.png" />
+    <Content Include="Css\jquery-ui-1.8.14.caes.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Css\Site.css" />
+    <Content Include="Css\themes\base\jquery-ui.css" />
+    <Content Include="Css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Css\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Css\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Css\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Css\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Css\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Css\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Css\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Css\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Css\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Css\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Css\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Images\comment.png" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\details.png" />
@@ -236,6 +238,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_ServiceMessages.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
