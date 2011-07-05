@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert2", "Dogbert2\Dogbert2.csproj", "{B63466E5-172F-48AF-BB1D-EF36DCC51AF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{CB2AFBF5-EBC7-499D-97B8-17B8B5103868}"
+	ProjectSection(SolutionItems) = preProject
+		Bin\Antlr3.Runtime.dll = Bin\Antlr3.Runtime.dll
+		Bin\AutoMapper.dll = Bin\AutoMapper.dll
+		Bin\Castle.Core.dll = Bin\Castle.Core.dll
+		Bin\Castle.Windsor.dll = Bin\Castle.Windsor.dll
+		Bin\Common.Logging.dll = Bin\Common.Logging.dll
+		Bin\Elmah.dll = Bin\Elmah.dll
+		Bin\FluentNHibernate.dll = Bin\FluentNHibernate.dll
+		Bin\HibernatingRhinos.Profiler.Appender.dll = Bin\HibernatingRhinos.Profiler.Appender.dll
+		Bin\Iesi.Collections.dll = Bin\Iesi.Collections.dll
+		Bin\log4net.dll = Bin\log4net.dll
+		Bin\Microsoft.Practices.ServiceLocation.dll = Bin\Microsoft.Practices.ServiceLocation.dll
+		Bin\Microsoft.Web.Mvc.dll = Bin\Microsoft.Web.Mvc.dll
+		Bin\MvcContrib.dll = Bin\MvcContrib.dll
+		Bin\MvcContrib.FluentHtml.dll = Bin\MvcContrib.FluentHtml.dll
+		Bin\MvcContrib.TestHelper.dll = Bin\MvcContrib.TestHelper.dll
+		Bin\MvcMiniProfiler.dll = Bin\MvcMiniProfiler.dll
+		Bin\Newtonsoft.Json.dll = Bin\Newtonsoft.Json.dll
+		Bin\NHibernate.ByteCode.Spring.dll = Bin\NHibernate.ByteCode.Spring.dll
+		Bin\NHibernate.dll = Bin\NHibernate.dll
+		Bin\NHibernate.Validator.dll = Bin\NHibernate.Validator.dll
+		Bin\Remotion.Data.Linq.dll = Bin\Remotion.Data.Linq.dll
+		Bin\Rhino.Mocks.dll = Bin\Rhino.Mocks.dll
+		Bin\Spring.Aop.dll = Bin\Spring.Aop.dll
+		Bin\Spring.Core.dll = Bin\Spring.Core.dll
+		Bin\System.Data.SQLite.DLL = Bin\System.Data.SQLite.DLL
+		Bin\Telerik.Web.Mvc.dll = Bin\Telerik.Web.Mvc.dll
+		Bin\UCDArch.dll = Bin\UCDArch.dll
+		Bin\xVal.dll = Bin\xVal.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogbert2.Core", "Dogbert2.Core\Dogbert2.Core.csproj", "{F0DF734A-726F-4CEF-B1FE-10C68B79DAEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B63466E5-172F-48AF-BB1D-EF36DCC51AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B63466E5-172F-48AF-BB1D-EF36DCC51AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B63466E5-172F-48AF-BB1D-EF36DCC51AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B63466E5-172F-48AF-BB1D-EF36DCC51AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0DF734A-726F-4CEF-B1FE-10C68B79DAEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0DF734A-726F-4CEF-B1FE-10C68B79DAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0DF734A-726F-4CEF-B1FE-10C68B79DAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0DF734A-726F-4CEF-B1FE-10C68B79DAEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
