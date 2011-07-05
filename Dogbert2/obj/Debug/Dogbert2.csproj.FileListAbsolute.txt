@@ -31,3 +31,5 @@ c:\users\lai\documents\visual studio 2010\Projects\Dogbert2\Dogbert2\bin\Dogbert
 c:\users\lai\documents\visual studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\ResolveAssemblyReference.cache
 c:\users\lai\documents\visual studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\Dogbert2.dll
 c:\users\lai\documents\visual studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\Dogbert2.pdb
+C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\bin\Dogbert2.Clients.dll
+C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\bin\Dogbert2.Clients.pdb

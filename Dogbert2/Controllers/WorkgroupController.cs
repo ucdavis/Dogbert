@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert2.Clients;
 using Dogbert2.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
@@ -13,12 +15,14 @@ namespace Dogbert2.Controllers
     public class WorkgroupController : ApplicationController
     {
 	    private readonly IRepository<Workgroup> _workgroupRepository;
+        private readonly IDepartmentClient _departmentClient;
 
-        public WorkgroupController(IRepository<Workgroup> workgroupRepository)
+        public WorkgroupController(IRepository<Workgroup> workgroupRepository, IDepartmentClient departmentClient)
         {
             _workgroupRepository = workgroupRepository;
+            _departmentClient = departmentClient;
         }
-    
+
         //
         // GET: /Workgroup/
         public ActionResult Index()
@@ -44,7 +48,7 @@ namespace Dogbert2.Controllers
         // GET: /Workgroup/Create
         public ActionResult Create()
         {
-			var viewModel = WorkgroupViewModel.Create(Repository);
+			var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
             
             return View(viewModel);
         } 
@@ -56,8 +60,6 @@ namespace Dogbert2.Controllers
         {
             var workgroupToCreate = new Workgroup();
 
-            TransferValues(workgroup, workgroupToCreate);
-
             if (ModelState.IsValid)
             {
                 _workgroupRepository.EnsurePersistent(workgroupToCreate);
@@ -68,7 +70,7 @@ namespace Dogbert2.Controllers
             }
             else
             {
-				var viewModel = WorkgroupViewModel.Create(Repository);
+                var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
                 viewModel.Workgroup = workgroup;
 
                 return View(viewModel);
@@ -83,7 +85,7 @@ namespace Dogbert2.Controllers
 
             if (workgroup == null) return RedirectToAction("Index");
 
-			var viewModel = WorkgroupViewModel.Create(Repository);
+            var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
 			viewModel.Workgroup = workgroup;
 
 			return View(viewModel);
@@ -98,8 +100,6 @@ namespace Dogbert2.Controllers
 
             if (workgroupToEdit == null) return RedirectToAction("Index");
 
-            TransferValues(workgroup, workgroupToEdit);
-
             if (ModelState.IsValid)
             {
                 _workgroupRepository.EnsurePersistent(workgroupToEdit);
@@ -110,7 +110,7 @@ namespace Dogbert2.Controllers
             }
             else
             {
-				var viewModel = WorkgroupViewModel.Create(Repository);
+                var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
                 viewModel.Workgroup = workgroup;
 
                 return View(viewModel);
@@ -144,17 +144,6 @@ namespace Dogbert2.Controllers
             return RedirectToAction("Index");
         }
         
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(Workgroup source, Workgroup destination)
-        {
-			//Recommendation: Use AutoMapper
-			//Mapper.Map(source, destination)
-            throw new NotImplementedException();
-        }
-
-
     }
 
 	/// <summary>
@@ -163,13 +152,18 @@ namespace Dogbert2.Controllers
     public class WorkgroupViewModel
 	{
 		public Workgroup Workgroup { get; set; }
- 
-		public static WorkgroupViewModel Create(IRepository repository)
+        public IEnumerable<Department> ServiceDepartments { get; set; }
+
+		public static WorkgroupViewModel Create(IRepository repository, IDepartmentClient departmentClient)
 		{
 			Check.Require(repository != null, "Repository must be supplied");
-			
-			var viewModel = new WorkgroupViewModel {Workgroup = new Workgroup()};
- 
+
+		    var depts = new List<Department>();
+            depts.Add(new Department(string.Empty, "-- Select a Department --"));
+            depts.AddRange(departmentClient.GetAvailable());
+
+			var viewModel = new WorkgroupViewModel {Workgroup = new Workgroup(), ServiceDepartments = depts};
+
 			return viewModel;
 		}
 	}

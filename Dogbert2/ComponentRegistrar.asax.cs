@@ -1,4 +1,5 @@
 ﻿using Castle.Windsor;
+using Dogbert2.Clients;
 using UCDArch.Core.CommonValidator;
 using UCDArch.Core.DataAnnotationsValidator.CommonValidatorAdapter;
 using UCDArch.Core.PersistanceSupport;
@@ -15,6 +16,8 @@ namespace Dogbert2
 
             container.Register(Component.For<IValidator>().ImplementedBy<Validator>().Named("validator"));
             container.Register(Component.For<IDbContext>().ImplementedBy<DbContext>().Named("dbContext"));
+
+            container.Register(Component.For<IDepartmentClient>().ImplementedBy<DevDepartmentClient>().Named("departmentClient"));
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)

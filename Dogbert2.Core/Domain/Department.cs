@@ -12,6 +12,14 @@ namespace Dogbert2.Core.Domain
             SetDefaults();
         }
 
+        public Department(string id, string name)
+        {
+            Id = id;
+            Name = name;
+
+            SetDefaults();
+        }
+
         private void SetDefaults()
         {
             Workgroups = new List<Workgroup>();
