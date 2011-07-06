@@ -4,11 +4,13 @@
 @{
     ViewBag.Title = "Edit Project";
     ViewBag.HideWorkgroup = true;
+    ViewBag.NavigationKey = "Project";
 }
 
 @section SubNav
 {
     <ul class="navigation">
+        <li>@Html.ActionLink("Details", "Details", new {Id=Model.Project.Id})</li>
         <li>@Html.ActionLink("Workgroups", "Index", "ProjectWorkgroup", new { Id=Model.Project.Id }, new { })</li>
         <li>Requirement Categories</li>
         <li>Actors</li>

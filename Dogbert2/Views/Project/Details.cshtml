@@ -2,7 +2,8 @@
 
 
 @{
-    ViewBag.Title = "Project Details";
+    ViewBag.Title = Model.Name;
+    ViewBag.NavigationKey = "Project";
 }
 
 @section SubNav
@@ -10,6 +11,12 @@
 	<ul class="navigation">
 		
 			<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+
+            <li>Text</li>
+            <li>Requirements</li>
+            <li>Use Cases</li>
+            <li>Files</li>
+
 			<li>@Html.ActionLink("Back to List", "Index")</li>
 		
 	</ul>
@@ -20,40 +27,25 @@
 	<ul>
 
 		<li>
-			<div class="display-label">Name</div>
-			<div class="display-details">@Model.Name</div>
-		</li>
-
-		<li>
 			<div class="display-label">Complexity</div>
 			<div class="display-details">@Model.Complexity</div>
 		</li>
 
 		<li>
 			<div class="display-label">Deadline</div>
-			<div class="display-details">@String.Format("{0:g}", Model.Deadline)</div>
-		</li>
-
-		<li>
-			<div class="display-label">ProjectedBegin</div>
-			<div class="display-details">@String.Format("{0:g}", Model.ProjectedBegin)</div>
+			<div class="display-details">@ProjectInfo.ProjectDeadline(Model)</div>
 		</li>
 
 		<li>
 			<div class="display-label">Begin</div>
-			<div class="display-details">@String.Format("{0:g}", Model.Begin)</div>
-		</li>
-
-		<li>
-			<div class="display-label">ProjectedEnd</div>
-			<div class="display-details">@String.Format("{0:g}", Model.ProjectedEnd)</div>
+			<div class="display-details">@ProjectInfo.ProjectBegin(Model)</div>
 		</li>
 
 		<li>
 			<div class="display-label">End</div>
-			<div class="display-details">@String.Format("{0:g}", Model.End)</div>
+			<div class="display-details">@ProjectInfo.ProjectEnd(Model)</div>
 		</li>
-
+        		
 		<li>
 			<div class="display-label">Contact</div>
 			<div class="display-details">@Model.Contact</div>
@@ -79,13 +71,8 @@
 			<div class="display-details">@String.Format("{0:g}", Model.LastUpdate)</div>
 		</li>
 
-		<li>
-			<div class="display-label">Hide</div>
-			<div class="display-details">@Model.Hide</div>
-		</li>
-
-		<li>
-			<div class="display-label">WorkgroupNames</div>
+				<li>
+			<div class="display-label">Workgroup(s)</div>
 			<div class="display-details">@Model.WorkgroupNames</div>
 		</li>
 
