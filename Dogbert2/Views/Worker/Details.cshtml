@@ -1,5 +1,4 @@
-﻿@model Dogbert2.Core.Domain.Worker
-
+﻿@model Worker
 
 @{
     ViewBag.Title = "Worker Details";
@@ -48,8 +47,16 @@
 </fieldset>
 
 <fieldset>
-    <legend>Projects</legend>
+    <legend>Projects - Project Manager</legend>
 
+    @Html.Partial("_Projects", Model.ProjectManagers)
+
+</fieldset>
+
+<fieldset>
+    <legend>Projects - Lead Programmer</legend>
+
+    @Html.Partial("_Projects", Model.LeadProgrammers)
 
 </fieldset>
 

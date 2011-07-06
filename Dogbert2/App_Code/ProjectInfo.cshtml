@@ -1,0 +1,33 @@
+﻿@using Dogbert2.Core.Domain;
+
+@helper ProjectBegin(Project project)
+{
+    if (!project.Begin.HasValue)
+    { 
+        <text>@project.Begin.Value.ToString("d")</text>
+    }
+    else if (!project.ProjectedBegin.HasValue)
+    { 
+        <text>@project.ProjectedBegin.Value.ToString("d")*</text>
+    }
+    else
+    {
+        <text>n/a</text>
+    }
+}
+
+@helper ProjectEnd(Project project)
+{
+    if (!project.End.HasValue)
+    { 
+        <text>@project.End.Value.ToString("d")</text>
+    }
+    else if (!project.ProjectedEnd.HasValue)
+    { 
+        <text>@project.ProjectedEnd.Value.ToString("d")*</text>
+    }
+    else
+    {
+        <text>n/a</text>
+    }
+}

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Project>
+
+<table class="dt-table nolasticon">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Client</th>
+            <th>Begin</th>
+            <th>End</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var a in Model)
+        { 
+            <tr>
+                <td></td>
+                <td>@a.Name</td>
+                <td>@a.Contact</td>
+                <td>@ProjectInfo.ProjectBegin(a)</td>
+                <td>@ProjectInfo.ProjectEnd(a)</td>
+                <td>@a.StatusCode.Name</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

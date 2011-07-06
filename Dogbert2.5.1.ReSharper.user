@@ -23,10 +23,10 @@
       <Item value="CASHelper`0" priority="0" />
       <Item value="TempData" priority="0" />
       <Item value="returnUrl" priority="0" />
-      <Item value="propv" priority="27" />
+      <Item value="propv" priority="30" />
       <Item value="DomainObjectWithTypedId" priority="2" />
       <Item value="classMap" priority="6" />
-      <Item value="Department`0" priority="0" />
+      <Item value="Department`0" priority="1" />
       <Item value="map" priority="22" />
       <Item value="IFormatProvider`0" priority="0" />
       <Item value="bool" priority="0" />
@@ -40,11 +40,11 @@
       <Item value="LastName" priority="0" />
       <Item value="lastName" priority="0" />
       <Item value="prop" priority="5" />
-      <Item value="IList" priority="2" />
+      <Item value="IList" priority="5" />
       <Item value="Worker`0" priority="2" />
       <Item value="reference" priority="5" />
-      <Item value="Project`0" priority="1" />
-      <Item value="HasMany`1" priority="1" />
+      <Item value="Project`0" priority="3" />
+      <Item value="HasMany`1" priority="3" />
       <Item value="HasManyToMany`1" priority="1" />
       <Item value="Workgroup`0" priority="2" />
       <Item value="Workgroups" priority="5" />
@@ -52,7 +52,7 @@
       <Item value="int" priority="1" />
       <Item value="Table`0" priority="0" />
       <Item value="Workers" priority="0" />
-      <Item value="new" priority="2" />
+      <Item value="new" priority="4" />
       <Item value="List&lt;Worker&gt;" priority="0" />
       <Item value="List&lt;Workgroup&gt;" priority="1" />
       <Item value="char" priority="1" />
@@ -84,6 +84,9 @@
       <Item value="System" priority="0" />
       <Item value="Linq" priority="0" />
       <Item value="names" priority="2" />
+      <Item value="ProjectManagers" priority="0" />
+      <Item value="List&lt;Project&gt;" priority="1" />
+      <Item value="LeadProgrammers" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@UCDArch.Web.Authentication.CASHelper">
       <Item value="Login`0" priority="0" />
@@ -105,6 +108,8 @@
       <Item value="Workgroups" priority="0" />
       <Item value="Id" priority="0" />
       <Item value="LoginId" priority="3" />
+      <Item value="ProjectManagers" priority="0" />
+      <Item value="LeadProgrammers" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Dogbert2.Core.Domain.Workgroup">
       <Item value="Name" priority="0" />
@@ -125,6 +130,7 @@
     <ItemStatistics item="Qualified:FluentNHibernate.Mapping.OneToManyPart`1">
       <Item value="Inverse`0" priority="0" />
       <Item value="Cascade" priority="0" />
+      <Item value="KeyColumn`0" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Dogbert2.Core.Domain.ProjectWorkgroups">
       <Item value="Project" priority="0" />
@@ -182,16 +188,8 @@
   </CompletionStatisticsManager>
   <RecentFiles>
     <RecentFiles>
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ErrorController.cs" caret="447" fromTop="20" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="785" fromTop="31" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:Index.cshtml" caret="0" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Error/f:NotAuthorized.cshtml" caret="103" fromTop="4" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="21" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:CodeTemplates/d:AddView/d:CSHTML/f:ListDatatables.tt" caret="939" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="0" fromTop="0" />
       <File id="67CBC824-A49E-4E9B-A947-360F3DFE65C3/d:Schema Objects/d:Schemas/d:dbo/d:Tables/f:Projects.table.sql" caret="0" fromTop="0" />
       <File id="67CBC824-A49E-4E9B-A947-360F3DFE65C3/d:Schema Objects/d:Schemas/d:dbo/d:Tables/f:Workgroups.table.sql" caret="218" fromTop="3" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Department.cs" caret="320" fromTop="11" />
       <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:ProjectWorkgroups.cs" caret="299" fromTop="10" />
       <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:StatusCode.cs" caret="486" fromTop="18" />
       <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="59" fromTop="1" />
@@ -204,46 +202,54 @@
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Delete.cshtml" caret="301" fromTop="16" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="2904" fromTop="24" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Css/f:Site.css" caret="7946" fromTop="30" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1309" fromTop="19" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1111" fromTop="33" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="619" fromTop="17" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="320" fromTop="27" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1294" fromTop="34" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="4522" fromTop="24" />
       <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/f:packages.config" caret="0" fromTop="0" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="1170" fromTop="30" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Helpers/f:FluentHtmlExtensions.cs" caret="33" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="0" fromTop="0" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Department.cs" caret="473" fromTop="19" />
+      <File id="04CB5055-55A5-4B1C-90FD-460EB958E374/f:DevDepartmentClient.cs" caret="860" fromTop="23" />
+      <File id="04CB5055-55A5-4B1C-90FD-460EB958E374/f:IDepartmentClient.cs" caret="223" fromTop="10" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="1681" fromTop="14" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="1175" fromTop="32" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Global.asax.cs" caret="1493" fromTop="25" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1281" fromTop="18" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="2067" fromTop="32" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Web.config" caret="3750" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:App_Code/f:ProjectInfo.cshtml" caret="22" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/f:Web.config" caret="746" fromTop="9" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="7" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Delete.cshtml" caret="993" fromTop="29" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Delete.cshtml" caret="182" fromTop="11" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="4133" fromTop="19" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Css/f:Site.css" caret="5317" fromTop="36" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Css/f:Site.css" caret="6210" fromTop="50" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="713" fromTop="22" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="1603" fromTop="12" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="1947" fromTop="20" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Css/f:Site.css" caret="7946" fromTop="30" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkerController.cs" caret="1788" fromTop="16" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="0" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="68" fromTop="4" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="78" fromTop="5" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1111" fromTop="46" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="47" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="57" fromTop="5" />
       <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="165" fromTop="4" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1466" fromTop="21" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="393" fromTop="22" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="528" fromTop="27" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="665" fromTop="32" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="979" fromTop="42" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="822" fromTop="37" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1306" fromTop="19" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1111" fromTop="33" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="372" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="507" fromTop="27" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="644" fromTop="32" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="958" fromTop="42" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="801" fromTop="37" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="0" fromTop="0" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="89" fromTop="6" />
       <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="193" fromTop="12" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="90" fromTop="5" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1642" fromTop="43" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="46" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1294" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="59" fromTop="5" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1263" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="1684" fromTop="14" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1516" fromTop="37" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1591" fromTop="34" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="782" fromTop="12" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="2627" fromTop="30" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1723" fromTop="23" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="1993" fromTop="29" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1467" fromTop="41" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1350" fromTop="45" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:App_Code/f:ProjectInfo.cshtml" caret="38" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:App_Code/f:ProjectInfo.cshtml" caret="100" fromTop="9" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Web.config" caret="3750" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:App_Code/f:ProjectInfo.cshtml" caret="22" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="7" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/f:Web.config" caret="1237" fromTop="18" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>

@@ -27,6 +27,8 @@ namespace Dogbert2.Core.Domain
             IsActive = true;
 
             Workgroups = new List<Workgroup>();
+            ProjectManagers = new List<Project>();
+            LeadProgrammers = new List<Project>();
         }
 
         [Required]
@@ -45,8 +47,16 @@ namespace Dogbert2.Core.Domain
 
         public virtual IList<Workgroup> Workgroups { get; set; }
 
-        #region Calculated Fields
+        /// <summary>
+        /// Projects this user is a project manager for
+        /// </summary>
+        public virtual IList<Project> ProjectManagers { get; set; }
+        /// <summary>
+        /// Projects this user is a lead programmer for
+        /// </summary>
+        public virtual IList<Project> LeadProgrammers { get; set; }
 
+        #region Calculated Fields
         [Display(Name="Workgroups")]
         public virtual string WorkgroupNames { 
             get { var names = string.Join(", ", Workgroups.Select(a => a.Name));
@@ -70,6 +80,8 @@ namespace Dogbert2.Core.Domain
             HasManyToMany(x => x.Workgroups)
                 .ParentKeyColumn("WorkerId").ChildKeyColumn("WorkgroupId")
                 .Table("WorkgroupsXWorkers").Cascade.SaveUpdate();
+            HasMany(x => x.ProjectManagers).KeyColumn("ProjectManagerId");
+            HasMany(x => x.LeadProgrammers).KeyColumn("LeadProgrammerId");
         }
     }
 }

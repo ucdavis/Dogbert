@@ -199,6 +199,7 @@ div.dataTables_wrapper table
 
 .DataTables_sort_wrapper .ui-icon {display:inline-block;}
 
+
 /* ---------------- */
 /*    footer        */
 /* ---------------- */
@@ -215,3 +216,5 @@ div.dataTables_wrapper table
 #footer .col1 {border-right:2px solid #074F84;}
 #footer .navigation {text-align:left;}
 
+
+fieldset {padding: 10px;}

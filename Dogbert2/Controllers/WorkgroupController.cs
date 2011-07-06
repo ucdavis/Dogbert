@@ -56,7 +56,7 @@ namespace Dogbert2.Controllers
         //
         // POST: /Workgroup/Create
         [HttpPost]
-        public ActionResult Create(Workgroup workgroup)
+        public ActionResult Create(Workgroup workgroup, Department dept)
         {
             var workgroupToCreate = new Workgroup();
 

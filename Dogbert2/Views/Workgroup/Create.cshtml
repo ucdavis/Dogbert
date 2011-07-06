@@ -1,6 +1,4 @@
-﻿@using MvcContrib.FluentHtml;
-
-@model Dogbert2.Controllers.WorkgroupViewModel
+﻿@model Dogbert2.Controllers.WorkgroupViewModel
 
 @{
 	ViewBag.Title = "Create Workgroup";
@@ -40,11 +38,7 @@
                     @Html.LabelFor(model => model.Workgroup.Department)<span>*</span>
                 </div>
                 <div class="editor-field">
-
-                    
-                    @this.Select("Workgroup.Department").Options(Model.ServiceDepartments, x=>x.Id, x=>x.Name)
-
-                    @*@Html.DropDownListFor(a=> a.Workgroup.Department, new SelectList(Model.ServiceDepartments, "Id", "Name"))*@
+                    @Html.DropDownListFor(a=> a.Workgroup.Department, new SelectList(Model.ServiceDepartments, "Id", "Name"))
                     @Html.ValidationMessageFor(a=>a.Workgroup.Department)
                 </div>
             </li>

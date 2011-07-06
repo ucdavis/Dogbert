@@ -68,7 +68,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.ContactEmail);
             Map(x => x.Unit);
 
-            References(x => x.StatusCode);
+            References(x => x.StatusCode).Column("StatusCode");
             Map(x => x.DateAdded);
             Map(x => x.LastUpdate);
         }
