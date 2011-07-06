@@ -2,11 +2,11 @@
 
 @helper ProjectBegin(Project project)
 {
-    if (!project.Begin.HasValue)
+    if (project.Begin.HasValue)
     { 
         <text>@project.Begin.Value.ToString("d")</text>
     }
-    else if (!project.ProjectedBegin.HasValue)
+    else if (project.ProjectedBegin.HasValue)
     { 
         <text>@project.ProjectedBegin.Value.ToString("d")*</text>
     }
@@ -18,16 +18,28 @@
 
 @helper ProjectEnd(Project project)
 {
-    if (!project.End.HasValue)
+    if (project.End.HasValue)
     { 
         <text>@project.End.Value.ToString("d")</text>
     }
-    else if (!project.ProjectedEnd.HasValue)
+    else if (project.ProjectedEnd.HasValue)
     { 
         <text>@project.ProjectedEnd.Value.ToString("d")*</text>
     }
     else
     {
+        <text>n/a</text>
+    }
+}
+
+@helper ProjectDeadline(Project project)
+{
+    if (project.Deadline.HasValue)
+    { 
+        <text>@project.Deadline.Value.ToString("d")</text>
+    }
+    else 
+    { 
         <text>n/a</text>
     }
 }

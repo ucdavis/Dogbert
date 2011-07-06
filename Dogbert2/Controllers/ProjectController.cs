@@ -1,17 +1,16 @@
-﻿
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
+using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Core.Utils;
 
 namespace Dogbert2.Controllers
 {
     /// <summary>
     /// Controller for the Project class
     /// </summary>
+    [Authorize]
     public class ProjectController : ApplicationController
     {
 	    private readonly IRepository<Project> _projectRepository;
@@ -46,7 +45,7 @@ namespace Dogbert2.Controllers
         // GET: /Project/Create
         public ActionResult Create()
         {
-			var viewModel = ProjectViewModel.Create(Repository);
+			var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
             
             return View(viewModel);
         } 
@@ -54,27 +53,32 @@ namespace Dogbert2.Controllers
         //
         // POST: /Project/Create
         [HttpPost]
-        public ActionResult Create(Project project)
+        public ActionResult Create(ProjectPostModel projectPostModel)
         {
-            var projectToCreate = new Project();
+            var project = projectPostModel.Project;
+            var workgroup = projectPostModel.Workgroup;
 
-            TransferValues(project, projectToCreate);
+            if (workgroup == null)
+            {
+                ModelState.AddModelError("Workgroup", "Workgroup is required.");
+            }
+
+            project.AddWorkgroup(workgroup);
 
             if (ModelState.IsValid)
             {
-                _projectRepository.EnsurePersistent(projectToCreate);
+                _projectRepository.EnsurePersistent(project);
 
                 Message = "Project Created Successfully";
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-				var viewModel = ProjectViewModel.Create(Repository);
-                viewModel.Project = project;
+			
+            var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
+            viewModel.Project = project;
+            viewModel.Workgroup = workgroup;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
 
         //
@@ -85,7 +89,7 @@ namespace Dogbert2.Controllers
 
             if (project == null) return RedirectToAction("Index");
 
-			var viewModel = ProjectViewModel.Create(Repository);
+			var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
 			viewModel.Project = project;
 
 			return View(viewModel);
@@ -100,8 +104,6 @@ namespace Dogbert2.Controllers
 
             if (projectToEdit == null) return RedirectToAction("Index");
 
-            TransferValues(project, projectToEdit);
-
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(projectToEdit);
@@ -112,7 +114,7 @@ namespace Dogbert2.Controllers
             }
             else
             {
-				var viewModel = ProjectViewModel.Create(Repository);
+				var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
                 viewModel.Project = project;
 
                 return View(viewModel);
@@ -145,34 +147,5 @@ namespace Dogbert2.Controllers
 
             return RedirectToAction("Index");
         }
-        
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(Project source, Project destination)
-        {
-			//Recommendation: Use AutoMapper
-			//Mapper.Map(source, destination)
-            throw new NotImplementedException();
-        }
-
-
     }
-
-	/// <summary>
-    /// ViewModel for the Project class
-    /// </summary>
-    public class ProjectViewModel
-	{
-		public Project Project { get; set; }
- 
-		public static ProjectViewModel Create(IRepository repository)
-		{
-			Check.Require(repository != null, "Repository must be supplied");
-			
-			var viewModel = new ProjectViewModel {Project = new Project()};
- 
-			return viewModel;
-		}
-	}
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
+using System.Linq;
 
 namespace Dogbert2.Core.Domain
 {
@@ -16,18 +18,29 @@ namespace Dogbert2.Core.Domain
         {
             DateAdded = DateTime.Now;
             LastUpdate = DateTime.Now;
+
+            ProjectWorkgroups = new List<ProjectWorkgroup>();
         }
 
         [Required]
         [StringLength(50)]
         public virtual string Name { get; set; }
-        public virtual char Priority { get; set; }
+        [Required]
+        [Display(Name="Project Type")]
+        public virtual ProjectType ProjectType { get; set; }
+        public virtual PriorityType Priority { get; set; }
+        [Range(0, 10)]
+        public virtual int? Complexity { get; set; }
         public virtual DateTime? Deadline { get; set; }
+        [Display(Name="Projected Begin")]
         public virtual DateTime? ProjectedBegin { get; set; }
         public virtual DateTime? Begin { get; set; }
+        [Display(Name = "Projected End")]
         public virtual DateTime? ProjectedEnd { get; set; }
         public virtual DateTime? End { get; set; }
+        [Display(Name = "Project Manager")]
         public virtual Worker ProjectManager { get; set; }
+        [Display(Name = "Lead Programmer")]
         public virtual Worker LeadProgrammer { get; set; }
 
         // Client information
@@ -36,6 +49,7 @@ namespace Dogbert2.Core.Domain
         public virtual string Contact { get; set; }
         [StringLength(100)]
         [DataType(DataType.EmailAddress)]
+        [Display(Name="Contact Email")]
         public virtual string ContactEmail { get; set; }
         [Required]
         [StringLength(50)]
@@ -43,9 +57,32 @@ namespace Dogbert2.Core.Domain
 
         // tracking information
         [Required]
+        [Display(Name="Status Code")]
         public virtual StatusCode StatusCode { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastUpdate { get; set; }
+
+        // bags
+        public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
+
+        #region Non-Mapped fields
+
+        public virtual string WorkgroupNames
+        {
+            get { 
+                var wgs = ProjectWorkgroups.Select(a => a.Workgroup.Name);
+                return wgs.Count() > 0 ? string.Join(", ", wgs) : "n/a";
+            }
+        }
+        #endregion
+
+        #region Methods
+        public virtual void AddWorkgroup(Workgroup workgroup)
+        {
+            var pworkgroup = new ProjectWorkgroup() {Project = this, Workgroup = workgroup};
+            ProjectWorkgroups.Add(pworkgroup);
+        }
+        #endregion
     }
 
     public class ProjectMap : ClassMap<Project>
@@ -55,7 +92,9 @@ namespace Dogbert2.Core.Domain
             Id(x => x.Id);
 
             Map(x => x.Name);
-            Map(x => x.Priority);
+            References(x => x.ProjectType);
+            References(x => x.Priority).Column("Priority");
+            Map(x => x.Complexity);
             Map(x => x.Deadline);
             Map(x => x.ProjectedBegin);
             Map(x => x.Begin).Column("`Begin`");
@@ -71,6 +110,8 @@ namespace Dogbert2.Core.Domain
             References(x => x.StatusCode).Column("StatusCode");
             Map(x => x.DateAdded);
             Map(x => x.LastUpdate);
+
+            HasMany(x => x.ProjectWorkgroups).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }

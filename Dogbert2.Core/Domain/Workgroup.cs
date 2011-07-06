@@ -15,6 +15,7 @@ namespace Dogbert2.Core.Domain
         private void SetDefaults()
         {
             Workers = new List<Worker>();
+            ProjectWorkgroups = new List<ProjectWorkgroup>();
         }
 
         [Required]
@@ -26,6 +27,7 @@ namespace Dogbert2.Core.Domain
         public virtual Department Department { get; set; }
 
         public virtual IList<Worker> Workers { get; set; }
+        public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
     }
 
     public class WorkgroupMap : ClassMap<Workgroup>
@@ -42,6 +44,8 @@ namespace Dogbert2.Core.Domain
             HasManyToMany(x => x.Workers)
                 .ParentKeyColumn("WorkgroupId").ChildKeyColumn("WorkerId")
                 .Table("WorkgroupsXWorkers").Cascade.SaveUpdate();
+
+            HasMany(x => x.ProjectWorkgroups);
         }
     }
 }

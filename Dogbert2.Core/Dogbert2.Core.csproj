@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Department.cs" />
+    <Compile Include="Domain\PriorityType.cs" />
     <Compile Include="Domain\Project.cs" />
-    <Compile Include="Domain\ProjectWorkgroups.cs" />
+    <Compile Include="Domain\ProjectType.cs" />
+    <Compile Include="Domain\ProjectWorkgroup.cs" />
     <Compile Include="Domain\StatusCode.cs" />
     <Compile Include="Domain\Worker.cs" />
     <Compile Include="Domain\Workgroup.cs" />

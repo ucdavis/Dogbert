@@ -63,6 +63,10 @@ namespace Dogbert2.Core.Domain
                 return !string.IsNullOrWhiteSpace(names) ? names : "n/a";
             }
         }
+
+        public virtual string FullName { 
+            get { return string.Format("{0} {1}", FirstName, LastName); }
+        }
         #endregion
     }
 

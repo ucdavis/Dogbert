@@ -140,6 +140,8 @@
     </Compile>
     <Compile Include="Helpers\AutomapperConfig.cs" />
     <Compile Include="Helpers\FluentHtmlExtensions.cs" />
+    <Compile Include="Models\ProjectPostModel.cs" />
+    <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +187,7 @@
     <Content Include="Images\top_blue_bar.jpg" />
     <Content Include="Scripts\Common\jquery.dataTables.min.js" />
     <Content Include="Scripts\Common\jquery.placeholder.min.js" />
+    <Content Include="Scripts\InputTypeTest.js" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
@@ -210,9 +213,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="App_Code\ProjectInfo.cshtml" />
     <None Include="CodeTemplates\AddController\Controller.tt" />
@@ -252,7 +253,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_ServiceMessages.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotAuthorized.cshtml" />
     <Content Include="Views\Worker\Index.cshtml" />
@@ -264,6 +264,8 @@
     <Content Include="Views\Workgroup\Index.cshtml" />
     <Content Include="Views\Workgroup\Create.cshtml" />
     <Content Include="Views\Worker\_Projects.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
