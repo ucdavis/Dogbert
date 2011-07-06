@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ProjectWorkgroup>
+
+@{
+	ViewBag.Title = "Project Workgroups";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Add Workgroup", "Add", new { id = ViewBag.ProjectId })</li>
+        <li>@Html.ActionLink("Back to Project", "Edit", "Project", new { id = ViewBag.ProjectId }, new { })</li>
+	</ul>
+}
+
+<table class='dt-table nofirsticon'>
+	<thead>
+		<tr>
+
+            <th>Name</th>
+            <th>Department</th>
+            <th># Workers</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+
+            <td>@item.Workgroup.Name</td>
+            <td>@item.Workgroup.Department.Name</td>
+            <td>@item.Workgroup.Workers.Count</td>
+
+			<td>
+				<a href='@Url.Action("Delete", new { id = item.Id })'>
+					<img src='@Url.Image("delete.png")' />
+				</a>
+			</td>
+		
+
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

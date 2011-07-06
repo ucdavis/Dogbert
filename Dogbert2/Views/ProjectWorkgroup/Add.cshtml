@@ -1,0 +1,53 @@
+﻿@model ProjectWorkgroupViewModel
+
+@{
+	ViewBag.Title = "Add Workgroup";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to List", "Index", new { id=Model.ProjectWorkgroup.Project.Id })</li>
+	</ul>
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    @Html.Hidden("ProjectWorkgroup.Project", Model.ProjectWorkgroup.Project.Id)
+    <fieldset>
+	    <legend>Add Workgroup</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+
+		    <li>
+			    <div class="editor-label">
+				    Project Name
+			    </div>
+			    <div class="editor-field">
+				    @Html.DisplayFor(a=>a.ProjectWorkgroup.Project.Name)
+			    </div>
+		    </li>
+
+            <li><div class="editor-label required">Workgroup<span>*</span></div>
+                <div class="editor-field">
+                    @this.Select("ProjectWorkgroup.Workgroup").Options(Model.Workgroups, x=>x.Id, x=>x.Name).FirstOption("--Select Workgroup--").Selected(Model.ProjectWorkgroup.Workgroup != null ? Model.ProjectWorkgroup.Workgroup.Id.ToString() : string.Empty)
+                    @Html.ValidationMessage("Workgroup")
+                </div>
+            </li>
+
+		    <li>
+			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { Model.ProjectWorkgroup.Project.Id })
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}
+
+
+
+
+

@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectWorkgroupController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />
     <Compile Include="Global.asax.cs">
@@ -142,6 +143,7 @@
     <Compile Include="Helpers\FluentHtmlExtensions.cs" />
     <Compile Include="Models\ProjectPostModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
+    <Compile Include="Models\ProjectWorkgroupViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +270,11 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\_Project.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\ProjectWorkgroup\Index.cshtml" />
+    <Content Include="Views\ProjectWorkgroup\Add.cshtml" />
+    <Content Include="Views\ProjectWorkgroup\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

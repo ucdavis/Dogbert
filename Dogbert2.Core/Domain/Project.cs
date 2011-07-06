@@ -16,6 +16,8 @@ namespace Dogbert2.Core.Domain
 
         private void SetDefaults()
         {
+            Hide = false;
+
             DateAdded = DateTime.Now;
             LastUpdate = DateTime.Now;
 
@@ -61,6 +63,7 @@ namespace Dogbert2.Core.Domain
         public virtual StatusCode StatusCode { get; set; }
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastUpdate { get; set; }
+        public virtual bool Hide { get; set; }
 
         // bags
         public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
@@ -110,6 +113,7 @@ namespace Dogbert2.Core.Domain
             References(x => x.StatusCode).Column("StatusCode");
             Map(x => x.DateAdded);
             Map(x => x.LastUpdate);
+            Map(x => x.Hide);
 
             HasMany(x => x.ProjectWorkgroups).Inverse().Cascade.AllDeleteOrphan();
         }

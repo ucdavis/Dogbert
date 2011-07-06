@@ -24,7 +24,7 @@ namespace Dogbert2.Controllers
         // GET: /Project/
         public ActionResult Index()
         {
-            var projectList = _projectRepository.Queryable;
+            var projectList = _projectRepository.Queryable.Where(a=>!a.Hide);
 
             return View(projectList.ToList());
         }
@@ -104,6 +104,9 @@ namespace Dogbert2.Controllers
 
             if (projectToEdit == null) return RedirectToAction("Index");
 
+            AutoMapper.Mapper.Map(project, projectToEdit);
+            projectToEdit.LastUpdate = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(projectToEdit);
@@ -112,13 +115,11 @@ namespace Dogbert2.Controllers
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-				var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
-                viewModel.Project = project;
+			
+            var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
+            viewModel.Project = project;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
         
         //
@@ -141,7 +142,9 @@ namespace Dogbert2.Controllers
 
             if (projectToDelete == null) return RedirectToAction("Index");
 
-            _projectRepository.Remove(projectToDelete);
+            projectToDelete.Hide = true;
+            _projectRepository.EnsurePersistent(projectToDelete);
+            //_projectRepository.Remove(projectToDelete);
 
             Message = "Project Removed Successfully";
 

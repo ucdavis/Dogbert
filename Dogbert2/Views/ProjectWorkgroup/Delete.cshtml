@@ -1,0 +1,39 @@
+﻿@model ProjectWorkgroup
+
+@{
+    ViewBag.Title = "Remove Workgroup";
+    ViewBag.SubTitle = "Are you sure you want to delete this?";
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+
+    <fieldset class="display-form">
+	    <legend>ProjectWorkgroup</legend>
+	    <ul>
+        
+            <li>
+			    <div class="display-label">Project</div>
+			    <div class="display-details">@Model.Project.Name</div>
+		    </li>
+
+            <li>
+			    <div class="display-label">Workgroup</div>
+			    <div class="display-details">@Model.Workgroup.Name</div>
+		    </li>
+
+
+		    <li>
+			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
+			    <div class="display-label">&nbsp;</div>
+			    <div class="display-details">
+			    <input class="button" type="submit" value="Remove" /> | @Html.ActionLink("Cancel", "Index")
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}
+
+
+
+
