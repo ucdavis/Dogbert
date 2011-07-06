@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Clients;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
+using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Core.Utils;
 
 namespace Dogbert2.Controllers
 {
     /// <summary>
     /// Controller for the Workgroup class
     /// </summary>
+    [AdminOnly]
     public class WorkgroupController : ApplicationController
     {
 	    private readonly IRepository<Workgroup> _workgroupRepository;
-        private readonly IDepartmentClient _departmentClient;
 
-        public WorkgroupController(IRepository<Workgroup> workgroupRepository, IDepartmentClient departmentClient)
+        public WorkgroupController(IRepository<Workgroup> workgroupRepository)
         {
             _workgroupRepository = workgroupRepository;
-            _departmentClient = departmentClient;
         }
 
         //
@@ -48,7 +47,7 @@ namespace Dogbert2.Controllers
         // GET: /Workgroup/Create
         public ActionResult Create()
         {
-			var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
+			var viewModel = WorkgroupViewModel.Create(Repository);
             
             return View(viewModel);
         } 
@@ -56,25 +55,21 @@ namespace Dogbert2.Controllers
         //
         // POST: /Workgroup/Create
         [HttpPost]
-        public ActionResult Create(Workgroup workgroup, Department dept)
+        public ActionResult Create(Workgroup workgroup)
         {
-            var workgroupToCreate = new Workgroup();
-
             if (ModelState.IsValid)
             {
-                _workgroupRepository.EnsurePersistent(workgroupToCreate);
+                _workgroupRepository.EnsurePersistent(workgroup);
 
                 Message = "Workgroup Created Successfully";
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-                var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
-                viewModel.Workgroup = workgroup;
 
-                return View(viewModel);
-            }
+            var viewModel = WorkgroupViewModel.Create(Repository);
+            viewModel.Workgroup = workgroup;
+
+            return View(viewModel);
         }
 
         //
@@ -85,7 +80,7 @@ namespace Dogbert2.Controllers
 
             if (workgroup == null) return RedirectToAction("Index");
 
-            var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
+            var viewModel = WorkgroupViewModel.Create(Repository);
 			viewModel.Workgroup = workgroup;
 
 			return View(viewModel);
@@ -100,6 +95,8 @@ namespace Dogbert2.Controllers
 
             if (workgroupToEdit == null) return RedirectToAction("Index");
 
+            AutoMapper.Mapper.Map(workgroup, workgroupToEdit);
+
             if (ModelState.IsValid)
             {
                 _workgroupRepository.EnsurePersistent(workgroupToEdit);
@@ -108,13 +105,11 @@ namespace Dogbert2.Controllers
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-                var viewModel = WorkgroupViewModel.Create(Repository, _departmentClient);
-                viewModel.Workgroup = workgroup;
+            
+            var viewModel = WorkgroupViewModel.Create(Repository);
+            viewModel.Workgroup = workgroup;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
         
         //
@@ -143,28 +138,17 @@ namespace Dogbert2.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+
+        public ActionResult AddWorker(int id)
+        {
+            return View();
+        }
+
+        public ActionResult RemoveWorker(int id)
+        {
+            return View();
+        }
+
     }
-
-	/// <summary>
-    /// ViewModel for the Workgroup class
-    /// </summary>
-    public class WorkgroupViewModel
-	{
-		public Workgroup Workgroup { get; set; }
-        public IEnumerable<Department> ServiceDepartments { get; set; }
-
-		public static WorkgroupViewModel Create(IRepository repository, IDepartmentClient departmentClient)
-		{
-			Check.Require(repository != null, "Repository must be supplied");
-
-		    var depts = new List<Department>();
-            depts.Add(new Department(string.Empty, "-- Select a Department --"));
-            depts.AddRange(departmentClient.GetAvailable());
-
-			var viewModel = new WorkgroupViewModel {Workgroup = new Workgroup(), ServiceDepartments = depts};
-
-			return viewModel;
-		}
-	}
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
+﻿using AutoMapper;
 using Dogbert2.Core.Domain;
 
 namespace Dogbert2.Helpers
@@ -27,6 +23,12 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.DateAdded, x=> x.Ignore())
                 .ForMember(x => x.LastUpdate, x=> x.Ignore())
                 .ForMember(x => x.ProjectWorkgroups, x=> x.Ignore());
+
+            CreateMap<Workgroup, Workgroup>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.IsActive, x => x.Ignore())
+                .ForMember(x => x.WorkgroupWorkers, x => x.Ignore())
+                .ForMember(x => x.ProjectWorkgroups, x => x.Ignore());
         }
     }
 }

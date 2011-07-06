@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
@@ -11,6 +12,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the ProjectWorkgroup class
     /// </summary>
+    [AllRoles]
     public class ProjectWorkgroupController : ApplicationController
     {
         private readonly IRepository<ProjectWorkgroup> _projectWorkgroupRepository;

@@ -51,11 +51,16 @@
 		<div id="personalbar">
 			<!-- Example Welcome user message -->
 			<div class="col1">
-				<span id="welcome_user">Welcome back Bender!</span>
+				<span id="welcome_user">
+                    @if (User.Identity.IsAuthenticated)
+                    { 
+                        <text>Welcome back @User.Identity.Name</text>
+                    }
+                </span>
 			</div>
 			<!-- Example logout button -->
 			<div class="col2">
-				<a href="#">Logout</a>
+				@Html.Partial("_Login")
 			</div>
 			
 		</div>

@@ -2,6 +2,7 @@
 
 @{
 	ViewBag.Title = "Workgroups";
+    ViewBag.NavigationKey = "Admin";
 }
 
 @section SubNav
@@ -64,16 +65,3 @@
 }
 	</tbody>
 </table>
-
-<script type="text/javascript">
-	$(function () {
-		$(".dt-table").dataTable({
-			"bJQueryUI": true //Use the jquery ui skin
-			//"aaSorting": [[ 3, "asc" ]] //Add default sorting
-		});
-	});
-</script>
-
-
-
-

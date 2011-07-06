@@ -1,0 +1,82 @@
+﻿@model Workgroup
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		
+			<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+			<li>@Html.ActionLink("Back to List", "Index")</li>
+		
+	</ul>
+}
+
+<fieldset class="display-form">
+    <legend>Workgroup</legend>
+	<ul>
+
+		<li>
+			<div class="display-label">Name</div>
+			<div class="display-details">@Model.Name</div>
+		</li>
+
+        <li>
+            <div class="display-label">Department</div>
+            <div class="display-details">@Model.Department.Name</div>
+        </li>
+
+        <li>
+            <div class="display-label"># Projects</div>
+            <div class="display-details">@Model.ProjectWorkgroups.Count</div>
+        </li>
+
+		<li>
+			<div class="display-label">IsActive</div>
+			<div class="display-details">@Model.IsActive</div>
+		</li>
+
+	</ul>
+</fieldset>
+
+<fieldset>
+
+    <legend>Workers</legend>
+
+    <table class="dt-table nofirsticon">
+    
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Login</th>
+                <th>Limited</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        
+            @foreach (var a in Model.WorkgroupWorkers)
+            { 
+                <tr>
+                    <td>@a.Worker.FirstName</td>
+                    <td>@a.Worker.LastName</td>
+                    <td>@a.Worker.LoginId</td>
+                    <td>@a.Limited</td>
+                    <td><a href='@Url.Action("RemoveWorker", new { id = a.Id })'>
+							<img src='@Url.Image("delete.png")' />
+						</a>
+                    </td>
+                </tr>
+            }
+        
+        </tbody>
+
+    </table>
+
+
+</fieldset>
+

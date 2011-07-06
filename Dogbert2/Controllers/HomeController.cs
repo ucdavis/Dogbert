@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Dogbert2.Filters;
 
 namespace Dogbert2.Controllers
 {
@@ -10,6 +11,12 @@ namespace Dogbert2.Controllers
         //
         // GET: /Home/
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        [AdminOnly]
+        public ActionResult Admin()
         {
             return View();
         }

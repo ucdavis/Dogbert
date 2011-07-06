@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
 
@@ -10,21 +11,23 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the Project class
     /// </summary>
-    [Authorize]
+    [AllRoles]
     public class ProjectController : ApplicationController
     {
 	    private readonly IRepository<Project> _projectRepository;
+        private readonly IRepository<ProjectWorkgroup> _projectWorkgroupRepository;
 
-        public ProjectController(IRepository<Project> projectRepository)
+        public ProjectController(IRepository<Project> projectRepository, IRepository<ProjectWorkgroup> projectWorkgroupRepository)
         {
             _projectRepository = projectRepository;
+            _projectWorkgroupRepository = projectWorkgroupRepository;
         }
-    
+
         //
         // GET: /Project/
         public ActionResult Index()
         {
-            var projectList = _projectRepository.Queryable.Where(a=>!a.Hide);
+            var projectList = _projectWorkgroupRepository.Queryable.Where(a => a.Workgroup.IsActive && !a.Project.Hide).Select(a => a.Project);
 
             return View(projectList.ToList());
         }

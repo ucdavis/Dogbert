@@ -26,7 +26,7 @@ namespace Dogbert2.Core.Domain
         {
             IsActive = true;
 
-            Workgroups = new List<Workgroup>();
+            WorkgroupWorkers = new List<WorkgroupWorker>();
             ProjectManagers = new List<Project>();
             LeadProgrammers = new List<Project>();
         }
@@ -45,7 +45,8 @@ namespace Dogbert2.Core.Domain
         public virtual string LastName { get; set; }
         public virtual bool IsActive { get; set; }
 
-        public virtual IList<Workgroup> Workgroups { get; set; }
+        //public virtual IList<Workgroup> Workgroups { get; set; }
+        public virtual IList<WorkgroupWorker> WorkgroupWorkers { get; set; }
 
         /// <summary>
         /// Projects this user is a project manager for
@@ -59,7 +60,9 @@ namespace Dogbert2.Core.Domain
         #region Calculated Fields
         [Display(Name="Workgroups")]
         public virtual string WorkgroupNames { 
-            get { var names = string.Join(", ", Workgroups.Select(a => a.Name));
+            get {
+                var workgroups = WorkgroupWorkers.Select(a => a.Workgroup);
+                var names = string.Join(", ", workgroups.Select(a => a.Name));
                 return !string.IsNullOrWhiteSpace(names) ? names : "n/a";
             }
         }
@@ -81,11 +84,12 @@ namespace Dogbert2.Core.Domain
             Map(x => x.LastName);
             Map(x => x.IsActive);
 
-            HasManyToMany(x => x.Workgroups)
-                .ParentKeyColumn("WorkerId").ChildKeyColumn("WorkgroupId")
-                .Table("WorkgroupsXWorkers").Cascade.SaveUpdate();
-            HasMany(x => x.ProjectManagers).KeyColumn("ProjectManagerId");
-            HasMany(x => x.LeadProgrammers).KeyColumn("LeadProgrammerId");
+            //HasManyToMany(x => x.Workgroups)
+            //    .ParentKeyColumn("WorkerId").ChildKeyColumn("WorkgroupId")
+            //    .Table("WorkgroupsXWorkers").Cascade.SaveUpdate();
+            HasMany(x => x.WorkgroupWorkers).Inverse();
+            HasMany(x => x.ProjectManagers).KeyColumn("ProjectManagerId").Inverse();
+            HasMany(x => x.LeadProgrammers).KeyColumn("LeadProgrammerId").Inverse();
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model Dogbert2.Models.WorkgroupViewModel
+
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>Workgroup</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.Workgroup.Name)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Workgroup.Name)
+				    @Html.ValidationMessageFor(model => model.Workgroup.Name)
+			    </div>
+		    </li>
+            
+            <li>
+                <div class="editor-label required">
+                    @Html.LabelFor(model => model.Workgroup.Department)<span>*</span>
+                </div>
+                <div class="editor-field">
+                    @this.Select("Workgroup.Department").Options(Model.Departments, x=>x.Id,x=>x.Name).FirstOption("--Select Department--").Selected(Model.Workgroup.Department != null ? Model.Workgroup.Department.Id : string.Empty)
+                    @Html.ValidationMessageFor(a=>a.Workgroup.Department)
+                </div>
+            </li>
+
+		    <li>
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index")
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}

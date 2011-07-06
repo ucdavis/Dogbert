@@ -61,6 +61,7 @@
     <Compile Include="Domain\StatusCode.cs" />
     <Compile Include="Domain\Worker.cs" />
     <Compile Include="Domain\Workgroup.cs" />
+    <Compile Include="Domain\WorkgroupWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

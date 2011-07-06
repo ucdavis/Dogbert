@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
 
@@ -10,6 +11,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the Worker class
     /// </summary>
+    [AdminOnly]
     public class WorkerController : ApplicationController
     {
 	    private readonly IRepository<Worker> _workerRepository;

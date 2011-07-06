@@ -31,14 +31,13 @@ namespace Dogbert2.Models
                 StatusCodes = repository.OfType<StatusCode>().GetAll(),
                 ProjectTypes = repository.OfType<ProjectType>().Queryable.Where(a=>a.IsActive).OrderBy(a=>a.Order).ToList(),
                 PriorityTypes = repository.OfType<PriorityType>().Queryable.OrderBy(a=>a.Order).ToList(),
-                Workgroups = worker.Workgroups,
-                //Workers = new List<Worker>()
+                Workgroups = worker.WorkgroupWorkers.Where(a=>a.Workgroup.IsActive).Select(a=>a.Workgroup).ToList(),
             };
 
             var workers = new List<Worker>();
             foreach (var a in viewModel.Workgroups)
             {
-                workers.AddRange(a.Workers);
+                workers.AddRange(a.WorkgroupWorkers.Select(b=>b.Worker).ToList());
             }
             viewModel.Workers = workers.Distinct().OrderBy(a => a.LastName).ToList();
 

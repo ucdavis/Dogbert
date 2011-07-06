@@ -21,7 +21,7 @@ namespace Dogbert2.Models
             var viewModel = new ProjectWorkgroupViewModel
                                 {
                                     ProjectWorkgroup = projectWorkgroup ?? new ProjectWorkgroup(),
-                                    Workgroups = repository.OfType<Worker>().Queryable.Where(a=>a.LoginId == loginId).FirstOrDefault().Workgroups
+                                    Workgroups = repository.OfType<Worker>().Queryable.Where(a=>a.LoginId == loginId).FirstOrDefault().WorkgroupWorkers.Select(a=>a.Workgroup).ToList()
                                 };
  
             return viewModel;
