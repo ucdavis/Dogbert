@@ -1,8 +1,0 @@
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB_Script.PreDeployment.sql
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB_Script.PostDeployment.sql
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB_Database.sqlsettings
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB_Database.sqldeployment
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB_Database.sqlcmdvars
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB.deploymanifest
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\sql\debug\Dogbert2.DB.dbschema
-C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2.DB\obj\Debug\Dogbert2.DB.dbschema

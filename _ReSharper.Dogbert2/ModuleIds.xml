@@ -1,5 +1,0 @@
-<Modules>
-  <Module PersistentId="B63466E5-172F-48AF-BB1D-EF36DCC51AF6" ModuleId="Dogbert2" />
-  <Module PersistentId="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE" ModuleId="Dogbert2.Core" />
-  <Module PersistentId="04CB5055-55A5-4B1C-90FD-460EB958E374" ModuleId="Dogbert2.Clients" />
-</Modules>
