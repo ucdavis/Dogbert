@@ -33,3 +33,6 @@ C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\bin\Dogbert
 C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\Dogbert2.dll
 C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\Dogbert2.pdb
+C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\Dogbert2.App_GlobalResources.Messages.resources
+C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\lai\Documents\Visual Studio 2010\Projects\Dogbert2\Dogbert2\obj\Debug\GenerateResource.write.1.tlog

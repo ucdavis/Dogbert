@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert2.App_GlobalResources;
 using Dogbert2.Clients;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
@@ -188,10 +189,42 @@ namespace Dogbert2.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Removes a user from a workgroup
+        /// </summary>
+        /// <param name="id">Workgroup Worker Id</param>
+        /// <returns></returns>
         public ActionResult RemoveWorker(int id)
         {
-            return View();
+            var workgroupWorker = _workgroupWorkerRepository.GetNullableById(id);
+
+            if (workgroupWorker == null)
+            {
+                Message = string.Format(Messages.NotFound, "Workgroup Worker", id);
+                return this.RedirectToAction(a => a.Index());
+            }
+
+            return View(workgroupWorker);
         }
 
+        [HttpPost]
+        public ActionResult RemoveWorker(int id, WorkgroupWorker workgroupWorker)
+        {
+            workgroupWorker = _workgroupWorkerRepository.GetNullableById(id);
+
+            if (workgroupWorker == null)
+            {
+                Message = string.Format(Messages.NotFound, "Workgroup Worker", id);
+                return this.RedirectToAction(a => a.Index());
+            }
+
+            var workgroupId = workgroupWorker.Workgroup.Id;
+
+            _workgroupWorkerRepository.Remove(workgroupWorker);
+
+            Message = string.Format(Messages.Deleted, "Workgroup Worker");
+
+            return this.RedirectToAction(a => a.Details(workgroupId));
+        }
     }
 }
