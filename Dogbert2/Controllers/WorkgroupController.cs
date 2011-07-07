@@ -6,6 +6,8 @@ using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
+using MvcContrib;
+using UCDArch.Web.Helpers;
 
 namespace Dogbert2.Controllers
 {
@@ -16,10 +18,12 @@ namespace Dogbert2.Controllers
     public class WorkgroupController : ApplicationController
     {
 	    private readonly IRepository<Workgroup> _workgroupRepository;
+        private readonly IRepository<WorkgroupWorker> _workgroupWorkerRepository;
 
-        public WorkgroupController(IRepository<Workgroup> workgroupRepository)
+        public WorkgroupController(IRepository<Workgroup> workgroupRepository, IRepository<WorkgroupWorker> workgroupWorkerRepository)
         {
             _workgroupRepository = workgroupRepository;
+            _workgroupWorkerRepository = workgroupWorkerRepository;
         }
 
         //
@@ -139,10 +143,49 @@ namespace Dogbert2.Controllers
             return RedirectToAction("Index");
         }
 
-
+        /// <summary>
+        /// Add a worker to a workgroup
+        /// </summary>
+        /// <param name="id">Workgroup Id</param>
+        /// <returns></returns>
         public ActionResult AddWorker(int id)
         {
-            return View();
+            var workgroup = _workgroupRepository.GetNullableById(id);
+            if (workgroup == null) return this.RedirectToAction(a => a.Index());
+
+            var viewModel = WorkgroupWorkerViewModel.Create(Repository, workgroup, CurrentUser.Identity.Name);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddWorker(int id, WorkgroupWorker workgroupWorker)
+        {
+            var workgroup = _workgroupRepository.GetNullableById(id);
+            if (workgroup == null) return this.RedirectToAction(a => a.Index());
+
+            workgroupWorker.Workgroup = workgroup;
+
+            ModelState.Clear();
+            workgroupWorker.TransferValidationMessagesTo(ModelState);
+
+            // check to make sure user isn't already part of workgroup
+            if (_workgroupWorkerRepository.Queryable.Where(a => a.Workgroup == workgroup && a.Worker == workgroupWorker.Worker).Any())
+            {
+                ModelState.AddModelError("", "Worker is already part of workgroup.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _workgroupWorkerRepository.EnsurePersistent(workgroupWorker);
+
+                Message = "Worker has been added to workgroup.";
+
+                return this.RedirectToAction(a => a.Details(id));
+            }
+
+            var viewModel = WorkgroupWorkerViewModel.Create(Repository, workgroup, CurrentUser.Identity.Name);
+            viewModel.WorkgroupWorker = workgroupWorker;
+            return View(viewModel);
         }
 
         public ActionResult RemoveWorker(int id)

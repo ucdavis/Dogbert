@@ -1,0 +1,50 @@
+﻿@model WorkgroupWorkerViewModel
+
+@{
+	ViewBag.Title = "Add Worker";
+    ViewBag.NavigationalKey = "Admin";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to Workgroup", "Details", new { id=Model.WorkgroupWorker.Workgroup.Id })</li>
+	</ul>
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    @Html.HiddenFor(a=>a.WorkgroupWorker.Workgroup)
+    <fieldset>
+	    <legend>WorkgroupWorkerViewModel</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+
+            <li><div class="editor-label required">Workgroup<span>*</span></div>
+                <div class="editor-field">@Model.WorkgroupWorker.Workgroup.Name</div>
+            </li>
+
+            <li><div class="editor-label required">Worker<span>*</span></div>
+                <div class="editor-field">
+                    @this.Select("WorkgroupWorker.Worker").Options(Model.Workers, x=>x.Id, x=>x.FullName).FirstOption("--Select Worker").Selected(Model.WorkgroupWorker.Worker != null ? Model.WorkgroupWorker.Worker.Id.ToString() : string.Empty)
+                </div>
+            </li>
+
+            <li><div class="editor-label">Limited</div>
+                <div class="editor-field">@Html.CheckBoxFor(x=>x.WorkgroupWorker.Limited)</div>
+            </li>
+
+		    <li>
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Add" /> | @Html.ActionLink("Cancel", "Details", new { id = Model.WorkgroupWorker.Workgroup.Id })
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}
+
+
+
+

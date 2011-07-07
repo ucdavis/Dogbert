@@ -192,6 +192,36 @@ ALTER TABLE [dbo].[Departments]
 
 
 GO
+PRINT N'Creating [dbo].[PriorityTypes]...';
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+CREATE TABLE [dbo].[PriorityTypes] (
+    [Id]       CHAR (1)     NOT NULL,
+    [Name]     VARCHAR (50) NOT NULL,
+    [IsActive] BIT          NOT NULL,
+    [Order]    INT          NULL
+);
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+PRINT N'Creating PK_PriorityTypes...';
+
+
+GO
+ALTER TABLE [dbo].[PriorityTypes]
+    ADD CONSTRAINT [PK_PriorityTypes] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
 PRINT N'Creating [dbo].[Projects]...';
 
 
@@ -201,22 +231,25 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 GO
 CREATE TABLE [dbo].[Projects] (
-    [Id]             INT           IDENTITY (1, 1) NOT NULL,
-    [Name]           VARCHAR (50)  NOT NULL,
-    [Priority]       CHAR (1)      NULL,
-    [Deadline]       DATE          NULL,
-    [ProjectedBegin] DATE          NULL,
-    [Begin]          DATE          NULL,
-    [ProjectedEnd]   DATE          NULL,
-    [End]            DATE          NULL,
-    [Contact]        VARCHAR (100) NOT NULL,
-    [ContactEmail]   VARCHAR (100) NULL,
-    [Unit]           VARCHAR (50)  NOT NULL,
-    [StatusCode]     CHAR (1)      NOT NULL,
-    [ProjectManager] VARCHAR (100) NULL,
-    [LeadProgrammer] VARCHAR (100) NULL,
-    [DateAdded]      DATETIME      NULL,
-    [LastUpdate]     DATETIME      NULL
+    [Id]               INT           IDENTITY (1, 1) NOT NULL,
+    [ProjectTypeId]    CHAR (2)      NOT NULL,
+    [Name]             VARCHAR (50)  NOT NULL,
+    [Priority]         CHAR (1)      NULL,
+    [Complexity]       SMALLINT      NULL,
+    [Deadline]         DATE          NULL,
+    [ProjectedBegin]   DATE          NULL,
+    [Begin]            DATE          NULL,
+    [ProjectedEnd]     DATE          NULL,
+    [End]              DATE          NULL,
+    [Contact]          VARCHAR (100) NOT NULL,
+    [ContactEmail]     VARCHAR (100) NULL,
+    [Unit]             VARCHAR (50)  NOT NULL,
+    [StatusCode]       CHAR (1)      NOT NULL,
+    [ProjectManagerId] INT           NULL,
+    [LeadProgrammerId] INT           NULL,
+    [DateAdded]        DATETIME      NULL,
+    [LastUpdate]       DATETIME      NULL,
+    [Hide]             BIT           NOT NULL
 );
 
 
@@ -264,6 +297,64 @@ ALTER TABLE [dbo].[ProjectsXWorkgroups]
 
 
 GO
+PRINT N'Creating [dbo].[ProjectTypes]...';
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+CREATE TABLE [dbo].[ProjectTypes] (
+    [Id]       CHAR (2)     NOT NULL,
+    [Name]     VARCHAR (50) NOT NULL,
+    [IsActive] BIT          NOT NULL,
+    [Order]    INT          NOT NULL
+);
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+PRINT N'Creating PK_ProjectTypes...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectTypes]
+    ADD CONSTRAINT [PK_ProjectTypes] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Creating [dbo].[StatusCodes]...';
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+CREATE TABLE [dbo].[StatusCodes] (
+    [Id]   CHAR (1)     NOT NULL,
+    [Name] VARCHAR (50) NOT NULL
+);
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+PRINT N'Creating PK_StatusCodes...';
+
+
+GO
+ALTER TABLE [dbo].[StatusCodes]
+    ADD CONSTRAINT [PK_StatusCodes] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
 PRINT N'Creating [dbo].[Workers]...';
 
 
@@ -273,7 +364,8 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 GO
 CREATE TABLE [dbo].[Workers] (
-    [Id]        VARCHAR (10) NOT NULL,
+    [Id]        INT          IDENTITY (1, 1) NOT NULL,
+    [LoginId]   VARCHAR (10) NOT NULL,
     [FirstName] VARCHAR (50) NOT NULL,
     [LastName]  VARCHAR (50) NOT NULL,
     [IsActive]  BIT          NOT NULL
@@ -303,7 +395,7 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 GO
 CREATE TABLE [dbo].[Workgroups] (
-    [Id]           INT           NOT NULL,
+    [Id]           INT           IDENTITY (1, 1) NOT NULL,
     [Name]         VARCHAR (100) NOT NULL,
     [IsActive]     BIT           NOT NULL,
     [DepartmentId] CHAR (4)      NOT NULL
@@ -333,8 +425,8 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 GO
 CREATE TABLE [dbo].[WorkgroupsXWorkers] (
-    [WorkerId]    VARCHAR (10) NOT NULL,
-    [WorkgroupId] INT          NOT NULL
+    [WorkerId]    INT NOT NULL,
+    [WorkgroupId] INT NOT NULL
 );
 
 
@@ -349,6 +441,33 @@ PRINT N'Creating PK_WorkgroupsXWorkers...';
 GO
 ALTER TABLE [dbo].[WorkgroupsXWorkers]
     ADD CONSTRAINT [PK_WorkgroupsXWorkers] PRIMARY KEY CLUSTERED ([WorkerId] ASC, [WorkgroupId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Creating DF_PriorityTypes_IsActive...';
+
+
+GO
+ALTER TABLE [dbo].[PriorityTypes]
+    ADD CONSTRAINT [DF_PriorityTypes_IsActive] DEFAULT ((1)) FOR [IsActive];
+
+
+GO
+PRINT N'Creating DF_Projects_Hide...';
+
+
+GO
+ALTER TABLE [dbo].[Projects]
+    ADD CONSTRAINT [DF_Projects_Hide] DEFAULT ((0)) FOR [Hide];
+
+
+GO
+PRINT N'Creating DF_ProjectTypes_IsActive...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectTypes]
+    ADD CONSTRAINT [DF_ProjectTypes_IsActive] DEFAULT ((1)) FOR [IsActive];
 
 
 GO
@@ -367,6 +486,42 @@ PRINT N'Creating DF_Workgroups_IsActive...';
 GO
 ALTER TABLE [dbo].[Workgroups]
     ADD CONSTRAINT [DF_Workgroups_IsActive] DEFAULT ((1)) FOR [IsActive];
+
+
+GO
+PRINT N'Creating FK_Projects_PriorityTypes...';
+
+
+GO
+ALTER TABLE [dbo].[Projects] WITH NOCHECK
+    ADD CONSTRAINT [FK_Projects_PriorityTypes] FOREIGN KEY ([Priority]) REFERENCES [dbo].[PriorityTypes] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Creating FK_Projects_ProjectTypes...';
+
+
+GO
+ALTER TABLE [dbo].[Projects] WITH NOCHECK
+    ADD CONSTRAINT [FK_Projects_ProjectTypes] FOREIGN KEY ([ProjectTypeId]) REFERENCES [dbo].[ProjectTypes] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Creating FK_Projects_Workers...';
+
+
+GO
+ALTER TABLE [dbo].[Projects] WITH NOCHECK
+    ADD CONSTRAINT [FK_Projects_Workers] FOREIGN KEY ([LeadProgrammerId]) REFERENCES [dbo].[Workers] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Creating FK_Projects_Workers1...';
+
+
+GO
+ALTER TABLE [dbo].[Projects] WITH NOCHECK
+    ADD CONSTRAINT [FK_Projects_Workers1] FOREIGN KEY ([ProjectManagerId]) REFERENCES [dbo].[Workers] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -443,6 +598,14 @@ USE [$(DatabaseName)];
 
 
 GO
+ALTER TABLE [dbo].[Projects] WITH CHECK CHECK CONSTRAINT [FK_Projects_PriorityTypes];
+
+ALTER TABLE [dbo].[Projects] WITH CHECK CHECK CONSTRAINT [FK_Projects_ProjectTypes];
+
+ALTER TABLE [dbo].[Projects] WITH CHECK CHECK CONSTRAINT [FK_Projects_Workers];
+
+ALTER TABLE [dbo].[Projects] WITH CHECK CHECK CONSTRAINT [FK_Projects_Workers1];
+
 ALTER TABLE [dbo].[ProjectsXWorkgroups] WITH CHECK CHECK CONSTRAINT [FK_ProjectsXWorkgroups_Projects];
 
 ALTER TABLE [dbo].[ProjectsXWorkgroups] WITH CHECK CHECK CONSTRAINT [FK_ProjectsXWorkgroups_Workgroups];

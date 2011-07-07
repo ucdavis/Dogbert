@@ -9,54 +9,54 @@
   <CompletionStatisticsManager>
     <ItemStatistics item="Default">
       <Item value="Authorize" priority="0" />
-      <Item value="string" priority="27" />
-      <Item value="if" priority="4" />
+      <Item value="string" priority="35" />
+      <Item value="if" priority="10" />
       <Item value="resultUrl" priority="1" />
-      <Item value="return" priority="4" />
+      <Item value="return" priority="12" />
       <Item value="Redirect`0" priority="1" />
-      <Item value="this" priority="0" />
-      <Item value="action" priority="5" />
-      <Item value="a" priority="7" />
-      <Item value="using" priority="3" />
-      <Item value="MvcContrib" priority="0" />
-      <Item value="ctor" priority="5" />
+      <Item value="this" priority="5" />
+      <Item value="action" priority="8" />
+      <Item value="a" priority="31" />
+      <Item value="using" priority="6" />
+      <Item value="MvcContrib" priority="2" />
+      <Item value="ctor" priority="9" />
       <Item value="CASHelper`0" priority="0" />
       <Item value="TempData" priority="0" />
       <Item value="returnUrl" priority="0" />
-      <Item value="propv" priority="37" />
-      <Item value="DomainObjectWithTypedId" priority="3" />
-      <Item value="classMap" priority="7" />
-      <Item value="Department`0" priority="1" />
-      <Item value="map" priority="26" />
+      <Item value="propv" priority="47" />
+      <Item value="DomainObjectWithTypedId" priority="4" />
+      <Item value="classMap" priority="10" />
+      <Item value="Department`0" priority="2" />
+      <Item value="map" priority="31" />
       <Item value="IFormatProvider`0" priority="0" />
-      <Item value="bool" priority="0" />
-      <Item value="StringLength" priority="7" />
+      <Item value="bool" priority="3" />
+      <Item value="StringLength" priority="8" />
       <Item value="setDefault" priority="5" />
-      <Item value="IsActive" priority="0" />
-      <Item value="true" priority="1" />
+      <Item value="IsActive" priority="1" />
+      <Item value="true" priority="3" />
       <Item value="SetDefaults`0" priority="4" />
       <Item value="firstName" priority="1" />
-      <Item value="FirstName" priority="0" />
-      <Item value="LastName" priority="0" />
+      <Item value="FirstName" priority="1" />
+      <Item value="LastName" priority="1" />
       <Item value="lastName" priority="0" />
-      <Item value="prop" priority="9" />
-      <Item value="IList" priority="6" />
-      <Item value="Worker`0" priority="4" />
-      <Item value="reference" priority="6" />
-      <Item value="Project`0" priority="3" />
-      <Item value="HasMany`1" priority="5" />
+      <Item value="prop" priority="17" />
+      <Item value="IList" priority="8" />
+      <Item value="Worker`0" priority="6" />
+      <Item value="reference" priority="9" />
+      <Item value="Project`0" priority="5" />
+      <Item value="HasMany`1" priority="7" />
       <Item value="HasManyToMany`1" priority="2" />
-      <Item value="Workgroup`0" priority="4" />
-      <Item value="Workgroups" priority="7" />
-      <Item value="Workgroup" priority="0" />
-      <Item value="int" priority="3" />
-      <Item value="Table`0" priority="0" />
+      <Item value="Workgroup`0" priority="13" />
+      <Item value="Workgroups" priority="9" />
+      <Item value="Workgroup" priority="2" />
+      <Item value="int" priority="7" />
+      <Item value="Table`0" priority="1" />
       <Item value="Workers" priority="1" />
-      <Item value="new" priority="9" />
+      <Item value="new" priority="13" />
       <Item value="List&lt;Worker&gt;" priority="0" />
       <Item value="List&lt;Workgroup&gt;" priority="1" />
       <Item value="char" priority="2" />
-      <Item value="DateTime`0" priority="8" />
+      <Item value="DateTime`0" priority="9" />
       <Item value="StatusCode" priority="0" />
       <Item value="ClassMap" priority="0" />
       <Item value="StatusCode`0" priority="2" />
@@ -64,47 +64,102 @@
       <Item value="Required" priority="0" />
       <Item value="DateAdded" priority="0" />
       <Item value="LastUpdate" priority="0" />
-      <Item value="Display" priority="2" />
-      <Item value="Name" priority="2" />
+      <Item value="Display" priority="6" />
+      <Item value="Name" priority="6" />
       <Item value="Id" priority="0" />
       <Item value="login" priority="1" />
       <Item value="worker" priority="5" />
-      <Item value="ModelState" priority="1" />
+      <Item value="ModelState" priority="3" />
       <Item value="DomainObject`0" priority="0" />
       <Item value="LoginId" priority="0" />
       <Item value="workerToDelete" priority="1" />
-      <Item value="false" priority="0" />
+      <Item value="false" priority="2" />
       <Item value="_workerRepository" priority="2" />
-      <Item value="var" priority="5" />
+      <Item value="var" priority="15" />
       <Item value="w" priority="3" />
       <Item value="null" priority="0" />
       <Item value="else" priority="0" />
-      <Item value="public" priority="0" />
-      <Item value="ProjectWorkgroups`0" priority="2" />
-      <Item value="System" priority="2" />
-      <Item value="Linq" priority="2" />
+      <Item value="public" priority="6" />
+      <Item value="ProjectWorkgroups`0" priority="3" />
+      <Item value="System" priority="3" />
+      <Item value="Linq" priority="3" />
       <Item value="names" priority="2" />
       <Item value="ProjectManagers" priority="0" />
       <Item value="List&lt;Project&gt;" priority="1" />
       <Item value="LeadProgrammers" priority="0" />
       <Item value="Range" priority="0" />
-      <Item value="IEnumerable" priority="2" />
+      <Item value="IEnumerable" priority="3" />
       <Item value="StatusCodes" priority="0" />
-      <Item value="repository" priority="2" />
+      <Item value="repository" priority="5" />
       <Item value="throw" priority="0" />
       <Item value="require" priority="0" />
-      <Item value="viewModel" priority="4" />
+      <Item value="viewModel" priority="5" />
       <Item value="List" priority="1" />
-      <Item value="foreach" priority="0" />
-      <Item value="in" priority="0" />
+      <Item value="foreach" priority="1" />
+      <Item value="in" priority="1" />
       <Item value="workers" priority="1" />
-      <Item value="CurrentUser" priority="3" />
+      <Item value="CurrentUser" priority="5" />
       <Item value="ProjectWorkgroupses" priority="0" />
-      <Item value="ProjectWorkgroups" priority="2" />
+      <Item value="ProjectWorkgroups" priority="3" />
       <Item value="List&lt;ProjectWorkgroups&gt;" priority="1" />
       <Item value="ReadOnly`0" priority="0" />
-      <Item value="PriorityType`0" priority="1" />
+      <Item value="PriorityType`0" priority="2" />
       <Item value="PriorityTypes" priority="0" />
+      <Item value="ProjectType" priority="0" />
+      <Item value="ProjectType`0" priority="1" />
+      <Item value="ProjectTypes" priority="0" />
+      <Item value="workgroup" priority="7" />
+      <Item value="project" priority="5" />
+      <Item value="void" priority="0" />
+      <Item value="Project" priority="2" />
+      <Item value="pworkgroup" priority="0" />
+      <Item value="ProjectPostModel`0" priority="2" />
+      <Item value="ActionResult`0" priority="0" />
+      <Item value="projectPostModel" priority="4" />
+      <Item value="AutoMapper" priority="1" />
+      <Item value="Mapper`0" priority="1" />
+      <Item value="CreateMap`0" priority="1" />
+      <Item value="x" priority="22" />
+      <Item value="projectToEdit" priority="1" />
+      <Item value="Hide" priority="0" />
+      <Item value="projectToDelete" priority="1" />
+      <Item value="_projectRepository" priority="1" />
+      <Item value="IRepository`0" priority="1" />
+      <Item value="RedirectToAction`0" priority="0" />
+      <Item value="ProjectController`0" priority="1" />
+      <Item value="ProjectWorkgroup`0" priority="1" />
+      <Item value="projectWorkgroup" priority="4" />
+      <Item value="ViewData" priority="0" />
+      <Item value="ViewBag" priority="0" />
+      <Item value="id" priority="0" />
+      <Item value="WorkerController`0" priority="0" />
+      <Item value="loginId" priority="2" />
+      <Item value="ProjectWorkgroup" priority="0" />
+      <Item value="_projectWorkgroupRepository" priority="1" />
+      <Item value="projectWorkgroupToDelete" priority="0" />
+      <Item value="projectId" priority="0" />
+      <Item value="class" priority="0" />
+      <Item value="AuthorizeAttribute`0" priority="0" />
+      <Item value="Roles`0" priority="0" />
+      <Item value="RoleNames`0" priority="2" />
+      <Item value="static" priority="1" />
+      <Item value="readonly" priority="0" />
+      <Item value="Roles" priority="0" />
+      <Item value="enum" priority="0" />
+      <Item value="AccessLevel`0" priority="4" />
+      <Item value="container" priority="0" />
+      <Item value="Component`0" priority="0" />
+      <Item value="workgroups" priority="2" />
+      <Item value="WorkgroupWorkers`0" priority="0" />
+      <Item value="WorkgroupWorkerses" priority="0" />
+      <Item value="WorkgroupWorkers" priority="2" />
+      <Item value="List&lt;WorkgroupWorker&gt;" priority="1" />
+      <Item value="WorkgroupWorker`0" priority="1" />
+      <Item value="c" priority="0" />
+      <Item value="b" priority="3" />
+      <Item value="virtual" priority="0" />
+      <Item value="Departments" priority="0" />
+      <Item value="workgroupToEdit" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@UCDArch.Web.Authentication.CASHelper">
       <Item value="Login`0" priority="0" />
@@ -123,18 +178,21 @@
       <Item value="FirstName" priority="0" />
       <Item value="LastName" priority="1" />
       <Item value="IsActive" priority="4" />
-      <Item value="Workgroups" priority="2" />
+      <Item value="Workgroups" priority="3" />
       <Item value="Id" priority="0" />
-      <Item value="LoginId" priority="4" />
+      <Item value="LoginId" priority="8" />
       <Item value="ProjectManagers" priority="0" />
       <Item value="LeadProgrammers" priority="0" />
+      <Item value="WorkgroupWorkers" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Dogbert2.Core.Domain.Workgroup">
-      <Item value="Name" priority="1" />
-      <Item value="IsActive" priority="0" />
+      <Item value="Name" priority="2" />
+      <Item value="IsActive" priority="3" />
       <Item value="Department" priority="0" />
-      <Item value="Workers" priority="2" />
-      <Item value="ProjectWorkgroups" priority="0" />
+      <Item value="Workers" priority="3" />
+      <Item value="ProjectWorkgroups" priority="1" />
+      <Item value="WorkgroupWorkers" priority="3" />
+      <Item value="Id" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:FluentNHibernate.Mapping.ManyToManyPart`1">
       <Item value="ParentKeyColumn`0" priority="1" />
@@ -148,7 +206,7 @@
       <Item value="All`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:FluentNHibernate.Mapping.OneToManyPart`1">
-      <Item value="Inverse`0" priority="1" />
+      <Item value="Inverse`0" priority="6" />
       <Item value="Cascade" priority="1" />
       <Item value="KeyColumn`0" priority="1" />
     </ItemStatistics>
@@ -165,22 +223,26 @@
       <Item value="Priority" priority="1" />
       <Item value="Deadline" priority="0" />
       <Item value="ProjectedBegin" priority="0" />
-      <Item value="Begin" priority="0" />
+      <Item value="Begin" priority="1" />
       <Item value="ProjectedEnd" priority="0" />
-      <Item value="End" priority="0" />
+      <Item value="End" priority="1" />
       <Item value="ProjectManager" priority="0" />
       <Item value="LeadProgrammer" priority="0" />
       <Item value="StatusCode" priority="0" />
-      <Item value="DateAdded" priority="0" />
-      <Item value="LastUpdate" priority="0" />
+      <Item value="DateAdded" priority="1" />
+      <Item value="LastUpdate" priority="2" />
       <Item value="Contact" priority="1" />
       <Item value="Unit" priority="0" />
       <Item value="Complexity" priority="0" />
       <Item value="Workgroups" priority="0" />
-      <Item value="ProjectWorkgroups" priority="1" />
+      <Item value="ProjectWorkgroups" priority="5" />
+      <Item value="ProjectType" priority="1" />
+      <Item value="AddWorkgroup`0" priority="0" />
+      <Item value="Id" priority="2" />
+      <Item value="Hide" priority="3" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:FluentNHibernate.Mapping.PropertyPart">
-      <Item value="Column`0" priority="1" />
+      <Item value="Column`0" priority="4" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:FluentNHibernate.Mapping.ManyToOnePart`1">
       <Item value="Column`0" priority="3" />
@@ -189,36 +251,38 @@
       <Item value="EmailAddress" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.DateTime">
-      <Item value="Now" priority="1" />
+      <Item value="Now" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Web.Mvc.ModelStateDictionary">
-      <Item value="AddModelError`0" priority="1" />
+      <Item value="AddModelError`0" priority="3" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:UCDArch.Core.PersistanceSupport.IRepository`1">
-      <Item value="EnsurePersistent`0" priority="1" />
-      <Item value="Queryable" priority="2" />
-      <Item value="GetAll`0" priority="0" />
+      <Item value="EnsurePersistent`0" priority="2" />
+      <Item value="Queryable" priority="6" />
+      <Item value="GetAll`0" priority="1" />
+      <Item value="GetNullableById`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Linq.IQueryable`1">
-      <Item value="Where`1" priority="0" />
-      <Item value="Any`1" priority="0" />
-      <Item value="FirstOrDefault`1" priority="1" />
-      <Item value="Select`2" priority="0" />
+      <Item value="Where`1" priority="5" />
+      <Item value="Any`1" priority="1" />
+      <Item value="FirstOrDefault`1" priority="2" />
+      <Item value="Select`2" priority="1" />
       <Item value="ToList`1" priority="1" />
       <Item value="First`1" priority="0" />
-      <Item value="OrderBy`2" priority="0" />
+      <Item value="OrderBy`2" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
-      <Item value="Format`0" priority="0" />
+      <Item value="Format`0" priority="1" />
       <Item value="Join`0" priority="1" />
       <Item value="IsNullOrWhiteSpace`0" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:UCDArch.Core.PersistanceSupport.IRepository">
-      <Item value="OfType`1" priority="2" />
+      <Item value="OfType`1" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Dogbert2.Models.ProjectViewModel">
-      <Item value="Workers" priority="2" />
+      <Item value="Workers" priority="3" />
       <Item value="Workgroups" priority="0" />
+      <Item value="Workgroup" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
       <Item value="AddRange`0" priority="0" />
@@ -227,15 +291,17 @@
     <ItemStatistics item="Qualified:System.Collections.Generic.IEnumerable`1">
       <Item value="OrderBy`2" priority="0" />
       <Item value="Count`1" priority="0" />
+      <Item value="Any`1" priority="0" />
+      <Item value="ToList`1" priority="2" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Linq.IOrderedEnumerable`1">
       <Item value="ToList`1" priority="0" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Security.Principal.IPrincipal">
-      <Item value="Identity" priority="3" />
+      <Item value="Identity" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Security.Principal.IIdentity">
-      <Item value="Name" priority="3" />
+      <Item value="Name" priority="5" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Dogbert2.Core.Domain.PriorityType">
       <Item value="Name" priority="0" />
@@ -243,73 +309,140 @@
       <Item value="Order" priority="1" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Linq.IOrderedQueryable`1">
-      <Item value="ToList`1" priority="0" />
+      <Item value="ToList`1" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Core.Domain.ProjectType">
+      <Item value="Name" priority="0" />
+      <Item value="IsActive" priority="1" />
+      <Item value="Order" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IList`1">
+      <Item value="Add`0" priority="0" />
+      <Item value="Select`2" priority="6" />
+      <Item value="Where`1" priority="2" />
+      <Item value="Any`1" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Models.ProjectPostModel">
+      <Item value="Project" priority="1" />
+      <Item value="Workgroup" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@AutoMapper.Mapper">
+      <Item value="Map`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:AutoMapper.IMappingExpression`2">
+      <Item value="ForMember`0" priority="10" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:AutoMapper.IMemberConfigurationExpression`1">
+      <Item value="Ignore`0" priority="10" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Core.Domain.ProjectWorkgroup">
+      <Item value="Project" priority="6" />
+      <Item value="Workgroup" priority="4" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Controllers.ProjectWorkgroupController">
+      <Item value="RedirectToAction`0" priority="3" />
+      <Item value="Index`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Controllers.ProjectController">
+      <Item value="Index`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Dogbert2.Filters.RoleNames">
+      <Item value="User" priority="0" />
+      <Item value="Admin" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Dogbert2.Helpers.AccessValidator+AccessLevel">
+      <Item value="NoAccess" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Castle.Windsor.IWindsorContainer">
+      <Item value="Register`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Castle.MicroKernel.Registration.Component">
+      <Item value="For`5" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Castle.MicroKernel.Registration.ComponentRegistration`1">
+      <Item value="ImplementedBy`0" priority="0" />
+      <Item value="Name" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Dogbert2.Services.AccessLevel">
+      <Item value="NoAccess" priority="0" />
+      <Item value="Edit" priority="0" />
+      <Item value="Read" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Core.Domain.WorkgroupWorkers">
+      <Item value="Workgroup" priority="0" />
+      <Item value="Worker" priority="0" />
+      <Item value="Limited" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Dogbert2.Core.Domain.WorkgroupWorker">
+      <Item value="Worker" priority="2" />
+      <Item value="Workgroup" priority="3" />
+      <Item value="Limited" priority="0" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <RecentFiles>
     <RecentFiles>
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/f:packages.config" caret="0" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Helpers/f:FluentHtmlExtensions.cs" caret="33" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="0" fromTop="0" />
-      <File id="04CB5055-55A5-4B1C-90FD-460EB958E374/f:DevDepartmentClient.cs" caret="860" fromTop="23" />
-      <File id="04CB5055-55A5-4B1C-90FD-460EB958E374/f:IDepartmentClient.cs" caret="223" fromTop="10" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="1681" fromTop="14" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Global.asax.cs" caret="1493" fromTop="25" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="1281" fromTop="18" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Department.cs" caret="179" fromTop="5" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Web.config" caret="3704" fromTop="33" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Index.cshtml" caret="984" fromTop="30" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:_Projects.cshtml" caret="531" fromTop="22" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="1304" fromTop="35" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="326" fromTop="14" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Home/f:Index.cshtml" caret="82" fromTop="2" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Navigation.cshtml" caret="333" fromTop="3" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:App_Code/f:ProjectInfo.cshtml" caret="707" fromTop="34" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Project/f:Index.cshtml" caret="501" fromTop="26" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/f:Web.config" caret="1140" fromTop="16" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Css/f:Site.css" caret="5183" fromTop="31" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Scripts/f:InputTypeTest.js" caret="945" fromTop="26" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="3838" fromTop="33" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="611" fromTop="23" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="0" fromTop="0" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:ProjectWorkgroups.cs" caret="0" fromTop="0" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:PriorityType.cs" caret="0" fromTop="0" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1168" fromTop="29" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Project/f:Create.cshtml" caret="1243" fromTop="12" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="464" fromTop="17" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Services/f:IAccessValidatorService.cs" caret="269" fromTop="10" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:ComponentRegistrar.asax.cs" caret="897" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectWorkgroupViewModel.cs" caret="1063" fromTop="23" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:HomeController.cs" caret="406" fromTop="18" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Services/f:AccessValidator.cs" caret="874" fromTop="26" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:AccountController.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Login.cshtml" caret="78" fromTop="2" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/f:Web.config" caret="2627" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Navigation.cshtml" caret="542" fromTop="6" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Home/f:Admin.cshtml" caret="37" fromTop="2" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Create.cshtml" caret="119" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Delete.cshtml" caret="113" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Details.cshtml" caret="93" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Edit.cshtml" caret="120" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Worker/f:Index.cshtml" caret="96" fromTop="4" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Worker.cs" caret="2073" fromTop="19" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:WorkgroupWorker.cs" caret="577" fromTop="20" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:WorkgroupViewModel.cs" caret="731" fromTop="20" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:_Workgroup.cshtml" caret="0" fromTop="0" />
+      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Helpers/f:AutomapperConfig.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="128" fromTop="6" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Index.cshtml" caret="855" fromTop="29" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="4062" fromTop="45" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1496" fromTop="33" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="1115" fromTop="29" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="75" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Edit.cshtml" caret="122" fromTop="5" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="89" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="1694" fromTop="15" />
     </RecentFiles>
     <RecentEdits>
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Scripts/f:InputTypeTest.js" caret="945" fromTop="26" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="724" fromTop="19" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="681" fromTop="17" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="149" fromTop="4" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="890" fromTop="23" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1401" fromTop="31" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1416" fromTop="34" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1546" fromTop="37" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="1252" fromTop="25" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="1869" fromTop="38" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="2307" fromTop="22" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="3045" fromTop="47" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="283" fromTop="12" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Shared/f:_Layout.cshtml" caret="3838" fromTop="33" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="3118" fromTop="37" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="841" fromTop="28" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="1347" fromTop="46" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Workgroup.cs" caret="464" fromTop="17" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="533" fromTop="15" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="180" fromTop="5" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="2140" fromTop="15" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Project/f:Create.cshtml" caret="1550" fromTop="19" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Project/f:Create.cshtml" caret="1252" fromTop="12" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:PriorityType.cs" caret="304" fromTop="12" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:PriorityType.cs" caret="616" fromTop="22" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:PriorityType.cs" caret="596" fromTop="26" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:PriorityType.cs" caret="0" fromTop="0" />
-      <File id="F0DF734A-726F-4CEF-B1FE-10C68B79DAEE/d:Domain/f:Project.cs" caret="2412" fromTop="28" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="473" fromTop="16" />
-      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1168" fromTop="29" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="1780" fromTop="30" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:_Workgroup.cshtml" caret="1498" fromTop="45" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:_Workgroup.cshtml" caret="43" fromTop="5" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:_Workgroup.cshtml" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Create.cshtml" caret="256" fromTop="9" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Edit.cshtml" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Edit.cshtml" caret="153" fromTop="7" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Helpers/f:AutomapperConfig.cs" caret="1095" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Helpers/f:AutomapperConfig.cs" caret="0" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="2696" fromTop="35" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="2955" fromTop="18" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="2981" fromTop="19" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="7" fromTop="0" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="129" fromTop="7" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="129" fromTop="7" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="467" fromTop="22" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Delete.cshtml" caret="802" fromTop="34" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="93" fromTop="6" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="765" fromTop="31" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="744" fromTop="32" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="982" fromTop="43" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="1118" fromTop="31" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="1593" fromTop="31" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="3960" fromTop="40" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:WorkgroupController.cs" caret="4062" fromTop="45" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Models/f:ProjectViewModel.cs" caret="1496" fromTop="33" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="657" fromTop="19" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Controllers/f:ProjectController.cs" caret="1042" fromTop="31" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Details.cshtml" caret="89" fromTop="4" />
+      <File id="B63466E5-172F-48AF-BB1D-EF36DCC51AF6/d:Views/d:Workgroup/f:Edit.cshtml" caret="122" fromTop="5" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
