@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Dogbert2.Core.Domain;
 using Dogbert2.Services;
 using System.Linq;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Data.NHibernate;
 
 namespace Dogbert2.Helpers
 {
