@@ -130,6 +130,8 @@
 
             if (!hasSupport("datetime")) $('input[type="datetime"]').datepicker();
             
+            // sets the way jquery deals with array parameters
+            jQuery.ajaxSettings.traditional = true;
         });
     </script>
 
@@ -142,9 +144,6 @@
             s.parentNode.insertBefore(g, s)
         } (document, "script"));
     </script>
-
-</body>
-</html>
 
 </body>
 </html>

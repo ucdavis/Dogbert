@@ -297,6 +297,37 @@ ALTER TABLE [dbo].[ProjectsXWorkgroups]
 
 
 GO
+PRINT N'Creating [dbo].[ProjectTerms]...';
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+CREATE TABLE [dbo].[ProjectTerms] (
+    [Id]         INT           IDENTITY (1, 1) NOT NULL,
+    [Term]       VARCHAR (50)  NOT NULL,
+    [Definition] VARCHAR (MAX) NOT NULL,
+    [Src]        VARCHAR (50)  NULL,
+    [ProjectId]  INT           NOT NULL
+);
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+PRINT N'Creating PK_Definitions...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectTerms]
+    ADD CONSTRAINT [PK_Definitions] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
 PRINT N'Creating [dbo].[ProjectTypes]...';
 
 
@@ -425,8 +456,10 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 GO
 CREATE TABLE [dbo].[WorkgroupsXWorkers] (
+    [Id]          INT IDENTITY (1, 1) NOT NULL,
     [WorkerId]    INT NOT NULL,
-    [WorkgroupId] INT NOT NULL
+    [WorkgroupId] INT NOT NULL,
+    [Limited]     BIT NOT NULL
 );
 
 
@@ -440,7 +473,7 @@ PRINT N'Creating PK_WorkgroupsXWorkers...';
 
 GO
 ALTER TABLE [dbo].[WorkgroupsXWorkers]
-    ADD CONSTRAINT [PK_WorkgroupsXWorkers] PRIMARY KEY CLUSTERED ([WorkerId] ASC, [WorkgroupId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+    ADD CONSTRAINT [PK_WorkgroupsXWorkers] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
 
 
 GO
@@ -486,6 +519,15 @@ PRINT N'Creating DF_Workgroups_IsActive...';
 GO
 ALTER TABLE [dbo].[Workgroups]
     ADD CONSTRAINT [DF_Workgroups_IsActive] DEFAULT ((1)) FOR [IsActive];
+
+
+GO
+PRINT N'Creating DF_WorkgroupsXWorkers_Limited...';
+
+
+GO
+ALTER TABLE [dbo].[WorkgroupsXWorkers]
+    ADD CONSTRAINT [DF_WorkgroupsXWorkers_Limited] DEFAULT ((0)) FOR [Limited];
 
 
 GO
@@ -540,6 +582,15 @@ PRINT N'Creating FK_ProjectsXWorkgroups_Workgroups...';
 GO
 ALTER TABLE [dbo].[ProjectsXWorkgroups] WITH NOCHECK
     ADD CONSTRAINT [FK_ProjectsXWorkgroups_Workgroups] FOREIGN KEY ([WorkgroupId]) REFERENCES [dbo].[Workgroups] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Creating FK_Definitions_Projects...';
+
+
+GO
+ALTER TABLE [dbo].[ProjectTerms] WITH NOCHECK
+    ADD CONSTRAINT [FK_Definitions_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Projects] ([Id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -609,6 +660,8 @@ ALTER TABLE [dbo].[Projects] WITH CHECK CHECK CONSTRAINT [FK_Projects_Workers1];
 ALTER TABLE [dbo].[ProjectsXWorkgroups] WITH CHECK CHECK CONSTRAINT [FK_ProjectsXWorkgroups_Projects];
 
 ALTER TABLE [dbo].[ProjectsXWorkgroups] WITH CHECK CHECK CONSTRAINT [FK_ProjectsXWorkgroups_Workgroups];
+
+ALTER TABLE [dbo].[ProjectTerms] WITH CHECK CHECK CONSTRAINT [FK_Definitions_Projects];
 
 ALTER TABLE [dbo].[Workgroups] WITH CHECK CHECK CONSTRAINT [FK_Workgroups_Departments];
 

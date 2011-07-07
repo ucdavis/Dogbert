@@ -134,6 +134,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectTermController.cs" />
+    <Compile Include="Controllers\ProjectTextController.cs" />
     <Compile Include="Controllers\ProjectWorkgroupController.cs" />
     <Compile Include="Controllers\TextTypeController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
@@ -208,6 +209,7 @@
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="UCDArch.txt" />
     <Content Include="Web.config" />

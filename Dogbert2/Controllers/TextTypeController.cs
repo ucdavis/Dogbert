@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Web.ActionResults;
 
 namespace Dogbert2.Controllers
 {
@@ -22,7 +25,7 @@ namespace Dogbert2.Controllers
         // GET: /TextType/
         public ActionResult Index()
         {
-            var textTypeList = _textTypeRepository.Queryable;
+            var textTypeList = _textTypeRepository.Queryable.OrderBy(a=>a.Order);
 
             return View(textTypeList.ToList());
         }
@@ -97,6 +100,33 @@ namespace Dogbert2.Controllers
 
             return View(viewModel);
         }
-                
+
+        /// <summary>
+        /// Updates the order of the text types (to be used for report generation)
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonNetResult UpdateOrder(List<string> textTypes)
+        {
+            try
+            {
+                for (int i = 0; i < textTypes.Count; i++)
+                {
+                    var tt = _textTypeRepository.GetNullableById(textTypes[i]);
+
+                    if (tt != null)
+                    {
+                        tt.Order = i;
+                        _textTypeRepository.EnsurePersistent(tt);
+                    }
+                }
+
+                return new JsonNetResult(true);
+            }
+            catch (Exception)
+            {
+                return new JsonNetResult(false);
+            }
+        }
     }
 }

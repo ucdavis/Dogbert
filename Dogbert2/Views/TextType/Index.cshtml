@@ -2,7 +2,7 @@
 
 @{
 	ViewBag.Title = "Text Types";
-
+    ViewBag.NavigationKey = "Admin";
 }
 
 @section SubNav
@@ -12,7 +12,53 @@
 	</ul>
 }
 
-<table>
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#text-types").tableDnD({
+                onDragClass: "dragging",
+                onDrop: function (table, row) {
+                    // re-adjust the odd, even row classes
+                    $("tbody tr").removeClass("odd");
+                    $("tbody tr").removeClass("even");
+
+                    $("tbody tr:even").addClass("even");
+                    $("tbody tr:odd").addClass("odd");
+
+                    var rows = table.tBodies[0].rows;
+                    var order = [];
+                    $.each(rows, function (index, item) {
+                        order.push($(item).data("id"));
+                    });
+
+                    var url = '@Url.Action("UpdateOrder")';
+                    var antiForgery = $('input[name="__RequestVerificationToken"]').val();
+                    $.post(url, { textTypes: order, __RequestVerificationToken: antiForgery }, function (result) {
+                    
+                        if (result == false) alert("failed to update order");
+
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    <style type="text/css">
+        .dragging
+        {
+            border: 1px dashed red;    
+        }
+    </style>
+}
+
+@Html.AntiForgeryToken()
+
+<table id="text-types">
 	<thead>
 		<tr>
 			<th></th>
@@ -40,7 +86,7 @@
 	<tbody>
 @{ var odd = false; }
 @foreach (var item in Model) {
-		<tr class="@(odd ? "odd": "even")">
+		<tr class="@(odd ? "odd": "even")" data-id="@item.Id">
 
 			<td>
 				<a href='@Url.Action("Edit", new {id=item.Id})'>
