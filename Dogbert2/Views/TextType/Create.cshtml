@@ -1,0 +1,15 @@
+﻿@model TextTypeViewModel
+
+@{
+	ViewBag.Title = "Create Text type";
+    ViewBag.NavigationalKey = "Admin";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to List", "Index")</li>
+	</ul>
+}
+
+@Html.Partial("_TextType")

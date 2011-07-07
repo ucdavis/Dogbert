@@ -33,6 +33,8 @@ namespace Dogbert2.Helpers
             CreateMap<ProjectTerm, ProjectTerm>()
                 .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore());
+
+            CreateMap<TextType, TextType>();
         }
     }
 }

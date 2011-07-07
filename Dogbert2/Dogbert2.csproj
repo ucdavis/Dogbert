@@ -135,6 +135,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectTermController.cs" />
     <Compile Include="Controllers\ProjectWorkgroupController.cs" />
+    <Compile Include="Controllers\TextTypeController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />
     <Compile Include="Filters\RoleFilter.cs" />
@@ -147,6 +148,7 @@
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectTermViewModel.cs" />
+    <Compile Include="Models\TextTypeViewModel.cs" />
     <Compile Include="Models\WorkgroupViewModel.cs" />
     <Compile Include="Models\WorkgroupWorkerViewModel.cs" />
     <Compile Include="Services\AccessValidator.cs" />
@@ -305,6 +307,10 @@
     <Content Include="Views\ProjectTerm\_ProjectTerm.cshtml" />
     <Content Include="Views\ProjectTerm\Edit.cshtml" />
     <Content Include="Views\ProjectTerm\Delete.cshtml" />
+    <Content Include="Views\TextType\Index.cshtml" />
+    <Content Include="Views\TextType\Create.cshtml" />
+    <Content Include="Views\TextType\Edit.cshtml" />
+    <Content Include="Views\TextType\_TextType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
