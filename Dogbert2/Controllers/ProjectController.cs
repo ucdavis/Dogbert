@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 
 namespace Dogbert2.Controllers
@@ -16,20 +17,24 @@ namespace Dogbert2.Controllers
     {
 	    private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<ProjectWorkgroup> _projectWorkgroupRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public ProjectController(IRepository<Project> projectRepository, IRepository<ProjectWorkgroup> projectWorkgroupRepository)
+        public ProjectController(IRepository<Project> projectRepository, IRepository<ProjectWorkgroup> projectWorkgroupRepository, IAccessValidatorService accessValidator)
         {
             _projectRepository = projectRepository;
             _projectWorkgroupRepository = projectWorkgroupRepository;
+            _accessValidator = accessValidator;
         }
 
         //
         // GET: /Project/
         public ActionResult Index()
         {
-            var projectList = _projectWorkgroupRepository.Queryable.Where(a => a.Workgroup.IsActive && !a.Project.Hide).Select(a => a.Project);
+            var workgroups = _accessValidator.GetWorkgroupsByUser(CurrentUser.Identity.Name);
 
-            return View(projectList.ToList());
+            var projects = _projectWorkgroupRepository.Queryable.Where(a => !a.Project.Hide && workgroups.Contains(a.Workgroup)).Select(a => a.Project).Distinct();
+
+            return View(projects.ToList());
         }
 
 

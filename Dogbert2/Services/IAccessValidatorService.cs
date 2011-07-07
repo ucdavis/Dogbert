@@ -8,6 +8,8 @@ namespace Dogbert2.Services
 {
     public interface IAccessValidatorService
     {
+        IEnumerable<Workgroup> GetWorkgroupsByUser(string loginId);
+
         AccessLevel HasAccess(string loginId, Project project);
     }
 

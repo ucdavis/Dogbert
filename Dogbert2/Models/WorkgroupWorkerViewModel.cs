@@ -16,16 +16,10 @@ namespace Dogbert2.Models
         {
             Check.Require(repository != null, "Repository is required.");
 
-            // get the current user's workgroups
-            var workgroups = repository.OfType<WorkgroupWorker>().Queryable.Where(a => a.Worker.LoginId == loginId).Select(a => a.Workgroup);
-
-            // get all workers in those workgroups
-            var workers = repository.OfType<WorkgroupWorker>().Queryable.Where(a => workgroups.Contains(a.Workgroup)).Select(a => a.Worker).Distinct();
-
             var viewModel = new WorkgroupWorkerViewModel()
                                 {
                                     WorkgroupWorker = new WorkgroupWorker(){Workgroup = workgroup},
-                                    Workers = workers.ToList()
+                                    Workers = repository.OfType<Worker>().GetAll()
                                 };
 
             return viewModel;

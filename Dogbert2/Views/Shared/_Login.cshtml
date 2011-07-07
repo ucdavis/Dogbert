@@ -1,4 +1,8 @@
-﻿@if (User.Identity.IsAuthenticated)
+﻿@if ( Session["Emulation"] != null ? ((bool)Session["Emulation"]) : false)
+{ 
+    @Html.ActionLink("End Emulation", "EndEmulate", "Account")
+}
+else if (User.Identity.IsAuthenticated)
 { 
     @Html.ActionLink("Logout", "LogOff", "Account")
 }
@@ -6,7 +10,3 @@ else
 { 
     @Html.ActionLink("Login", "LogOn", "Account")
 }
-
-
-
-

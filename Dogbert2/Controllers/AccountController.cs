@@ -33,6 +33,22 @@ namespace Dogbert2.Controllers
             return Redirect("https://cas.ucdavis.edu/cas/logout");
         }
 
+#if DEBUG
+        public ActionResult Emulate(string loginId)
+        {
+            FormsAuthentication.RedirectFromLoginPage(loginId, false);
+            Session["Emulation"] = true;
 
+            return this.RedirectToAction<HomeController>(a => a.Index());
+        }
+
+        public ActionResult EndEmulate()
+        {
+            FormsAuthentication.SignOut();
+            Session["Emulation"] = false;
+
+            return this.RedirectToAction<HomeController>(a => a.Index());
+        }
+#endif
     }
 }
