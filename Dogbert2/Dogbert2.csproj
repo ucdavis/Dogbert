@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectTermController.cs" />
     <Compile Include="Controllers\ProjectWorkgroupController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />
@@ -145,6 +146,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProjectTermViewModel.cs" />
     <Compile Include="Models\WorkgroupViewModel.cs" />
     <Compile Include="Models\WorkgroupWorkerViewModel.cs" />
     <Compile Include="Services\AccessValidator.cs" />
@@ -298,6 +300,11 @@
     <Content Include="Views\Workgroup\Details.cshtml" />
     <Content Include="Views\Workgroup\AddWorker.cshtml" />
     <Content Include="Views\Workgroup\RemoveWorker.cshtml" />
+    <Content Include="Views\ProjectTerm\Index.cshtml" />
+    <Content Include="Views\ProjectTerm\Create.cshtml" />
+    <Content Include="Views\ProjectTerm\_ProjectTerm.cshtml" />
+    <Content Include="Views\ProjectTerm\Edit.cshtml" />
+    <Content Include="Views\ProjectTerm\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -312,6 +319,7 @@
       <Name>Dogbert2.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

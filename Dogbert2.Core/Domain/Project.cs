@@ -22,6 +22,7 @@ namespace Dogbert2.Core.Domain
             LastUpdate = DateTime.Now;
 
             ProjectWorkgroups = new List<ProjectWorkgroup>();
+            ProjectTerms = new List<ProjectTerm>();
         }
 
         [Required]
@@ -67,6 +68,7 @@ namespace Dogbert2.Core.Domain
 
         // bags
         public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
+        public virtual IList<ProjectTerm> ProjectTerms { get; set; }
 
         #region Non-Mapped fields
 
@@ -116,6 +118,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.Hide);
 
             HasMany(x => x.ProjectWorkgroups).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.ProjectTerms).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }

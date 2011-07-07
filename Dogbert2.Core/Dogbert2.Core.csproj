@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\ProjectTerm.cs" />
     <Compile Include="Domain\Department.cs" />
     <Compile Include="Domain\PriorityType.cs" />
     <Compile Include="Domain\Project.cs" />

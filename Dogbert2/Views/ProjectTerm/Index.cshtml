@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ProjectTerm>
+
+
+@{
+	ViewBag.Title = "Project Terms";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Create New", "Create", new { projectId = ViewBag.ProjectId })</li>
+	</ul>
+}
+
+
+<table class='dt-table nofirsticon'>
+	<thead>
+		<tr>
+            <th></th>
+
+			<th>
+				Term
+			</th>
+
+			<th>
+				Definition
+			</th>
+
+			<th>
+				Src
+			</th>
+
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+
+            <td>
+             <a href='@Url.Action("Edit", new { id = item.Id })'>
+							<img src='@Url.Image("edit.png")' />
+						</a>
+            </td>
+
+			<td>
+				@item.Term
+			</td>
+
+			<td>
+				@item.Definition
+			</td>
+
+			<td>
+				@item.Src
+			</td>
+
+		
+					<td>
+						<a href='@Url.Action("Delete", new { id = item.Id })'>
+							<img src='@Url.Image("delete.png")' />
+						</a>
+					</td>
+		
+
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

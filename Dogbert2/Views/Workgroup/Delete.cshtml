@@ -9,27 +9,27 @@
 @using (Html.BeginForm()) {
 	@Html.AntiForgeryToken()
 
-<fieldset class="display-form">
-	<legend>Workgroup</legend>
-	<ul>
+    <fieldset class="display-form">
+	    <legend>Workgroup</legend>
+	    <ul>
 
-		<li>
-			<div class="display-label">Name</div>
-			<div class="display-details">@Model.Name</div>
-		</li>
+		    <li>
+			    <div class="display-label">Name</div>
+			    <div class="display-details">@Model.Name</div>
+		    </li>
 
-		<li>
-			<div class="display-label">Department</div>
-			<div class="display-details">@Model.Department.Name</div>
-		</li>
+		    <li>
+			    <div class="display-label">Department</div>
+			    <div class="display-details">@Model.Department.Name</div>
+		    </li>
 		
-		<li>
-			@* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
-			<div class="display-label">&nbsp;</div>
-			<div class="display-details">
-			<input class="button" type="submit" value="Delete" /> | @Html.ActionLink("Cancel", "Index")
-			</div>
-		</li>
-	</ul>
-</fieldset>
+		    <li>
+			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
+			    <div class="display-label">&nbsp;</div>
+			    <div class="display-details">
+			    <input class="button" type="submit" value="Delete" /> | @Html.ActionLink("Cancel", "Index")
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
 }

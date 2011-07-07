@@ -1,0 +1,50 @@
+﻿@model ProjectTermViewModel
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>ProjectTerm</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.ProjectTerm.Term)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ProjectTerm.Term)
+				    @Html.ValidationMessageFor(model => model.ProjectTerm.Term)
+			    </div>
+		    </li>
+
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.ProjectTerm.Definition)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ProjectTerm.Definition)
+				    @Html.ValidationMessageFor(model => model.ProjectTerm.Definition)
+			    </div>
+		    </li>
+
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.ProjectTerm.Src) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ProjectTerm.Src)
+				    @Html.ValidationMessageFor(model => model.ProjectTerm.Src)
+			    </div>
+		    </li>
+
+		    <li>
+			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.ProjectTerm.Project.Id})
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}

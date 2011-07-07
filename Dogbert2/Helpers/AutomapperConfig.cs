@@ -29,6 +29,10 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.IsActive, x => x.Ignore())
                 .ForMember(x => x.WorkgroupWorkers, x => x.Ignore())
                 .ForMember(x => x.ProjectWorkgroups, x => x.Ignore());
+
+            CreateMap<ProjectTerm, ProjectTerm>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.Project, x => x.Ignore());
         }
     }
 }
