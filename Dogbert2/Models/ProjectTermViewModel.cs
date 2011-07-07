@@ -11,9 +11,10 @@ namespace Dogbert2.Models
     {
         public ProjectTerm ProjectTerm { get; set; }
 
-        public static ProjectTermViewModel Create(IRepository repository, Project project = null)
+        public static ProjectTermViewModel Create(IRepository repository, Project project)
         {
             Check.Require(repository != null, "Repository must be supplied");
+            Check.Require(project != null, "project is required.");
 
             var viewModel = new ProjectTermViewModel { ProjectTerm = new ProjectTerm() {Project = project} };
 

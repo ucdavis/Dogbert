@@ -1,11 +1,12 @@
-﻿
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Core.Utils;
+using MvcContrib;
+using UCDArch.Web.Helpers;
 
 namespace Dogbert2.Controllers
 {
@@ -14,20 +15,35 @@ namespace Dogbert2.Controllers
     /// </summary>
     public class ProjectTextController : ApplicationController
     {
-	    private readonly IRepository<ProjectText> _projectTextRepository;
+        private readonly IRepository<Project> _projectRepository;
+        private readonly IRepository<ProjectText> _projectTextRepository;
+        private readonly IRepositoryWithTypedId<TextType, string> _textTypeRepository;
 
-        public ProjectTextController(IRepository<ProjectText> projectTextRepository)
+        public ProjectTextController(IRepository<Project> projectRepository, IRepository<ProjectText> projectTextRepository, IRepositoryWithTypedId<TextType, string> textTypeRepository)
         {
+            _projectRepository = projectRepository;
             _projectTextRepository = projectTextRepository;
+            _textTypeRepository = textTypeRepository;
         }
-    
-        //
-        // GET: /ProjectText/
-        public ActionResult Index()
-        {
-            var projectTextList = _projectTextRepository.Queryable;
 
-            return View(projectTextList.ToList());
+        /// <summary>
+        /// GET: /ProjectText/ 
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <returns></returns>
+        public ActionResult Index(int id)
+        {
+            var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            ViewBag.ProjectId = project.Id;
+
+            return View(project.ProjectTexts.OrderBy(a=>a.TextType.Order).ToList());
         }
 
 
@@ -37,44 +53,67 @@ namespace Dogbert2.Controllers
         {
             var projectText = _projectTextRepository.GetNullableById(id);
 
-            if (projectText == null) return RedirectToAction("Index");
+            if (projectText == null) return this.RedirectToAction<HomeController>(a => a.Index());
 
             return View(projectText);
         }
 
         //
         // GET: /ProjectText/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-			var viewModel = ProjectTextViewModel.Create(Repository);
-            
+            var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            ViewBag.ProjectId = project.Id;
+
+			var viewModel = ProjectTextViewModel.Create(Repository, project);
             return View(viewModel);
         } 
 
         //
         // POST: /ProjectText/Create
         [HttpPost]
-        public ActionResult Create(ProjectText projectText)
+        [ValidateInput(false)]
+        public ActionResult Create(int id, ProjectText projectText)
         {
-            var projectTextToCreate = new ProjectText();
+            var project = _projectRepository.GetNullableById(id);
 
-            TransferValues(projectText, projectTextToCreate);
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            projectText.Project = project;
+
+            ModelState.Clear();
+            projectText.TransferValidationMessagesTo(ModelState);
+
+            // make sure we're not adding a project text that already exists for this project
+            if (_projectTextRepository.Queryable.Where(a => a.Project == project && a.TextType == projectText.TextType).Any())
+            {
+                ModelState.AddModelError("", "Project Text of this type already exists for this project.");
+            }
 
             if (ModelState.IsValid)
             {
-                _projectTextRepository.EnsurePersistent(projectTextToCreate);
+                _projectTextRepository.EnsurePersistent(projectText);
 
-                Message = "ProjectText Created Successfully";
+                Message = "Project Text Created Successfully";
 
-                return RedirectToAction("Index");
+                return this.RedirectToAction(a => a.Index(projectText.Project.Id));
             }
-            else
-            {
-				var viewModel = ProjectTextViewModel.Create(Repository);
-                viewModel.ProjectText = projectText;
 
-                return View(viewModel);
-            }
+            var viewModel = ProjectTextViewModel.Create(Repository, projectText.Project);
+            viewModel.ProjectText = projectText;
+
+            return View(viewModel);
         }
 
         //
@@ -83,9 +122,9 @@ namespace Dogbert2.Controllers
         {
             var projectText = _projectTextRepository.GetNullableById(id);
 
-            if (projectText == null) return RedirectToAction("Index");
+            if (projectText == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
-			var viewModel = ProjectTextViewModel.Create(Repository);
+			var viewModel = ProjectTextViewModel.Create(Repository, projectText.Project);
 			viewModel.ProjectText = projectText;
 
 			return View(viewModel);
@@ -94,13 +133,17 @@ namespace Dogbert2.Controllers
         //
         // POST: /ProjectText/Edit/5
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(int id, ProjectText projectText)
         {
             var projectTextToEdit = _projectTextRepository.GetNullableById(id);
 
-            if (projectTextToEdit == null) return RedirectToAction("Index");
+            if (projectTextToEdit == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
-            TransferValues(projectText, projectTextToEdit);
+            AutoMapper.Mapper.Map(projectText, projectTextToEdit);
+
+            ModelState.Clear();
+            projectTextToEdit.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
             {
@@ -108,15 +151,12 @@ namespace Dogbert2.Controllers
 
                 Message = "ProjectText Edited Successfully";
 
-                return RedirectToAction("Index");
+                return this.RedirectToAction(a=>a.Index(projectTextToEdit.Project.Id));
             }
-            else
-            {
-				var viewModel = ProjectTextViewModel.Create(Repository);
-                viewModel.ProjectText = projectText;
 
-                return View(viewModel);
-            }
+            var viewModel = ProjectTextViewModel.Create(Repository, projectTextToEdit.Project);
+            viewModel.ProjectText = projectTextToEdit;
+            return View(viewModel);
         }
         
         //
@@ -125,7 +165,7 @@ namespace Dogbert2.Controllers
         {
 			var projectText = _projectTextRepository.GetNullableById(id);
 
-            if (projectText == null) return RedirectToAction("Index");
+            if (projectText == null) return this.RedirectToAction<HomeController>(a=>a.Index());
 
             return View(projectText);
         }
@@ -137,42 +177,16 @@ namespace Dogbert2.Controllers
         {
 			var projectTextToDelete = _projectTextRepository.GetNullableById(id);
 
-            if (projectTextToDelete == null) return RedirectToAction("Index");
+            var projectId = projectTextToDelete.Project.Id;
+
+            if (projectTextToDelete == null) return this.RedirectToAction<HomeController>(a => a.Index());
 
             _projectTextRepository.Remove(projectTextToDelete);
 
             Message = "ProjectText Removed Successfully";
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction(a => a.Index(projectId));
         }
-        
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(ProjectText source, ProjectText destination)
-        {
-			//Recommendation: Use AutoMapper
-			//Mapper.Map(source, destination)
-            throw new NotImplementedException();
-        }
-
-
+       
     }
-
-	/// <summary>
-    /// ViewModel for the ProjectText class
-    /// </summary>
-    public class ProjectTextViewModel
-	{
-		public ProjectText ProjectText { get; set; }
- 
-		public static ProjectTextViewModel Create(IRepository repository)
-		{
-			Check.Require(repository != null, "Repository must be supplied");
-			
-			var viewModel = new ProjectTextViewModel {ProjectText = new ProjectText()};
- 
-			return viewModel;
-		}
-	}
 }

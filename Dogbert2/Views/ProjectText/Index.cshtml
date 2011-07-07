@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ProjectText>
+
+@{
+	ViewBag.Title = "Project Texts";
+    
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectId })</li>
+	</ul>
+}
+
+<table class='dt-table'>
+	<thead>
+		<tr>
+			<th></th>
+
+            <th>Type</th>
+
+			<th>
+				Date Created
+			</th>
+
+            <th>Last Updated</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+
+			<td>
+				<a href='@Url.Action("Details", new {id=item.Id})'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+				<a href='@Url.Action("Edit", new {id=item.Id})'>
+					<img src='@Url.Image("edit.png")' />
+				</a>
+			</td>
+
+            <td>@item.TextType.Name</td>
+
+            <td>@item.DateCreated.ToString("g")</td>
+            <td>@item.LastUpdate.ToString("g")</td>
+		
+			<td>
+				<a href='@Url.Action("Delete", new { id = item.Id })'>
+					<img src='@Url.Image("delete.png")' />
+				</a>
+			</td>
+		
+
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

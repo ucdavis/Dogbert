@@ -35,6 +35,11 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.Project, x => x.Ignore());
 
             CreateMap<TextType, TextType>();
+
+            CreateMap<ProjectText, ProjectText>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.DateCreated, x => x.Ignore())
+                .ForMember(x => x.Project, x=> x.Ignore());
         }
     }
 }

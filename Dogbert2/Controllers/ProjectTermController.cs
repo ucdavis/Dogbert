@@ -108,7 +108,7 @@ namespace Dogbert2.Controllers
                 return RedirectToAction("Index");
             }
 
-			var viewModel = ProjectTermViewModel.Create(Repository);
+			var viewModel = ProjectTermViewModel.Create(Repository, projectTerm.Project);
 			viewModel.ProjectTerm = projectTerm;
 
 			return View(viewModel);
@@ -141,7 +141,7 @@ namespace Dogbert2.Controllers
                 return RedirectToAction("Index", new {id=projectTermToEdit.Project.Id});
             }
             
-            var viewModel = ProjectTermViewModel.Create(Repository);
+            var viewModel = ProjectTermViewModel.Create(Repository, projectTermToEdit.Project);
             viewModel.ProjectTerm = projectTermToEdit;
 
             return View(viewModel);
