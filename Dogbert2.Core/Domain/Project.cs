@@ -70,6 +70,7 @@ namespace Dogbert2.Core.Domain
         public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
         public virtual IList<ProjectTerm> ProjectTerms { get; set; }
         public virtual IList<ProjectText> ProjectTexts { get; set; }
+        public virtual IList<File> Files { get; set; }
 
         #region Non-Mapped fields
 
@@ -121,6 +122,7 @@ namespace Dogbert2.Core.Domain
             HasMany(x => x.ProjectWorkgroups).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.ProjectTerms).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.ProjectTexts).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.Files).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }
