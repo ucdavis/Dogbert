@@ -578,6 +578,7 @@
     <Content Include="Views\ProjectText\Delete.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
     <Content Include="Views\File\Create.cshtml" />
+    <Content Include="Views\File\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -121,12 +121,9 @@ namespace Dogbert2.Controllers
         {
             var file = _fileRepository.GetNullableById(id);
 
-            if (file == null) return RedirectToAction("Index");
+            if (file == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
 
-			var viewModel = FileViewModel.Create(Repository, file.Project);
-			//viewModel.File = file;
-
-			return View(viewModel);
+			return View(file);
         }
         
         //
@@ -183,7 +180,13 @@ namespace Dogbert2.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+        public FileResult Download(int id)
+        {
+            var file = _fileRepository.GetNullableById(id);
+            return File(file.Contents, file.ContentType, file.FileName);
+        }
+
         /// <summary>
         /// Transfer editable values from source to destination
         /// </summary>

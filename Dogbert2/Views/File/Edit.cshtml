@@ -1,0 +1,42 @@
+﻿@model Dogbert2.Core.Domain.File
+
+
+@{
+    ViewBag.Title = "Edit Project File";
+}
+
+@using (Html.BeginForm("Edit", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+        <ul>
+            <li><div class="editor-label">Current File Name:</div>
+                <div class="editor-field">
+                    @Model.FileName
+                    @Html.ActionLink("[Download]", "Download", new { id=Model.Id })
+                </div>
+            </li>
+            <li><div class='editor-label'>Title</div>
+                <div class='editor-field'>@Html.TextBoxFor(a => a.Title)</div>
+            </li>
+            <li><div class='editor-label'>Caption</div>
+                <div class='editor-field'>@Html.TextAreaFor(a => a.Caption)</div>
+            </li>
+            <li><div class='editor-label required'>File<span>*</span></div>
+                <div class='editor-field'><input type="file" id='file' name='file' /></div>
+            </li>
+            <li><div class='editor-label'>Append</div>
+                <div class='editor-field'>@Html.CheckBoxFor(a => a.Append)
+                    <em>Append a pdf to the SRS?</em>
+                </div>
+            </li>
+            <li>
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id = Model.Project.Id })
+			    </div>
+		    </li>
+        </ul>  
+    </fieldset>
+}
