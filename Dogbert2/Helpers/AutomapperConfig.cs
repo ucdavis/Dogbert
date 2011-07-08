@@ -50,6 +50,15 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.Contents, x=> x.MapFrom(y => y.FileContents))
                 .ForMember(x => x.Append, x=> x.MapFrom(y => y.Append))
                 .ForMember(x => x.IsImage, x=>x.MapFrom(y=>y.IsImage));
+
+            CreateMap<File, File>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.DateCreated, x => x.Ignore())
+                .ForMember(x => x.IsImage, x => x.Ignore())
+                .ForMember(x => x.ContentType, x => x.Ignore())
+                .ForMember(x => x.Contents, x => x.Ignore())
+                .ForMember(x => x.FileName, x => x.Ignore())
+                .ForMember(x => x.Project, x => x.Ignore());
         }
     }
 }

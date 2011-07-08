@@ -62,6 +62,9 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\Bin\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\Bin\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -137,6 +140,7 @@
     <Compile Include="Controllers\ProjectTermController.cs" />
     <Compile Include="Controllers\ProjectTextController.cs" />
     <Compile Include="Controllers\ProjectWorkgroupController.cs" />
+    <Compile Include="Controllers\SrsController.cs" />
     <Compile Include="Controllers\TextTypeController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />

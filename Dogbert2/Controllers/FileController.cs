@@ -123,7 +123,7 @@ namespace Dogbert2.Controllers
 
             if (fileToEdit == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
-            TransferValues(file, fileToEdit);
+            AutoMapper.Mapper.Map(file, fileToEdit);
 
             if (ModelState.IsValid)
             {
@@ -176,17 +176,6 @@ namespace Dogbert2.Controllers
             var file = _fileRepository.GetNullableById(id);
             return File(file.Contents, file.ContentType, file.FileName);
         }
-
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(File source, File destination)
-        {
-			//Recommendation: Use AutoMapper
-			//Mapper.Map(source, destination)
-            throw new NotImplementedException();
-        }
-
 
     }
 
