@@ -50,18 +50,6 @@ namespace Dogbert2.Controllers
             return View(project.Files);
         }
 
-
-        //
-        // GET: /File/Details/5
-        public ActionResult Details(int id)
-        {
-            var file = _fileRepository.GetNullableById(id);
-
-            if (file == null) return RedirectToAction("Index");
-
-            return View(file);
-        }
-
         //
         // GET: /File/Create
         public ActionResult Create(int id)
@@ -133,7 +121,7 @@ namespace Dogbert2.Controllers
         {
             var fileToEdit = _fileRepository.GetNullableById(id);
 
-            if (fileToEdit == null) return RedirectToAction("Index");
+            if (fileToEdit == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
             TransferValues(file, fileToEdit);
 
@@ -160,7 +148,7 @@ namespace Dogbert2.Controllers
         {
 			var file = _fileRepository.GetNullableById(id);
 
-            if (file == null) return RedirectToAction("Index");
+            if (file == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
 
             return View(file);
         }
@@ -172,13 +160,15 @@ namespace Dogbert2.Controllers
         {
 			var fileToDelete = _fileRepository.GetNullableById(id);
 
-            if (fileToDelete == null) return RedirectToAction("Index");
+            if (fileToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            var projectId = fileToDelete.Project.Id;
 
             _fileRepository.Remove(fileToDelete);
 
             Message = "File Removed Successfully";
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction(a=>a.Index(projectId));
         }
 
         public FileResult Download(int id)

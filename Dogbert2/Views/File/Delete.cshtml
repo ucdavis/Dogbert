@@ -1,0 +1,64 @@
+﻿@model Dogbert2.Core.Domain.File
+
+
+@{
+    ViewBag.Title = "Delete Project File";
+    ViewBag.Subtitle = "Are you sure you want to delete this?";
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+
+    <fieldset class="display-form">
+	    <legend>File</legend>
+	    <ul>
+
+		    <li>
+			    <div class="display-label">Caption</div>
+			    <div class="display-details">@Model.Caption</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">Title</div>
+			    <div class="display-details">@Model.Title</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">FileName</div>
+			    <div class="display-details">@Model.FileName</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">IsImage</div>
+			    <div class="display-details">@Model.IsImage</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">Append</div>
+			    <div class="display-details">@Model.Append</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">DateCreated</div>
+			    <div class="display-details">@String.Format("{0:g}", Model.DateCreated)</div>
+		    </li>
+
+		    <li>
+			    <div class="display-label">LastUpdate</div>
+			    <div class="display-details">@String.Format("{0:g}", Model.LastUpdate)</div>
+		    </li>
+		
+		    <li>
+			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
+			    <div class="display-label">&nbsp;</div>
+			    <div class="display-details">
+			    <input class="button" type="submit" value="Delete" /> | @Html.ActionLink("Cancel", "Index")
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}
+
+
+
+
