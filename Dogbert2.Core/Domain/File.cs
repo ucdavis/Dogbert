@@ -22,17 +22,19 @@ namespace Dogbert2.Core.Domain
         /// </summary>
         [StringLength(100)]
         public virtual string Caption { get; set; }
-        
+        /// <summary>
+        /// Used as title for a  document like a pdf file
+        /// </summary>
+        [StringLength(100)]
+        public virtual string Title { get; set; }
+
         // file meta data
         [Required]
         [StringLength(50)]
         public virtual string FileName { get; set; }
         [Required]
-        [StringLength(5)]
-        public virtual string Extension { get; set; }
-        [Required]
         [StringLength(15)]
-        public virtual string MimeType { get; set; }
+        public virtual string ContentType { get; set; }
         /// <summary>
         /// Is this a image to use in the body?
         /// </summary>
@@ -46,6 +48,7 @@ namespace Dogbert2.Core.Domain
         public virtual DateTime DateCreated { get; set; }
         public virtual DateTime LastUpdate { get; set; }
 
+        [Required]
         public virtual Project Project { get; set; }
     }
 
@@ -57,10 +60,10 @@ namespace Dogbert2.Core.Domain
 
             Map(x => x.Contents);
             Map(x => x.Caption);
+            Map(x => x.Title);
 
             Map(x => x.FileName);
-            Map(x => x.Extension);
-            Map(x => x.MimeType);
+            Map(x => x.ContentType);
             Map(x => x.IsImage);
 
             Map(x => x.DateCreated);

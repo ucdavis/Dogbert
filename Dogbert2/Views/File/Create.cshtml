@@ -1,0 +1,100 @@
+﻿@model FileViewModel
+
+@{
+	ViewBag.Title = "Create Project File";
+    ViewBag.NavigationKey = "Project";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to List", "Index", new { id=Model.Project.Id })</li>
+	</ul>
+}
+
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Script("jquery.tmpl.min.js")"></script>
+
+     <script type="text/javascript">
+
+         $(function () {
+
+             $.template("fileTemplate", $("#template").html());
+
+             $("#addFile").button();
+
+             $("#addFile").click(function () {
+
+                 var index = $("#file-container").children().size();
+                 $.tmpl("fileTemplate", { index: index }).appendTo("#file-container");
+
+             });
+         });
+
+    </script>
+}
+
+@using (Html.BeginForm("Create", "File", FormMethod.Post, new {enctype="multipart/form-data"})) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>File(s)</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    
+        <input type="button" id="addFile" value="+ Add File" />
+
+        <div id="file-container">
+        @for (var i = 0; i < Model.Files.Count; i++)
+        { 
+          <fieldset>
+            <legend>File @i</legend>
+            <ul>
+                <li><div class='editor-label'>Title</div>
+                    <div class='editor-field'>@Html.TextBox(string.Format("files[{0}].Title", i), Model.Files[i].Title)</div>
+                </li>
+                <li><div class='editor-label'>Caption</div>
+                    <div class='editor-field'>@Html.TextArea(string.Format("files[{0}].Caption", i), Model.Files[i].Caption)</div>
+                </li>
+                <li><div class='editor-label required'>File<span>*</span></div>
+                    <div class='editor-field'><input type="file" id='@string.Format("files[{0}]_File", i)' name='@string.Format("files[{0}].File", i)' /></div>
+                </li>
+                <li><div class='editor-label'>Append</div>
+                    <div class='editor-field'>@Html.CheckBox(string.Format("files[{0}].Append", i), Model.Files[i].Append)
+                        <em>Append a pdf to the SRS?</em>
+                    </div>
+                </li>
+            </ul>   
+        </fieldset>    
+        }
+        </div>
+
+        <ul>
+		    <li>
+			    <div class="editor-label">&nbsp;</div>
+			    <div class="editor-field">
+			    <input class="button" type="submit" value="Create" /> | @Html.ActionLink("Cancel", "Index", new { id = Model.Project.Id })
+			    </div>
+		    </li>
+	    </ul>
+    </fieldset>
+}
+
+<div id="template" style="display:none;">
+    <fieldset>
+    <legend>File ${index}</legend>
+        <ul>
+            <li><div class='editor-label'>Title</div>
+                <div class='editor-field'>@Html.TextBox("files[${index}].Title")</div>
+            </li>
+            <li><div class='editor-label'>Caption</div>
+                <div class='editor-field'>@Html.TextArea("files[${index}].Caption")</div>
+            </li>
+            <li><div class='editor-label required'>File<span>*</span></div>
+                <div class='editor-field'><input type="file" id="files[${index}]_File" name="files[${index}].File" /></div>
+            </li>
+        </ul>   
+    </fieldset> 
+</div>
+
+

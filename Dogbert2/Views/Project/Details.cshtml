@@ -16,7 +16,7 @@
             <li>@Html.ActionLink("Text", "Index", "ProjectText", new {id=Model.Id}, new {})</li>
             <li>Requirements</li>
             <li>Use Cases</li>
-            <li>Files</li>
+            <li>@Html.ActionLink("Files", "Index", "File", new { id = Model.Id }, new { })</li>
 
 			<li>@Html.ActionLink("Back to List", "Index")</li>
 		

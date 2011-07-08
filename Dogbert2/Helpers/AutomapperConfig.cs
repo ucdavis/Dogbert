@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dogbert2.Core.Domain;
+using Dogbert2.Models;
 
 namespace Dogbert2.Helpers
 {
@@ -40,6 +41,15 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.DateCreated, x => x.Ignore())
                 .ForMember(x => x.Project, x=> x.Ignore());
+
+            CreateMap<FilePostModel, File>()
+                .ForMember(x => x.Title, x => x.MapFrom(y => y.Title))
+                .ForMember(x => x.Caption, x => x.MapFrom(y => y.Caption))
+                .ForMember(x => x.FileName, x => x.MapFrom(y => y.File.FileName))
+                .ForMember(x => x.ContentType, x => x.MapFrom(y => y.File.ContentType))
+                .ForMember(x => x.Contents, x=> x.MapFrom(y => y.FileContents))
+                .ForMember(x => x.Append, x=> x.MapFrom(y => y.Append))
+                .ForMember(x => x.IsImage, x=>x.MapFrom(y=>y.IsImage));
         }
     }
 }
