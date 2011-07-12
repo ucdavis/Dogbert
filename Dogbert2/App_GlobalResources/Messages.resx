@@ -129,4 +129,7 @@
   <data name="NotFound" xml:space="preserve">
     <value>Could not load {0} with Id {1}</value>
   </data>
+  <data name="SRSDisclaimer" xml:space="preserve">
+    <value>This document is a software requirement specification document for {0}.  It details all requirements, assumptions and use cases for the project.</value>
+  </data>
 </root>

@@ -95,5 +95,14 @@ namespace Dogbert2.App_GlobalResources {
                 return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This document is a software requirement specification document for {0}.  It details all requirements, assumptions and use cases for the project..
+        /// </summary>
+        internal static string SRSDisclaimer {
+            get {
+                return ResourceManager.GetString("SRSDisclaimer", resourceCulture);
+            }
+        }
     }
 }

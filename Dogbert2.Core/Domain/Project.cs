@@ -81,6 +81,14 @@ namespace Dogbert2.Core.Domain
                 return wgs.Count() > 0 ? string.Join(", ", wgs) : "n/a";
             }
         }
+
+        public virtual string WorkgroupDepts
+        {
+            get { 
+                var wgs = ProjectWorkgroups.Select(a => a.Workgroup.Department.Name).Distinct();
+                return wgs.Count() > 0 ? string.Join(", ", wgs) : "n/a";
+            }
+        }
         #endregion
 
         #region Methods
