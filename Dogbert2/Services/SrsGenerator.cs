@@ -1,20 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.html;
+using UCDArch.Core.PersistanceSupport;
+using System.Linq;
 
 namespace Dogbert2.Services
 {
     public class SrsGenerator : ISrsGenerator
     {
+        private readonly IRepository<ProjectText> _projectTextRepository;
+
+        public SrsGenerator(IRepository<ProjectText> projectTextRepository)
+        {
+            _projectTextRepository = projectTextRepository;
+        }
+
         // base color
         private CMYKColor _baseColor = new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f);
 
         // standard body font
         private Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+        private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
 
         // fonts for the cover page
         private BaseFont _dateBaseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
@@ -52,7 +64,13 @@ namespace Dogbert2.Services
 
             // add information
             AddCoverpage(writer.DirectContent, doc, project);
-           
+
+            foreach (var txt in project.ProjectTexts.OrderBy(b => b.TextType.Order))
+            {
+                AddSectionHeader(doc, txt.TextType.Name);
+                AddHtmlText(doc, txt.Text);
+            }
+
             doc.Close();
 
             var bytes = ms.ToArray();
@@ -73,6 +91,8 @@ namespace Dogbert2.Services
 
             // add the disclaimer information
             AddDisclaimerInformation(cb, doc, project);
+
+            doc.NewPage();
         }
 
         /// <summary>
@@ -203,91 +223,292 @@ namespace Dogbert2.Services
         }
         #endregion
 
+        public void AddSectionHeader(Document document, string title)
+        {
+            var table = new PdfPTable(1);
+            table.TotalWidth = _pageWidth;
+            table.LockedWidth = true;
+            
+            var cell = new PdfPCell();
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            
+            cell.BorderWidthTop = 0;
+            cell.BorderWidthLeft = 0;
+            cell.BorderWidthRight = 0;
+
+            cell.BorderWidthBottom = 3;
+            cell.BorderColorBottom = _baseColor;
+            cell.PaddingTop = 16f;
+            cell.PaddingBottom = 10f;
+
+            var paragraph = new Paragraph(title, _headerFont);
+            cell.AddElement(paragraph);
+
+            table.AddCell(cell);
+            document.Add(table);
+        }
+
         #region Html Text
         /// <summary>
         /// Parse out the html and format it using iTextSharp's stuff
         /// </summary>
         /// <remarks>
-        /// http://blog.dmbcllc.com/2009/07/28/itextsharp-html-to-pdf-parsing-html/
+        /// http://blog.dmbcllc.com/2009/07/28/itextsharp-html-to-pdf-parsing-html/ (not being used)
         /// </remarks>
         /// <param name="text"></param>
-        private void AddHtmlText(string text)
+        private void AddHtmlText(Document doc, string text)
         {
-            
+            var elements = new List<HtmlElement>(); 
+
+            var reader = new XmlTextReader(text, XmlNodeType.Element, null);
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    // opening element
+                    case XmlNodeType.Element:
+                        
+                        elements.Add(new HtmlElement(reader.Name, true));
+
+                        break;
+                    // closing element
+                    case XmlNodeType.EndElement:
+
+                        elements.Add(new HtmlElement(reader.Name, true, true));
+
+                        // is this a closing for a full iTextsharp element?
+                        if (IsReadyToProcess(reader.Name))
+                        {
+
+                            if (listTags.Contains(reader.Name))
+                            {
+                                // build the list object
+                            }
+                            else
+                            {
+                                var paragraph = BuildDocObject(elements, reader.Name);
+                                doc.Add(paragraph);
+                            }
+                            
+                        }
+                        
+                        break;
+                    case XmlNodeType.Text:
+                        
+                        // add the text into the stack
+                        elements.Add(new HtmlElement(reader.Value));
+
+                        break;
+                    case XmlNodeType.Whitespace:
+
+                        // do nothing for now
+
+                        break;
+                }
+            }
         }
+
+        private List<string> blockTags = new List<string>() {"p", "ul", "ol"};
+        private List<string> listTags = new List<string>() {"ul", "ol"};
+        private List<string> formatTags = new List<string>() {"em", "strong", "span"};
 
         /// <summary>
-        /// Sanitize html string for display
+        /// Determines if readed end of block element that cooresponds to iTextSharp objects
         /// </summary>
-        /// <remarks>
-        /// http://blog.dmbcllc.com/2009/07/20/itextsharp-pdf-to-html-cleaning-html/
-        /// </remarks>
-        /// <param name="html"></param>
+        /// <param name="tag"></param>
         /// <returns></returns>
-        private string SanitizeHtml(string html)
+        public bool IsReadyToProcess(string tag)
         {
-            // ensure it starts with <p>
-            if (!html.ToLower().StartsWith("<p>")) html = "<p>" + html + "</p>";
-
-            // remove all white spaces
-            html = html.Replace("\r", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
-
-            // standardize all br tags
-            html = html.Replace("<BR>", "<br />").Replace("<br>", "<br />");
-
-            // removes all attributes on span tags
-            System.Text.RegularExpressions.Regex re = null;
-            System.Text.RegularExpressions.Match match = null;
-
-            re = new System.Text.RegularExpressions.Regex("<span.*?>");
-            match = re.Match(html);
-            while (match.Success)
-            {
-                foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-                    html = html.Replace(c.Value, string.Empty);
-                match = match.NextMatch();
-            }
-
-            // lower case all tags
-            re = new System.Text.RegularExpressions.Regex("<\\w+?");
-            match = re.Match(html);
-
-            while (match.Success)
-            {
-                foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-                    html = html.Replace(c.Value, c.Value.ToLower());
-                match = match.NextMatch();
-            }
-
-            re = new System.Text.RegularExpressions.Regex("</\\w+?>");
-            match = re.Match(html);
-            while (match.Success)
-            {
-                foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-                    html = html.Replace(c.Value, c.Value.ToLower());
-                match = match.NextMatch();
-            }
-
-            // strip out white space
-            while (html.Contains("> ")) html = html .Replace("> ", ">");
-            while (html.Contains("  ")) html = html.Replace("  ", " ");
-
-            // swap out the encoded & value
-            html = html.Replace(" & ", " &amp; ");
-
-            // quote all the attributes
-            int length = 0;
-            while (length != html.Length)
-            {
-                length = html.Length;
-                html = System.Text
-                    .RegularExpressions.Regex
-                    .Replace(html,"(<.+?\\s+\\w+=)([^\"']\\S*?)([\\s>])", "$1\"$2\"$3");
-
-            }
-
-            return html;
+            return blockTags.Contains(tag.ToLower());
         }
+
+        private Paragraph BuildDocObject(List<HtmlElement> elements, string closingTag)
+        {
+            var docObjs = new Stack<HtmlElement>();
+            var paragraph = new Paragraph();
+
+            foreach (var a in elements)
+            {
+                // opening element
+                if (a.IsElement && !a.IsClose)
+                {
+                    a.Phrase = new Phrase();
+
+                    // set styling if any exists
+
+                    docObjs.Push(a);
+                }
+                // closing element
+                else if (a.IsElement && a.IsClose)
+                {
+                    var obj = docObjs.Pop();
+
+                    // no more objects in stack, add to paragraph
+                    if (docObjs.Count == 0)
+                    {
+                        paragraph.Add(obj.Phrase);    
+                    }
+                    // still just a child, add it to the next object and put it back
+                    else
+                    {
+                        var parent = docObjs.Pop();
+                        parent.Phrase.Add(obj.Phrase);
+                        docObjs.Push(parent);
+                    }
+                }
+                // deal with text
+                else
+                {
+                    var obj = docObjs.Pop();
+                    obj.Phrase.Add(a.Value);
+
+                    // put it back on the stack because we're not done
+                    docObjs.Push(obj);
+                }
+            }
+            return paragraph;
+        }
+
+        
+
+        ///// <summary>
+        ///// Traverse down the stack to build an iTextSharp object
+        ///// </summary>
+        ///// <param name="doc"></param>
+        ///// <param name="stack"></param>
+        ///// <param name="closingTag"></param>
+        //private void BuildDocObject(Document doc, Stack<HtmlElement> stack, string closingTag)
+        //{
+        //    // deal with the list objects
+        //    if (listTags.Contains(closingTag.ToLower()))
+        //    {
+        //        BuildDocListObj(doc, stack, closingTag);
+        //        return;
+        //    }
+
+        //    // reverse the order so we can start from the beginning
+        //    var elements = new Stack<HtmlElement>();
+        //    HtmlElement element;
+        //    do
+        //    {
+        //        element = stack.Pop();
+
+        //        elements.Push(element);
+
+        //    } while (element.Value != closingTag);
+
+        //    // build the objects
+        //    var paragraph = new Paragraph();
+        //    Chunk chunk = new Chunk();
+        //    do
+        //    {
+        //        element = stack.Pop();
+
+        //        // opening formatting element
+        //        if (element.IsElement && !element.IsClose)
+        //        {
+        //            chunk = new Chunk();
+
+        //            // set the styling
+        //        }
+        //        // closing element
+        //        else if (element.IsElement && element.IsClose)
+        //        {
+        //            // add the element to the paragraph
+        //            paragraph.Add(chunk);
+        //        }
+        //        // text element
+        //        else
+        //        {
+        //            chunk.Content = 
+        //        }
+
+
+        //    } while (elements.Count > 0);
+
+
+        //    throw new NotImplementedException();
+        //}
+
+        //private void BuildDocListObj(Document doc, Stack<HtmlElement> stack, string closingTag)
+        //{
+        //    // determine what type of list
+
+        //    throw new NotImplementedException();
+        //}
+
+        ///// <summary>
+        ///// Sanitize html string for display
+        ///// </summary>
+        ///// <remarks>
+        ///// http://blog.dmbcllc.com/2009/07/20/itextsharp-pdf-to-html-cleaning-html/
+        ///// </remarks>
+        ///// <param name="html"></param>
+        ///// <returns></returns>
+        //private string SanitizeHtml(string html)
+        //{
+        //    // ensure it starts with <p>
+        //    if (!html.ToLower().StartsWith("<p>")) html = "<p>" + html + "</p>";
+
+        //    // remove all white spaces
+        //    html = html.Replace("\r", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
+
+        //    // standardize all br tags
+        //    html = html.Replace("<BR>", "<br />").Replace("<br>", "<br />");
+
+        //    // removes all attributes on span tags
+        //    System.Text.RegularExpressions.Regex re = null;
+        //    System.Text.RegularExpressions.Match match = null;
+
+        //    re = new System.Text.RegularExpressions.Regex("<span.*?>");
+        //    match = re.Match(html);
+        //    while (match.Success)
+        //    {
+        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
+        //            html = html.Replace(c.Value, string.Empty);
+        //        match = match.NextMatch();
+        //    }
+
+        //    // lower case all tags
+        //    re = new System.Text.RegularExpressions.Regex("<\\w+?");
+        //    match = re.Match(html);
+
+        //    while (match.Success)
+        //    {
+        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
+        //            html = html.Replace(c.Value, c.Value.ToLower());
+        //        match = match.NextMatch();
+        //    }
+
+        //    re = new System.Text.RegularExpressions.Regex("</\\w+?>");
+        //    match = re.Match(html);
+        //    while (match.Success)
+        //    {
+        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
+        //            html = html.Replace(c.Value, c.Value.ToLower());
+        //        match = match.NextMatch();
+        //    }
+
+        //    // strip out white space
+        //    while (html.Contains("> ")) html = html .Replace("> ", ">");
+        //    while (html.Contains("  ")) html = html.Replace("  ", " ");
+
+        //    // swap out the encoded & value
+        //    html = html.Replace(" & ", " &amp; ");
+
+        //    // quote all the attributes
+        //    int length = 0;
+        //    while (length != html.Length)
+        //    {
+        //        length = html.Length;
+        //        html = System.Text
+        //            .RegularExpressions.Regex
+        //            .Replace(html,"(<.+?\\s+\\w+=)([^\"']\\S*?)([\\s>])", "$1\"$2\"$3");
+
+        //    }
+
+        //    return html;
+        //}
         #endregion
 
         /// <summary>
@@ -423,5 +644,29 @@ namespace Dogbert2.Services
                 cell.PaddingTop = 10;
             }
         }
+    }
+
+    public class HtmlElement
+    {
+        public HtmlElement(string value, bool isElement = false, bool isclose = false)
+        {
+            Value = value;
+            IsElement = isElement;
+            IsClose = isclose;
+        }
+
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Whether or not it's an html element (not text)
+        /// </summary>
+        public bool IsElement { get; set; }
+
+        /// <summary>
+        /// Is this a closing element
+        /// </summary>
+        public bool IsClose { get; set; }
+
+        public Phrase Phrase { get; set; }
     }
 }
