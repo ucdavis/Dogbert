@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Helpers;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.html;
 using UCDArch.Core.PersistanceSupport;
 using System.Linq;
+using File = Dogbert2.Core.Domain.File;
 
 namespace Dogbert2.Services
 {
     public class SrsGenerator : ISrsGenerator
     {
         private readonly IRepository<ProjectText> _projectTextRepository;
+        private readonly IRepository<File> _fileRepository;
 
-        public SrsGenerator(IRepository<ProjectText> projectTextRepository)
+        public SrsGenerator(IRepository<ProjectText> projectTextRepository, IRepository<File> fileRepository)
         {
             _projectTextRepository = projectTextRepository;
+            _fileRepository = fileRepository;
         }
 
         // base color
@@ -29,6 +34,7 @@ namespace Dogbert2.Services
         private Font _boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
         private Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
         private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private Font _captionFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
 
         // fonts for the cover page
         private BaseFont _dateBaseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
@@ -251,6 +257,9 @@ namespace Dogbert2.Services
         }
 
         #region Html Text
+        private List<string> blockTags = new List<string>() { "p", "ul", "ol" };
+        private List<string> listTags = new List<string>() { "ul", "ol" };
+        
         /// <summary>
         /// Parse out the html and format it using iTextSharp's stuff
         /// </summary>
@@ -285,14 +294,14 @@ namespace Dogbert2.Services
                             if (listTags.Contains(reader.Name))
                             {
                                 // build the list object
-                                var paragraph = BuildListObject(elements, reader.Name);
+                                var paragraph = BuildListObject(elements, reader.Name, doc);
                                 doc.Add(paragraph);
 
                                 elements.Clear();
                             }
                             else
                             {
-                                var paragraph = BuildDocObject(elements);
+                                var paragraph = BuildDocObject(elements, doc);
                                 doc.Add(paragraph);
 
                                 elements.Clear();
@@ -316,21 +325,17 @@ namespace Dogbert2.Services
             }
         }
 
-        private List<string> blockTags = new List<string>() {"p", "ul", "ol"};
-        private List<string> listTags = new List<string>() {"ul", "ol"};
-        private List<string> formatTags = new List<string>() {"em", "strong", "span"};
-
         /// <summary>
         /// Determines if readed end of block element that cooresponds to iTextSharp objects
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public bool IsReadyToProcess(string tag)
+        private bool IsReadyToProcess(string tag)
         {
             return blockTags.Contains(tag.ToLower());
         }
 
-        private Paragraph BuildDocObject(List<HtmlElement> elements)
+        private Paragraph BuildDocObject(List<HtmlElement> elements, Document document)
         {
             var docObjs = new Stack<HtmlElement>();
             var paragraph = new Paragraph();
@@ -341,14 +346,14 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a);
+                var obj = HandleTag(docObjs, a, document);
 
                 if (obj != null) paragraph.Add(obj);
             }
             return paragraph;
         }
        
-        private List BuildListObject(List<HtmlElement> elements, string listType)
+        private List BuildListObject(List<HtmlElement> elements, string listType, Document document)
         {
             var docObjs = new Stack<HtmlElement>();
             var lt = listType == "ol" ? List.ORDERED : List.UNORDERED;
@@ -362,7 +367,7 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a);
+                var obj = HandleTag(docObjs, a, document);
                 if (obj != null)
                 {
                     list.Add(new ListItem(obj));
@@ -372,7 +377,13 @@ namespace Dogbert2.Services
             return list;
         }
 
-        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element)
+        /// <summary>
+        /// Generates new phrase element with all sub formatting
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element, Document document)
         {
             // opening element
             if (element.IsElement && !element.IsClose)
@@ -414,13 +425,79 @@ namespace Dogbert2.Services
             else
             {
                 var obj = elements.Pop();
-                obj.Phrase.Add(element.Value);
+
+                // scan for an image token
+                var result = ScanForImage(document, element.Value);
+
+                obj.Phrase.Add(result);
 
                 // put it back on the stack because we're not done
                 elements.Push(obj);
             }
 
             return null;
+        }
+        #endregion
+
+        #region Image
+        public string ScanForImage(Document document, string txt)
+        {
+            // does not contain the image tag
+            if (!txt.Contains("{Image-")) return txt;
+
+            // parse out all the image tags
+            foreach (int pos in txt.IndexOfAll("{Image-"))
+            {
+                var token = txt.Substring(pos, txt.IndexOf("}", pos)+1);
+
+                var begin = token.IndexOf("-")+1;
+                var length = token.IndexOf("}") - begin;
+
+                // get the id
+                var id = token.Substring(begin, length);
+                int fileId;
+                if (int.TryParse(id, out fileId))
+                {
+                    AddImage(document, fileId);
+                }
+
+            }
+
+            // replace all {Image-*} tags with string empty
+            var rgx = new Regex("{Image-.+}");
+            var result = rgx.Replace(txt, string.Empty);
+
+            return result;
+        }
+        public void AddImage(Document document, int fileId)
+        {
+            var table = new PdfPTable(1);
+            //table.TotalWidth = _pageWidth;
+            //table.LockedWidth = true;
+            table.KeepTogether = true;
+
+            var imgCell = new PdfPCell();
+            imgCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            imgCell.BorderWidth = 0;
+
+            var file = _fileRepository.GetNullableById(Convert.ToInt32(fileId));
+            if (file != null)
+            {
+                var ms = new MemoryStream(file.Contents);
+
+                // add the image into the document
+                var img = Image.GetInstance(ms);
+                img.Alignment = Element.ALIGN_CENTER;
+
+                // scale the image
+                img.ScaleToFit(300f, 300f);
+
+                imgCell.AddElement(img);
+                imgCell.AddElement(new Phrase(file.Caption, _captionFont));
+            }
+
+            table.AddCell(imgCell);
+            document.Add(table);
         }
         #endregion
 

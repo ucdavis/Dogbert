@@ -153,6 +153,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\ProjectTermViewModel.cs" />
     <Compile Include="Models\ProjectTextViewModel.cs" />

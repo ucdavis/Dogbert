@@ -11,6 +11,7 @@ namespace Dogbert2.Models
     /// </summary>
     public class ProjectTextViewModel
     {
+        public Project Project { get; set; }
         public ProjectText ProjectText { get; set; }
         public IEnumerable<TextType> TextTypes { get; set; }
 
@@ -21,6 +22,7 @@ namespace Dogbert2.Models
 
             var viewModel = new ProjectTextViewModel
                                 {
+                                    Project = project,
                                     ProjectText = new ProjectText() {Project = project},
                                     TextTypes = repository.OfType<TextType>().Queryable.Where(a=>a.IsActive).OrderBy(a=>a.Order).ToList()
                                 };

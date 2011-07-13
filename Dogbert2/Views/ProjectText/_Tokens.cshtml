@@ -1,7 +1,13 @@
-﻿<aside id="tokens">
+﻿@model IEnumerable<Dogbert2.Core.Domain.File>
+
+<aside id="tokens">
     <ul>
-        <li><a href="javascript:;" class="token" data-value="{Image-1}">Image 1</a></li>    
-        <li><a href="javascript:;" class="token" data-value="{Image-2}">Image 2</a></li>    
+
+        @foreach (var a in Model)
+        { 
+            <li><a href="javascript:;" class="token" data-value="{Image-@a.Id}">@a.Title</a></li>
+        }
+
     </ul>
 </aside>
 

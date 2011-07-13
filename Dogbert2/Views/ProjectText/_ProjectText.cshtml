@@ -20,7 +20,7 @@
 				    @Html.LabelFor(model => model.ProjectText.Text)<span>*</span> 
 			    </div>
 			    <div class="editor-field" style="width: 85%;">
-                    @Html.Partial("_Tokens")
+                    @Html.Partial("_Tokens", Model.Project.Files.Where(a=>a.IsImage).ToList())
 				    @Html.EditorFor(model => model.ProjectText.Text)
 				    @Html.ValidationMessageFor(model => model.ProjectText.Text)
 			    </div>

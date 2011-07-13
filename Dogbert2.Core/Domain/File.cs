@@ -58,7 +58,7 @@ namespace Dogbert2.Core.Domain
         {
             Id(x => x.Id);
 
-            Map(x => x.Contents);
+            Map(x => x.Contents).CustomType("BinaryBlob");
             Map(x => x.Caption);
             Map(x => x.Title);
 
