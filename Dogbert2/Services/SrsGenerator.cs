@@ -26,6 +26,8 @@ namespace Dogbert2.Services
 
         // standard body font
         private Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+        private Font _boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
+        private Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
         private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
 
         // fonts for the cover page
@@ -283,11 +285,17 @@ namespace Dogbert2.Services
                             if (listTags.Contains(reader.Name))
                             {
                                 // build the list object
+                                var paragraph = BuildListObject(elements, reader.Name);
+                                doc.Add(paragraph);
+
+                                elements.Clear();
                             }
                             else
                             {
-                                var paragraph = BuildDocObject(elements, reader.Name);
+                                var paragraph = BuildDocObject(elements);
                                 doc.Add(paragraph);
+
+                                elements.Clear();
                             }
                             
                         }
@@ -322,193 +330,98 @@ namespace Dogbert2.Services
             return blockTags.Contains(tag.ToLower());
         }
 
-        private Paragraph BuildDocObject(List<HtmlElement> elements, string closingTag)
+        private Paragraph BuildDocObject(List<HtmlElement> elements)
         {
             var docObjs = new Stack<HtmlElement>();
             var paragraph = new Paragraph();
 
+            // set spacing
+            paragraph.SpacingBefore = 5;
+            paragraph.FirstLineIndent = 36;
+
             foreach (var a in elements)
             {
-                // opening element
-                if (a.IsElement && !a.IsClose)
-                {
-                    a.Phrase = new Phrase();
+                var obj = HandleTag(docObjs, a);
 
-                    // set styling if any exists
-
-                    docObjs.Push(a);
-                }
-                // closing element
-                else if (a.IsElement && a.IsClose)
-                {
-                    var obj = docObjs.Pop();
-
-                    // no more objects in stack, add to paragraph
-                    if (docObjs.Count == 0)
-                    {
-                        paragraph.Add(obj.Phrase);    
-                    }
-                    // still just a child, add it to the next object and put it back
-                    else
-                    {
-                        var parent = docObjs.Pop();
-                        parent.Phrase.Add(obj.Phrase);
-                        docObjs.Push(parent);
-                    }
-                }
-                // deal with text
-                else
-                {
-                    var obj = docObjs.Pop();
-                    obj.Phrase.Add(a.Value);
-
-                    // put it back on the stack because we're not done
-                    docObjs.Push(obj);
-                }
+                if (obj != null) paragraph.Add(obj);
             }
             return paragraph;
         }
+       
+        private List BuildListObject(List<HtmlElement> elements, string listType)
+        {
+            var docObjs = new Stack<HtmlElement>();
+            var lt = listType == "ol" ? List.ORDERED : List.UNORDERED;
 
-        
+            // remove the ol objects
+            elements.RemoveAll(a => a.Value == listType);
 
-        ///// <summary>
-        ///// Traverse down the stack to build an iTextSharp object
-        ///// </summary>
-        ///// <param name="doc"></param>
-        ///// <param name="stack"></param>
-        ///// <param name="closingTag"></param>
-        //private void BuildDocObject(Document doc, Stack<HtmlElement> stack, string closingTag)
-        //{
-        //    // deal with the list objects
-        //    if (listTags.Contains(closingTag.ToLower()))
-        //    {
-        //        BuildDocListObj(doc, stack, closingTag);
-        //        return;
-        //    }
+            var list = new iTextSharp.text.List(lt);
+            if (lt == List.UNORDERED) list.SetListSymbol("\u2022");
+            list.IndentationLeft = 10f;
 
-        //    // reverse the order so we can start from the beginning
-        //    var elements = new Stack<HtmlElement>();
-        //    HtmlElement element;
-        //    do
-        //    {
-        //        element = stack.Pop();
+            foreach (var a in elements)
+            {
+                var obj = HandleTag(docObjs, a);
+                if (obj != null)
+                {
+                    list.Add(new ListItem(obj));
+                }
+            }
 
-        //        elements.Push(element);
+            return list;
+        }
 
-        //    } while (element.Value != closingTag);
+        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element)
+        {
+            // opening element
+            if (element.IsElement && !element.IsClose)
+            {
+                element.Phrase = new Phrase();
+                element.Phrase.Font = _font;
 
-        //    // build the objects
-        //    var paragraph = new Paragraph();
-        //    Chunk chunk = new Chunk();
-        //    do
-        //    {
-        //        element = stack.Pop();
+                // set styling if any exists
+                if (element.Value == "em")
+                {
+                    element.Phrase.Font = _italicFont;
+                }
+                else if (element.Value == "strong")
+                {
+                    element.Phrase.Font = _boldFont;
+                }
 
-        //        // opening formatting element
-        //        if (element.IsElement && !element.IsClose)
-        //        {
-        //            chunk = new Chunk();
+                elements.Push(element);
+            }
+            // closing element
+            else if (element.IsElement && element.IsClose)
+            {
+                var obj = elements.Pop();
 
-        //            // set the styling
-        //        }
-        //        // closing element
-        //        else if (element.IsElement && element.IsClose)
-        //        {
-        //            // add the element to the paragraph
-        //            paragraph.Add(chunk);
-        //        }
-        //        // text element
-        //        else
-        //        {
-        //            chunk.Content = 
-        //        }
+                // no more objects in stack, add to paragraph
+                if (elements.Count == 0)
+                {
+                    return obj.Phrase;
+                }
+                // still just a child, add it to the next object and put it back
+                else
+                {
+                    var parent = elements.Pop();
+                    parent.Phrase.Add(obj.Phrase);
+                    elements.Push(parent);
+                }
+            }
+            // deal with text
+            else
+            {
+                var obj = elements.Pop();
+                obj.Phrase.Add(element.Value);
 
+                // put it back on the stack because we're not done
+                elements.Push(obj);
+            }
 
-        //    } while (elements.Count > 0);
-
-
-        //    throw new NotImplementedException();
-        //}
-
-        //private void BuildDocListObj(Document doc, Stack<HtmlElement> stack, string closingTag)
-        //{
-        //    // determine what type of list
-
-        //    throw new NotImplementedException();
-        //}
-
-        ///// <summary>
-        ///// Sanitize html string for display
-        ///// </summary>
-        ///// <remarks>
-        ///// http://blog.dmbcllc.com/2009/07/20/itextsharp-pdf-to-html-cleaning-html/
-        ///// </remarks>
-        ///// <param name="html"></param>
-        ///// <returns></returns>
-        //private string SanitizeHtml(string html)
-        //{
-        //    // ensure it starts with <p>
-        //    if (!html.ToLower().StartsWith("<p>")) html = "<p>" + html + "</p>";
-
-        //    // remove all white spaces
-        //    html = html.Replace("\r", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
-
-        //    // standardize all br tags
-        //    html = html.Replace("<BR>", "<br />").Replace("<br>", "<br />");
-
-        //    // removes all attributes on span tags
-        //    System.Text.RegularExpressions.Regex re = null;
-        //    System.Text.RegularExpressions.Match match = null;
-
-        //    re = new System.Text.RegularExpressions.Regex("<span.*?>");
-        //    match = re.Match(html);
-        //    while (match.Success)
-        //    {
-        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-        //            html = html.Replace(c.Value, string.Empty);
-        //        match = match.NextMatch();
-        //    }
-
-        //    // lower case all tags
-        //    re = new System.Text.RegularExpressions.Regex("<\\w+?");
-        //    match = re.Match(html);
-
-        //    while (match.Success)
-        //    {
-        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-        //            html = html.Replace(c.Value, c.Value.ToLower());
-        //        match = match.NextMatch();
-        //    }
-
-        //    re = new System.Text.RegularExpressions.Regex("</\\w+?>");
-        //    match = re.Match(html);
-        //    while (match.Success)
-        //    {
-        //        foreach (System.Text.RegularExpressions.Capture c in match.Captures)
-        //            html = html.Replace(c.Value, c.Value.ToLower());
-        //        match = match.NextMatch();
-        //    }
-
-        //    // strip out white space
-        //    while (html.Contains("> ")) html = html .Replace("> ", ">");
-        //    while (html.Contains("  ")) html = html.Replace("  ", " ");
-
-        //    // swap out the encoded & value
-        //    html = html.Replace(" & ", " &amp; ");
-
-        //    // quote all the attributes
-        //    int length = 0;
-        //    while (length != html.Length)
-        //    {
-        //        length = html.Length;
-        //        html = System.Text
-        //            .RegularExpressions.Regex
-        //            .Replace(html,"(<.+?\\s+\\w+=)([^\"']\\S*?)([\\s>])", "$1\"$2\"$3");
-
-        //    }
-
-        //    return html;
-        //}
+            return null;
+        }
         #endregion
 
         /// <summary>
