@@ -476,9 +476,10 @@ namespace Dogbert2.Services
             //table.LockedWidth = true;
             table.KeepTogether = true;
 
-            var imgCell = new PdfPCell();
-            imgCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            imgCell.BorderWidth = 0;
+            var cell = new PdfPCell();
+            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+            cell.BorderWidth = 0;
+            cell.Padding = 10;
 
             var file = _fileRepository.GetNullableById(Convert.ToInt32(fileId));
             if (file != null)
@@ -490,13 +491,16 @@ namespace Dogbert2.Services
                 img.Alignment = Element.ALIGN_CENTER;
 
                 // scale the image
-                img.ScaleToFit(300f, 300f);
+                img.ScaleToFit(_pageWidth, 250f);
 
-                imgCell.AddElement(img);
-                imgCell.AddElement(new Phrase(file.Caption, _captionFont));
+                var paragraph = new Paragraph(file.Caption, _captionFont);
+                paragraph.Alignment = Element.ALIGN_CENTER;
+
+                cell.AddElement(img);
+                cell.AddElement(paragraph);
             }
 
-            table.AddCell(imgCell);
+            table.AddCell(cell);
             document.Add(table);
         }
         #endregion
