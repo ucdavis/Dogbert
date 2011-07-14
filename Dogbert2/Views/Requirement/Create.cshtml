@@ -1,0 +1,74 @@
+﻿@model Dogbert2.Models.RequirementViewModel
+
+@{
+    ViewBag.Title = "Create Requirement";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+        <li>@Html.ActionLink("Back to List", "Index", new { id=Model.Project.Id })</li>
+	</ul>
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>Requirement</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.Requirement.Description)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.Description)
+				    @Html.ValidationMessageFor(model => model.Requirement.Description)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.TechnicalDifficulty) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.TechnicalDifficulty)
+				    @Html.ValidationMessageFor(model => model.Requirement.TechnicalDifficulty)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.IsComplete) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.IsComplete)
+				    @Html.ValidationMessageFor(model => model.Requirement.IsComplete)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.DateAdded) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.DateAdded)
+				    @Html.ValidationMessageFor(model => model.Requirement.DateAdded)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.LastModified) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.LastModified)
+				    @Html.ValidationMessageFor(model => model.Requirement.LastModified)
+			    </div>
+		    </li>
+		    <li>
+                <div class="editor-label"><label>&nbsp;</label></div>
+			    <div class="editor-field">
+			        <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.Project.Id })
+                </div>
+		    </li>
+	    </ul>
+	</fieldset>
+}

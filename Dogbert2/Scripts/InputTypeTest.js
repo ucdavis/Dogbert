@@ -16,7 +16,7 @@ $(function () {
             input.value = 'testing';
             if (input.value !== 'testing') {
                 uiSupport.push(input.type);
-                // console.log(uiSupport);
+                //console.log(uiSupport);
             }
         }
     }
@@ -24,5 +24,14 @@ $(function () {
 
 // checks if a specific feature is in the database
 function hasSupport(name) {
-    return $.inArray(name, uiSupport) > 0;   
+    for (i = 0; i < uiSupport.length; i++) {
+
+        //alert(uiSupport[i] + "|" + name);
+
+        if (uiSupport[i] == name) {
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Dogbert2.Core.Resources;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace Dogbert2.Core.Domain
         public virtual ProjectType ProjectType { get; set; }
         public virtual PriorityType Priority { get; set; }
         [Range(0, 10)]
+        [DataType(DataTypes.Range)]
         public virtual int? Complexity { get; set; }
         public virtual DateTime? Deadline { get; set; }
         [Display(Name="Projected Begin")]

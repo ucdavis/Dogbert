@@ -59,6 +59,9 @@
     <Compile Include="Domain\PriorityType.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="Domain\ProjectText.cs" />
+    <Compile Include="Domain\Requirement.cs" />
+    <Compile Include="Domain\RequirementCategory.cs" />
+    <Compile Include="Domain\RequirementType.cs" />
     <Compile Include="Domain\TextType.cs" />
     <Compile Include="Domain\ProjectType.cs" />
     <Compile Include="Domain\ProjectWorkgroup.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Domain\Workgroup.cs" />
     <Compile Include="Domain\WorkgroupWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\DataTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
