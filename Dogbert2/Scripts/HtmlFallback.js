@@ -8,6 +8,7 @@
         $.each($('input[type="range"]'), function (index, item) {
 
             var id = item.id;
+            var value = $(item).val();
 
             // create the div we need
             var hidden = $("<input>").attr("type", "hidden").attr("id", id);
@@ -18,8 +19,8 @@
             slider.insertAfter($(item));
 
             $("#slider_" + id).slider({
-                min: 0, max: 10,
-                value: $("#" + id).val(),
+                min: 0, max: 10,    // hard coded for now
+                value: value,
                 slide: function (event, ui) {
                     $("#" + id).val(ui.value);
                 }

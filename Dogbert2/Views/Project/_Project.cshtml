@@ -63,8 +63,9 @@
 				    @Html.LabelFor(model => model.Project.Complexity) 
 			    </div>
 			    <div class="editor-field">
-                    <div id="slider-complexity"></div>
-                    @Html.HiddenFor(model=>model.Project.Complexity)
+                    @*<div id="slider-complexity"></div>
+                    @Html.HiddenFor(model=>model.Project.Complexity)*@
+                    @Html.EditorFor(model => model.Project.Complexity)
 				    @Html.ValidationMessageFor(model => model.Project.Complexity)
 			    </div>
 		    </li>
@@ -161,7 +162,7 @@
 }
 
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(function () {
         $("#slider-complexity").slider({
             min: 0, max: 10,
@@ -171,5 +172,5 @@
             }
         });
     });
-</script>
+</script>*@
 
