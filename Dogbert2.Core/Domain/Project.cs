@@ -140,6 +140,7 @@ namespace Dogbert2.Core.Domain
             HasMany(x => x.ProjectTexts).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Files).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.RequirementCategories).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.Requirements).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }

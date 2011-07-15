@@ -34,7 +34,9 @@ namespace Dogbert2.Services
         private Font _boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
         private Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
         private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private Font _subHeaderFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
         private Font _captionFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private Font _tableHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
 
         // fonts for the cover page
         private BaseFont _dateBaseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
@@ -78,6 +80,9 @@ namespace Dogbert2.Services
                 AddSectionHeader(doc, txt.TextType.Name);
                 AddHtmlText(doc, txt.Text);
             }
+
+            // add in the requirements section
+            AddRequirementTable(doc, project);
 
             doc.Close();
 
@@ -236,7 +241,8 @@ namespace Dogbert2.Services
             var table = new PdfPTable(1);
             table.TotalWidth = _pageWidth;
             table.LockedWidth = true;
-            
+            table.SpacingAfter = 10f;
+
             var cell = new PdfPCell();
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             
@@ -438,6 +444,53 @@ namespace Dogbert2.Services
             return null;
         }
         #endregion
+
+        public void AddRequirementTable(Document document, Project project)
+        {
+            AddSectionHeader(document, "Requirements");
+
+            foreach (var cat in project.RequirementCategories)
+            {
+                // add in a category title
+                document.Add(new Chunk(cat.Name, _subHeaderFont));
+
+                // add in the table
+                var table = new PdfPTable(4);
+                table.TotalWidth = _pageWidth;
+                table.LockedWidth = true;
+                table.SetWidths(new float[]{1f, 2f, 5f, 1f});
+                table.SpacingAfter = 2f;
+
+                // put the headers on the table
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Id", _tableHeaderFont))) {BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Priority", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Description", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5 });
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Type", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+            
+                foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory))
+                {
+                    var cell1 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5};
+                    var cell2 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+                    var cell3 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+                    var cell4 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+
+                    cell1.AddElement(new Chunk(req.RequirementId));
+                    cell2.AddElement(new Chunk(req.PriorityType.Name));
+                    cell3.AddElement(new Chunk(req.Description));
+                    cell4.AddElement(new Chunk(req.RequirementType.Id));
+
+                    table.AddCell(cell1);
+                    table.AddCell(cell2);
+                    table.AddCell(cell3);
+                    table.AddCell(cell4);
+                }
+
+                document.Add(table);
+
+            }
+
+
+        }
 
         #region Image
         public string ScanForImage(Document document, string txt)
