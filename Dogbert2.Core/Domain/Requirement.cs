@@ -24,16 +24,22 @@ namespace Dogbert2.Core.Domain
         public virtual string Description { get; set; }
         [Range(0, 10)]
         [DataType(DataTypes.Range)]
+        [Display(Name="Technical Difficulty")]
         public virtual int TechnicalDifficulty { get; set; }
         public virtual bool IsComplete { get; set; }
+        [Required]
+        public virtual string RequirementId { get; set; }
 
         [Required]
+        [Display(Name="Requirement Type")]
         public virtual RequirementType RequirementType { get; set; }
         [Required]
+        [Display(Name="Priority Type")]
         public virtual PriorityType PriorityType { get; set; }
         [Required]
         public virtual Project Project { get; set; }
         [Required]
+        [Display(Name="Category")]
         public virtual RequirementCategory RequirementCategory { get; set; }
 
         public virtual DateTime DateAdded { get; set; }
@@ -49,6 +55,8 @@ namespace Dogbert2.Core.Domain
             Map(x => x.Description);
             Map(x => x.TechnicalDifficulty);
             Map(x => x.IsComplete);
+
+            Map(x => x.RequirementId);
 
             References(x => x.RequirementType);
             References(x => x.PriorityType);

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Dogbert2.Core.Domain.Requirement>
+﻿@model IEnumerable<Dogbert2.Core.Domain.RequirementCategory>
 
 @{
-	ViewBag.Title = "Requirements";
+	ViewBag.Title = "Requirement Categories";
     ViewBag.NavigationKey = "Project";
 }
 
@@ -9,8 +9,7 @@
 {
 	<ul class='navigation'>
 		<li>@Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectId })</li>
-        <li>@Html.ActionLink("Categories", "Index", "RequirementCategory", new { id=ViewBag.ProjectId}, new {})</li>
-        <li>@Html.ActionLink("Back to Project", "Index", "Project", new { id=ViewBag.ProjectId }, new { })</li>
+        <li>@Html.ActionLink("Back to Requirements", "Index", "Requirement", new {id=ViewBag.ProjectId}, new {})</li>
 	</ul>
 }
 
@@ -20,14 +19,10 @@
 		<tr>
 			<th></th>
 			<th>
-				Description
+				Name
 			</th>
 			<th>
-				TechnicalDifficulty
-			</th>
-            <th>Category</th>
-			<th>
-				LastModified
+				IsActive
 			</th>
 
 			<th></th>
@@ -44,16 +39,10 @@
 				</a>
 			</td>
 			<td>
-				@item.Description
+				@item.Name
 			</td>
 			<td>
-				@item.TechnicalDifficulty
-			</td>
-            <td>
-                @item.RequirementCategory.Name
-            </td>
-			<td>
-				@String.Format("{0:g}", item.LastModified)
+				@item.IsActive
 			</td>
 							<td>
 						<a href='@Url.Action("Delete", new { id = item.Id })'>

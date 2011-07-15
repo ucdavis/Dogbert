@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Web.Helpers;
+using MvcContrib;
 
 namespace Dogbert2.Controllers
 {
@@ -36,17 +38,6 @@ namespace Dogbert2.Controllers
         }
 
         //
-        // GET: /Requirement/Details/5
-        public ActionResult Details(int id)
-        {
-            var requirement = _requirementRepository.GetNullableById(id);
-
-            if (requirement == null) return RedirectToAction("Index");
-
-            return View(requirement);
-        }
-
-        //
         // GET: /Requirement/Create
         public ActionResult Create(int id)
         {
@@ -60,23 +51,27 @@ namespace Dogbert2.Controllers
         //
         // POST: /Requirement/Create
         [HttpPost]
-        public ActionResult Create(Requirement requirement)
+        public ActionResult Create(int id, [Bind(Exclude="Project, RequirementId")]Requirement requirement)
         {
-            var requirementToCreate = new Requirement();
+            var project = _projectRepository.GetNullableById(id);
 
-            //TransferValues(requirement, requirementToCreate);
+            requirement.RequirementId = string.Format("R{0}", project.Requirements.Count() + 1);
+            requirement.Project = project;
+
+            ModelState.Clear();
+            requirement.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
             {
-                _requirementRepository.EnsurePersistent(requirementToCreate);
+                _requirementRepository.EnsurePersistent(requirement);
 
                 Message = "Requirement Created Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new {id=id});
             }
             else
             {
-				var viewModel = RequirementViewModel.Create(Repository);
+				var viewModel = RequirementViewModel.Create(Repository, project);
                 viewModel.Requirement = requirement;
 
                 return View(viewModel);
@@ -91,7 +86,7 @@ namespace Dogbert2.Controllers
 
             if (requirement == null) return RedirectToAction("Index");
 
-			var viewModel = RequirementViewModel.Create(Repository);
+			var viewModel = RequirementViewModel.Create(Repository, requirement.Project);
 			viewModel.Requirement = requirement;
 
 			return View(viewModel);
@@ -104,9 +99,13 @@ namespace Dogbert2.Controllers
         {
             var requirementToEdit = _requirementRepository.GetNullableById(id);
 
-            if (requirementToEdit == null) return RedirectToAction("Index");
+            if (requirementToEdit == null) return RedirectToAction("Index", new {id=id});
 
-            //TransferValues(requirement, requirementToEdit);
+            AutoMapper.Mapper.Map(requirement, requirementToEdit);
+            requirementToEdit.LastModified = DateTime.Now;
+
+            ModelState.Clear();
+            requirementToEdit.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
             {
@@ -114,15 +113,13 @@ namespace Dogbert2.Controllers
 
                 Message = "Requirement Edited Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new {id=requirementToEdit.Project.Id});
             }
-            else
-            {
-				var viewModel = RequirementViewModel.Create(Repository);
-                viewModel.Requirement = requirement;
+			
+            var viewModel = RequirementViewModel.Create(Repository, requirementToEdit.Project);
+            viewModel.Requirement = requirement;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
         
         //
@@ -131,7 +128,7 @@ namespace Dogbert2.Controllers
         {
 			var requirement = _requirementRepository.GetNullableById(id);
 
-            if (requirement == null) return RedirectToAction("Index");
+            if (requirement == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
             return View(requirement);
         }
@@ -143,14 +140,15 @@ namespace Dogbert2.Controllers
         {
 			var requirementToDelete = _requirementRepository.GetNullableById(id);
 
-            if (requirementToDelete == null) return RedirectToAction("Index");
+            if (requirementToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            var projectId = requirementToDelete.Project.Id;
 
             _requirementRepository.Remove(requirementToDelete);
 
             Message = "Requirement Removed Successfully";
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {id = projectId});
         }
-
     }
 }

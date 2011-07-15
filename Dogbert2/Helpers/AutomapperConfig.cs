@@ -59,6 +59,12 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.Contents, x => x.Ignore())
                 .ForMember(x => x.FileName, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore());
+
+            CreateMap<Requirement, Requirement>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.RequirementId, x => x.Ignore())
+                .ForMember(x => x.Project, x => x.Ignore())
+                .ForMember(x => x.DateAdded, x => x.Ignore());
         }
     }
 }

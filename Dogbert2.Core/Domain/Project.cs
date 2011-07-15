@@ -24,6 +24,10 @@ namespace Dogbert2.Core.Domain
 
             ProjectWorkgroups = new List<ProjectWorkgroup>();
             ProjectTerms = new List<ProjectTerm>();
+            ProjectTexts = new List<ProjectText>();
+            Files = new List<File>();
+            RequirementCategories = new List<RequirementCategory>();
+            Requirements = new List<Requirement>();
         }
 
         [Required]
@@ -73,6 +77,8 @@ namespace Dogbert2.Core.Domain
         public virtual IList<ProjectTerm> ProjectTerms { get; set; }
         public virtual IList<ProjectText> ProjectTexts { get; set; }
         public virtual IList<File> Files { get; set; }
+        public virtual IList<RequirementCategory> RequirementCategories { get; set; }
+        public virtual IList<Requirement> Requirements { get; set; }
 
         #region Non-Mapped fields
 
@@ -133,6 +139,7 @@ namespace Dogbert2.Core.Domain
             HasMany(x => x.ProjectTerms).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.ProjectTexts).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Files).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.RequirementCategories).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }

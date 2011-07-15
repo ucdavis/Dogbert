@@ -1,0 +1,14 @@
+﻿@model Dogbert2.Models.RequirementCategoryViewModel
+
+@{
+    ViewBag.Title = "Create Requirement Cateogry";
+    ViewBag.NavigationKey = "Project";
+}
+
+@section SubNav{
+    <ul class="navigation">
+        <li>@Html.ActionLink("Back to List", "Index", new { id=Model.Project.Id })</li>
+    </ul>
+}
+
+@Html.Partial("_RequirementCateogry")

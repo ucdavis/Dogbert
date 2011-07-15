@@ -1,0 +1,74 @@
+﻿@model Dogbert2.Models.RequirementViewModel
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>Requirement</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.Requirement.Description)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.Description)
+				    @Html.ValidationMessageFor(model => model.Requirement.Description)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.TechnicalDifficulty) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.TechnicalDifficulty)
+				    @Html.ValidationMessageFor(model => model.Requirement.TechnicalDifficulty)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.IsComplete) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Requirement.IsComplete)
+				    @Html.ValidationMessageFor(model => model.Requirement.IsComplete)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.RequirementType) 
+			    </div>
+			    <div class="editor-field">
+				    @this.Select("Requirement.RequirementType").Options(Model.RequirementTypes, x=>x.Id, x=> x.Name).Selected(Model.Requirement.RequirementType != null ? Model.Requirement.RequirementType.Id.ToString() : string.Empty).FirstOption("--Select Requirement Type--")
+				    @Html.ValidationMessageFor(model => model.Requirement.RequirementType)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Requirement.PriorityType) 
+			    </div>
+			    <div class="editor-field">
+                    @this.Select("Requirement.PriorityType").Options(Model.PriorityTypes, x=>x.Id, x=>x.Name).Selected(Model.Requirement.PriorityType != null ? Model.Requirement.PriorityType.Id.ToString() : string.Empty).FirstOption("--Select Priority Type--")
+				    @Html.ValidationMessageFor(model => model.Requirement.PriorityType)
+			    </div>
+		    </li>
+
+            <li>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Requirement.RequirementCategory)
+                </div>
+                <div class="editor-field">
+                    @this.Select("Requirement.RequirementCategory").Options(Model.RequirementCategories, x=>x.Id, x=>x.Name).Selected(Model.Requirement.RequirementCategory != null ? Model.Requirement.RequirementCategory.Id.ToString() : string.Empty).FirstOption("--Select Category--")
+                    @Html.ValidationMessageFor(model => model.Requirement.RequirementCategory)
+                </div>
+            </li>
+
+		    <li>
+                <div class="editor-label"><label>&nbsp;</label></div>
+			    <div class="editor-field">
+			        <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.Project.Id })
+                </div>
+		    </li>
+	    </ul>
+	</fieldset>
+}

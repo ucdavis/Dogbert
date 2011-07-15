@@ -145,6 +145,7 @@
     <Compile Include="Controllers\ProjectTermController.cs" />
     <Compile Include="Controllers\ProjectTextController.cs" />
     <Compile Include="Controllers\ProjectWorkgroupController.cs" />
+    <Compile Include="Controllers\RequirementCategoryController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\SrsController.cs" />
     <Compile Include="Controllers\TextTypeController.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\ProjectTermViewModel.cs" />
     <Compile Include="Models\ProjectTextViewModel.cs" />
+    <Compile Include="Models\RequirementCategoryViewModel.cs" />
     <Compile Include="Models\RequirementViewModel.cs" />
     <Compile Include="Models\TextTypeViewModel.cs" />
     <Compile Include="Models\WorkgroupViewModel.cs" />
@@ -617,6 +619,14 @@
     <Content Include="Views\Requirement\Index.cshtml" />
     <Content Include="Views\Requirement\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Range.cshtml" />
+    <Content Include="Views\RequirementCategory\Index.cshtml" />
+    <Content Include="Views\RequirementCategory\Create.cshtml" />
+    <Content Include="Views\Requirement\_Requirement.cshtml" />
+    <Content Include="Views\Requirement\Edit.cshtml" />
+    <Content Include="Views\Requirement\Delete.cshtml" />
+    <Content Include="Views\RequirementCategory\_RequirementCategory.cshtml" />
+    <Content Include="Views\RequirementCategory\Edit.cshtml" />
+    <Content Include="Views\RequirementCategory\Delete.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

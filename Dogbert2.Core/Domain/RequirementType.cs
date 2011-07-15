@@ -4,7 +4,7 @@ using UCDArch.Core.DomainModel;
 
 namespace Dogbert2.Core.Domain
 {
-    public class RequirementType : DomainObject
+    public class RequirementType : DomainObjectWithTypedId<string>
     {
         public RequirementType()
         {

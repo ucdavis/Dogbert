@@ -165,7 +165,7 @@ namespace Dogbert2.Controllers
         {
 			var projectText = _projectTextRepository.GetNullableById(id);
 
-            if (projectText == null) return this.RedirectToAction<HomeController>(a=>a.Index());
+            if (projectText == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
 
             return View(projectText);
         }
