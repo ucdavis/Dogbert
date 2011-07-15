@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
 
@@ -17,11 +18,13 @@ namespace Dogbert2.Controllers
     {
         private readonly IRepository<ProjectWorkgroup> _projectWorkgroupRepository;
         private readonly IRepository<Project> _projectRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public ProjectWorkgroupController(IRepository<ProjectWorkgroup> projectWorkgroupRepository, IRepository<Project> projectRepository)
+        public ProjectWorkgroupController(IRepository<ProjectWorkgroup> projectWorkgroupRepository, IRepository<Project> projectRepository, IAccessValidatorService accessValidator)
         {
             _projectWorkgroupRepository = projectWorkgroupRepository;
             _projectRepository = projectRepository;
+            _accessValidator = accessValidator;
         }
 
         /// <summary>
@@ -34,6 +37,14 @@ namespace Dogbert2.Controllers
             var project = _projectRepository.GetNullableById(id);
 
             if (project == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             var projectWorkgroupList = _projectWorkgroupRepository.Queryable.Where(a => a.Project == project);
 
@@ -54,6 +65,14 @@ namespace Dogbert2.Controllers
 
             if (project == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             var viewModel = ProjectWorkgroupViewModel.Create(Repository, CurrentUser.Identity.Name, new ProjectWorkgroup() { Project = project});
             
             return View(viewModel);
@@ -68,6 +87,14 @@ namespace Dogbert2.Controllers
             if (_projectWorkgroupRepository.Queryable.Any(a => a.Project == projectWorkgroup.Project && a.Workgroup == projectWorkgroup.Workgroup))
             {
                 ModelState.AddModelError("", "Workgroup already added to project.");
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectWorkgroup.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             if (ModelState.IsValid)
@@ -95,6 +122,14 @@ namespace Dogbert2.Controllers
 
             if (projectWorkgroup == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectWorkgroup.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             return View(projectWorkgroup);
         }
 
@@ -106,6 +141,14 @@ namespace Dogbert2.Controllers
 			var projectWorkgroupToDelete = _projectWorkgroupRepository.GetNullableById(id);
 
             if (projectWorkgroupToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectWorkgroupToDelete.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             var projectId = projectWorkgroupToDelete.Project.Id;
 

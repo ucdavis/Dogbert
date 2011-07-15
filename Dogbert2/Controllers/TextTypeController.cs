@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.ActionResults;
@@ -12,6 +13,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the TextType class
     /// </summary>
+    [AdminOnly]
     public class TextTypeController : ApplicationController
     {
         private readonly IRepositoryWithTypedId<TextType, string> _textTypeRepository;

@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
 using UCDArch.Web.Helpers;
@@ -11,15 +13,18 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the ProjectTerm class
     /// </summary>
+    [AllRoles]
     public class ProjectTermController : ApplicationController
     {
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<ProjectTerm> _projectTermRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public ProjectTermController(IRepository<Project> projectRepository, IRepository<ProjectTerm> projectTermRepository)
+        public ProjectTermController(IRepository<Project> projectRepository, IRepository<ProjectTerm> projectTermRepository, IAccessValidatorService accessValidator)
         {
             _projectRepository = projectRepository;
             _projectTermRepository = projectTermRepository;
+            _accessValidator = accessValidator;
         }
 
         /// <summary>
@@ -36,6 +41,10 @@ namespace Dogbert2.Controllers
                 Message = string.Format(Messages.NotFound, "Project", id);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null) return redirect;
 
             ViewBag.ProjectId = project.Id;
 
@@ -57,6 +66,14 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = ProjectTermViewModel.Create(Repository, project);            
 
             return View(viewModel);
@@ -73,6 +90,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "Project", projectId);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             projectTerm.Project = project;
@@ -108,6 +133,14 @@ namespace Dogbert2.Controllers
                 return RedirectToAction("Index");
             }
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectTerm.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = ProjectTermViewModel.Create(Repository, projectTerm.Project);
 			viewModel.ProjectTerm = projectTerm;
 
@@ -125,6 +158,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "Project Term", id);
                 return RedirectToAction("Index");
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectTermToEdit.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             AutoMapper.Mapper.Map(projectTerm, projectTermToEdit);
@@ -155,6 +196,14 @@ namespace Dogbert2.Controllers
 
             if (projectTerm == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectTerm.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             return View(projectTerm);
         }
 
@@ -166,6 +215,14 @@ namespace Dogbert2.Controllers
             var projectTermToDelete = _projectTermRepository.GetNullableById(id);
 
             if (projectTermToDelete == null) return RedirectToAction("Index");
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectTermToDelete.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             var projectId = projectTermToDelete.Project.Id;
 

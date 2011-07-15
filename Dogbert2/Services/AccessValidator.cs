@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Dogbert2.Core.Domain;
 using Dogbert2.Services;
 using System.Linq;
@@ -44,6 +47,38 @@ namespace Dogbert2.Helpers
 
             // fall back)
             return AccessLevel.NoAccess;
+        }
+
+        public RedirectToRouteResult CheckEditAccess(string loginId, Project project)
+        {
+            var access = HasAccess(loginId, project);
+
+            if (access == AccessLevel.NoAccess)
+            {
+                return new RedirectToRouteResult(new RouteValueDictionary{{"controller", "Error"}, {"action", "NotAuthorzied"} });
+            }
+            
+            if (access == AccessLevel.Read)
+            {
+                var dictionary = new RouteValueDictionary {{"action", "Index"}};
+                dictionary["id"] = project.Id;
+
+                return new RedirectToRouteResult(dictionary);
+            }
+
+            return null;
+        }
+
+        public RedirectToRouteResult CheckReadAccess(string loginId, Project project)
+        {
+            var access = HasAccess(loginId, project);
+
+            if (access == AccessLevel.NoAccess)
+            {
+                return new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Error" }, { "action", "NotAuthorzied" } });
+            }
+
+            return null;
         }
     }
 }

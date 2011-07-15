@@ -3,7 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
 using UCDArch.Web.Helpers;
@@ -13,15 +15,18 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the RequirementCategory class
     /// </summary>
+    [AllRoles]
     public class RequirementCategoryController : ApplicationController
     {
 	    private readonly IRepository<RequirementCategory> _requirementCategoryRepository;
         private readonly IRepository<Project> _projectRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public RequirementCategoryController(IRepository<RequirementCategory> requirementCategoryRepository, IRepository<Project> projectRepository)
+        public RequirementCategoryController(IRepository<RequirementCategory> requirementCategoryRepository, IRepository<Project> projectRepository, IAccessValidatorService accessValidator)
         {
             _requirementCategoryRepository = requirementCategoryRepository;
             _projectRepository = projectRepository;
+            _accessValidator = accessValidator;
         }
 
         /// <summary>
@@ -37,6 +42,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "Project", id);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             ViewBag.ProjectId = project.Id;
@@ -59,6 +72,14 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = RequirementCategoryViewModel.Create(Repository, project);
             
             return View(viewModel);
@@ -75,6 +96,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "Project", id);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             var existing = project.RequirementCategories.Where(a => a.Name == requirementCategory.Name).FirstOrDefault();
@@ -122,6 +151,14 @@ namespace Dogbert2.Controllers
 
             if (requirementCategory == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementCategory.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = RequirementCategoryViewModel.Create(Repository, requirementCategory.Project);
 			viewModel.RequirementCategory = requirementCategory;
 
@@ -136,6 +173,14 @@ namespace Dogbert2.Controllers
             var requirementCategoryToEdit = _requirementCategoryRepository.GetNullableById(id);
 
             if (requirementCategoryToEdit == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementCategoryToEdit.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             requirementCategoryToEdit.Name = requirementCategory.Name;
             
@@ -162,6 +207,14 @@ namespace Dogbert2.Controllers
 
             if (requirementCategory == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementCategory.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             return View(requirementCategory);
         }
 
@@ -173,6 +226,14 @@ namespace Dogbert2.Controllers
 			var requirementCategoryToDelete = _requirementCategoryRepository.GetNullableById(id);
 
             if (requirementCategoryToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementCategoryToDelete.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             requirementCategoryToDelete.IsActive = false;
             _requirementCategoryRepository.EnsurePersistent(requirementCategoryToDelete);

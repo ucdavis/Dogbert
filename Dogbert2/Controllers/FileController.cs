@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
+using System.Security;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
 using UCDArch.Web.Helpers;
@@ -17,15 +16,18 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the File class
     /// </summary>
+    [AllRoles]
     public class FileController : ApplicationController
     {
 	    private readonly IRepository<File> _fileRepository;
         private readonly IRepository<Project> _projectRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public FileController(IRepository<File> fileRepository, IRepository<Project> projectRepository)
+        public FileController(IRepository<File> fileRepository, IRepository<Project> projectRepository, IAccessValidatorService accessValidator)
         {
             _fileRepository = fileRepository;
             _projectRepository = projectRepository;
+            _accessValidator = accessValidator;
         }
 
         /// <summary>
@@ -45,6 +47,10 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction<ProjectController>(a => a.Index());
             }
 
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null) return redirect;
+
             ViewBag.ProjectId = id;
 
             return View(project.Files);
@@ -60,6 +66,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "project", id);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
 			var viewModel = FileViewModel.Create(Repository, project);
@@ -78,6 +92,14 @@ namespace Dogbert2.Controllers
             {
                 Message = string.Format(Messages.NotFound, "project", id);
                 return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
             }
 
             for (var i = 0; i < files.Count(); i++)
@@ -111,6 +133,14 @@ namespace Dogbert2.Controllers
 
             if (file == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, file.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			return View(file);
         }
         
@@ -123,6 +153,14 @@ namespace Dogbert2.Controllers
 
             if (fileToEdit == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, fileToEdit.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             AutoMapper.Mapper.Map(file, fileToEdit);
 
             if (ModelState.IsValid)
@@ -133,13 +171,11 @@ namespace Dogbert2.Controllers
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-				var viewModel = FileViewModel.Create(Repository, file.Project);
-                //viewModel.File = file;
+			
+            var viewModel = FileViewModel.Create(Repository, file.Project);
+            //viewModel.File = file;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
         
         //
@@ -149,6 +185,14 @@ namespace Dogbert2.Controllers
 			var file = _fileRepository.GetNullableById(id);
 
             if (file == null) return this.RedirectToAction<ProjectController>(a=>a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, file.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             return View(file);
         }
@@ -162,6 +206,14 @@ namespace Dogbert2.Controllers
 
             if (fileToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, fileToDelete.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             var projectId = fileToDelete.Project.Id;
 
             _fileRepository.Remove(fileToDelete);
@@ -174,6 +226,11 @@ namespace Dogbert2.Controllers
         public FileResult Download(int id)
         {
             var file = _fileRepository.GetNullableById(id);
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, file.Project);
+            if (redirect != null) throw new SecurityException("Not authorized to download file");
+
             return File(file.Contents, file.ContentType, file.FileName);
         }
 

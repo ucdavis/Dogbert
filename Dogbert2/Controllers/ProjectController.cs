@@ -46,6 +46,10 @@ namespace Dogbert2.Controllers
 
             if (project == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null) return redirect;
+
             return View(project);
         }
 
@@ -97,6 +101,14 @@ namespace Dogbert2.Controllers
 
             if (project == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = ProjectViewModel.Create(Repository, CurrentUser.Identity.Name);
 			viewModel.Project = project;
 
@@ -111,6 +123,14 @@ namespace Dogbert2.Controllers
             var projectToEdit = _projectRepository.GetNullableById(id);
 
             if (projectToEdit == null) return RedirectToAction("Index");
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             AutoMapper.Mapper.Map(project, projectToEdit);
             projectToEdit.LastUpdate = DateTime.Now;
@@ -138,6 +158,14 @@ namespace Dogbert2.Controllers
 
             if (project == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             return View(project);
         }
 
@@ -150,9 +178,16 @@ namespace Dogbert2.Controllers
 
             if (projectToDelete == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             projectToDelete.Hide = true;
             _projectRepository.EnsurePersistent(projectToDelete);
-            //_projectRepository.Remove(projectToDelete);
 
             Message = "Project Removed Successfully";
 

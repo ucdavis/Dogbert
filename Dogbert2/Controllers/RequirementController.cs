@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Helpers;
 using MvcContrib;
@@ -12,15 +15,18 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the Requirement class
     /// </summary>
+    [AllRoles]
     public class RequirementController : ApplicationController
     {
 	    private readonly IRepository<Requirement> _requirementRepository;
         private readonly IRepository<Project> _projectRepository;
+        private readonly IAccessValidatorService _accessValidator;
 
-        public RequirementController(IRepository<Requirement> requirementRepository, IRepository<Project> projectRepository)
+        public RequirementController(IRepository<Requirement> requirementRepository, IRepository<Project> projectRepository, IAccessValidatorService accessValidator)
         {
             _requirementRepository = requirementRepository;
             _projectRepository = projectRepository;
+            _accessValidator = accessValidator;
         }
 
         /// <summary>
@@ -30,11 +36,25 @@ namespace Dogbert2.Controllers
         /// <returns></returns>
         public ActionResult Index(int id)
         {
-            var requirementList = _requirementRepository.Queryable.Where(a => a.Project.Id == id);
+            var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             ViewBag.ProjectId = id;
 
-            return View(requirementList.ToList());
+            return View(project.Requirements);
         }
 
         //
@@ -42,6 +62,20 @@ namespace Dogbert2.Controllers
         public ActionResult Create(int id)
         {
             var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
 			var viewModel = RequirementViewModel.Create(Repository, project);
             
@@ -54,6 +88,20 @@ namespace Dogbert2.Controllers
         public ActionResult Create(int id, [Bind(Exclude="Project, RequirementId")]Requirement requirement)
         {
             var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             requirement.RequirementId = string.Format("R{0}", project.Requirements.Count() + 1);
             requirement.Project = project;
@@ -86,6 +134,14 @@ namespace Dogbert2.Controllers
 
             if (requirement == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirement.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
 			var viewModel = RequirementViewModel.Create(Repository, requirement.Project);
 			viewModel.Requirement = requirement;
 
@@ -100,6 +156,14 @@ namespace Dogbert2.Controllers
             var requirementToEdit = _requirementRepository.GetNullableById(id);
 
             if (requirementToEdit == null) return RedirectToAction("Index", new {id=id});
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementToEdit.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             AutoMapper.Mapper.Map(requirement, requirementToEdit);
             requirementToEdit.LastModified = DateTime.Now;
@@ -130,6 +194,14 @@ namespace Dogbert2.Controllers
 
             if (requirement == null) return this.RedirectToAction<ProjectController>(a => a.Index());
 
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirement.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
             return View(requirement);
         }
 
@@ -141,6 +213,14 @@ namespace Dogbert2.Controllers
 			var requirementToDelete = _requirementRepository.GetNullableById(id);
 
             if (requirementToDelete == null) return this.RedirectToAction<ProjectController>(a => a.Index());
+
+            // validate access
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, requirementToDelete.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             var projectId = requirementToDelete.Project.Id;
 
