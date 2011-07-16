@@ -1,6 +1,118 @@
 ﻿@{
-    ViewBag.Title = "Dogbert 2 Home Page";
-    ViewBag.NavigationKey = "Home";
+    ViewBag.Title = "Dogbert Project Management";
 }
 
-@Html.ActionLink("SRS", "Index", "Srs", new { id=4 }, new { })
+@section AdditionalScripts
+{
+
+    <style type="text/css">
+        #MainPanel
+        {
+            border: 1px solid black;
+            padding: 2em;
+            margin-top: 2em;
+            
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            box-shadow: 10px 10px 5px #888;
+        }
+    
+        #welcome-txt
+        {
+            width: 59%;
+            float: left;
+        }
+        
+        #welcome-txt p
+        {
+            margin: 1em 0;    
+        }
+        
+        #MainPanel aside
+        {
+            vertical-align: middle;
+        }
+        
+        aside#nav
+        {
+            border-left: 1px solid black;
+            width: 37%;
+            height: 250px;
+            float: right;
+            vertical-align: middle;
+        }
+        
+        #MainPanel aside nav
+        {
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        #MainPanel .large-btn 
+        {
+            display: block;
+            padding: 2em;
+            margin: 2em;
+            
+           border-top: 1px solid #96d1f8;
+           background: #002459;
+           background: -webkit-gradient(linear, left top, left bottom, from(#024b82), to(#002459));
+           background: -moz-linear-gradient(top, #024b82, #002459);
+           
+           -webkit-border-radius: 8px;
+           -moz-border-radius: 8px;
+           border-radius: 8px;
+           -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+           -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+           box-shadow: rgba(0,0,0,1) 0 1px 0;
+           text-shadow: rgba(0,0,0,.4) 0 1px 0;
+           color: white;
+           font-size: 14px;
+           font-family: Helvetica, Arial, Sans-Serif;
+           text-decoration: none;
+           vertical-align: middle;
+           }
+        #MainPanel .large-btn:hover {
+           border-top-color: #28597a;
+           background: #28597a;
+           color: #e4b939;
+           }
+        #MainPanel .large-btn:active {
+           border-top-color: #1b435e;
+           background: #1b435e;
+           }
+        
+    </style>
+}
+
+<div id="MainPanel">
+
+    <div id="welcome-txt">
+    
+        <p>Welcome to the Dogbert Project Management System.</p>
+
+        <p>Use Dogbert to manage project priorities, requirements engineering and manage your IT projects.  
+           This tool will help managers prioritize their workgroup's projects and allows aids in managing projects that span workgroups.
+           Dogbert will help staff manage projects that they are working on and provide easy documentation on projects.
+           It is open to all UC Davis employees with a valid Kerberos account.</p>
+        
+        <p>Dogbert has been used extensively on software projects for requirements engineering, use case tracking and document generation by the College of Agricultural & Environmental Sciences Dean's Office Computing Resources Unit.</p>
+
+        <p>To get started please sign up to request access.  We will setup your account and a workgroup for you.</p>
+    
+    </div>
+
+    <aside id="nav">
+    
+        <nav>
+            <a href="#" class="large-btn">Sign-Up</a>
+
+            @Html.ActionLink("Login", "Index", "Project", new {}, new {@class="large-btn"})
+
+        </nav>
+
+    </aside>
+
+    <div style="clear: both;"></div>
+
+</div>
