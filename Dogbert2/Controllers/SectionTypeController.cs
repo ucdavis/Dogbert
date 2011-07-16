@@ -14,11 +14,11 @@ namespace Dogbert2.Controllers
     /// Controller for the TextType class
     /// </summary>
     [AdminOnly]
-    public class TextTypeController : ApplicationController
+    public class SectionTypeController : ApplicationController
     {
-        private readonly IRepositoryWithTypedId<TextType, string> _textTypeRepository;
+        private readonly IRepositoryWithTypedId<SectionType, string> _textTypeRepository;
 
-        public TextTypeController(IRepositoryWithTypedId<TextType, string> textTypeRepository)
+        public SectionTypeController(IRepositoryWithTypedId<SectionType, string> textTypeRepository)
         {
             _textTypeRepository = textTypeRepository;
         }
@@ -36,7 +36,7 @@ namespace Dogbert2.Controllers
         // GET: /TextType/Create
         public ActionResult Create()
         {
-			var viewModel = TextTypeViewModel.Create(Repository);
+			var viewModel = SectionTypeViewModel.Create(Repository);
             
             return View(viewModel);
         } 
@@ -44,21 +44,21 @@ namespace Dogbert2.Controllers
         //
         // POST: /TextType/Create
         [HttpPost]
-        public ActionResult Create(TextType textType)
+        public ActionResult Create(SectionType sectionType)
         {
             // check to make sure the id doesn't already exist
 
             if (ModelState.IsValid)
             {
-                _textTypeRepository.EnsurePersistent(textType);
+                _textTypeRepository.EnsurePersistent(sectionType);
 
                 Message = "TextType Created Successfully";
 
                 return RedirectToAction("Index");
             }
 			
-            var viewModel = TextTypeViewModel.Create(Repository);
-            viewModel.TextType = textType;
+            var viewModel = SectionTypeViewModel.Create(Repository);
+            viewModel.SectionType = sectionType;
 
             return View(viewModel);
         }
@@ -71,8 +71,8 @@ namespace Dogbert2.Controllers
 
             if (textType == null) return RedirectToAction("Index");
 
-			var viewModel = TextTypeViewModel.Create(Repository);
-			viewModel.TextType = textType;
+			var viewModel = SectionTypeViewModel.Create(Repository);
+			viewModel.SectionType = textType;
 
 			return View(viewModel);
         }
@@ -80,13 +80,13 @@ namespace Dogbert2.Controllers
         //
         // POST: /TextType/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, TextType textType)
+        public ActionResult Edit(string id, SectionType sectionType)
         {
             var textTypeToEdit = _textTypeRepository.GetNullableById(id);
 
             if (textTypeToEdit == null) return RedirectToAction("Index");
 
-            AutoMapper.Mapper.Map(textType, textTypeToEdit);
+            AutoMapper.Mapper.Map(sectionType, textTypeToEdit);
 
             if (ModelState.IsValid)
             {
@@ -97,8 +97,8 @@ namespace Dogbert2.Controllers
                 return RedirectToAction("Index");
             }
 			
-            var viewModel = TextTypeViewModel.Create(Repository);
-            viewModel.TextType = textType;
+            var viewModel = SectionTypeViewModel.Create(Repository);
+            viewModel.SectionType = sectionType;
 
             return View(viewModel);
         }

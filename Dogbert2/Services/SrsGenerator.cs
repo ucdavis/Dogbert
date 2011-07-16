@@ -17,13 +17,13 @@ namespace Dogbert2.Services
 {
     public class SrsGenerator : ISrsGenerator
     {
-        private readonly IRepository<ProjectText> _projectTextRepository;
         private readonly IRepository<File> _fileRepository;
+        private readonly IRepository<SectionType> _sectionTypeRepository;
 
-        public SrsGenerator(IRepository<ProjectText> projectTextRepository, IRepository<File> fileRepository)
+        public SrsGenerator(IRepository<File> fileRepository, IRepository<SectionType> sectionTypeRepository)
         {
-            _projectTextRepository = projectTextRepository;
             _fileRepository = fileRepository;
+            _sectionTypeRepository = sectionTypeRepository;
         }
 
         // base color
@@ -47,7 +47,22 @@ namespace Dogbert2.Services
 
         // width of the content
         private float _pageWidth;
-       
+
+        // html tag types reuqired to be scanned
+        private List<string> blockTags = new List<string>() { "p", "ul", "ol" };
+        private List<string> listTags = new List<string>() { "ul", "ol" };
+        
+        // current documents
+        private Document _doc;
+        private Project _project;
+
+        private void InitializeDocument()
+        {
+            _doc = new iTextSharp.text.Document(PageSize.LETTER, 36 /* left */, 36 /* right */, 62 /* top */, 52 /* bottom */);
+            // set the variable for the page's actual content size
+            _pageWidth = _doc.PageSize.Width - (_doc.LeftMargin + _doc.RightMargin);
+        }
+
         /// <summary>
         /// Generates a pdf document
         /// </summary>
@@ -59,53 +74,83 @@ namespace Dogbert2.Services
         /// <returns></returns>
         public byte[] GeneratePdf(Project project)
         {
-            var doc = new iTextSharp.text.Document(PageSize.LETTER, 36 /* left */, 36 /* right */, 62 /* top */, 52 /* bottom */);
-
-            // set the variable for the page's actual content size
-            _pageWidth = doc.PageSize.Width - (doc.LeftMargin + doc.RightMargin);
+            InitializeDocument();
+            _project = project;
 
             var ms = new MemoryStream();
-            var writer = PdfWriter.GetInstance(doc, ms);
+            var writer = PdfWriter.GetInstance(_doc, ms);
 
             // add in the header/footer
             writer.PageEvent = new pdfPage(project);
 
-            doc.Open();
+            _doc.Open();
 
             // add information
-            AddCoverpage(writer.DirectContent, doc, project);
+            AddCoverpage(writer.DirectContent);
 
-            foreach (var txt in project.ProjectTexts.OrderBy(b => b.TextType.Order))
+            // get all section types
+            var sections = _sectionTypeRepository.Queryable.OrderBy(a => a.Order);
+            foreach(var sec in sections)
+            //foreach (var txt in project.ProjectSections.OrderBy(b => b.SectionType.Order))
             {
-                AddSectionHeader(doc, txt.TextType.Name);
-                AddHtmlText(doc, txt.Text);
+                // see if the project has this if it's not speical
+                if (!sec.IsSpecial)
+                {
+                    var txt = project.ProjectSections.Where(a => a.SectionType == sec).FirstOrDefault();
+
+                    // project has this text in it
+                    if (txt != null)
+                    {
+                        // add the header
+                        AddSectionHeader(sec.Name);
+
+                        // add the txt
+                        AddHtmlText(txt.Text);
+                    }
+                }
+                // deal with specialized 
+                else
+                {
+                    AddSectionHeader(sec.Name);
+
+                    switch (sec.Id)
+                    {
+                        case "GL":
+                            AddGlossary(_project);
+                            break;
+                        case "RQ":
+                            AddRequirementTable(_project);
+                            break;
+                        case "UC":
+                            break;
+
+                    }  
+                }                
             }
 
-            // add in the requirements section
-            AddRequirementTable(doc, project);
-
-            doc.Close();
+            _doc.Close();
 
             var bytes = ms.ToArray();
             return bytes;
         }
 
         #region Cover Page
-        private void AddCoverpage(PdfContentByte cb, Document doc, Project project)
+        private void AddCoverpage(PdfContentByte cb)
         {
             // adds in the date box
-            DrawBoxForCover(cb, doc);            
+            DrawBoxForCover(cb, _doc);            
 
             // add in the worker information
-            AddWorkerInformation(cb, doc, project);
+            AddWorkerInformation(cb, _doc, _project);
 
             // add in the project and client information
-            AddProjectInformation(cb, doc, project);
+            AddProjectInformation(cb, _doc, _project);
 
             // add the disclaimer information
-            AddDisclaimerInformation(cb, doc, project);
+            AddDisclaimerInformation(cb, _doc, _project);
 
-            doc.NewPage();
+            // call new page
+            _doc.NewPage();
         }
 
         /// <summary>
@@ -236,7 +281,7 @@ namespace Dogbert2.Services
         }
         #endregion
 
-        public void AddSectionHeader(Document document, string title)
+        public void AddSectionHeader(string title)
         {
             var table = new PdfPTable(1);
             table.TotalWidth = _pageWidth;
@@ -259,13 +304,10 @@ namespace Dogbert2.Services
             cell.AddElement(paragraph);
 
             table.AddCell(cell);
-            document.Add(table);
+            _doc.Add(table);
         }
 
         #region Html Text
-        private List<string> blockTags = new List<string>() { "p", "ul", "ol" };
-        private List<string> listTags = new List<string>() { "ul", "ol" };
-        
         /// <summary>
         /// Parse out the html and format it using iTextSharp's stuff
         /// </summary>
@@ -273,7 +315,7 @@ namespace Dogbert2.Services
         /// http://blog.dmbcllc.com/2009/07/28/itextsharp-html-to-pdf-parsing-html/ (not being used)
         /// </remarks>
         /// <param name="text"></param>
-        private void AddHtmlText(Document doc, string text)
+        private void AddHtmlText(string text)
         {
             var elements = new List<HtmlElement>(); 
 
@@ -300,15 +342,15 @@ namespace Dogbert2.Services
                             if (listTags.Contains(reader.Name))
                             {
                                 // build the list object
-                                var paragraph = BuildListObject(elements, reader.Name, doc);
-                                doc.Add(paragraph);
+                                var paragraph = BuildListObject(elements, reader.Name);
+                                _doc.Add(paragraph);
 
                                 elements.Clear();
                             }
                             else
                             {
-                                var paragraph = BuildDocObject(elements, doc);
-                                doc.Add(paragraph);
+                                var paragraph = BuildDocObject(elements);
+                                _doc.Add(paragraph);
 
                                 elements.Clear();
                             }
@@ -341,7 +383,7 @@ namespace Dogbert2.Services
             return blockTags.Contains(tag.ToLower());
         }
 
-        private Paragraph BuildDocObject(List<HtmlElement> elements, Document document)
+        private Paragraph BuildDocObject(List<HtmlElement> elements)
         {
             var docObjs = new Stack<HtmlElement>();
             var paragraph = new Paragraph();
@@ -352,14 +394,14 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a, document);
+                var obj = HandleTag(docObjs, a);
 
                 if (obj != null) paragraph.Add(obj);
             }
             return paragraph;
         }
        
-        private List BuildListObject(List<HtmlElement> elements, string listType, Document document)
+        private List BuildListObject(List<HtmlElement> elements, string listType)
         {
             var docObjs = new Stack<HtmlElement>();
             var lt = listType == "ol" ? List.ORDERED : List.UNORDERED;
@@ -373,7 +415,7 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a, document);
+                var obj = HandleTag(docObjs, a);
                 if (obj != null)
                 {
                     list.Add(new ListItem(obj));
@@ -389,7 +431,7 @@ namespace Dogbert2.Services
         /// <param name="elements"></param>
         /// <param name="element"></param>
         /// <returns></returns>
-        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element, Document document)
+        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element)
         {
             // opening element
             if (element.IsElement && !element.IsClose)
@@ -433,7 +475,7 @@ namespace Dogbert2.Services
                 var obj = elements.Pop();
 
                 // scan for an image token
-                var result = ScanForImage(document, element.Value);
+                var result = ScanForImage(element.Value);
 
                 obj.Phrase.Add(result);
 
@@ -445,55 +487,8 @@ namespace Dogbert2.Services
         }
         #endregion
 
-        public void AddRequirementTable(Document document, Project project)
-        {
-            AddSectionHeader(document, "Requirements");
-
-            foreach (var cat in project.RequirementCategories)
-            {
-                // add in a category title
-                document.Add(new Chunk(cat.Name, _subHeaderFont));
-
-                // add in the table
-                var table = new PdfPTable(4);
-                table.TotalWidth = _pageWidth;
-                table.LockedWidth = true;
-                table.SetWidths(new float[]{1f, 2f, 5f, 1f});
-                table.SpacingAfter = 2f;
-
-                // put the headers on the table
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Id", _tableHeaderFont))) {BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Priority", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Description", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5 });
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Type", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
-            
-                foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory))
-                {
-                    var cell1 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5};
-                    var cell2 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
-                    var cell3 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
-                    var cell4 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
-
-                    cell1.AddElement(new Chunk(req.RequirementId));
-                    cell2.AddElement(new Chunk(req.PriorityType.Name));
-                    cell3.AddElement(new Chunk(req.Description));
-                    cell4.AddElement(new Chunk(req.RequirementType.Id));
-
-                    table.AddCell(cell1);
-                    table.AddCell(cell2);
-                    table.AddCell(cell3);
-                    table.AddCell(cell4);
-                }
-
-                document.Add(table);
-
-            }
-
-
-        }
-
         #region Image
-        public string ScanForImage(Document document, string txt)
+        public string ScanForImage(string txt)
         {
             // does not contain the image tag
             if (!txt.Contains("{Image-")) return txt;
@@ -511,7 +506,7 @@ namespace Dogbert2.Services
                 int fileId;
                 if (int.TryParse(id, out fileId))
                 {
-                    AddImage(document, fileId);
+                    AddImage(fileId);
                 }
 
             }
@@ -522,11 +517,9 @@ namespace Dogbert2.Services
 
             return result;
         }
-        public void AddImage(Document document, int fileId)
+        public void AddImage(int fileId)
         {
             var table = new PdfPTable(1);
-            //table.TotalWidth = _pageWidth;
-            //table.LockedWidth = true;
             table.KeepTogether = true;
 
             var cell = new PdfPCell();
@@ -554,27 +547,88 @@ namespace Dogbert2.Services
             }
 
             table.AddCell(cell);
-            document.Add(table);
+            _doc.Add(table);
         }
         #endregion
 
-        /// <summary>
-        /// Adds in some demo text to fill a page
-        /// </summary>
-        /// <param name="doc"></param>
-        private void AddDemoText(Document doc)
+        #region Specialized Sections
+        private void AddGlossary(Project project)
         {
-            var stanardFont = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+            // build the html object so we can use the other list builder
+            var elements = new List<HtmlElement>();
+            
+            // open the list
+            elements.Add(new HtmlElement("ul", true, false));
 
-            doc.Add(new Paragraph("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla massa augue, aliquet scelerisque sodales eu, porttitor eu libero. Aenean auctor sapien sit amet libero convallis quis commodo nisl suscipit. Cras dapibus commodo orci, placerat rhoncus lorem suscipit in. Mauris libero elit, auctor eget dignissim nec, feugiat eu dolor. Nullam adipiscing massa sit amet ipsum posuere egestas. Quisque est turpis, tempor vel blandit non, venenatis id nunc. Nam ornare nulla quis erat viverra eleifend dictum purus ornare. Curabitur eget dui nec enim euismod imperdiet sed eget elit. Nulla quis nunc sem, a imperdiet tortor. Phasellus lectus turpis, malesuada eget laoreet hendrerit, dignissim at nunc. Etiam in tortor nisi, eu tempor nunc. Ut interdum ipsum eget nunc laoreet pellentesque. Nunc consectetur, purus sit amet posuere scelerisque, velit eros aliquam quam, non mollis neque orci aliquam elit. In hac habitasse platea dictumst. In non erat id lorem pellentesque tempus id ac magna. Vestibulum enim metus, convallis vitae varius a, blandit in lorem.", stanardFont));
-            doc.Add(new Paragraph("Pellentesque mattis luctus laoreet. Nullam magna massa, dapibus et adipiscing ut, mattis et ligula. Nunc pretium posuere nisi, sed dapibus magna malesuada ut. Aenean lacinia ipsum non lorem dignissim at facilisis eros tincidunt. Nam eleifend, erat id aliquet ullamcorper, turpis lorem blandit nulla, in pulvinar velit diam non justo. Ut justo lorem, hendrerit quis hendrerit eu, tincidunt at sapien. Sed iaculis quam vitae neque auctor vel aliquet dui dictum. Nam vulputate eros est. Nullam aliquam metus quis metus aliquam ornare. Aenean ultricies felis at quam venenatis vel mollis diam facilisis. Aenean rutrum odio non nulla congue facilisis. Quisque non elit a sem fringilla dignissim eget at sem. Donec vulputate eros in libero tincidunt tincidunt. Fusce vitae mi et lorem imperdiet pulvinar. Nunc ac tellus urna. Nunc sapien magna, mollis nec imperdiet sit amet, rutrum eget turpis. Morbi vitae eros turpis. Vestibulum non massa non purus condimentum fermentum eget quis turpis.", stanardFont));
-            doc.Add(new Paragraph("Cras ac enim et neque rutrum accumsan sit amet non mauris. Curabitur tempor adipiscing eros in hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lobortis nisl. Donec pretium rutrum enim sagittis pulvinar. Aliquam vitae mauris at tellus dictum facilisis vel nec ante. Integer neque risus, placerat a pharetra ac, placerat sit amet mi. In sed ipsum felis, nec porta dolor. Aliquam non nulla non risus bibendum lobortis. Integer pretium, mi vitae accumsan blandit, est leo luctus libero, eget aliquet dolor neque a augue. Nullam id purus ipsum, in ultricies leo.", stanardFont));
-            doc.Add(new Paragraph("Vestibulum hendrerit interdum orci, a faucibus enim pellentesque non. Ut non lobortis erat. Aliquam vestibulum augue sit amet libero scelerisque et blandit libero suscipit. Nunc nulla eros, aliquet eget mollis nec, iaculis quis tortor. Cras sapien enim, posuere sollicitudin blandit ut, auctor vitae augue. Mauris aliquam, ligula ac commodo ultricies, libero risus viverra erat, at dapibus dolor nibh ultrices massa. Morbi urna eros, fringilla sit amet fermentum ullamcorper, posuere consequat ante. Maecenas justo ligula, aliquam nec malesuada et, posuere ac magna. Duis eget tellus turpis. Maecenas diam justo, varius ut pulvinar ac, lacinia nec lectus. Nam ultricies mattis urna ullamcorper lacinia. In volutpat iaculis lacus, sit amet posuere eros fermentum non. Phasellus a magna quam, eget gravida erat. Morbi laoreet lectus in justo blandit ullamcorper. Proin a cursus ante. Mauris ultrices eros tristique velit viverra semper. Mauris vel risus faucibus lacus condimentum ullamcorper id eget mauris.", stanardFont));
-            doc.Add(new Paragraph("Vestibulum aliquet consectetur turpis. Morbi est sapien, interdum eu dignissim dignissim, aliquam id est. Ut ligula ante, placerat bibendum tincidunt non, elementum eget magna. Ut consectetur sem a est malesuada eleifend. Etiam a nibh at dui sagittis scelerisque. Curabitur sit amet nibh lectus, sed sagittis nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum facilisis urna at odio rutrum elementum. Curabitur metus lorem, feugiat a rutrum id, hendrerit eget justo. Integer blandit tincidunt dui nec sodales. Nulla gravida viverra eros et iaculis. Duis massa metus, ornare nec bibendum ut, rhoncus nec sapien. Donec libero augue, tristique vel mollis in, mollis ac risus. Nam luctus, est sit amet imperdiet vulputate, orci turpis tincidunt ipsum, vel vulputate massa quam ut orci. Nullam turpis mauris, aliquet faucibus tincidunt quis, hendrerit sed nibh. Proin pellentesque tincidunt nibh, ut posuere nunc gravida rhoncus. Ut tincidunt lacinia arcu in tristique. Maecenas congue lacinia tristique. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;", stanardFont));
-            doc.Add(new Paragraph("Curabitur ac lacus vel urna tempus ullamcorper. Aenean non magna vitae diam semper euismod nec non lacus. Praesent facilisis, sapien id dignissim mattis, neque neque faucibus sem, ac rutrum neque enim a ligula. Curabitur aliquet venenatis libero, a porttitor dui venenatis ut. Phasellus ligula purus, tincidunt laoreet mattis in, faucibus id nisl. Curabitur in dui non risus faucibus faucibus. Donec mi lectus, aliquam sed mattis id, placerat sed diam. Curabitur eu purus arcu. Donec accumsan purus quis metus imperdiet at dictum urna pretium. Proin id faucibus nibh. Pellentesque non venenatis lectus. Praesent convallis nunc eget quam luctus mattis. Vestibulum vitae quam justo. Ut consequat condimentum urna, sit amet laoreet enim scelerisque nec. Maecenas convallis, augue id fringilla varius, ipsum ipsum semper lectus, eu tincidunt turpis tortor vitae ante. Morbi eu erat non quam tristique lobortis ac sed arcu. Vivamus sapien quam, mattis at fringilla at, sagittis vel diam.", stanardFont));
-            doc.Add(new Paragraph("Suspendisse potenti. Sed euismod mauris sit amet elit gravida interdum. Aliquam eleifend diam et nisl lacinia convallis at non lorem. Morbi nisl arcu, pellentesque id egestas eget, tincidunt non odio. Curabitur facilisis lorem et metus convallis facilisis. Vestibulum mollis pretium urna vel facilisis. Aliquam mattis libero quis tellus congue sit amet vestibulum massa molestie. Morbi consectetur lacus in elit vehicula in vehicula nibh placerat. Cras pharetra mi non odio sollicitudin non eleifend turpis luctus. Ut fringilla ultricies lorem, ac ullamcorper justo interdum sit amet. Morbi vehicula nibh eget felis consequat pulvinar. Integer interdum ullamcorper tempus. Donec ut pharetra purus. Mauris odio ante, porttitor non faucibus eget, lacinia non turpis. Cras tincidunt ante et nulla ultrices non venenatis est aliquam. Etiam ut sapien turpis, a porttitor turpis. Fusce sit amet urna at magna consequat bibendum sit amet vitae turpis. Etiam sollicitudin pulvinar sem, at blandit purus placerat in. Donec bibendum volutpat sapien, vel iaculis risus condimentum non. Mauris vestibulum est at tortor vehicula nec eleifend ligula viverra.", stanardFont));
-            doc.Add(new Paragraph("Integer auctor vestibulum dui sed consectetur. Aliquam erat volutpat. Fusce ultrices, dui sit amet tincidunt vestibulum, enim tellus sodales leo, quis iaculis purus nisi id velit. Nunc lacus dolor, viverra at consectetur vel, rutrum ut ante. Donec nec purus at ipsum gravida posuere vel sit amet elit. Maecenas malesuada eleifend pharetra. Cras est urna, sodales in iaculis a, pellentesque nec augue. Nulla facilisi. Integer a diam nibh. Cras sed sapien massa. Integer lacus urna, condimentum vitae vulputate id, tempor eget magna. Sed id erat in ante venenatis malesuada non sit amet purus.", stanardFont));
+            foreach (var term in project.ProjectTerms)
+            {
+                // open li
+                elements.Add(new HtmlElement("li", true, false));
+
+                // strong term name
+                elements.Add(new HtmlElement("strong", true, false));
+
+                // throw in the term
+                elements.Add(new HtmlElement(term.Term));
+
+                // strong term name
+                elements.Add(new HtmlElement("strong", true, true));
+
+                elements.Add(new HtmlElement(string.Format("- {0}", term.Definition)));
+
+                // close li
+                elements.Add(new HtmlElement("li", true, true));
+            }
+            
+            // close the list
+            elements.Add(new HtmlElement("ul", true, true));
+
+            var list = BuildListObject(elements, "ul");
+            _doc.Add(list);
         }
+        private void AddRequirementTable(Project project)
+        {
+            foreach (var cat in project.RequirementCategories)
+            {
+                // add in a category title
+                _doc.Add(new Chunk(cat.Name, _subHeaderFont));
+
+                // add in the table
+                var table = new PdfPTable(4);
+                table.TotalWidth = _pageWidth;
+                table.LockedWidth = true;
+                table.SetWidths(new float[]{1f, 2f, 5f, 1f});
+                table.SpacingAfter = 2f;
+
+                // put the headers on the table
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Id", _tableHeaderFont))) {BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Priority", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Description", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5 });
+                table.AddCell(new PdfPCell(new Phrase(new Chunk("Type", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+            
+                foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory))
+                {
+                    var cell1 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5};
+                    var cell2 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+                    var cell3 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+                    var cell4 = new PdfPCell() { BorderWidthLeft = 0, BorderWidthTop = 0, BorderWidthRight = 0, Padding = 5 };
+
+                    cell1.AddElement(new Chunk(req.RequirementId, _font));
+                    cell2.AddElement(new Chunk(req.PriorityType.Name, _font));
+                    cell3.AddElement(new Chunk(req.Description, _font));
+                    cell4.AddElement(new Chunk(req.RequirementType.Id, _font));
+
+                    table.AddCell(cell1);
+                    table.AddCell(cell2);
+                    table.AddCell(cell3);
+                    table.AddCell(cell4);
+                }
+
+                _doc.Add(table);
+
+            }
+        }
+        #endregion
     }
 
     /// <summary>

@@ -33,12 +33,17 @@ INSERT INTO StatusCodes (Id, Name) Values ('P', 'Production')
 INSERT INTO StatusCodes (Id, Name) Values ('W', 'Waiting')
 
 /*
-	Insert into Text Types
+	Insert into Section Types
 */
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('DC', 'Description', '', 1, 0)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('DT', 'Development Timeline', '', 1, 1)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('EL', 'Expected Load', '', 1, 2)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('PR', 'Purpose', '', 1, 3)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('SC', 'System Context', '', 1, 4)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('SF', 'Screen Flow', '', 1, 5)
-INSERT INTO TextTypes (Id, Name, Description, IsActive, [Order]) Values ('SM', 'System Main Features', '', 1, 6)
+INSERT INTO SectionTypes(Id, Name, Description, IsActive, [Order]) Values ('DC', 'Description', '', 1, 0)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('DT', 'Development Timeline', '', 1, 1)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('EL', 'Expected Load', '', 1, 2)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('PR', 'Purpose', '', 1, 3)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('SC', 'System Context', '', 1, 4)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('SF', 'Screen Flow', '', 1, 5)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order]) Values ('SM', 'System Main Features', '', 1, 6)
+
+/* Speicalized section types */
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order], IsSpecial) Values ('GL', 'Glossary', '', 1, 7, 1)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order], IsSpecial) Values ('RQ', 'Requirements', '', 1, 8, 1)
+INSERT INTO SectionTypes (Id, Name, Description, IsActive, [Order], IsSpecial) Values ('UC', 'Use Cases', '', 1, 9, 1)

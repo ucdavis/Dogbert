@@ -24,7 +24,7 @@ namespace Dogbert2.Core.Domain
 
             ProjectWorkgroups = new List<ProjectWorkgroup>();
             ProjectTerms = new List<ProjectTerm>();
-            ProjectTexts = new List<ProjectText>();
+            ProjectSections = new List<ProjectSection>();
             Files = new List<File>();
             RequirementCategories = new List<RequirementCategory>();
             Requirements = new List<Requirement>();
@@ -75,7 +75,7 @@ namespace Dogbert2.Core.Domain
         // bags
         public virtual IList<ProjectWorkgroup> ProjectWorkgroups { get; set; }
         public virtual IList<ProjectTerm> ProjectTerms { get; set; }
-        public virtual IList<ProjectText> ProjectTexts { get; set; }
+        public virtual IList<ProjectSection> ProjectSections { get; set; }
         public virtual IList<File> Files { get; set; }
         public virtual IList<RequirementCategory> RequirementCategories { get; set; }
         public virtual IList<Requirement> Requirements { get; set; }
@@ -137,7 +137,7 @@ namespace Dogbert2.Core.Domain
 
             HasMany(x => x.ProjectWorkgroups).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.ProjectTerms).Inverse().Cascade.AllDeleteOrphan();
-            HasMany(x => x.ProjectTexts).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.ProjectSections).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Files).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.RequirementCategories).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Requirements).Inverse().Cascade.AllDeleteOrphan();

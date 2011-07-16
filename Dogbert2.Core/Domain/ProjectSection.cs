@@ -5,9 +5,9 @@ using UCDArch.Core.DomainModel;
 
 namespace Dogbert2.Core.Domain
 {
-    public class ProjectText : DomainObject
+    public class ProjectSection : DomainObject
     {
-        public ProjectText()
+        public ProjectSection()
         {
             DateCreated = DateTime.Now;
             LastUpdate = DateTime.Now;
@@ -20,13 +20,13 @@ namespace Dogbert2.Core.Domain
         public virtual Project Project { get; set; }
         [Required]
         [Display(Name = "Text Type")]
-        public virtual TextType TextType { get; set; }
+        public virtual SectionType SectionType { get; set; }
 
         public virtual DateTime DateCreated{ get; set; }
         public virtual DateTime LastUpdate { get; set; }
     }
 
-    public class ProjectTextMap : ClassMap<ProjectText>
+    public class ProjectTextMap : ClassMap<ProjectSection>
     {
         public ProjectTextMap()
         {
@@ -34,7 +34,7 @@ namespace Dogbert2.Core.Domain
 
             Map(x => x.Text);
             References(x => x.Project);
-            References(x => x.TextType);
+            References(x => x.SectionType);
 
             Map(x => x.DateCreated);
             Map(x => x.LastUpdate);

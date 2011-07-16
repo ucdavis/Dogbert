@@ -1,0 +1,20 @@
+﻿@model ProjectSectionViewModel
+
+@{
+	ViewBag.Title = "Project Section";
+    ViewBag.NavigationKey = "Project";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Back to List", "Index", new { id=Model.ProjectSection.Project.Id })</li>
+	</ul>
+}
+
+@section AdditionalScripts
+{
+    @Html.Partial("_ProjectSectionScripts")
+}
+
+@Html.Partial("_ProjectSection")

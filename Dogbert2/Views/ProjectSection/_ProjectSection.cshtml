@@ -1,4 +1,4 @@
-﻿@model Dogbert2.Models.ProjectTextViewModel
+﻿@model ProjectSectionViewModel
 
 @using (Html.BeginForm()) {
 	@Html.AntiForgeryToken()
@@ -8,21 +8,21 @@
 	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
 	    <ul>
 
-            <li><div class="editor-label required">@Html.LabelFor(a=>a.ProjectText.TextType)<span>*</span></div>
+            <li><div class="editor-label required">@Html.LabelFor(a => a.ProjectSection.SectionType)<span>*</span></div>
                 <div class="editor-field">
-                    @this.Select("ProjectText.TextType").Options(Model.TextTypes, x=>x.Id, x=> x.Name).FirstOption("--Select Text Type--").Selected(Model.ProjectText.TextType != null ? Model.ProjectText.TextType.Id : string.Empty)
-                    @Html.ValidationMessageFor(a => a.ProjectText.TextType)
+                    @this.Select("ProjectSection.SectionType").Options(Model.SectionTypes, x => x.Id, x => x.Name).FirstOption("--Select Section Type--").Selected(Model.ProjectSection.SectionType != null ? Model.ProjectSection.SectionType.Id : string.Empty)
+                    @Html.ValidationMessageFor(a => a.ProjectSection.SectionType)
                 </div>                
             </li>
 
 		    <li>
 			    <div class="editor-label required">
-				    @Html.LabelFor(model => model.ProjectText.Text)<span>*</span> 
+				    @Html.LabelFor(model => model.ProjectSection.Text)<span>*</span> 
 			    </div>
 			    <div class="editor-field" style="width: 85%;">
                     @Html.Partial("_Tokens", Model.Project.Files.Where(a=>a.IsImage).ToList())
-				    @Html.EditorFor(model => model.ProjectText.Text)
-				    @Html.ValidationMessageFor(model => model.ProjectText.Text)
+				    @Html.EditorFor(model => model.ProjectSection.Text)
+				    @Html.ValidationMessageFor(model => model.ProjectSection.Text)
 			    </div>
 		    </li>
 
@@ -30,7 +30,7 @@
 			    @* For the clear and submit buttons an empty label is required. Example: <label>&nbsp;</label> *@
 			    <div class="editor-label">&nbsp;</div>
 			    <div class="editor-field">
-			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.ProjectText.Project.Id })
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.ProjectSection.Project.Id })
 			    </div>
 		    </li>
 	    </ul>

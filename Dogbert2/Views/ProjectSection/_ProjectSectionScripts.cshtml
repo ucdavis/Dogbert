@@ -1,7 +1,7 @@
 ﻿<script type="text/javascript" src='@Url.Script("tiny_mce/jquery.tinymce.js")'></script>
 <script type="text/javascript">
     $(function () {
-        $("#ProjectText_Text").tinymce({
+        $("#ProjectSection_Text").tinymce({
             script_url: '@Url.Script("tiny_mce/tiny_mce.js")',
             width: "500",
             height: "400",
@@ -22,7 +22,7 @@
 
         $(".token").click(function(){
             var val = $(this).data("value");
-            $('#ProjectText_Text').tinymce().execCommand('mceInsertContent',false,val);
+            $('#ProjectSection_Text').tinymce().execCommand('mceInsertContent',false,val);
         });
     });
 </script>

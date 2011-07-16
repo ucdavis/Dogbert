@@ -9,22 +9,22 @@ namespace Dogbert2.Models
     /// <summary>
     /// ViewModel for the ProjectText class
     /// </summary>
-    public class ProjectTextViewModel
+    public class ProjectSectionViewModel
     {
         public Project Project { get; set; }
-        public ProjectText ProjectText { get; set; }
-        public IEnumerable<TextType> TextTypes { get; set; }
+        public ProjectSection ProjectSection { get; set; }
+        public IEnumerable<SectionType> SectionTypes { get; set; }
 
-        public static ProjectTextViewModel Create(IRepository repository, Project project)
+        public static ProjectSectionViewModel Create(IRepository repository, Project project)
         {
             Check.Require(repository != null, "Repository must be supplied");
             Check.Require(project != null, "project is required.");
 
-            var viewModel = new ProjectTextViewModel
+            var viewModel = new ProjectSectionViewModel
                                 {
                                     Project = project,
-                                    ProjectText = new ProjectText() {Project = project},
-                                    TextTypes = repository.OfType<TextType>().Queryable.Where(a=>a.IsActive).OrderBy(a=>a.Order).ToList()
+                                    ProjectSection = new ProjectSection() {Project = project},
+                                    SectionTypes = repository.OfType<SectionType>().Queryable.Where(a=>a.IsActive && !a.IsSpecial).OrderBy(a=>a.Order).ToList()
                                 };
 
             return viewModel;

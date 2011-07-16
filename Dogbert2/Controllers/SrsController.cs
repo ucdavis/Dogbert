@@ -14,13 +14,13 @@ namespace Dogbert2.Controllers
     public class SrsController : ApplicationController
     {
         private readonly IRepository<Project> _projectRepository;
-        private readonly ISrsGenerator _srsGenerator;
+        private readonly IRepository<File> _fileRepository;
         private readonly IAccessValidatorService _accessValidator;
 
-        public SrsController(IRepository<Project> projectRepository, ISrsGenerator srsGenerator, IAccessValidatorService accessValidator)
+        public SrsController(IRepository<Project> projectRepository, IRepository<File> fileRepository, IAccessValidatorService accessValidator)
         {
             _projectRepository = projectRepository;
-            _srsGenerator = srsGenerator;
+            _fileRepository = fileRepository;
             _accessValidator = accessValidator;
         }
 
@@ -37,7 +37,9 @@ namespace Dogbert2.Controllers
             var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
             if (redirect != null) throw new SecurityException("Not authorized to view file");
 
-            var pdf = _srsGenerator.GeneratePdf(project);
+            var generator = new SrsGenerator(_fileRepository, Repository.OfType<SectionType>());
+
+            var pdf = generator.GeneratePdf(project);
             return File(pdf, "application/pdf", "doc.pdf");
         }
     }

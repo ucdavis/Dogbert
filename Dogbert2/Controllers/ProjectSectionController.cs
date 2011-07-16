@@ -16,14 +16,14 @@ namespace Dogbert2.Controllers
     /// Controller for the ProjectText class
     /// </summary>
     [AllRoles]
-    public class ProjectTextController : ApplicationController
+    public class ProjectSectionController : ApplicationController
     {
         private readonly IRepository<Project> _projectRepository;
-        private readonly IRepository<ProjectText> _projectTextRepository;
-        private readonly IRepositoryWithTypedId<TextType, string> _textTypeRepository;
+        private readonly IRepository<ProjectSection> _projectTextRepository;
+        private readonly IRepositoryWithTypedId<SectionType, string> _textTypeRepository;
         private readonly IAccessValidatorService _accessValidator;
 
-        public ProjectTextController(IRepository<Project> projectRepository, IRepository<ProjectText> projectTextRepository, IRepositoryWithTypedId<TextType, string> textTypeRepository, IAccessValidatorService accessValidator)
+        public ProjectSectionController(IRepository<Project> projectRepository, IRepository<ProjectSection> projectTextRepository, IRepositoryWithTypedId<SectionType, string> textTypeRepository, IAccessValidatorService accessValidator)
         {
             _projectRepository = projectRepository;
             _projectTextRepository = projectTextRepository;
@@ -52,7 +52,7 @@ namespace Dogbert2.Controllers
 
             ViewBag.ProjectId = project.Id;
 
-            return View(project.ProjectTexts.OrderBy(a=>a.TextType.Order).ToList());
+            return View(project.ProjectSections.OrderBy(a=>a.SectionType.Order).ToList());
         }
 
 
@@ -91,7 +91,7 @@ namespace Dogbert2.Controllers
 
             ViewBag.ProjectId = project.Id;
 
-			var viewModel = ProjectTextViewModel.Create(Repository, project);
+			var viewModel = ProjectSectionViewModel.Create(Repository, project);
             return View(viewModel);
         } 
 
@@ -99,7 +99,7 @@ namespace Dogbert2.Controllers
         // POST: /ProjectText/Create
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(int id, ProjectText projectText)
+        public ActionResult Create(int id, ProjectSection projectSection)
         {
             var project = _projectRepository.GetNullableById(id);
 
@@ -117,28 +117,28 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-            projectText.Project = project;
+            projectSection.Project = project;
 
             ModelState.Clear();
-            projectText.TransferValidationMessagesTo(ModelState);
+            projectSection.TransferValidationMessagesTo(ModelState);
 
             // make sure we're not adding a project text that already exists for this project
-            if (_projectTextRepository.Queryable.Where(a => a.Project == project && a.TextType == projectText.TextType).Any())
+            if (_projectTextRepository.Queryable.Where(a => a.Project == project && a.SectionType == projectSection.SectionType).Any())
             {
                 ModelState.AddModelError("", "Project Text of this type already exists for this project.");
             }
 
             if (ModelState.IsValid)
             {
-                _projectTextRepository.EnsurePersistent(projectText);
+                _projectTextRepository.EnsurePersistent(projectSection);
 
                 Message = "Project Text Created Successfully";
 
-                return this.RedirectToAction(a => a.Index(projectText.Project.Id));
+                return this.RedirectToAction(a => a.Index(projectSection.Project.Id));
             }
 
-            var viewModel = ProjectTextViewModel.Create(Repository, projectText.Project);
-            viewModel.ProjectText = projectText;
+            var viewModel = ProjectSectionViewModel.Create(Repository, projectSection.Project);
+            viewModel.ProjectSection = projectSection;
 
             return View(viewModel);
         }
@@ -159,8 +159,8 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-			var viewModel = ProjectTextViewModel.Create(Repository, projectText.Project);
-			viewModel.ProjectText = projectText;
+			var viewModel = ProjectSectionViewModel.Create(Repository, projectText.Project);
+			viewModel.ProjectSection = projectText;
 
 			return View(viewModel);
         }
@@ -169,7 +169,7 @@ namespace Dogbert2.Controllers
         // POST: /ProjectText/Edit/5
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(int id, ProjectText projectText)
+        public ActionResult Edit(int id, ProjectSection projectSection)
         {
             var projectTextToEdit = _projectTextRepository.GetNullableById(id);
 
@@ -183,7 +183,7 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-            AutoMapper.Mapper.Map(projectText, projectTextToEdit);
+            AutoMapper.Mapper.Map(projectSection, projectTextToEdit);
 
             ModelState.Clear();
             projectTextToEdit.TransferValidationMessagesTo(ModelState);
@@ -197,8 +197,8 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction(a=>a.Index(projectTextToEdit.Project.Id));
             }
 
-            var viewModel = ProjectTextViewModel.Create(Repository, projectTextToEdit.Project);
-            viewModel.ProjectText = projectTextToEdit;
+            var viewModel = ProjectSectionViewModel.Create(Repository, projectTextToEdit.Project);
+            viewModel.ProjectSection = projectTextToEdit;
             return View(viewModel);
         }
         
@@ -224,7 +224,7 @@ namespace Dogbert2.Controllers
         //
         // POST: /ProjectText/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, ProjectText projectText)
+        public ActionResult Delete(int id, ProjectSection projectSection)
         {
 			var projectTextToDelete = _projectTextRepository.GetNullableById(id);
 

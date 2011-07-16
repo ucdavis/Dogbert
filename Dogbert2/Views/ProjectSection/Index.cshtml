@@ -1,7 +1,7 @@
-﻿@model IEnumerable<ProjectText>
+﻿@model IEnumerable<ProjectSection>
 
 @{
-	ViewBag.Title = "Project Texts";
+	ViewBag.Title = "Project Sections";
     
 }
 
@@ -44,7 +44,7 @@
 				</a>
 			</td>
 
-            <td>@item.TextType.Name</td>
+            <td>@item.SectionType.Name</td>
 
             <td>@item.DateCreated.ToString("g")</td>
             <td>@item.LastUpdate.ToString("g")</td>
