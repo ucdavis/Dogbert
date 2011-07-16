@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Dogbert2.Core.Domain.AccessRequest>
+
+@{
+	ViewBag.Title = "Access Requests";
+    ViewBag.NavigationKey = "Admin";
+}
+
+@section SubNav
+{
+}
+
+
+<table class='dt-table nolasticon'>
+	<thead>
+		<tr>
+			<th></th>
+			<th>
+				LoginId
+			</th>
+			<th>
+				FirstName
+			</th>
+			<th>
+				LastName
+			</th>
+			<th>
+				Email
+			</th>
+			<th>
+				WorkgroupName
+			</th>
+			<th>
+				OtherUsers
+			</th>
+			<th>
+				DateCreated
+			</th>
+			<th>
+				Pending
+			</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+			<td>
+				<a href='@Url.Action("Details", new {id=item.Id})'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+			</td>
+			<td>
+				@item.LoginId
+			</td>
+			<td>
+				@item.FirstName
+			</td>
+			<td>
+				@item.LastName
+			</td>
+			<td>
+				@item.Email
+			</td>
+			<td>
+				@item.WorkgroupName
+			</td>
+			<td>
+				@item.OtherUsers
+			</td>
+			<td>
+				@String.Format("{0:g}", item.DateCreated)
+			</td>
+			<td>
+				@item.Pending
+			</td>
+		
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

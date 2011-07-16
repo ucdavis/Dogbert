@@ -5,6 +5,7 @@ using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
 using UCDArch.Core.PersistanceSupport;
+using MvcContrib;
 
 namespace Dogbert2.Controllers
 {
@@ -25,7 +26,7 @@ namespace Dogbert2.Controllers
         [AdminOnly]
         public ActionResult Index()
         {
-            var accessRequestList = _accessRequestRepository.Queryable;
+            var accessRequestList = _accessRequestRepository.Queryable.OrderBy(a=>a.Pending);
 
             return View(accessRequestList.ToList());
         }
@@ -47,7 +48,7 @@ namespace Dogbert2.Controllers
         [Authorize]
         public ActionResult Create()
         {
-			var viewModel = AccessRequestViewModel.Create(Repository);
+			var viewModel = AccessRequestViewModel.Create(Repository, CurrentUser.Identity.Name);
             
             return View(viewModel);
         } 
@@ -61,69 +62,65 @@ namespace Dogbert2.Controllers
         [HttpPost]
         public ActionResult Create(AccessRequest accessRequest)
         {
-            var accessRequestToCreate = new AccessRequest();
-
             if (ModelState.IsValid)
             {
-                _accessRequestRepository.EnsurePersistent(accessRequestToCreate);
+                _accessRequestRepository.EnsurePersistent(accessRequest);
 
-                Message = "AccessRequest Created Successfully";
+                Message = "Your request has been submitted, we will contact you shortly.";
 
-                return RedirectToAction("Index");
+                return this.RedirectToAction<HomeController>(a => a.Index());
             }
-            else
-            {
-				var viewModel = AccessRequestViewModel.Create(Repository);
-                viewModel.AccessRequest = accessRequest;
 
-                return View(viewModel);
-            }
+			var viewModel = AccessRequestViewModel.Create(Repository, CurrentUser.Identity.Name);
+            viewModel.AccessRequest = accessRequest;
+
+            return View(viewModel);
         }
 
-        //
-        // GET: /AccessRequest/Edit/5
+        ////
+        //// GET: /AccessRequest/Edit/5
 
-        [AdminOnly]
-        public ActionResult Edit(int id)
-        {
-            var accessRequest = _accessRequestRepository.GetNullableById(id);
+        //[AdminOnly]
+        //public ActionResult Edit(int id)
+        //{
+        //    var accessRequest = _accessRequestRepository.GetNullableById(id);
 
-            if (accessRequest == null) return RedirectToAction("Index");
+        //    if (accessRequest == null) return RedirectToAction("Index");
 
-			var viewModel = AccessRequestViewModel.Create(Repository);
-			viewModel.AccessRequest = accessRequest;
+        //    var viewModel = AccessRequestViewModel.Create(Repository);
+        //    viewModel.AccessRequest = accessRequest;
 
-			return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
         
-        //
-        // POST: /AccessRequest/Edit/5
-        [AdminOnly]
-        [HttpPost]
-        public ActionResult Edit(int id, AccessRequest accessRequest)
-        {
-            var accessRequestToEdit = _accessRequestRepository.GetNullableById(id);
+        ////
+        //// POST: /AccessRequest/Edit/5
+        //[AdminOnly]
+        //[HttpPost]
+        //public ActionResult Edit(int id, AccessRequest accessRequest)
+        //{
+        //    var accessRequestToEdit = _accessRequestRepository.GetNullableById(id);
 
-            if (accessRequestToEdit == null) return RedirectToAction("Index");
+        //    if (accessRequestToEdit == null) return RedirectToAction("Index");
 
-            //TransferValues(accessRequest, accessRequestToEdit);
+        //    //TransferValues(accessRequest, accessRequestToEdit);
 
-            if (ModelState.IsValid)
-            {
-                _accessRequestRepository.EnsurePersistent(accessRequestToEdit);
+        //    if (ModelState.IsValid)
+        //    {
+        //        _accessRequestRepository.EnsurePersistent(accessRequestToEdit);
 
-                Message = "AccessRequest Edited Successfully";
+        //        Message = "AccessRequest Edited Successfully";
 
-                return RedirectToAction("Index");
-            }
-            else
-            {
-				var viewModel = AccessRequestViewModel.Create(Repository);
-                viewModel.AccessRequest = accessRequest;
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        var viewModel = AccessRequestViewModel.Create(Repository);
+        //        viewModel.AccessRequest = accessRequest;
 
-                return View(viewModel);
-            }
-        }
+        //        return View(viewModel);
+        //    }
+        //}
 
     }
 }

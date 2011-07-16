@@ -1,74 +1,78 @@
 ﻿@model Dogbert2.Models.AccessRequestViewModel
 
 @{
-    ViewBag.Title = "Request Access";
+    ViewBag.Title = "Submit Access Request";
 }
 
 @using (Html.BeginForm()) {
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true)
-<fieldset>
-	<legend>AccessRequestViewModel</legend>
-	<p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
-	<ul>
-		<li>
-			<div class="editor-label required">
-				@Html.LabelFor(model => model.AccessRequest.LoginId)<span>*</span> 
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.AccessRequest.LoginId)
-				@Html.ValidationMessageFor(model => model.AccessRequest.LoginId)
-			</div>
-		</li>
-		<li>
-			<div class="editor-label required">
-				@Html.LabelFor(model => model.AccessRequest.FirstName)<span>*</span> 
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.AccessRequest.FirstName)
-				@Html.ValidationMessageFor(model => model.AccessRequest.FirstName)
-			</div>
-		</li>
-		<li>
-			<div class="editor-label required">
-				@Html.LabelFor(model => model.AccessRequest.LastName)<span>*</span> 
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.AccessRequest.LastName)
-				@Html.ValidationMessageFor(model => model.AccessRequest.LastName)
-			</div>
-		</li>
-		<li>
-			<div class="editor-label required">
-				@Html.LabelFor(model => model.AccessRequest.Email)<span>*</span> 
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.AccessRequest.Email)
-				@Html.ValidationMessageFor(model => model.AccessRequest.Email)
-			</div>
-		</li>
-        <li>
-			<div class="editor-label required">
-				@Html.LabelFor(model => model.AccessRequest.Department) <span>*</span>
-			</div>
-			<div class="editor-field">
-				@this.Select("AccessRequest.Department").Options(Model.Departments, x=>x.Id, x=>x.Name).Selected(Model.AccessRequest.Department != null ? Model.AccessRequest.Department.Id : string.Empty).FirstOption("--Select Department--")
-				@Html.ValidationMessageFor(model => model.AccessRequest.Department)
-			</div>
-		</li>
-		<li>
-			<div class="editor-label">
-				@Html.LabelFor(model => model.AccessRequest.OtherUsers) 
-			</div>
-			<div class="editor-field">
-				@Html.EditorFor(model => model.AccessRequest.OtherUsers)
-				@Html.ValidationMessageFor(model => model.AccessRequest.OtherUsers)
-			</div>
-		</li>
-		<li>
-			<div class="editor-label">&nbsp;</div>
-			<div class="editor-field"><input class="button" type="submit" value="Submit" /> | @Html.ActionLink("Cancel", "Index", "Home")</div>
-		</li>
-	</ul>
+    <fieldset>
+	    <legend>AccessRequestViewModel</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.AccessRequest.LoginId)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+                    @Model.AccessRequest.LoginId
+                    @Html.HiddenFor(model => model.AccessRequest.LoginId)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.AccessRequest.FirstName)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.AccessRequest.FirstName)
+				    @Html.ValidationMessageFor(model => model.AccessRequest.FirstName)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.AccessRequest.LastName)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.AccessRequest.LastName)
+				    @Html.ValidationMessageFor(model => model.AccessRequest.LastName)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.AccessRequest.Email)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.AccessRequest.Email)
+				    @Html.ValidationMessageFor(model => model.AccessRequest.Email)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.AccessRequest.WorkgroupName) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.AccessRequest.WorkgroupName)
+				    @Html.ValidationMessageFor(model => model.AccessRequest.WorkgroupName)
+                    <em>*Can be any name you would like your unit to be called.</em>
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.AccessRequest.OtherUsers) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.AccessRequest.OtherUsers)
+				    @Html.ValidationMessageFor(model => model.AccessRequest.OtherUsers)
+                    <br /><em>*Any other users you wish to have added to your workgroup, comma seperated list of kerberos ids</em>
+			    </div>
+		    </li>
+		    <li>
+                <div class="editor-label"><label>&nbsp;</label></div>
+                <div class="editor-field">
+                    <input class="button" type="submit" value="Submit" /> | @Html.ActionLink("Cancel", "Index", "Home")
+                </div>
+		    </li>
+	    </ul>
 	</fieldset>
 }

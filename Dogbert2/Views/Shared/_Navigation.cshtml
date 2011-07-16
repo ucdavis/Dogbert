@@ -1,4 +1,4 @@
-﻿@if (User.Identity.IsAuthenticated)
+﻿@if (User.Identity.IsAuthenticated && (User.IsInRole(Dogbert2.Filters.RoleNames.Admin) || User.IsInRole(Dogbert2.Filters.RoleNames.User)))
 { 
 <ul class="navigation">
     <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @class = ViewBag.NavigationKey == "Home" ? "currentpage" : string.Empty })</li>

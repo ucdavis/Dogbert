@@ -34,7 +34,11 @@ namespace Dogbert2.Core.Domain
         public virtual Department Department { get; set; }
         [Required]
         [StringLength(50)]
+        [DataType(DataType.EmailAddress)]
         public virtual string Email { get; set; }
+        [StringLength(50)]
+        [Display(Name="Workgroup Name")]
+        public virtual string WorkgroupName { get; set; }
         [Display(Name="Other Users")]
         [DataType(DataType.MultilineText)]
         public virtual string OtherUsers { get; set; }
@@ -54,6 +58,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.LastName);
             References(x => x.Department);
             Map(x => x.Email);
+            Map(x => x.WorkgroupName);
             Map(x => x.OtherUsers);
             Map(x => x.DateCreated);
             Map(x => x.Pending);

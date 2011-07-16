@@ -1,0 +1,53 @@
+﻿@model Dogbert2.Core.Domain.AccessRequest
+
+@{
+    ViewBag.Title = "Access Details";
+    ViewBag.NavigationKey = "Admin";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+	    <li>@Html.ActionLink("Back to List", "Index")</li>
+	</ul>
+}
+
+<fieldset class="display-form">
+    <legend>AccessRequest</legend>
+	<ul>
+		<li>
+			<div class="display-label">LoginId</div>
+			<div class="display-details">@Model.LoginId</div>
+		</li>
+		<li>
+			<div class="display-label">FirstName</div>
+			<div class="display-details">@Model.FirstName</div>
+		</li>
+		<li>
+			<div class="display-label">LastName</div>
+			<div class="display-details">@Model.LastName</div>
+		</li>
+		<li>
+			<div class="display-label">Email</div>
+			<div class="display-details">@Model.Email</div>
+		</li>
+		<li>
+			<div class="display-label">WorkgroupName</div>
+			<div class="display-details">@Model.WorkgroupName</div>
+		</li>
+		<li>
+			<div class="display-label">OtherUsers</div>
+			<div class="display-details">@Model.OtherUsers</div>
+		</li>
+		<li>
+			<div class="display-label">DateCreated</div>
+			<div class="display-details">@String.Format("{0:g}", Model.DateCreated)</div>
+		</li>
+		<li>
+			<div class="display-label">Pending</div>
+			<div class="display-details">@Model.Pending</div>
+		</li>
+	</ul>
+</fieldset>
+
+
