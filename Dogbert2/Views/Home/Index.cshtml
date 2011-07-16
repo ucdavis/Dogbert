@@ -105,7 +105,8 @@
     <aside id="nav">
     
         <nav>
-            <a href="#" class="large-btn">Sign-Up</a>
+
+            @Html.ActionLink("Sign-Up", "Create", "AccessRequest", new {}, new {@class="large-btn"})
 
             @Html.ActionLink("Login", "Index", "Project", new {}, new {@class="large-btn"})
 
