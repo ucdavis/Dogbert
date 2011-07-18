@@ -47,6 +47,7 @@ namespace Dogbert2.Services
 
         // width of the content
         private float _pageWidth;
+        private float _pageHeight;
 
         // html tag types reuqired to be scanned
         private List<string> blockTags = new List<string>() { "p", "ul", "ol" };
@@ -56,11 +57,14 @@ namespace Dogbert2.Services
         private Document _doc;
         private Project _project;
 
+        private float _currentHeight = 0f;
+
         private void InitializeDocument()
         {
             _doc = new iTextSharp.text.Document(PageSize.LETTER, 36 /* left */, 36 /* right */, 62 /* top */, 52 /* bottom */);
             // set the variable for the page's actual content size
             _pageWidth = _doc.PageSize.Width - (_doc.LeftMargin + _doc.RightMargin);
+            _pageHeight = _doc.PageSize.Height - (_doc.TopMargin + _doc.BottomMargin);
         }
 
         /// <summary>
@@ -91,7 +95,6 @@ namespace Dogbert2.Services
             // get all section types
             var sections = _sectionTypeRepository.Queryable.OrderBy(a => a.Order);
             foreach(var sec in sections)
-            //foreach (var txt in project.ProjectSections.OrderBy(b => b.SectionType.Order))
             {
                 // see if the project has this if it's not speical
                 if (!sec.IsSpecial)
@@ -101,11 +104,22 @@ namespace Dogbert2.Services
                     // project has this text in it
                     if (txt != null)
                     {
+                        var table = InitializeTable();
+                        var cell = InitializeNoBorderCell();
+
                         // add the header
-                        AddSectionHeader(sec.Name);
+                        AddSectionHeader(sec.Name, cell);
 
                         // add the txt
-                        AddHtmlText(txt.Text);
+                        AddHtmlText(txt.Text, cell);
+
+                        
+
+                        table.AddCell(cell);
+                        //_doc.Add(table);
+
+                        AddToPage(table);
+
                     }
                 }
                 // deal with specialized 
@@ -281,7 +295,7 @@ namespace Dogbert2.Services
         }
         #endregion
 
-        public void AddSectionHeader(string title)
+        private void AddSectionHeader(string title, PdfPCell pCell = null)
         {
             var table = new PdfPTable(1);
             table.TotalWidth = _pageWidth;
@@ -304,8 +318,70 @@ namespace Dogbert2.Services
             cell.AddElement(paragraph);
 
             table.AddCell(cell);
+            
+            if (pCell != null) pCell.AddElement(table);
+            else _doc.Add(table);
+        }
+
+        /// <summary>
+        /// Adds the table to the document taking into account what is currently on the page
+        /// </summary>
+        /// <param name="table"></param>
+        private void AddToPage(PdfPTable table)
+        {
+            var test = _currentHeight;
+            var test2 = table.TotalHeight*.9;
+
+            // automatically insert new page if current contents goes over 80%
+            if (_currentHeight > table.TotalHeight * .9)
+            {
+                // add a new page
+                _doc.NewPage();
+
+                // set the height to how much it takes on the last page
+                _currentHeight = table.TotalHeight % _pageHeight;
+            }
+            // page is less than 80% and table will not overrun page
+            else if (_currentHeight + table.TotalHeight < _pageHeight)
+            {
+                // just add the height into the count
+                _currentHeight += table.TotalHeight;
+            }
+            // page is less than 80% and table will overrun page
+            else
+            {
+                _currentHeight = table.TotalHeight % _pageHeight;
+            }
+
             _doc.Add(table);
         }
+
+        #region Initializers
+        /// <summary>
+        /// Initializes a pdf p table
+        /// </summary>
+        /// <param name="columns"># of columns</param>
+        /// <returns></returns>
+        private PdfPTable InitializeTable(int columns = 1)
+        {
+            var table = new PdfPTable(columns);
+
+            // set the styles
+            table.TotalWidth = _pageWidth;
+            table.LockedWidth = true;
+            table.SpacingAfter = 2f;
+
+            return table;
+        }
+        private PdfPCell InitializeNoBorderCell()
+        {
+            var cell = new PdfPCell();
+
+            cell.Border = 0;
+
+            return cell;
+        }
+        #endregion
 
         #region Html Text
         /// <summary>
@@ -315,7 +391,7 @@ namespace Dogbert2.Services
         /// http://blog.dmbcllc.com/2009/07/28/itextsharp-html-to-pdf-parsing-html/ (not being used)
         /// </remarks>
         /// <param name="text"></param>
-        private void AddHtmlText(string text)
+        private void AddHtmlText(string text, PdfPCell pCell = null)
         {
             var elements = new List<HtmlElement>(); 
 
@@ -342,15 +418,18 @@ namespace Dogbert2.Services
                             if (listTags.Contains(reader.Name))
                             {
                                 // build the list object
-                                var paragraph = BuildListObject(elements, reader.Name);
-                                _doc.Add(paragraph);
+                                var paragraph = BuildListObject(elements, reader.Name, pCell);
+                                
+                                if (pCell != null) pCell.AddElement(paragraph);
+                                else _doc.Add(paragraph);
 
                                 elements.Clear();
                             }
                             else
                             {
-                                var paragraph = BuildDocObject(elements);
-                                _doc.Add(paragraph);
+                                var paragraph = BuildDocObject(elements, pCell);
+                                if (pCell != null) pCell.AddElement(paragraph);
+                                else _doc.Add(paragraph);
 
                                 elements.Clear();
                             }
@@ -383,7 +462,7 @@ namespace Dogbert2.Services
             return blockTags.Contains(tag.ToLower());
         }
 
-        private Paragraph BuildDocObject(List<HtmlElement> elements)
+        private Paragraph BuildDocObject(List<HtmlElement> elements, PdfPCell pCell = null)
         {
             var docObjs = new Stack<HtmlElement>();
             var paragraph = new Paragraph();
@@ -394,14 +473,14 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a);
+                var obj = HandleTag(docObjs, a, pCell);
 
                 if (obj != null) paragraph.Add(obj);
             }
             return paragraph;
         }
-       
-        private List BuildListObject(List<HtmlElement> elements, string listType)
+
+        private List BuildListObject(List<HtmlElement> elements, string listType, PdfPCell pCell = null)
         {
             var docObjs = new Stack<HtmlElement>();
             var lt = listType == "ol" ? List.ORDERED : List.UNORDERED;
@@ -415,7 +494,7 @@ namespace Dogbert2.Services
 
             foreach (var a in elements)
             {
-                var obj = HandleTag(docObjs, a);
+                var obj = HandleTag(docObjs, a, pCell);
                 if (obj != null)
                 {
                     list.Add(new ListItem(obj));
@@ -431,7 +510,7 @@ namespace Dogbert2.Services
         /// <param name="elements"></param>
         /// <param name="element"></param>
         /// <returns></returns>
-        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element)
+        private Phrase HandleTag(Stack<HtmlElement> elements, HtmlElement element, PdfPCell pCell = null)
         {
             // opening element
             if (element.IsElement && !element.IsClose)
@@ -475,7 +554,7 @@ namespace Dogbert2.Services
                 var obj = elements.Pop();
 
                 // scan for an image token
-                var result = ScanForImage(element.Value);
+                var result = ScanForImage(element.Value, pCell);
 
                 obj.Phrase.Add(result);
 
@@ -488,7 +567,7 @@ namespace Dogbert2.Services
         #endregion
 
         #region Image
-        public string ScanForImage(string txt)
+        public string ScanForImage(string txt, PdfPCell pCell = null)
         {
             // does not contain the image tag
             if (!txt.Contains("{Image-")) return txt;
@@ -506,7 +585,7 @@ namespace Dogbert2.Services
                 int fileId;
                 if (int.TryParse(id, out fileId))
                 {
-                    AddImage(fileId);
+                    AddImage(fileId, pCell);
                 }
 
             }
@@ -517,7 +596,7 @@ namespace Dogbert2.Services
 
             return result;
         }
-        public void AddImage(int fileId)
+        public void AddImage(int fileId, PdfPCell pCell = null)
         {
             var table = new PdfPTable(1);
             table.KeepTogether = true;
@@ -547,7 +626,9 @@ namespace Dogbert2.Services
             }
 
             table.AddCell(cell);
-            _doc.Add(table);
+
+            if (pCell != null) pCell.AddElement(table);
+            else _doc.Add(table);
         }
         #endregion
 

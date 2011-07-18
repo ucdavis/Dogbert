@@ -3,10 +3,10 @@
   <Version>1</Version>
   <SourceModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=.\sqlexpress;Initial Catalog=dogbert;Integrated Security=True;Pooling=False</ConnectionString>
-      <DatabaseName>Dogbert</DatabaseName>
+      <ConnectionString>Data Source=.\sqlexpress;Initial Catalog=dogbert2;Integrated Security=True;Pooling=False</ConnectionString>
+      <DatabaseName>Dogbert2</DatabaseName>
       <DspFamilyName>sql</DspFamilyName>
-      <Name>[SUPERKING\sqlexpress.dogbert]</Name>
+      <Name>[SUPERKING\sqlexpress.dogbert2]</Name>
     </ConnectionBasedModelProvider>
   </SourceModelProvider>
   <TargetModelProvider>
@@ -289,11 +289,11 @@
       </PropertyElementName>
       <PropertyElementName>
         <Name>TargetDatabaseName</Name>
-        <Value>Dogbert</Value>
+        <Value>Dogbert2</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>TargetConnectionString</Name>
-        <Value>Data Source=.\sqlexpress;Initial Catalog=dogbert;Integrated Security=True;Pooling=False</Value>
+        <Value>Data Source=terry;Initial Catalog=dogbert2;Integrated Security=True;Pooling=False</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>VerifyDeployment</Name>

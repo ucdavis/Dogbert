@@ -12,6 +12,7 @@ namespace Dogbert2.Core.Domain
         public virtual Worker Worker { get; set; }
 
         public virtual bool Limited { get; set; }
+        public virtual bool Admin { get; set; }
     }
 
     public class WorkgroupWorkerMap : ClassMap<WorkgroupWorker>
@@ -25,7 +26,7 @@ namespace Dogbert2.Core.Domain
             References(x => x.Workgroup);
             References(x => x.Worker);
             Map(x => x.Limited);
-
+            Map(x => x.Admin);
         }
     }
 }

@@ -1,21 +1,17 @@
 ﻿@model IEnumerable<Dogbert2.Core.Domain.Project>
 
-
 @{
-	ViewBag.Title = "My Projects";
-    ViewBag.NavigationKey = "Project";
+	ViewBag.Title = "Manage Projects";
 }
 
 @section SubNav
 {
-	<ul class='navigation'>
-        <li>@Html.ActionLink("Manage", "Manage")</li>
+	<ul class="navigation">
 		<li>@Html.ActionLink("Create New", "Create")</li>
 	</ul>
 }
 
-
-<table class='dt-table nolasticon'>
+<table class='nolasticon'>
 	<thead>
 		<tr>
 			<th></th>

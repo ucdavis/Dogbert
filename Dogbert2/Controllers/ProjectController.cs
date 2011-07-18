@@ -37,6 +37,16 @@ namespace Dogbert2.Controllers
             return View(projects.ToList());
         }
 
+        /// <summary>
+        /// Reorder and organize projects for which user has admin access to workgroup
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Manage()
+        {
+            var viewModel = ProjectListViewModel.Create(Repository, CurrentUser.Identity.Name);
+            
+            return View(viewModel);
+        }
 
         //
         // GET: /Project/Details/5

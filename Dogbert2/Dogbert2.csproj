@@ -168,6 +168,7 @@
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\AccessRequestViewModel.cs" />
     <Compile Include="Models\FileViewModel.cs" />
+    <Compile Include="Models\ProjectListViewModel.cs" />
     <Compile Include="Models\ProjectTermViewModel.cs" />
     <Compile Include="Models\ProjectSectionViewModel.cs" />
     <Compile Include="Models\RequirementCategoryViewModel.cs" />
@@ -641,6 +642,7 @@
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Project\Manage.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
