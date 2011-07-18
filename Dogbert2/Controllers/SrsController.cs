@@ -40,7 +40,7 @@ namespace Dogbert2.Controllers
             var generator = new SrsGenerator(_fileRepository, Repository.OfType<SectionType>());
 
             var pdf = generator.GeneratePdf(project);
-            return File(pdf, "application/pdf", "doc.pdf");
+            return File(pdf, "application/pdf", string.Format("srs-{0}.pdf", id));
         }
     }
 }
