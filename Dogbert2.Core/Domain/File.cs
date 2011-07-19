@@ -33,7 +33,7 @@ namespace Dogbert2.Core.Domain
         [StringLength(50)]
         public virtual string FileName { get; set; }
         [Required]
-        [StringLength(15)]
+        [StringLength(50)]
         public virtual string ContentType { get; set; }
         /// <summary>
         /// Is this a image to use in the body?
