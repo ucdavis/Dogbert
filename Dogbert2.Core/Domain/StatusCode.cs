@@ -9,6 +9,8 @@ namespace Dogbert2.Core.Domain
         [Required]
         [StringLength(50)]
         public virtual string Name { get; set; }
+
+        public virtual bool Display { get; set; }
     }
 
     public class StatusCodeMap : ClassMap<StatusCode>
@@ -17,6 +19,7 @@ namespace Dogbert2.Core.Domain
         {
             Id(x => x.Id);
             Map(x => x.Name);
+            Map(x => x.Display);
         }
     }
 }

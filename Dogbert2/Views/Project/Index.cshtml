@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Dogbert2.Core.Domain.Project>
+﻿@model IEnumerable<Workgroup>
 
 
 @{
 	ViewBag.Title = "My Projects";
     ViewBag.NavigationKey = "Project";
+    ViewBag.dTable = true;
 }
 
 @section SubNav
@@ -14,56 +15,27 @@
 	</ul>
 }
 
+@section AdditionalScripts
+{
+    <script type="text/javascript">
 
-<table class='dt-table nolasticon'>
-	<thead>
-		<tr>
-			<th></th>
+        $(function () {
+            $("#tabs").tabs();
+        });
 
-			<th>Name</th>
-			<th>Contact</th>
-            <th>Unit</th>
-            <th>Complexity</th>
-            <th>Start</th>
-            <th>End</th>
-			<th>Deadline</th>
-            <th>Status</th>
-			
-            <th></th>
-		</tr>
-	</thead>
-	<tbody>
-@{ var odd = false; }
-@foreach (var item in Model) {
-		<tr class="@(odd ? "odd": "even")">
-
-			<td>
-				<a href='@Url.Action("Details", new {id=item.Id})'>
-					<img src='@Url.Image("details.png")' />
-				</a>
-				<a href='@Url.Action("Edit", new {id=item.Id})'>
-					<img src='@Url.Image("edit.png")' />
-				</a>
-			</td>
-
-			<td>@item.Name</td>
-			<td>@item.Contact</td>
-            <td>@item.Unit</td>
-            <td>@item.Complexity</td>
-            <td>@ProjectInfo.ProjectBegin(item)</td>
-            <td>@ProjectInfo.ProjectEnd(item)</td>
-            <td>@ProjectInfo.ProjectDeadline(item)</td>
-            <td>@item.StatusCode.Name</td>
-				
-			<td>
-				<a href='@Url.Action("Delete", new { id = item.Id })'>
-					<img src='@Url.Image("delete.png")' />
-				</a>
-			</td>
-		
-
-		</tr>
-		odd = !odd;
+    </script>
 }
-	</tbody>
-</table>
+
+@if (Model.Count() == 1)
+{
+    // display the table only
+    @Html.Partial("_ProjectTable", Model.FirstOrDefault().ProjectWorkgroups)
+}
+else
+{ 
+    // display the tabs
+    @Html.Partial("_ProjectTabs", Model)
+    
+}
+
+

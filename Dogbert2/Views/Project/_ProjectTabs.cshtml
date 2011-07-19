@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Workgroup>
+
+<div id="tabs">
+    <ul>
+        @foreach (var workgroup in Model)
+        { 
+            <li>
+                <a href='@string.Format("#tab-{0}", workgroup.Id)'>@workgroup.Name</a>
+            </li>
+        }
+    </ul>
+
+    @foreach(var workgroup in Model)
+    {
+        <div id='@string.Format("tab-{0}", workgroup.Id)'>
+            @Html.Partial("_ProjectTable", workgroup.ProjectWorkgroups)
+        </div>
+    }
+
+</div>

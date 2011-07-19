@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
@@ -32,20 +33,49 @@ namespace Dogbert2.Controllers
         {
             var workgroups = _accessValidator.GetWorkgroupsByUser(CurrentUser.Identity.Name);
 
-            var projects = _projectWorkgroupRepository.Queryable.Where(a => !a.Project.Hide && workgroups.Contains(a.Workgroup)).Select(a => a.Project).Distinct();
+            //var projects = _projectWorkgroupRepository.Queryable.Where(a => !a.Project.Hide && workgroups.Contains(a.Workgroup)).Select(a => a.Project).Distinct();
 
-            return View(projects.ToList());
+            return View(workgroups);
         }
 
         /// <summary>
-        /// Reorder and organize projects for which user has admin access to workgroup
+        /// Reorder and organize projects
         /// </summary>
         /// <returns></returns>
         public ActionResult Manage()
         {
-            var viewModel = ProjectListViewModel.Create(Repository, CurrentUser.Identity.Name);
-            
-            return View(viewModel);
+            var workgroups = Repository.OfType<WorkgroupWorker>().Queryable.Where(a => a.Admin && a.Worker.LoginId == CurrentUser.Identity.Name).Select(a => a.Workgroup);
+
+            return View(workgroups);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateProjectOrder(int workgroupId, List<int> projectWorkgroupId)
+        {
+            try
+            {
+                // load the workgroup
+                var workgroup = Repository.OfType<Workgroup>().GetNullableById(workgroupId);
+
+                // ensure user is an admin
+
+
+                // load the projects and update the order
+                for (var i = 0; i < projectWorkgroupId.Count; i++)
+                {
+                    var projectWorkgroup = _projectWorkgroupRepository.GetNullableById(projectWorkgroupId[i]);
+
+                    projectWorkgroup.Order = i;
+
+                    _projectWorkgroupRepository.EnsurePersistent(projectWorkgroup);
+                }
+
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(false);
+            }
         }
 
         //

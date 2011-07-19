@@ -1,65 +1,66 @@
-﻿@model IEnumerable<Dogbert2.Core.Domain.Project>
+﻿@model IEnumerable<Workgroup>
 
 @{
-	ViewBag.Title = "Manage Projects";
+    ViewBag.Title = "Manage Projects";
 }
 
 @section SubNav
 {
 	<ul class="navigation">
-		<li>@Html.ActionLink("Create New", "Create")</li>
+		<li>@Html.ActionLink("Back to My Projects", "Index", "Project")</li>
 	</ul>
 }
 
-<table class='nolasticon'>
-	<thead>
-		<tr>
-			<th></th>
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
 
-			<th>Name</th>
-			<th>Contact</th>
-            <th>Unit</th>
-            <th>Complexity</th>
-            <th>Start</th>
-            <th>End</th>
-			<th>Deadline</th>
-            <th>Status</th>
-			
-            <th></th>
-		</tr>
-	</thead>
-	<tbody>
-@{ var odd = false; }
-@foreach (var item in Model) {
-		<tr class="@(odd ? "odd": "even")">
+    <script type="text/javascript">
 
-			<td>
-				<a href='@Url.Action("Details", new {id=item.Id})'>
-					<img src='@Url.Image("details.png")' />
-				</a>
-				<a href='@Url.Action("Edit", new {id=item.Id})'>
-					<img src='@Url.Image("edit.png")' />
-				</a>
-			</td>
+        $(function () { 
+        
+            $("table").tableDnD({
+                onDragClass: "dragging",
+                onDrop: function (table, row) {
+                    // re-adjust the odd, even row classes
+                    $("tbody tr").removeClass("odd");
+                    $("tbody tr").removeClass("even");
 
-			<td>@item.Name</td>
-			<td>@item.Contact</td>
-            <td>@item.Unit</td>
-            <td>@item.Complexity</td>
-            <td>@ProjectInfo.ProjectBegin(item)</td>
-            <td>@ProjectInfo.ProjectEnd(item)</td>
-            <td>@ProjectInfo.ProjectDeadline(item)</td>
-            <td>@item.StatusCode.Name</td>
-				
-			<td>
-				<a href='@Url.Action("Delete", new { id = item.Id })'>
-					<img src='@Url.Image("delete.png")' />
-				</a>
-			</td>
-		
+                    $("tbody tr:even").addClass("even");
+                    $("tbody tr:odd").addClass("odd");
 
-		</tr>
-		odd = !odd;
+                    var rows = table.tBodies[0].rows;
+                    var order = [];
+                    $.each(rows, function (index, item) {
+                        order.push($(item).data("id"));
+                    });
+
+                    var id = $("table").parents(".plist-container").data("id");
+
+                    var url = '@Url.Action("UpdateProjectOrder")';
+                    var antiForgery = $('input[name="__RequestVerificationToken"]').val();
+                    $.post(url, { workgroupId: id, projectWorkgroupId: order, __RequestVerificationToken: antiForgery }, function (result) {
+                    
+                        if (result == false) alert("failed to update order");
+
+                    });
+                }
+            });
+
+        });
+
+    </script>
 }
-	</tbody>
-</table>
+
+@Html.AntiForgeryToken()
+
+@if (Model.Count() == 1)
+{
+    @Html.Partial("_ProjectTable", Model.FirstOrDefault().ProjectWorkgroups)
+}
+else
+{ 
+    // display the tabs
+    @Html.Partial("_ProjectTabs", Model)
+    
+}

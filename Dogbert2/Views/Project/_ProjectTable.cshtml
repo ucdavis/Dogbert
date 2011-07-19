@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ProjectWorkgroup>
+
+@{
+    var classes = ViewBag.dTable == true ? "dt-table" : string.Empty;
+    var workgroupId = Model.Count() > 0 ? Model.FirstOrDefault().Workgroup.Id : -1;
+}
+
+<div class="plist-container" data-id="@workgroupId">
+<table class='@classes'>
+	<thead>
+		<tr>
+			<th></th>
+
+			<th>Name</th>
+			<th>Contact</th>
+            <th>Unit</th>
+            <th>Complexity</th>
+            <th>Start</th>
+            <th>End</th>
+			<th>Deadline</th>
+            <th>Status</th>
+			
+            <th></th>
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model.Where(a=>a.Project.StatusCode.Display).OrderBy(a =>a.Order))
+{
+		<tr class="@(odd ? "odd" : "even")" data-id="@item.Id">
+
+			<td>
+				<a href='@Url.Action("Details", new { id = item.Project.Id })'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+				<a href='@Url.Action("Edit", new { id = item.Project.Id })'>
+					<img src='@Url.Image("edit.png")' />
+				</a>
+			</td>
+
+			<td>@item.Project.Name</td>
+			<td>@item.Project.Contact</td>
+            <td>@item.Project.Unit</td>
+            <td>@item.Project.Complexity</td>
+            <td>@ProjectInfo.ProjectBegin(item.Project)</td>
+            <td>@ProjectInfo.ProjectEnd(item.Project)</td>
+            <td>@ProjectInfo.ProjectDeadline(item.Project)</td>
+            <td>@item.Project.StatusCode.Name</td>
+				
+			<td>
+				<a href='@Url.Action("Delete", new { id = item.Project.Id })'>
+					<img src='@Url.Image("delete.png")' />
+				</a>
+			</td>
+		
+
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>
+</div>
