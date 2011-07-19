@@ -1,4 +1,6 @@
-﻿using System.Security;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
@@ -39,7 +41,24 @@ namespace Dogbert2.Controllers
 
             var generator = new SrsGenerator(_fileRepository, Repository.OfType<SectionType>());
 
-            var pdf = generator.GeneratePdf(project);
+            // get the srs
+            var srs = generator.GeneratePdf(project);
+
+            // append the files if any
+            var files = new List<byte[]>();
+            files.Add(srs);
+            files.AddRange(project.Files.Where(a => a.Append).Select(a=>a.Contents).ToList());
+
+            var pdf = new byte[0];
+            if (files.Count() > 1)
+            {
+                pdf = PdfMerger.MergePdfs(files);
+            }
+            else
+            {
+                pdf = srs;
+            }
+            
             return File(pdf, "application/pdf", string.Format("srs-{0}.pdf", id));
         }
     }

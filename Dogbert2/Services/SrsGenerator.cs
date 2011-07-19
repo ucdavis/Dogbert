@@ -329,11 +329,11 @@ namespace Dogbert2.Services
         /// <param name="table"></param>
         private void AddToPage(PdfPTable table)
         {
-            var test = _currentHeight;
-            var test2 = table.TotalHeight*.9;
+            //var test = _currentHeight;
+            //var test2 = table.TotalHeight*.9;
 
             // automatically insert new page if current contents goes over 80%
-            if (_currentHeight > table.TotalHeight * .9)
+            if (_currentHeight > _pageHeight * .8)
             {
                 // add a new page
                 _doc.NewPage();

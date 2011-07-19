@@ -161,7 +161,28 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-            AutoMapper.Mapper.Map(file, fileToEdit);
+            // no file update, preserve old information
+            if (file.File == null)
+            {
+                // save the old values
+                var contents = fileToEdit.Contents;
+                var type = fileToEdit.ContentType;
+                var name = fileToEdit.FileName;
+
+                AutoMapper.Mapper.Map(file, fileToEdit);
+
+                // copy back in the values
+                fileToEdit.Contents = contents;
+                fileToEdit.ContentType = type;
+                fileToEdit.FileName = name;
+            }
+            // file was uploaded, perform standard transfer
+            else
+            {
+                AutoMapper.Mapper.Map(file, fileToEdit);    
+            }
+
+            
 
             if (ModelState.IsValid)
             {
