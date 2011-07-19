@@ -147,7 +147,7 @@ namespace Dogbert2.Controllers
         //
         // POST: /File/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, File file)
+        public ActionResult Edit(int id, FilePostModel file)
         {
             var fileToEdit = _fileRepository.GetNullableById(id);
 
@@ -169,13 +169,10 @@ namespace Dogbert2.Controllers
 
                 Message = "File Edited Successfully";
 
-                return RedirectToAction("Index");
+                return this.RedirectToAction(a => a.Index(fileToEdit.Project.Id));
             }
-			
-            var viewModel = FileViewModel.Create(Repository, file.Project);
-            //viewModel.File = file;
 
-            return View(viewModel);
+            return View(fileToEdit);
         }
         
         //

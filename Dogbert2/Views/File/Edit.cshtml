@@ -18,16 +18,16 @@
                 </div>
             </li>
             <li><div class='editor-label'>Title</div>
-                <div class='editor-field'>@Html.TextBoxFor(a => a.Title)</div>
+                <div class='editor-field'>@Html.TextBox("file.Title", Model.Title)</div>
             </li>
             <li><div class='editor-label'>Caption</div>
-                <div class='editor-field'>@Html.TextAreaFor(a => a.Caption)</div>
+                <div class='editor-field'>@Html.TextBox("file.Caption", Model.Caption)</div>
             </li>
             <li><div class='editor-label required'>File<span>*</span></div>
-                <div class='editor-field'><input type="file" id='file' name='file' /></div>
+                <div class='editor-field'><input type="file" id='file_file' name='file.File' /></div>
             </li>
             <li><div class='editor-label'>Append</div>
-                <div class='editor-field'>@Html.CheckBoxFor(a => a.Append)
+                <div class='editor-field'>@Html.CheckBox("file.Append", Model.Append)
                     <em>Append a pdf to the SRS?</em>
                 </div>
             </li>
