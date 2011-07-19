@@ -9,6 +9,7 @@ namespace Dogbert2.Services
         IEnumerable<Workgroup> GetWorkgroupsByUser(string loginId);
 
         AccessLevel HasAccess(string loginId, Project project);
+        bool HasAccess(string loginId, Workgroup workgroup);
 
         /// <summary>
         /// Returns the redirect command

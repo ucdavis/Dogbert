@@ -16,7 +16,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the File class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class FileController : ApplicationController
     {
 	    private readonly IRepository<File> _fileRepository;

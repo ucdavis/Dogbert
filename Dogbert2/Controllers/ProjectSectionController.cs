@@ -15,7 +15,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the ProjectText class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class ProjectSectionController : ApplicationController
     {
         private readonly IRepository<Project> _projectRepository;

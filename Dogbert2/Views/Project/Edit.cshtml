@@ -12,7 +12,7 @@
     <ul class="navigation">
         <li>@Html.ActionLink("Details", "Details", new {Id=Model.Project.Id})</li>
         <li>@Html.ActionLink("Workgroups", "Index", "ProjectWorkgroup", new { Id=Model.Project.Id }, new { })</li>
-        <li>Requirement Categories</li>
+        <li>@Html.ActionLink("Requirement Categories", "Index", "RequirementCategory", new { Id = Model.Project.Id }, new { })</li>
         <li>Actors</li>
     </ul>
 }

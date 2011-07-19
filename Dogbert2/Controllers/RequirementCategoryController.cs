@@ -15,7 +15,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the RequirementCategory class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class RequirementCategoryController : ApplicationController
     {
 	    private readonly IRepository<RequirementCategory> _requirementCategoryRepository;

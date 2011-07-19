@@ -49,6 +49,18 @@ namespace Dogbert2.Helpers
             return AccessLevel.NoAccess;
         }
 
+        public bool HasAccess(string loginId, Workgroup workgroup)
+        {
+            var workgroups = GetWorkgroupsByUser(loginId);
+
+            if (workgroups.Contains(workgroup))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public RedirectToRouteResult CheckEditAccess(string loginId, Project project)
         {
             var access = HasAccess(loginId, project);
@@ -80,5 +92,6 @@ namespace Dogbert2.Helpers
 
             return null;
         }
+
     }
 }

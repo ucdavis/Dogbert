@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
 using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
+using MvcContrib;
 
 namespace Dogbert2.Controllers
 {
     /// <summary>
     /// Controller for the Project class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class ProjectController : ApplicationController
     {
 	    private readonly IRepository<Project> _projectRepository;
@@ -64,9 +66,12 @@ namespace Dogbert2.Controllers
                 var workgroup = Repository.OfType<Workgroup>().GetNullableById(workgroupId);
 
                 // ensure user is an admin
+                if (!workgroup.WorkgroupWorkers.Where(a => a.Worker.LoginId == CurrentUser.Identity.Name && a.Admin).Any())
+                {
+                    throw new SecurityException("Not authorized to perform action.");
+                }
 
-
-                // load the projects and update the order
+                // load the projects and update the order))
                 for (var i = 0; i < projectWorkgroupId.Count; i++)
                 {
                     var projectWorkgroup = _projectWorkgroupRepository.GetNullableById(projectWorkgroupId[i]);
@@ -134,6 +139,11 @@ namespace Dogbert2.Controllers
             if (workgroup == null)
             {
                 ModelState.AddModelError("Workgroup", "Workgroup is required.");
+            }
+
+            if (!_accessValidator.HasAccess(CurrentUser.Identity.Name, workgroup))
+            {
+                return this.RedirectToAction<ErrorController>(a => a.NotAuthorized());
             }
 
             project.AddWorkgroup(workgroup);

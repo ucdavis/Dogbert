@@ -13,7 +13,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the ProjectWorkgroup class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class ProjectWorkgroupController : ApplicationController
     {
         private readonly IRepository<ProjectWorkgroup> _projectWorkgroupRepository;
