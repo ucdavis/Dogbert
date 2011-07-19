@@ -182,8 +182,6 @@ namespace Dogbert2.Controllers
                 AutoMapper.Mapper.Map(file, fileToEdit);    
             }
 
-            
-
             if (ModelState.IsValid)
             {
                 _fileRepository.EnsurePersistent(fileToEdit);

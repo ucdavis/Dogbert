@@ -19,7 +19,6 @@ namespace Dogbert2.Services
             PdfCopy writer = null;
             var ms = new MemoryStream();
 
-
             foreach (var file in files)
             {
                 var reader = new PdfReader(file);
@@ -54,6 +53,7 @@ namespace Dogbert2.Services
                     writer.CopyAcroForm(reader);
                 }
 
+                f++;
             }
 
             // step 5: we close the document

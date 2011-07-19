@@ -65,6 +65,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.FileName);
             Map(x => x.ContentType);
             Map(x => x.IsImage);
+            Map(x => x.Append);
 
             Map(x => x.DateCreated);
             Map(x => x.LastUpdate);

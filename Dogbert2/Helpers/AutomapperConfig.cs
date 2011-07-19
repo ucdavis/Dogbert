@@ -45,11 +45,11 @@ namespace Dogbert2.Helpers
             CreateMap<FilePostModel, File>()
                 .ForMember(x => x.Title, x => x.MapFrom(y => y.Title))
                 .ForMember(x => x.Caption, x => x.MapFrom(y => y.Caption))
+                .ForMember(x => x.Append, x => x.MapFrom(y => y.Append))
+                .ForMember(x => x.IsImage, x => x.MapFrom(y => y.IsImage))
                 .ForMember(x => x.FileName, x => x.MapFrom(y => y.File.FileName))
                 .ForMember(x => x.ContentType, x => x.MapFrom(y => y.File.ContentType))
-                .ForMember(x => x.Contents, x=> x.MapFrom(y => y.FileContents))
-                .ForMember(x => x.Append, x=> x.MapFrom(y => y.Append))
-                .ForMember(x => x.IsImage, x=>x.MapFrom(y=>y.IsImage));
+                .ForMember(x => x.Contents, x=> x.MapFrom(y => y.FileContents));
 
             CreateMap<File, File>()
                 .ForMember(x => x.Id, x => x.Ignore())
