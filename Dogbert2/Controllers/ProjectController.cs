@@ -49,6 +49,12 @@ namespace Dogbert2.Controllers
             return View(workgroups);
         }
 
+        /// <summary>
+        /// Updates the order of projects within a workgroup.
+        /// </summary>
+        /// <param name="workgroupId"></param>
+        /// <param name="projectWorkgroupId"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult UpdateProjectOrder(int workgroupId, List<int> projectWorkgroupId)
         {
@@ -76,6 +82,21 @@ namespace Dogbert2.Controllers
             {
                 return Json(false);
             }
+        }
+
+        /// <summary>
+        /// Displays list of completed projects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Completed()
+        {
+            // load workgroups
+            var workgroups = _accessValidator.GetWorkgroupsByUser(CurrentUser.Identity.Name);
+
+            // get completed/hidden projects
+            var projectsWorkgroups = _projectWorkgroupRepository.Queryable.Where(a => (a.Project.Hide || !a.Project.StatusCode.Display) && workgroups.Contains(a.Workgroup));
+
+            return View(projectsWorkgroups);
         }
 
         //

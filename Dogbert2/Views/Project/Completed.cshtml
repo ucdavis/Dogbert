@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ProjectWorkgroup>
+
+@{
+	ViewBag.Title = "Completed / Hidden Projects";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Back to My Projects", "Index")</li>
+	</ul>
+}
+
+
+<table class='dt-table nolasticon'>
+	<thead>
+		<tr>
+			<th></th>
+            <th>Workgroup</th>
+            <th>Name</th>
+            <th>Unit</th>
+            <th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+			<td>
+				<a href='@Url.Action("Details", new {id=item.Id})'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+				<a href='@Url.Action("Edit", new {id=item.Id})'>
+					<img src='@Url.Image("edit.png")' />
+				</a>
+			</td>
+
+            <td>@item.Workgroup.Name</td>
+            <td>@item.Project.Name</td>
+            <td>@item.Project.Unit</td>
+            <td>@item.Project.StatusCode.Name</td>
+		
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

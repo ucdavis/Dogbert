@@ -645,6 +645,7 @@
     <Content Include="Views\Project\Manage.cshtml" />
     <Content Include="Views\Project\_ProjectTable.cshtml" />
     <Content Include="Views\Project\_ProjectTabs.cshtml" />
+    <Content Include="Views\Project\Completed.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

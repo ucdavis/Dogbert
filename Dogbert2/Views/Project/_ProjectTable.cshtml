@@ -25,7 +25,7 @@
 	</thead>
 	<tbody>
 @{ var odd = false; }
-@foreach (var item in Model.Where(a=>a.Project.StatusCode.Display).OrderBy(a =>a.Order))
+@foreach (var item in Model.Where(a=>a.Project.StatusCode.Display && !a.Project.Hide).OrderBy(a =>a.Order))
 {
 		<tr class="@(odd ? "odd" : "even")" data-id="@item.Id">
 
