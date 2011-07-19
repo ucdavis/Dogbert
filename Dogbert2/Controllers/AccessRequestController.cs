@@ -79,51 +79,5 @@ namespace Dogbert2.Controllers
 
             return View(viewModel);
         }
-
-        ////
-        //// GET: /AccessRequest/Edit/5
-
-        //[AdminOnly]
-        //public ActionResult Edit(int id)
-        //{
-        //    var accessRequest = _accessRequestRepository.GetNullableById(id);
-
-        //    if (accessRequest == null) return RedirectToAction("Index");
-
-        //    var viewModel = AccessRequestViewModel.Create(Repository);
-        //    viewModel.AccessRequest = accessRequest;
-
-        //    return View(viewModel);
-        //}
-        
-        ////
-        //// POST: /AccessRequest/Edit/5
-        //[AdminOnly]
-        //[HttpPost]
-        //public ActionResult Edit(int id, AccessRequest accessRequest)
-        //{
-        //    var accessRequestToEdit = _accessRequestRepository.GetNullableById(id);
-
-        //    if (accessRequestToEdit == null) return RedirectToAction("Index");
-
-        //    //TransferValues(accessRequest, accessRequestToEdit);
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        _accessRequestRepository.EnsurePersistent(accessRequestToEdit);
-
-        //        Message = "AccessRequest Edited Successfully";
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        var viewModel = AccessRequestViewModel.Create(Repository);
-        //        viewModel.AccessRequest = accessRequest;
-
-        //        return View(viewModel);
-        //    }
-        //}
-
     }
 }
