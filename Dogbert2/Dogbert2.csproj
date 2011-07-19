@@ -101,6 +101,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Spring.Core.dll</HintPath>
     </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
     <Reference Include="System.Web.Helpers" />
@@ -182,6 +184,7 @@
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\ProjectWorkgroupViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DirectoryServices.cs" />
     <Compile Include="Services\IAccessValidatorService.cs" />
     <Compile Include="Services\ISrsGenerator.cs" />
     <Compile Include="Services\PdfMerger.cs" />

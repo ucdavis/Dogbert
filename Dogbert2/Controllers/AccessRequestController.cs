@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Dogbert2.Core.Domain;
 using Dogbert2.Filters;
 using Dogbert2.Models;
+using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
 
@@ -15,12 +16,14 @@ namespace Dogbert2.Controllers
     public class AccessRequestController : ApplicationController
     {
 	    private readonly IRepository<AccessRequest> _accessRequestRepository;
+        private readonly IDirectorySearchService _directorySearchService;
 
-        public AccessRequestController(IRepository<AccessRequest> accessRequestRepository)
+        public AccessRequestController(IRepository<AccessRequest> accessRequestRepository, IDirectorySearchService directorySearchService )
         {
             _accessRequestRepository = accessRequestRepository;
+            _directorySearchService = directorySearchService;
         }
-    
+
         //
         // GET: /AccessRequest/
         [AdminOnly]
@@ -48,7 +51,7 @@ namespace Dogbert2.Controllers
         [Authorize]
         public ActionResult Create()
         {
-			var viewModel = AccessRequestViewModel.Create(Repository, CurrentUser.Identity.Name);
+			var viewModel = AccessRequestViewModel.Create(Repository, _directorySearchService, CurrentUser.Identity.Name);
             
             return View(viewModel);
         } 
@@ -71,7 +74,7 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction<HomeController>(a => a.Index());
             }
 
-			var viewModel = AccessRequestViewModel.Create(Repository, CurrentUser.Identity.Name);
+			var viewModel = AccessRequestViewModel.Create(Repository, _directorySearchService, CurrentUser.Identity.Name);
             viewModel.AccessRequest = accessRequest;
 
             return View(viewModel);

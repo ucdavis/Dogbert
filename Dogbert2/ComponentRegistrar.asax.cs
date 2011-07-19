@@ -25,7 +25,7 @@ namespace Dogbert2
 
             // access remote service
             container.Register(Component.For<IDepartmentClient>().ImplementedBy<DevDepartmentClient>().Named("departmentClient"));
-
+            container.Register(Component.For<IDirectorySearchService>().ImplementedBy<DirectoryServices>().Named("directoryServices"));
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)
