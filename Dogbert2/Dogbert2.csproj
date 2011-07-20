@@ -156,6 +156,7 @@
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\SrsController.cs" />
     <Compile Include="Controllers\SectionTypeController.cs" />
+    <Compile Include="Controllers\UseCaseController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />
     <Compile Include="Filters\RoleFilter.cs" />

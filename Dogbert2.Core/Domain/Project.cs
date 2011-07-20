@@ -28,6 +28,7 @@ namespace Dogbert2.Core.Domain
             Files = new List<File>();
             RequirementCategories = new List<RequirementCategory>();
             Requirements = new List<Requirement>();
+            UseCases = new List<UseCase>();
         }
 
         [Required]
@@ -79,6 +80,7 @@ namespace Dogbert2.Core.Domain
         public virtual IList<File> Files { get; set; }
         public virtual IList<RequirementCategory> RequirementCategories { get; set; }
         public virtual IList<Requirement> Requirements { get; set; }
+        public virtual IList<UseCase> UseCases { get; set; }
 
         #region Non-Mapped fields
 
@@ -141,6 +143,7 @@ namespace Dogbert2.Core.Domain
             HasMany(x => x.Files).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.RequirementCategories).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Requirements).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.UseCases).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }
