@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Dogbert2.Core.Resources;
 using FluentNHibernate.Mapping;
@@ -44,6 +45,8 @@ namespace Dogbert2.Core.Domain
 
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime LastModified { get; set; }
+
+        public virtual IList<UseCase> UseCases { get; set; }
     }
 
     public class RequirementMap : ClassMap<Requirement>
@@ -65,6 +68,11 @@ namespace Dogbert2.Core.Domain
 
             Map(x => x.DateAdded);
             Map(x => x.LastModified);
+
+            HasManyToMany(x => x.UseCases)
+                .ParentKeyColumn("RequirementId")
+                .ChildKeyColumn("UseCaseId")
+                .Table("UseCaseXRequirements").Cascade.SaveUpdate();
         }
     }
 }
