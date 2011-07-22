@@ -196,7 +196,7 @@ namespace Dogbert2.Controllers
             if (projectToEdit == null) return RedirectToAction("Index");
 
             // validate access
-            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectToEdit);
             if (redirect != null)
             {
                 Message = "Not authorized to edit project.";

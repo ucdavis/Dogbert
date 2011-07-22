@@ -18,12 +18,19 @@ namespace Dogbert2.Helpers
         protected override void Configure()
         {
             CreateMap<Project, Project>()
-                .ForMember(x => x.Id, x=> x.Ignore())
-                .ForMember(x => x.Begin, x=> x.Ignore())
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.Begin, x => x.Ignore())
                 .ForMember(x => x.End, x => x.Ignore())
-                .ForMember(x => x.DateAdded, x=> x.Ignore())
-                .ForMember(x => x.LastUpdate, x=> x.Ignore())
-                .ForMember(x => x.ProjectWorkgroups, x=> x.Ignore());
+                .ForMember(x => x.DateAdded, x => x.Ignore())
+                .ForMember(x => x.LastUpdate, x => x.Ignore())
+                .ForMember(x => x.ProjectWorkgroups, x => x.Ignore())
+                .ForMember(x => x.ProjectTerms, x => x.Ignore())
+                .ForMember(x => x.ProjectSections, x => x.Ignore())
+                .ForMember(x => x.Files, x => x.Ignore())
+                .ForMember(x => x.RequirementCategories, x => x.Ignore())
+                .ForMember(x => x.Requirements, x => x.Ignore())
+                .ForMember(x => x.UseCases, x => x.Ignore())
+                ;
 
             CreateMap<Workgroup, Workgroup>()
                 .ForMember(x => x.Id, x => x.Ignore())

@@ -2,18 +2,18 @@
 <SchemaComparison>
   <Version>1</Version>
   <SourceModelProvider>
-    <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=.\sqlexpress;Initial Catalog=dogbert2;Integrated Security=True;Pooling=False</ConnectionString>
-      <DatabaseName>Dogbert2</DatabaseName>
-      <DspFamilyName>sql</DspFamilyName>
-      <Name>[SUPERKING\sqlexpress.dogbert2]</Name>
-    </ConnectionBasedModelProvider>
-  </SourceModelProvider>
-  <TargetModelProvider>
     <ProjectBasedModelProvider>
       <ProjectGuid>{67cbc824-a49e-4e9b-a947-360f3dfe65c3}</ProjectGuid>
       <Name>Dogbert2.DB</Name>
     </ProjectBasedModelProvider>
+  </SourceModelProvider>
+  <TargetModelProvider>
+    <ConnectionBasedModelProvider>
+      <ConnectionString>Data Source=donbot;Initial Catalog=Dogbert2;Integrated Security=True;Pooling=False</ConnectionString>
+      <DatabaseName>Dogbert2</DatabaseName>
+      <DspFamilyName>sql</DspFamilyName>
+      <Name>[donbot.Dogbert2]</Name>
+    </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
     <SchemaCompareSettingsService>
@@ -330,16 +330,6 @@
     </SelectedItem>
   </ExcludedSourceElements>
   <ExcludedTargetElements>
-    <SelectedItem Type="Microsoft.Data.Schema.Sql.SchemaModel.Sql100SchemaModel+Sql100DatabaseOptions, Microsoft.Data.Schema.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Name>
-      </Name>
-    </SelectedItem>
-    <SelectedItem Type="Microsoft.Data.Schema.Sql.SchemaModel.Sql100SchemaModel+Sql100File, Microsoft.Data.Schema.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Name>Dogbert</Name>
-    </SelectedItem>
-    <SelectedItem Type="Microsoft.Data.Schema.Sql.SchemaModel.Sql100SchemaModel+Sql100File, Microsoft.Data.Schema.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Name>Dogbert_log</Name>
-    </SelectedItem>
     <SelectedItem Type="Microsoft.Data.Schema.Sql.SchemaModel.Sql100SchemaModel+Sql100DatabaseOptions, Microsoft.Data.Schema.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Name>
       </Name>

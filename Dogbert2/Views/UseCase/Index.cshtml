@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Dogbert2.Core.Domain.UseCase>
+
+@{
+	ViewBag.Title = "Use Cases";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Create New", "Create")</li>
+	</ul>
+}
+
+@foreach (var cat in Model.Select(a => a.RequirementCategory).Distinct())
+{
+
+}
+
+
+@*<table class='dt-table'>
+	<thead>
+		<tr>
+			<th></th>
+			<th>
+				Name
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Precondition
+			</th>
+			<th>
+				Postcondition
+			</th>
+			<th>
+				DateAdded
+			</th>
+			<th>
+				DateModified
+			</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+			<td>
+				<a href='@Url.Action("Details", new {id=item.Id})'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+				<a href='@Url.Action("Edit", new {id=item.Id})'>
+					<img src='@Url.Image("edit.png")' />
+				</a>
+			</td>
+			<td>
+				@item.Name
+			</td>
+			<td>
+				@item.Description
+			</td>
+			<td>
+				@item.Precondition
+			</td>
+			<td>
+				@item.Postcondition
+			</td>
+			<td>
+				@String.Format("{0:g}", item.DateAdded)
+			</td>
+			<td>
+				@String.Format("{0:g}", item.DateModified)
+			</td>
+							<td>
+						<a href='@Url.Action("Delete", new { id = item.Id })'>
+							<img src='@Url.Image("delete.png")' />
+						</a>
+					</td>
+		
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>
+*@
