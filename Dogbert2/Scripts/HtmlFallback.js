@@ -12,6 +12,7 @@
 
             // create the div we need
             var hidden = $("<input>").attr("type", "hidden").attr("id", id).attr("name", id.replace("_", "."));
+            hidden.val(value);
             var slider = $("<div>").attr("id", "slider_" + id);
 
             // insert after the existing item
