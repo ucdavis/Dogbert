@@ -54,7 +54,7 @@ namespace Dogbert2.Controllers
 
             ViewBag.ProjectId = id;
 
-            return View(project.Requirements);
+            return View(project.Requirements.OrderBy(a => a.RequirementCategory.Name).ToList());
         }
 
         //

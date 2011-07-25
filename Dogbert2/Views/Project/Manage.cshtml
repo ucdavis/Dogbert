@@ -17,8 +17,10 @@
 
     <script type="text/javascript">
 
-        $(function () { 
-        
+        $(function () {
+
+            $("#tabs").tabs();
+
             $("table").tableDnD({
                 onDragClass: "dragging",
                 onDrop: function (table, row) {
@@ -40,7 +42,7 @@
                     var url = '@Url.Action("UpdateProjectOrder")';
                     var antiForgery = $('input[name="__RequestVerificationToken"]').val();
                     $.post(url, { workgroupId: id, projectWorkgroupId: order, __RequestVerificationToken: antiForgery }, function (result) {
-                    
+
                         if (result == false) alert("failed to update order");
 
                     });

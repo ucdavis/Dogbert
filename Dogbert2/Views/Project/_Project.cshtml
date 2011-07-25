@@ -137,6 +137,12 @@
 			    <div class="editor-field">
                     @this.Select("Project.ProjectManager").Options(Model.Workers, x=>x.Id, x=>x.FullName).FirstOption("-- Select Worker --").Selected(Model.Project.ProjectManager != null ? Model.Project.ProjectManager.Id.ToString() : string.Empty)
 				    @Html.ValidationMessageFor(model => model.Project.ProjectManager)
+
+                    @if (!Model.Workers.Contains(Model.Project.ProjectManager))
+                    { 
+                        <em>A worker has been selected that is not in your list.  Leaving this blank will not overwrite existing value.</em>
+                    }
+                    
 			    </div>
 		    </li>
 
@@ -147,6 +153,12 @@
 			    <div class="editor-field">
                     @this.Select("Project.LeadProgrammer").Options(Model.Workers, x => x.Id, x => x.FullName).FirstOption("-- Select Worker --").Selected(Model.Project.LeadProgrammer != null ? Model.Project.LeadProgrammer.Id.ToString() : string.Empty)
 				    @Html.ValidationMessageFor(model => model.Project.LeadProgrammer)
+
+                    @if (!Model.Workers.Contains(Model.Project.LeadProgrammer))
+                    { 
+                        <em>A worker has been selected that is not in your list.  Leaving this blank will not overwrite existing value.</em>
+                    }
+
 			    </div>
 		    </li>
 

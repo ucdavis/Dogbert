@@ -206,6 +206,18 @@ namespace Dogbert2.Controllers
             AutoMapper.Mapper.Map(project, projectToEdit);
             projectToEdit.LastUpdate = DateTime.Now;
 
+            // if the lead programmer or pm are blank, do not copy
+            // the value could be a user that is in someone else's workgroup
+            if (project.LeadProgrammer != null)
+            {
+                projectToEdit.LeadProgrammer = project.LeadProgrammer;
+            }
+            if (project.ProjectManager != null)
+            {
+                projectToEdit.ProjectManager = project.ProjectManager;
+            }
+
+
             if (ModelState.IsValid)
             {
                 _projectRepository.EnsurePersistent(projectToEdit);

@@ -184,13 +184,16 @@ namespace Dogbert2.Controllers
 
             requirementCategoryToEdit.Name = requirementCategory.Name;
             
+            ModelState.Clear();
+            requirementCategoryToEdit.TransferValidationMessagesTo(ModelState);
+
             if (ModelState.IsValid)
             {
                 _requirementCategoryRepository.EnsurePersistent(requirementCategoryToEdit);
 
                 Message = "RequirementCategory Edited Successfully";
 
-                return RedirectToAction("Index", requirementCategory.Project.Id);
+                return RedirectToAction("Index", requirementCategoryToEdit.Project.Id);
             }
 			
             var viewModel = RequirementCategoryViewModel.Create(Repository, requirementCategoryToEdit.Project);

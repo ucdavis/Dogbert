@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Dogbert2.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
@@ -28,7 +29,7 @@ namespace Dogbert2.Models
                                     Project = project,
                                     RequirementTypes = repository.OfType<RequirementType>().GetAll(),
                                     PriorityTypes = repository.OfType<PriorityType>().GetAll(),
-                                    RequirementCategories = project.RequirementCategories
+                                    RequirementCategories = project.RequirementCategories.Where(a => a.IsActive).ToList()
                                 };
  
             return viewModel;

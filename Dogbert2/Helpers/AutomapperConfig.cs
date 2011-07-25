@@ -30,6 +30,8 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.RequirementCategories, x => x.Ignore())
                 .ForMember(x => x.Requirements, x => x.Ignore())
                 .ForMember(x => x.UseCases, x => x.Ignore())
+                .ForMember(x => x.ProjectManager, x => x.Ignore())
+                .ForMember(x => x.LeadProgrammer, x => x.Ignore())
                 ;
 
             CreateMap<Workgroup, Workgroup>()
