@@ -150,7 +150,15 @@ namespace Dogbert2.Controllers
 
             if (useCase == null) return RedirectToAction("Index");
 
-			var viewModel = UseCaseViewModel.Create(Repository, null);
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, useCase.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
+			var viewModel = UseCaseViewModel.Create(Repository, useCase.Project);
 			viewModel.UseCase = useCase;
 
 			return View(viewModel);
@@ -165,7 +173,13 @@ namespace Dogbert2.Controllers
 
             if (useCaseToEdit == null) return RedirectToAction("Index");
 
-            TransferValues(useCase, useCaseToEdit);
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, useCaseToEdit.Project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
 
             if (ModelState.IsValid)
             {
@@ -175,13 +189,11 @@ namespace Dogbert2.Controllers
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-				var viewModel = UseCaseViewModel.Create(Repository, null);
-                viewModel.UseCase = useCase;
+			
+            var viewModel = UseCaseViewModel.Create(Repository, null);
+            viewModel.UseCase = useCase;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
         
         //
@@ -213,15 +225,5 @@ namespace Dogbert2.Controllers
             return this.RedirectToAction(a => a.Index(projectId));
         }
         
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(UseCase source, UseCase destination)
-        {
-			//Recommendation: Use AutoMapper
-			//Mapper.Map(source, destination)
-            throw new NotImplementedException();
-        }
-
     }
 }

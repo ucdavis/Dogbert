@@ -498,6 +498,7 @@
     <Content Include="Scripts\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
+    <Content Include="Scripts\UseCaseScripts.js" />
     <Content Include="UCDArch.txt" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -655,6 +656,8 @@
     <Content Include="Views\UseCase\Create.cshtml" />
     <Content Include="Views\UseCase\_UseCaseDisplay.cshtml" />
     <Content Include="Views\UseCase\Delete.cshtml" />
+    <Content Include="Views\UseCase\_UseCase.cshtml" />
+    <Content Include="Views\UseCase\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
