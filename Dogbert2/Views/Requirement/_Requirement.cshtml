@@ -58,7 +58,7 @@
                     @Html.LabelFor(model => model.Requirement.RequirementCategory)
                 </div>
                 <div class="editor-field">
-                    @this.Select("Requirement.RequirementCategory").Options(Model.RequirementCategories, x=>x.Id, x=>x.Name).Selected(Model.Requirement.RequirementCategory != null ? Model.Requirement.RequirementCategory.Id.ToString() : string.Empty).FirstOption("--Select Category--")
+                    @this.Select("Requirement.RequirementCategory").Options(Model.RequirementCategories.OrderBy(a=>a.Name), x=>x.Id, x=>x.Name).Selected(Model.Requirement.RequirementCategory != null ? Model.Requirement.RequirementCategory.Id.ToString() : string.Empty).FirstOption("--Select Category--")
                     @Html.ValidationMessageFor(model => model.Requirement.RequirementCategory)
                 </div>
             </li>

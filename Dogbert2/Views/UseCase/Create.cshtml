@@ -1,0 +1,282 @@
+﻿@model Dogbert2.Models.UseCaseViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section SubNav
+{
+    <ul class="navigation">
+        <li>
+	        @Html.ActionLink("Back to List", "Index", new { id=Model.Project.Id })
+        </li>
+    </ul>
+}
+
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Script("jquery.tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
+
+    <style type="text/css">
+        #step-dialog ul { list-style: none;}
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            // compile the template
+            $.template("rowTemplate", $("#row-template table tbody").html());
+
+            // set up the dialog
+            $("#step-dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 400,
+                buttons: {
+                    "Save": addStep,
+                    "Cancel": function () { $(this).dialog("close"); }
+                }
+            });
+
+            // make the add step a button
+            $("#add-step").button();
+
+            // bring up dialog to create a new step
+            $("#add-step").click(function () {
+
+                // blank the controls
+                $("#step-description").val("");
+                $("#step-optional").attr("checked", false);
+
+                // open the dialog
+                $("#step-dialog").dialog("open");
+
+            });
+
+            $(".edit-usecase").live("click", function () { });
+            $(".delete-usecase").live("click", function () {
+
+                // delete the row
+                $(this).parents("tr").remove();
+
+                initializeTableDragging();
+
+                reorderSteps();
+
+            });
+
+            initializeTableDragging();
+
+        });
+
+        function addStep() {
+
+            var tbody = $("#steps tbody");
+
+            var index = tbody.children().length;
+            var number = tbody.children().length + 1;
+            var description = $("#step-description").val();
+            var optional = ($("#step-optional").attr("checked") ? "x" : "");
+            var optionalValue = $("#step-optional").is(':checked'); 
+
+            var values = [{ Index: index,  Number: number, Description: description, Optional: optional, OptionalValue: optionalValue }];
+            $.tmpl("rowTemplate", values).appendTo("#steps tbody");
+
+            initializeTableDragging();
+
+            // close the dialog
+            $(this).dialog("close");
+        }
+
+        function initializeTableDragging() {
+            $("#steps").tableDnD({
+                onDragClass: "dragging",
+                onDrop: function (table, row) {
+                    // re-adjust the odd, even row classes
+                    $("tbody tr").removeClass("odd");
+                    $("tbody tr").removeClass("even");
+
+                    $("tbody tr:even").addClass("even");
+                    $("tbody tr:odd").addClass("odd");
+
+                    reorderSteps();
+                }
+            });
+        }
+
+        function reorderSteps() {
+
+            // get all the rows
+            var rows = $("#steps tbody tr");
+
+            $.each(rows, function (index, item) {
+
+                // get the controls
+                var orderCtl = $(item).find(".usecase-order");
+                var orderHdn = $(item).find(".order-hdn");
+                var descriptionHdn = $(item).find(".description-hdn");
+                var optionalHdn = $(item).find(".optional-hdn");
+
+                // update all the values now
+                orderCtl.html(index + 1);
+                orderHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Order");
+                orderHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Order");
+                orderHdn.val(index + 1);
+                orderCtl.append(orderHdn);
+
+                descriptionHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Description");
+                descriptionHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Description");
+
+                optionalHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Optional");
+                optionalHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Optional");
+            });
+
+        }
+
+    </script>
+}
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>Use Case</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+		    <li><div class="editor-label required">
+                    @Html.LabelFor(model => model.UseCase.RequirementCategory)<span>*</span>
+                </div>
+                <div class="editor-field">
+                    @this.Select("UseCase.RequirementCategory").Options(Model.RequirementCategories, x=>x.Id, x=>x.Name).FirstOption("--Select Category--").Selected(Model.UseCase.RequirementCategory != null ? Model.UseCase.RequirementCategory.Id.ToString() : string.Empty)
+                    @Html.ValidationMessageFor(model => model.UseCase.RequirementCategory)
+                </div>
+            </li>
+            <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.UseCase.Name)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.UseCase.Name)
+				    @Html.ValidationMessageFor(model => model.UseCase.Name)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.UseCase.Description)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.UseCase.Description)
+				    @Html.ValidationMessageFor(model => model.UseCase.Description)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.UseCase.Precondition) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.UseCase.Precondition)
+				    @Html.ValidationMessageFor(model => model.UseCase.Precondition)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.UseCase.Postcondition) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.UseCase.Postcondition)
+				    @Html.ValidationMessageFor(model => model.UseCase.Postcondition)
+			    </div>
+		    </li>
+
+		    
+	    </ul>
+	</fieldset>
+    
+    <fieldset>
+    
+        <legend>Steps</legend>
+
+        <input type="button" id="add-step" value="+ Step" />
+
+        <table id="steps" style="margin-top: 1em;">
+        
+            <thead>
+                <tr>
+                    <th style="width: 20px;"></th>
+                    <th style="width: 20px;">#</th>
+                    <th>Description</th>
+                    <th style="width: 20px;">Optional</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            
+                @for (int i = 0; i < Model.UseCase.UseCaseSteps.Count; i++)
+                { 
+                    <tr>
+                        <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
+                            <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
+                            <input type='hidden' id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />
+                        </td>
+                        <td class="usecase-order">@Model.UseCase.UseCaseSteps[i].Order
+                            <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Order" name="UseCase.UseCaseSteps[@i].Order" value="@Model.UseCase.UseCaseSteps[i].Order" />
+                        </td>
+                        <td>@Model.UseCase.UseCaseSteps[i].Description
+                            <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Description" name="UseCase.UseCaseSteps[@i].Description" value="@Model.UseCase.UseCaseSteps[i].Description" />
+                        </td>
+                        <td>@(Model.UseCase.UseCaseSteps[i].Optional ? "x" : string.Empty)
+                            <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Optional" name="UseCase.UseCaseSteps[@i].Optional" value="@Model.UseCase.UseCaseSteps[i].Optional" />
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </fieldset>
+    
+    <fieldset>
+        <ul>
+            <li>
+			    <div class="editor-label"><label>&nbsp;</label></div>
+			    <div class="editor-field"><input class="button" type="submit" value="Create" /> | @Html.ActionLink("Cancel", "Index")</div>
+		    </li>
+        </ul>
+    </fieldset>
+}
+
+<div id="step-dialog" title="Use Case Step">
+
+    <ul>
+        <li>Description:
+            <textarea id="step-description" style="width: 375px; height: 75px;"></textarea>
+        </li>
+        <li style="margin-top: .75em;">Optional: <input type="checkbox" id="step-optional" />
+        </li>
+    </ul>
+
+</div>
+
+<div id="row-template" style="display:none;">
+    <table>
+    <tbody>
+    <tr>
+        <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
+            <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
+        </td>
+        <td class="usecase-order">${Number}
+            <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Order" name="UseCase.UseCaseSteps[${Index}].Order" value="${Number}" />
+        </td>
+        <td>${Description}
+            <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Description" name="UseCase.UseCaseSteps[${Index}].Description" value="${Description}" />
+        </td>
+        <td>${Optional}
+            <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Optional" name="UseCase.UseCaseSteps[${Index}].Optional" value="${OptionalValue}" />
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</div>

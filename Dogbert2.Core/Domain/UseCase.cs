@@ -28,8 +28,11 @@ namespace Dogbert2.Core.Domain
         [StringLength(100)]
         public virtual string Name { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         public virtual string Description { get; set; }
+        [DataType(DataType.MultilineText)]
         public virtual string Precondition { get; set; }
+        [DataType(DataType.MultilineText)]
         public virtual string Postcondition { get; set; }
 
         public virtual DateTime DateAdded { get; set; }
@@ -38,6 +41,7 @@ namespace Dogbert2.Core.Domain
         [Required]
         public virtual Project Project { get; set; }
         [Required]
+        [Display(Name="Category")]
         public virtual RequirementCategory RequirementCategory { get; set; }
 
         public virtual IList<UseCaseStep> UseCaseSteps { get; set; }

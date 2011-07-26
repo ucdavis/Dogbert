@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
 using Dogbert2.Core.Domain;
+using Dogbert2.Models;
 using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Core.Utils;
 using MvcContrib;
+using UCDArch.Web.Helpers;
 
 namespace Dogbert2.Controllers
 {
@@ -64,11 +66,30 @@ namespace Dogbert2.Controllers
             return View(useCase);
         }
 
-        //
-        // GET: /UseCase/Create
-        public ActionResult Create()
+        /// <summary>
+        /// Create a new use case
+        /// </summary>
+        /// <param name="projectId">Project Id</param>
+        /// <returns></returns>
+        public ActionResult Create(int projectId)
         {
-			var viewModel = UseCaseViewModel.Create(Repository);
+            var project = _projectRepository.GetNullableById(projectId);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", projectId);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
+			var viewModel = UseCaseViewModel.Create(Repository, project);
             
             return View(viewModel);
         } 
@@ -76,27 +97,49 @@ namespace Dogbert2.Controllers
         //
         // POST: /UseCase/Create
         [HttpPost]
-        public ActionResult Create(UseCase useCase)
+        public ActionResult Create(int projectId, UseCase useCase)
         {
-            var useCaseToCreate = new UseCase();
+            var project = _projectRepository.GetNullableById(projectId);
 
-            TransferValues(useCase, useCaseToCreate);
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", projectId);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
 
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
+            ModelState.Clear();
+
+            useCase.Project = project;
+            useCase.TransferValidationMessagesTo(ModelState);
+
+            foreach (var a in useCase.UseCaseSteps)
+            {
+                a.UseCase = useCase;
+                a.TransferValidationMessagesTo(ModelState);
+            }
+
+           
             if (ModelState.IsValid)
             {
-                _useCaseRepository.EnsurePersistent(useCaseToCreate);
+                _useCaseRepository.EnsurePersistent(useCase);
 
                 Message = "UseCase Created Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new {id=projectId});
             }
-            else
-            {
-				var viewModel = UseCaseViewModel.Create(Repository);
-                viewModel.UseCase = useCase;
+			
+            var viewModel = UseCaseViewModel.Create(Repository, project);
+            viewModel.UseCase = useCase;
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
 
         //
@@ -107,7 +150,7 @@ namespace Dogbert2.Controllers
 
             if (useCase == null) return RedirectToAction("Index");
 
-			var viewModel = UseCaseViewModel.Create(Repository);
+			var viewModel = UseCaseViewModel.Create(Repository, null);
 			viewModel.UseCase = useCase;
 
 			return View(viewModel);
@@ -134,7 +177,7 @@ namespace Dogbert2.Controllers
             }
             else
             {
-				var viewModel = UseCaseViewModel.Create(Repository);
+				var viewModel = UseCaseViewModel.Create(Repository, null);
                 viewModel.UseCase = useCase;
 
                 return View(viewModel);
@@ -179,21 +222,4 @@ namespace Dogbert2.Controllers
         }
 
     }
-
-	/// <summary>
-    /// ViewModel for the UseCase class
-    /// </summary>
-    public class UseCaseViewModel
-	{
-		public UseCase UseCase { get; set; }
- 
-		public static UseCaseViewModel Create(IRepository repository)
-		{
-			Check.Require(repository != null, "Repository must be supplied");
-			
-			var viewModel = new UseCaseViewModel {UseCase = new UseCase()};
- 
-			return viewModel;
-		}
-	}
 }

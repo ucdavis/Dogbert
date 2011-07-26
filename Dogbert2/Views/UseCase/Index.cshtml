@@ -7,13 +7,125 @@
 @section SubNav
 {
 	<ul class='navigation'>
-		<li>@Html.ActionLink("Create New", "Create")</li>
+		<li>@Html.ActionLink("Create New", "Create", new { ProjectId = ViewBag.ProjectId })</li>
 	</ul>
+}
+
+@section AdditionalScripts
+{
+    <style type="text/css">
+        .usecase-section
+        {
+            margin-top: 1.5em;
+        }
+        .usecase-section header
+        {
+            font-weight: bold;
+            font-size: large;
+            margin: 1em 0;
+            border-bottom: 1px solid lightgray;
+            padding-bottom: .5em;
+            color: #014A81;
+        }
+        .usecase legend
+        {
+            font-size: larger;
+        }
+        .usecase-button
+        {
+            float:right;
+            margin-left: 5px;
+        }
+        .info-box
+        {
+            border: 1px solid lightgray;
+            margin: 1em 0;
+            padding: 10px;
+            background-color: #E8E8E8;
+        }
+        .info-box h4
+        {
+            margin-bottom: 1em;
+        }
+        .steps
+        {
+            display: block;
+            margin-left: 50px;
+        }
+        .steps li
+        {
+            margin: .25em 0;
+        }
+        .optional
+        {
+            color: #99CC00;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function () { $(".usecase-button").button(); });
+    </script>
 }
 
 @foreach (var cat in Model.Select(a => a.RequirementCategory).Distinct())
 {
+    
+    <section class="usecase-section">
+    
+        <header>@cat.Name</header>
 
+        @foreach(var uc in Model.Where(a => a.RequirementCategory == cat))
+        {
+            <fieldset class="usecase">
+                <legend>@uc.Name</legend>
+                
+                @Html.ActionLink("Delete", "Delete", new {id=@uc.Id}, new {@class="usecase-button"})
+                @Html.ActionLink("Edit", "Edit", new { id = @uc.Id }, new { @class="usecase-button" })
+                <div style="clear:both;"></div>
+
+                <div class="info-box">
+                
+                    <h4>Description</h4>
+                
+                    <div>@(!string.IsNullOrWhiteSpace(uc.Description) ? uc.Description : "n/a")</div>
+
+                </div>
+
+                <div class="info-box">
+                
+                    <h4>PreCondition</h4>
+
+                    <div>@(!string.IsNullOrWhiteSpace(uc.Precondition) ? uc.Precondition : "n/a")</div>
+
+                </div>
+
+                <div class="info-box">
+                
+                    <h4>PostCondition</h4>
+
+                    <div>@(!string.IsNullOrWhiteSpace(uc.Postcondition) ? uc.Postcondition : "n/a")</div>
+                
+                </div>
+
+                <div class="info-box">
+                
+                    <h4>Steps</h4>
+
+                    <div>
+                        <ol class="steps">
+                            @foreach (var s in uc.UseCaseSteps.OrderBy(a=>a.Order))
+                            { 
+                                <li><span class="@(s.Optional ? "optional" : string.Empty)">@s.Description</span></li>
+                            }
+                        </ol>
+                    </div>
+                
+                </div>
+            </fieldset>
+        }
+    
+    </section>
+    
 }
 
 

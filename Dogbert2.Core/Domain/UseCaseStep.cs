@@ -25,6 +25,7 @@ namespace Dogbert2.Core.Domain
         }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public virtual string Description { get; set; }
         public virtual int Order { get; set; }
         public virtual bool Optional { get; set; }
@@ -43,7 +44,7 @@ namespace Dogbert2.Core.Domain
             Id(x => x.Id);
 
             Map(x => x.Description);
-            Map(x => x.Order);
+            Map(x => x.Order).Column("`Order`");
             Map(x => x.Optional);
             Map(x => x.DateAdded);
             Map(x => x.DateModified);

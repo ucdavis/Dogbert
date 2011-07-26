@@ -10,7 +10,7 @@
 	<ul class='navigation'>
 		<li>@Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectId })</li>
         <li>@Html.ActionLink("Categories", "Index", "RequirementCategory", new { id=ViewBag.ProjectId}, new {})</li>
-        <li>@Html.ActionLink("Back to Project", "Index", "Project", new { id=ViewBag.ProjectId }, new { })</li>
+        <li>@Html.ActionLink("Back to Project", "Details", "Project", new { id=ViewBag.ProjectId }, new { })</li>
 	</ul>
 }
 
@@ -23,11 +23,11 @@
 				Description
 			</th>
 			<th>
-				TechnicalDifficulty
+				Difficulty
 			</th>
             <th>Category</th>
 			<th>
-				LastModified
+				Last Modified
 			</th>
 
 			<th></th>
