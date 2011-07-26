@@ -204,11 +204,13 @@ namespace Dogbert2.Controllers
 
             if (useCaseToDelete == null) return RedirectToAction("Index");
 
+            var projectId = useCaseToDelete.Project.Id;
+
             _useCaseRepository.Remove(useCaseToDelete);
 
             Message = "UseCase Removed Successfully";
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction(a => a.Index(projectId));
         }
         
         /// <summary>

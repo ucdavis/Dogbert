@@ -1,0 +1,23 @@
+﻿@model Dogbert2.Core.Domain.UseCase
+
+@{
+    ViewBag.Title = "Delete";
+    ViewBag.DisplayButtons = false;
+}
+
+@Html.Partial("_UseCaseDisplay", Model)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <ul>
+            <li><div class="editor-label">&nbsp;</div>
+                <div class="editor-field">
+                    <input type="submit" value="Delete" class="button" /> |
+                    @Html.ActionLink("Cancel", "Index", new {id=Model.Project.Id})
+                </div>
+            </li>
+        </ul>
+    </fieldset>
+}

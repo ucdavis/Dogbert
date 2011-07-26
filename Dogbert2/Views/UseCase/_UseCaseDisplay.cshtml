@@ -1,0 +1,104 @@
+﻿@model Dogbert2.Core.Domain.UseCase
+
+<fieldset class="usecase">
+    <legend>@Model.Name</legend>
+
+    @if (ViewBag.DisplayButtons != false)
+    { 
+        @Html.ActionLink("Delete", "Delete", new { id = @Model.Id }, new { @class = "usecase-button" })
+        @Html.ActionLink("Edit", "Edit", new { id = @Model.Id }, new { @class = "usecase-button" })
+        <div style="clear:both;"></div>
+    }                
+    
+    <div class="info-box">
+                
+        <h4>Description</h4>
+                
+        <div>@(!string.IsNullOrWhiteSpace(Model.Description) ? Model.Description : "n/a")</div>
+
+    </div>
+
+    <div class="info-box">
+                
+        <h4>PreCondition</h4>
+
+        <div>@(!string.IsNullOrWhiteSpace(Model.Precondition) ? Model.Precondition : "n/a")</div>
+
+    </div>
+
+    <div class="info-box">
+                
+        <h4>PostCondition</h4>
+
+        <div>@(!string.IsNullOrWhiteSpace(Model.Postcondition) ? Model.Postcondition : "n/a")</div>
+                
+    </div>
+
+    <div class="info-box">
+                
+        <h4>Steps</h4>
+
+        <div>
+            <ol class="steps">
+                @foreach (var s in Model.UseCaseSteps.OrderBy(a => a.Order))
+                { 
+                    <li><span class="@(s.Optional ? "optional" : string.Empty)">@s.Description</span></li>
+                }
+            </ol>
+        </div>
+                
+    </div>
+</fieldset>
+
+<style type="text/css">
+    .usecase-section
+    {
+        margin-top: 1.5em;
+    }
+    .usecase-section header
+    {
+        font-weight: bold;
+        font-size: large;
+        margin: 1em 0;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: .5em;
+        color: #014A81;
+    }
+    .usecase legend
+    {
+        font-size: larger;
+    }
+    .usecase-button
+    {
+        float:right;
+        margin-left: 5px;
+    }
+    .info-box
+    {
+        border: 1px solid lightgray;
+        margin: 1em 0;
+        padding: 10px;
+        background-color: #E8E8E8;
+    }
+    .info-box h4
+    {
+        margin-bottom: 1em;
+    }
+    .steps
+    {
+        display: block;
+        margin-left: 50px;
+    }
+    .steps li
+    {
+        margin: .25em 0;
+    }
+    .optional
+    {
+        color: #99CC00;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () { $(".usecase-button").button(); });
+</script>
