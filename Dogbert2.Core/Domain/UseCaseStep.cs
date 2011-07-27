@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
 

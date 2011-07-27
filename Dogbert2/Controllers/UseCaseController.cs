@@ -181,16 +181,21 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
+            TransferValues(useCase, useCaseToEdit);
+
+            ModelState.Clear();
+            useCaseToEdit.TransferValidationMessagesTo(ModelState);
+
             if (ModelState.IsValid)
             {
                 _useCaseRepository.EnsurePersistent(useCaseToEdit);
 
                 Message = "UseCase Edited Successfully";
 
-                return RedirectToAction("Index");
+                return this.RedirectToAction(a => a.Index(useCaseToEdit.Project.Id));
             }
 			
-            var viewModel = UseCaseViewModel.Create(Repository, null);
+            var viewModel = UseCaseViewModel.Create(Repository, useCaseToEdit.Project);
             viewModel.UseCase = useCase;
 
             return View(viewModel);
@@ -225,5 +230,38 @@ namespace Dogbert2.Controllers
             return this.RedirectToAction(a => a.Index(projectId));
         }
         
+        private void TransferValues(UseCase src, UseCase dest)
+        {
+            // update the values
+            AutoMapper.Mapper.Map(src, dest);
+
+            // delete any use cases that are no longer
+            var deletes = dest.UseCaseSteps.Where(a => !src.UseCaseSteps.Select(b => b.Id).Contains(a.Id)).Select(a => a.Id).ToList();
+            foreach (var stepId in deletes)
+            {
+                var step = dest.UseCaseSteps.Where(a => a.Id == stepId).FirstOrDefault();
+                dest.UseCaseSteps.Remove(step);
+            }
+
+            // update the list of steps
+            foreach (var step in src.UseCaseSteps)
+            {
+                // new step
+                if (step.Id == 0)
+                {
+                    dest.AddStep(step);
+                }
+                // editing an existing step
+                else
+                {
+                    var existingStep = dest.UseCaseSteps.Where(a => a.Id == step.Id).FirstOrDefault();
+
+                    if (existingStep != null)
+                    {
+                        AutoMapper.Mapper.Map(step, existingStep);
+                    }
+                }
+            }
+        }
     }
 }

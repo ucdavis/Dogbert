@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
 
@@ -46,6 +44,12 @@ namespace Dogbert2.Core.Domain
 
         public virtual IList<UseCaseStep> UseCaseSteps { get; set; }
         public virtual IList<Requirement> Requirements { get; set; }
+
+        public virtual void AddStep(UseCaseStep useCaseStep)
+        {
+            useCaseStep.UseCase = this;
+            UseCaseSteps.Add(useCaseStep);
+        }
     }
 
     public class UseCaseMap : ClassMap<UseCase>

@@ -74,6 +74,18 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.RequirementId, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore())
                 .ForMember(x => x.DateAdded, x => x.Ignore());
+
+            CreateMap<UseCase, UseCase>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.DateAdded, x => x.Ignore())
+                .ForMember(x => x.UseCaseSteps, x => x.Ignore())
+                .ForMember(x => x.Requirements, x => x.Ignore())
+                .ForMember(x => x.Project, x => x.Ignore());
+
+            CreateMap<UseCaseStep, UseCaseStep>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.DateAdded, x => x.Ignore())
+                .ForMember(x => x.UseCase, x => x.Ignore());
         }
     }
 }
