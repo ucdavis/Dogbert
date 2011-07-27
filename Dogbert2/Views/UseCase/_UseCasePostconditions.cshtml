@@ -26,7 +26,7 @@
                         @Html.Hidden(string.Format("UseCase.Postconditions[{0}].Id", i), Model.UseCase.Postconditions[i].Id, new { @class="id-hdn" })
                     </td>
                     <td><span class="description">@Model.UseCase.Postconditions[i].Description</span>
-                        @Html.Hidden(string.Format("UseCase.Postconditions[{0}].Descripton", i), Model.UseCase.Postconditions[i].Description, new { @class="description-hdn"}))
+                        @Html.Hidden(string.Format("UseCase.Postconditions[{0}].Description", i), Model.UseCase.Postconditions[i].Description, new { @class="description-hdn"})
                     </td>               
                 </tr>
             }

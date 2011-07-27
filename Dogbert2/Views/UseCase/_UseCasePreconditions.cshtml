@@ -26,7 +26,7 @@
                         @Html.Hidden(string.Format("UseCase.Preconditions[{0}].Id", i), Model.UseCase.Preconditions[i].Id, new { @class="id-hdn" })
                     </td>
                     <td><span class="description">@Model.UseCase.Preconditions[i].Description</span>
-                        @Html.Hidden(string.Format("UseCase.Preconditions[{0}].Descripton", i), Model.UseCase.Preconditions[i].Description, new { @class="description-hdn"}))
+                        @Html.Hidden(string.Format("UseCase.Preconditions[{0}].Description", i), Model.UseCase.Preconditions[i].Description, new { @class="description-hdn"})
                     </td>               
                 </tr>
             }
