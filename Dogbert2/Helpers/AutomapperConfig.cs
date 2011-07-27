@@ -80,6 +80,8 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.DateAdded, x => x.Ignore())
                 .ForMember(x => x.UseCaseSteps, x => x.Ignore())
                 .ForMember(x => x.Requirements, x => x.Ignore())
+                .ForMember(x => x.Preconditions, x => x.Ignore())
+                .ForMember(x => x.Postconditions, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore());
 
             CreateMap<UseCaseStep, UseCaseStep>()

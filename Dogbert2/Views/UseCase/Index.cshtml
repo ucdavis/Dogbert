@@ -12,6 +12,62 @@
 	</ul>
 }
 
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        $(function () { $(".usecase-button").button(); });
+    </script>
+
+    <style type="text/css">
+        .usecase-section
+        {
+            margin-top: 1.5em;
+        }
+        .usecase-section header
+        {
+            font-weight: bold;
+            font-size: large;
+            margin: 1em 0;
+            border-bottom: 1px solid lightgray;
+            padding-bottom: .5em;
+            color: #014A81;
+        }
+        .usecase legend
+        {
+            font-size: larger;
+        }
+        .usecase-button
+        {
+            float:right;
+            margin-left: 5px;
+        }
+        .info-box
+        {
+            border: 1px solid lightgray;
+            margin: 1em 0;
+            padding: 10px;
+            background-color: #E8E8E8;
+        }
+        .info-box h4
+        {
+            margin-bottom: 1em;
+        }
+        .usecase ul, .usecase ol
+        {
+            display: block;
+            margin-left: 50px;
+        }
+        .usecase li
+        {
+            margin: .25em 0;
+        }
+        .optional
+        {
+            color: #99CC00;
+        }
+    </style>
+}
+
 @foreach (var cat in Model.Select(a => a.RequirementCategory).Distinct())
 {
     

@@ -71,6 +71,8 @@
     <Compile Include="Domain\ProjectWorkgroup.cs" />
     <Compile Include="Domain\StatusCode.cs" />
     <Compile Include="Domain\UseCase.cs" />
+    <Compile Include="Domain\UseCasePostcondition.cs" />
+    <Compile Include="Domain\UseCasePrecondition.cs" />
     <Compile Include="Domain\UseCaseStep.cs" />
     <Compile Include="Domain\Worker.cs" />
     <Compile Include="Domain\Workgroup.cs" />

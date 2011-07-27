@@ -17,11 +17,23 @@
 {
     <script type="text/javascript" src="@Url.Script("jquery.tmpl.min.js")"></script>
     <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
-    <script type="text/javascript" src="@Url.Script("UseCaseScripts.js")"></script>
+    
+    <script type="text/javascript" src="@Url.Script("UseCasePreconditions.js")></script>
+    <script type="text/javascript" src="@Url.Script("UseCaseSteps.js")"></script>
 
     <style type="text/css">
-        #step-dialog ul { list-style: none;}
+        /* Generic for all controls on page */
+        .template {display:none;}
+        .dialog ul {list-style:none;}
     </style>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".addButton").button();
+
+            InitializePrecondition();
+        });
+    </script>
 }
 
 @Html.Partial("_UseCase")

@@ -1,0 +1,79 @@
+﻿@model Dogbert2.Models.UseCaseViewModel
+
+<fieldset>
+    
+    <legend>Steps</legend>
+
+    <input type="button" id="add-step" value="+ Step" />
+
+    <table id="steps" style="margin-top: 1em;">
+        
+        <thead>
+            <tr>
+                <th style="width: 20px;"></th>
+                <th style="width: 20px;">#</th>
+                <th>Description</th>
+                <th style="width: 20px;">Optional</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+            @for (int i = 0; i < Model.UseCase.UseCaseSteps.Count; i++)
+            { 
+                <tr data-id='@i'>
+                    <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
+                        <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
+                        <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />
+                    </td>
+                    <td class="usecase-order">@Model.UseCase.UseCaseSteps[i].Order
+                        <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Order" name="UseCase.UseCaseSteps[@i].Order" value="@Model.UseCase.UseCaseSteps[i].Order" />
+                    </td>
+                    <td>@Model.UseCase.UseCaseSteps[i].Description
+                        <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Description" name="UseCase.UseCaseSteps[@i].Description" value="@Model.UseCase.UseCaseSteps[i].Description" />
+                    </td>
+                    <td>@(Model.UseCase.UseCaseSteps[i].Optional ? "x" : string.Empty)
+                        <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Optional" name="UseCase.UseCaseSteps[@i].Optional" value="@Model.UseCase.UseCaseSteps[i].Optional" />
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</fieldset>
+
+<div id="step-dialog" title="Use Case Step">
+    <input type="hidden" id="step-edit" value="-1" />
+    <ul>
+        <li>Description:
+            <textarea id="step-description" style="width: 375px; height: 75px;"></textarea>
+        </li>
+        <li style="margin-top: .75em;">Optional: <input type="checkbox" id="step-optional" />
+        </li>
+    </ul>
+
+</div>
+
+<div id="row-template" style="display:none;">
+    <table>
+    <tbody>
+    <tr>
+        <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
+            <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
+            <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[${Index}]_Id" name="UseCase.UseCaseSteps[${Index}].Id" value="0" />
+        </td>
+        <td class="usecase-order">${Number}
+            <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Order" name="UseCase.UseCaseSteps[${Index}].Order" value="${Number}" />
+        </td>
+        <td>${Description}
+            <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Description" name="UseCase.UseCaseSteps[${Index}].Description" value="${Description}" />
+        </td>
+        <td>${Optional}
+            <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Optional" name="UseCase.UseCaseSteps[${Index}].Optional" value="${OptionalValue}" />
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</div>

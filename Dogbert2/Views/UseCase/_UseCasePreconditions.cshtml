@@ -1,0 +1,69 @@
+﻿@model Dogbert2.Models.UseCaseViewModel
+
+
+<fieldset>
+
+    <legend>Preconditions</legend>
+
+    <input type="button" id="add-precondition" value="+ Precondition" class="addButton" />
+
+    <table id="preconditions" style="margin-top: 1em;">
+
+        <thead>
+            <tr>
+                <th style="width: 20px;"></th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        
+            @for (int i = 0; i < Model.UseCase.Preconditions.Count; i++ )
+            { 
+                <tr data-id='@i'>
+                    <td><a href="javascript:;" class="edit-precondition"><img src='@Url.Image("edit.png")' alt="Edit Precondition" /></a>
+                        <a href="javascript:;" class="delete-precondition"><img src='@Url.Image("delete.png")' alt="Delete Precondition" /></a>
+                        @Html.Hidden(string.Format("UseCase.Preconditions[{0}].Id", i), Model.UseCase.Preconditions[i].Id, new { @class="id-hdn" })
+                    </td>
+                    <td><span class="description">@Model.UseCase.Preconditions[i].Description</span>
+                        @Html.Hidden(string.Format("UseCase.Preconditions[{0}].Descripton", i), Model.UseCase.Preconditions[i].Description, new { @class="description-hdn"}))
+                    </td>               
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</fieldset>
+
+<div id="precondition-dialog" title="Precondition" class="dialog">
+
+    @Html.Hidden("precondition-index", -1)
+
+    <ul>
+        <li>Description:
+            @Html.TextArea("precondition-description", new {style="width: 375px; height: 75px;"})
+        </li>
+    </ul>
+
+</div>
+
+<div id="precondition-template" class="template">
+
+    <table>
+    <tbody>
+    <tr data-id="${Index}">
+        <td><a href="javascript:;" class="edit-precondition"><img src='@Url.Image("edit.png")' alt="Edit Precondition" /></a>
+            <a href="javascript:;" class="delete-precondition"><img src='@Url.Image("delete.png")' alt="Delete Precondition" /></a>
+            @Html.Hidden("UseCase.Preconditions[${Index}].Id", 0, new { @class="id-hdn" })
+        </td>
+        <td>
+            <span class="description">${Description}</span>
+            @Html.Hidden("UseCase.Preconditions[${Index}].Description", "${Description}", new { @class="description-hdn" })
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+</div>

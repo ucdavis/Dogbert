@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
@@ -115,21 +116,15 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
+            var newUseCase = new UseCase(){Project = project};
+            TransferValues(useCase, newUseCase);
+
             ModelState.Clear();
-
-            useCase.Project = project;
-            useCase.TransferValidationMessagesTo(ModelState);
-
-            foreach (var a in useCase.UseCaseSteps)
-            {
-                a.UseCase = useCase;
-                a.TransferValidationMessagesTo(ModelState);
-            }
-
+            newUseCase.TransferValidationMessagesTo(ModelState);
            
             if (ModelState.IsValid)
             {
-                _useCaseRepository.EnsurePersistent(useCase);
+                _useCaseRepository.EnsurePersistent(newUseCase);
 
                 Message = "UseCase Created Successfully";
 
@@ -232,9 +227,20 @@ namespace Dogbert2.Controllers
         
         private void TransferValues(UseCase src, UseCase dest)
         {
+            if (src.UseCaseSteps == null) src.UseCaseSteps = new List<UseCaseStep>();
+            if (src.Preconditions == null) src.Preconditions = new List<UseCasePrecondition>();
+            if (src.Postconditions == null) src.Postconditions = new List<UseCasePostcondition>();
+
             // update the values
             AutoMapper.Mapper.Map(src, dest);
 
+            ReconcileSteps(src, dest);
+
+            ReconcilePreconditions(src, dest);
+        }
+
+        private void ReconcileSteps(UseCase src, UseCase dest)
+        {
             // delete any use cases that are no longer
             var deletes = dest.UseCaseSteps.Where(a => !src.UseCaseSteps.Select(b => b.Id).Contains(a.Id)).Select(a => a.Id).ToList();
             foreach (var stepId in deletes)
@@ -261,7 +267,41 @@ namespace Dogbert2.Controllers
                         AutoMapper.Mapper.Map(step, existingStep);
                     }
                 }
+            }            
+        }
+
+        private void ReconcilePreconditions(UseCase src, UseCase dest)
+        {
+            // delete any use cases that are no more
+            var deletes = dest.Preconditions.Where(a => !src.Preconditions.Select(b => b.Id).Contains(a.Id)).Select(a => a.Id).ToList();
+            foreach (var preconditionId in deletes)
+            {
+                var precondition = dest.Preconditions.Where(a => a.Id == preconditionId).FirstOrDefault();
+                dest.Preconditions.Remove(precondition);
             }
+
+            foreach (var precondition in src.Preconditions)
+            {
+                if (precondition.Id == 0)
+                {
+                    dest.AddPrecondition(precondition);    
+                }
+                else
+                {
+                    var existingPrecondition = dest.Preconditions.Where(a => a.Id == precondition.Id).FirstOrDefault();
+
+                    if (existingPrecondition != null)
+                    {
+                        existingPrecondition.Description = precondition.Description;
+                    }
+                }
+                
+            }
+        }
+
+        private void ReconcilePostconditions(UseCase src, UseCase dest)
+        {
+            
         }
     }
 }
