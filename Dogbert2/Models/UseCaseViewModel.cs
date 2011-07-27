@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Dogbert2.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Core.Utils;
@@ -24,7 +25,7 @@ namespace Dogbert2.Models
                                 {
                                     UseCase = new UseCase(),
                                     Project = project,
-                                    RequirementCategories = project.RequirementCategories
+                                    RequirementCategories = project.RequirementCategories.Where(a => a.IsActive).ToList()
                                 };
  
             return viewModel;
