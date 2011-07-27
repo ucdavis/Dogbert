@@ -499,7 +499,7 @@
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
     <Content Include="Scripts\UseCasePreconditions.js" />
-    <Content Include="Scripts\UseCaseScripts.js" />
+    <Content Include="Scripts\UseCaseSteps.js" />
     <Content Include="UCDArch.txt" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

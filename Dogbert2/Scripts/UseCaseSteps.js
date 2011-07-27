@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿function InitializeSteps() {
 
     // compile the template
     $.template("rowTemplate", $("#row-template table tbody").html());
@@ -55,7 +55,7 @@
 
     initializeTableDragging();
 
-});
+}
 
 function addStep() {
 

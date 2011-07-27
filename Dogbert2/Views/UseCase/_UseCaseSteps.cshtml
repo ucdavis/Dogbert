@@ -24,16 +24,20 @@
                 <tr data-id='@i'>
                     <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
                         <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
-                        <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />
+                        @*<input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />*@
+                        @Html.Hidden(string.Format("UseCase.UseCaseSteps[{0}].Id", i), Model.UseCase.UseCaseSteps[i].Id, new {@class="id-hdn"})
                     </td>
                     <td class="usecase-order">@Model.UseCase.UseCaseSteps[i].Order
-                        <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Order" name="UseCase.UseCaseSteps[@i].Order" value="@Model.UseCase.UseCaseSteps[i].Order" />
+                        @*<input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Order" name="UseCase.UseCaseSteps[@i].Order" value="@Model.UseCase.UseCaseSteps[i].Order" />*@
+                        @Html.Hidden(string.Format("UseCase.UseCaseSteps[{0}].Order", i), Model.UseCase.UseCaseSteps[i].Order, new {@class="order-hdn"})
                     </td>
                     <td>@Model.UseCase.UseCaseSteps[i].Description
-                        <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Description" name="UseCase.UseCaseSteps[@i].Description" value="@Model.UseCase.UseCaseSteps[i].Description" />
+                        @*<input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Description" name="UseCase.UseCaseSteps[@i].Description" value="@Model.UseCase.UseCaseSteps[i].Description" />*@
+                        @Html.Hidden(string.Format("UseCase.UseCaseSteps[{0}].Description", i), Model.UseCase.UseCaseSteps[i].Description, new {@class="description-hdn"})
                     </td>
                     <td>@(Model.UseCase.UseCaseSteps[i].Optional ? "x" : string.Empty)
-                        <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Optional" name="UseCase.UseCaseSteps[@i].Optional" value="@Model.UseCase.UseCaseSteps[i].Optional" />
+                        @*<input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Optional" name="UseCase.UseCaseSteps[@i].Optional" value="@Model.UseCase.UseCaseSteps[i].Optional" />*@
+                        @Html.Hidden(string.Format("UseCase.UseCaseSteps[{0}].Optional", i), Model.UseCase.UseCaseSteps[i].Optional, new {@class="optional-hdn"})
                     </td>
                 </tr>
             }
@@ -44,7 +48,7 @@
 
 </fieldset>
 
-<div id="step-dialog" title="Use Case Step">
+<div id="step-dialog" title="Use Case Step" class="dialog">
     <input type="hidden" id="step-edit" value="-1" />
     <ul>
         <li>Description:
@@ -56,22 +60,26 @@
 
 </div>
 
-<div id="row-template" style="display:none;">
+<div id="row-template" class="template">
     <table>
     <tbody>
     <tr>
         <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
             <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
-            <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[${Index}]_Id" name="UseCase.UseCaseSteps[${Index}].Id" value="0" />
+            @*<input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[${Index}]_Id" name="UseCase.UseCaseSteps[${Index}].Id" value="0" />*@
+            @Html.Hidden("UseCase.UseCaseSteps[${Index}].Id", 0, new {@class="id-hdn"})
         </td>
         <td class="usecase-order">${Number}
-            <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Order" name="UseCase.UseCaseSteps[${Index}].Order" value="${Number}" />
+            @*<input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Order" name="UseCase.UseCaseSteps[${Index}].Order" value="${Number}" />*@
+            @Html.Hidden("UseCase.UseCaseSteps[${Index}].Order", "${Number}", new {@class="order-hdn"})
         </td>
         <td>${Description}
-            <input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Description" name="UseCase.UseCaseSteps[${Index}].Description" value="${Description}" />
+            @*<input class="description-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Description" name="UseCase.UseCaseSteps[${Index}].Description" value="${Description}" />*@
+            @Html.Hidden("UseCase.UseCaseSteps[${Index}].Description", "${Description}", new {@class="description-hdn"})
         </td>
         <td>${Optional}
-            <input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Optional" name="UseCase.UseCaseSteps[${Index}].Optional" value="${OptionalValue}" />
+            @*<input class="optional-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Optional" name="UseCase.UseCaseSteps[${Index}].Optional" value="${OptionalValue}" />*@
+            @Html.Hidden("UseCase.UseCaseSteps[${Index}].Optional", "${OptionalValue}", new {@class="optional-hdn"})
         </td>
     </tr>
     </tbody>
