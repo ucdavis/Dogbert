@@ -29,7 +29,19 @@
 
     });
 
-    $(".edit-usecase").live("click", function () { });
+    $(".edit-usecase").live("click", function () {
+        var $row = $(this).parents("tr");
+
+        var description = $row.find(".description-hdn");
+        var optional = $row.find(".optional-hdn");
+
+        $("#step-dialog").dialog("open");
+
+        $("#step-description").val(description.val());
+        $("#step-optional").attr("checked", optional.val());
+        $("#step-edit").val($row.data("id"));
+    });
+
     $(".delete-usecase").live("click", function () {
 
         // delete the row
@@ -47,16 +59,47 @@
 
 function addStep() {
 
+    // read the values out of the controls
     var tbody = $("#steps tbody");
 
-    var index = tbody.children().length;
-    var number = tbody.children().length + 1;
+    var existingIndex = parseInt($("#step-edit").val());
+
+    var index, number;
+
+    if (existingIndex >= 0) {
+        index = existingIndex;
+        number = existingIndex + 1;        
+    }
+    else {
+        index = tbody.children().length;
+        number = tbody.children().length + 1;
+    }
+    
     var description = $("#step-description").val();
     var optional = ($("#step-optional").attr("checked") ? "x" : "");
-    var optionalValue = $("#step-optional").is(':checked'); 
+    var optionalValue = $("#step-optional").is(':checked');
 
-    var values = [{ Index: index,  Number: number, Description: description, Optional: optional, OptionalValue: optionalValue }];
-    $.tmpl("rowTemplate", values).appendTo("#steps tbody");
+    var values = [{ Index: index, Number: number, Description: description, Optional: optional, OptionalValue: optionalValue}];
+
+    // update an existing step
+    if ($("#step-edit").val() >= 0) {
+        //var $row = tbody.find("tr[data-id='" + existingIndex + "']");
+
+        var $row = tbody.find("tr").filter(function () {
+            var indexId = $("#step-edit").val();
+
+            return $(this).data("id") == indexId;
+        });
+
+
+        var newRow = $.tmpl("rowTemplate", values);
+        newRow.data("id", existingIndex);
+        newRow.find(".id-hdn").val($row.find(".id-hdn").val());
+        $row.replaceWith(newRow);
+    }
+    else {
+        $.tmpl("rowTemplate", values).appendTo("#steps tbody");
+    }
 
     initializeTableDragging();
 
@@ -92,8 +135,14 @@ function reorderSteps() {
         var orderHdn = $(item).find(".order-hdn");
         var descriptionHdn = $(item).find(".description-hdn");
         var optionalHdn = $(item).find(".optional-hdn");
+        var idHdn = $(item).find(".id-hdn");
 
         // update all the values now
+        $(item).data("id", index);
+
+        idHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Id");
+        idHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Id");
+
         orderCtl.html(index + 1);
         orderHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Order");
         orderHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Order");
@@ -105,6 +154,7 @@ function reorderSteps() {
 
         optionalHdn.attr("name", "UseCase.UseCaseSteps[" + index + "].Optional");
         optionalHdn.attr("id", "UseCase_UseCaseSteps[" + index + "]_Optional");
+
     });
 
 }

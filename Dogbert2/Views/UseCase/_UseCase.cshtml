@@ -77,10 +77,10 @@
             
                 @for (int i = 0; i < Model.UseCase.UseCaseSteps.Count; i++)
                 { 
-                    <tr>
+                    <tr data-id='@i'>
                         <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
                             <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
-                            <input type='hidden' id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />
+                            <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[@i]_Id" name="UseCase.UseCaseSteps[@i].Id" value="@Model.UseCase.UseCaseSteps[i].Id" />
                         </td>
                         <td class="usecase-order">@Model.UseCase.UseCaseSteps[i].Order
                             <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[@i]_Order" name="UseCase.UseCaseSteps[@i].Order" value="@Model.UseCase.UseCaseSteps[i].Order" />
@@ -111,7 +111,7 @@
 }
 
 <div id="step-dialog" title="Use Case Step">
-
+    <input type="hidden" id="step-edit" value="-1" />
     <ul>
         <li>Description:
             <textarea id="step-description" style="width: 375px; height: 75px;"></textarea>
@@ -128,6 +128,7 @@
     <tr>
         <td><a href="javascript:;" class="edit-usecase"><img src='@Url.Image("edit.png")' alt="Edit Use Case" /></a>
             <a href="javascript:;" class="delete-usecase"><img src='@Url.Image("delete.png")' alt="Delete Use Case" /></a>
+            <input type='hidden' class="id-hdn" id="UseCase_UseCaseSteps[${Index}]_Id" name="UseCase.UseCaseSteps[${Index}].Id" value="0" />
         </td>
         <td class="usecase-order">${Number}
             <input class="order-hdn" type="hidden" id="UseCase_UseCaseSteps[${Index}]_Order" name="UseCase.UseCaseSteps[${Index}].Order" value="${Number}" />
