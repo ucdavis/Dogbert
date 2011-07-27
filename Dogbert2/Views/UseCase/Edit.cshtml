@@ -19,6 +19,7 @@
     <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
     
     <script type="text/javascript" src="@Url.Script("UseCasePreconditions.js")"></script>
+    <script type="text/javascript" src="@Url.Script("UseCasePostconditions.js")"></script>
     <script type="text/javascript" src="@Url.Script("UseCaseSteps.js")"></script>
 
     <style type="text/css">
@@ -32,7 +33,7 @@
             $(".addButton").button();
 
             InitializePrecondition();
-
+            InitializePostcondition();
             InitializeSteps();
         });
     </script>

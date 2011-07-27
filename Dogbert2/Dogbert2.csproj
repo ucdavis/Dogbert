@@ -498,6 +498,7 @@
     <Content Include="Scripts\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
+    <Content Include="Scripts\UseCasePostconditions.js" />
     <Content Include="Scripts\UseCasePreconditions.js" />
     <Content Include="Scripts\UseCaseSteps.js" />
     <Content Include="UCDArch.txt" />
@@ -661,6 +662,7 @@
     <Content Include="Views\UseCase\Edit.cshtml" />
     <Content Include="Views\UseCase\_UseCaseSteps.cshtml" />
     <Content Include="Views\UseCase\_UseCasePreconditions.cshtml" />
+    <Content Include="Views\UseCase\_UseCasePostconditions.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

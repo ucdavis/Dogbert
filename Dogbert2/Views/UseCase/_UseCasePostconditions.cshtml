@@ -1,0 +1,69 @@
+﻿@model Dogbert2.Models.UseCaseViewModel
+
+
+<fieldset>
+
+    <legend>Postconditions</legend>
+
+    <input type="button" id="add-postcondition" value="+ Postcondition" class="addButton" />
+
+    <table id="postconditions" style="margin-top: 1em;">
+
+        <thead>
+            <tr>
+                <th style="width: 20px;"></th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        
+            @for (int i = 0; i < Model.UseCase.Postconditions.Count; i++ )
+            { 
+                <tr data-id='@i'>
+                    <td><a href="javascript:;" class="edit-postcondition"><img src='@Url.Image("edit.png")' alt="Edit Postcondition" /></a>
+                        <a href="javascript:;" class="delete-postcondition"><img src='@Url.Image("delete.png")' alt="Delete Postcondition" /></a>
+                        @Html.Hidden(string.Format("UseCase.Postconditions[{0}].Id", i), Model.UseCase.Postconditions[i].Id, new { @class="id-hdn" })
+                    </td>
+                    <td><span class="description">@Model.UseCase.Postconditions[i].Description</span>
+                        @Html.Hidden(string.Format("UseCase.Postconditions[{0}].Descripton", i), Model.UseCase.Postconditions[i].Description, new { @class="description-hdn"}))
+                    </td>               
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</fieldset>
+
+<div id="postcondition-dialog" title="Postcondition" class="dialog">
+
+    @Html.Hidden("postcondition-index", -1)
+
+    <ul>
+        <li>Description:
+            @Html.TextArea("postcondition-description", new {style="width: 375px; height: 75px;"})
+        </li>
+    </ul>
+
+</div>
+
+<div id="postcondition-template" class="template">
+
+    <table>
+    <tbody>
+    <tr data-id="${Index}">
+        <td><a href="javascript:;" class="edit-postcondition"><img src='@Url.Image("edit.png")' alt="Edit Postcondition" /></a>
+            <a href="javascript:;" class="delete-postcondition"><img src='@Url.Image("delete.png")' alt="Delete Postcondition" /></a>
+            @Html.Hidden("UseCase.Postconditions[${Index}].Id", 0, new { @class="id-hdn" })
+        </td>
+        <td>
+            <span class="description">${Description}</span>
+            @Html.Hidden("UseCase.Postconditions[${Index}].Description", "${Description}", new { @class="description-hdn" })
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+</div>

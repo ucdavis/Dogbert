@@ -237,6 +237,8 @@ namespace Dogbert2.Controllers
             ReconcileSteps(src, dest);
 
             ReconcilePreconditions(src, dest);
+
+            ReconcilePostconditions(src, dest);
         }
 
         private void ReconcileSteps(UseCase src, UseCase dest)
@@ -301,7 +303,31 @@ namespace Dogbert2.Controllers
 
         private void ReconcilePostconditions(UseCase src, UseCase dest)
         {
-            
+            // delete any use cases that are no more
+            var deletes = dest.Postconditions.Where(a => !src.Postconditions.Select(b => b.Id).Contains(a.Id)).Select(a => a.Id).ToList();
+            foreach (var postconditionId in deletes)
+            {
+                var postcondition = dest.Postconditions.Where(a => a.Id == postconditionId).FirstOrDefault();
+                dest.Postconditions.Remove(postcondition);
+            }
+
+            foreach (var postcondition in src.Postconditions)
+            {
+                if (postcondition.Id == 0)
+                {
+                    dest.AddPostcondition(postcondition);
+                }
+                else
+                {
+                    var existingPostcondition = dest.Postconditions.Where(a => a.Id == postcondition.Id).FirstOrDefault();
+
+                    if (existingPostcondition != null)
+                    {
+                        existingPostcondition.Description = postcondition.Description;
+                    }
+                }
+
+            }
         }
     }
 }
