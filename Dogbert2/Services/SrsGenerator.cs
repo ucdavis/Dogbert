@@ -112,33 +112,38 @@ namespace Dogbert2.Services
 
                         // add the txt
                         AddHtmlText(txt.Text, cell);
-
-                        
-
+                      
                         table.AddCell(cell);
-                        //_doc.Add(table);
 
                         AddToPage(table);
-
                     }
                 }
                 // deal with specialized 
                 else
                 {
-                    AddSectionHeader(sec.Name);
+                    var table = new PdfPTable(1);
+                    table.TotalWidth = _pageWidth;
+                    table.LockedWidth = true;
+
+                    var headerCell = new PdfPCell();
+                    AddSectionHeader(sec.Name, headerCell);
+
+                    table.AddCell(headerCell);
 
                     switch (sec.Id)
                     {
                         case "GL":
-                            AddGlossary(_project);
+                            AddGlossary(table, _project);
                             break;
                         case "RQ":
-                            AddRequirementTable(_project);
+                            AddRequirementTable(table, _project);
                             break;
                         case "UC":
+                            AddUseCases(table, _project);
                             break;
-
                     }  
+
+                    AddToPage(table);
                 }                
             }
 
@@ -329,9 +334,6 @@ namespace Dogbert2.Services
         /// <param name="table"></param>
         private void AddToPage(PdfPTable table)
         {
-            //var test = _currentHeight;
-            //var test2 = table.TotalHeight*.9;
-
             // automatically insert new page if current contents goes over 80%
             if (_currentHeight > _pageHeight * .8)
             {
@@ -501,6 +503,8 @@ namespace Dogbert2.Services
                 }
             }
 
+            if (pCell != null) pCell.AddElement(list);
+
             return list;
         }
 
@@ -633,7 +637,7 @@ namespace Dogbert2.Services
         #endregion
 
         #region Specialized Sections
-        private void AddGlossary(Project project)
+        private void AddGlossary(PdfPTable table, Project project)
         {
             // build the html object so we can use the other list builder
             var elements = new List<HtmlElement>();
@@ -664,10 +668,11 @@ namespace Dogbert2.Services
             // close the list
             elements.Add(new HtmlElement("ul", true, true));
 
-            var list = BuildListObject(elements, "ul");
-            _doc.Add(list);
+            var cell = new PdfPCell();
+            var list = BuildListObject(elements, "ul", cell);
+            table.AddCell(cell);
         }
-        private void AddRequirementTable(Project project)
+        private void AddRequirementTable(PdfPTable table, Project project)
         {
             foreach (var cat in project.RequirementCategories)
             {
@@ -675,17 +680,17 @@ namespace Dogbert2.Services
                 _doc.Add(new Chunk(cat.Name, _subHeaderFont));
 
                 // add in the table
-                var table = new PdfPTable(4);
-                table.TotalWidth = _pageWidth;
-                table.LockedWidth = true;
-                table.SetWidths(new float[]{1f, 2f, 5f, 1f});
-                table.SpacingAfter = 2f;
+                var reqTable = new PdfPTable(4);
+                reqTable.TotalWidth = _pageWidth;
+                reqTable.LockedWidth = true;
+                reqTable.SetWidths(new float[]{1f, 2f, 5f, 1f});
+                reqTable.SpacingAfter = 2f;
 
                 // put the headers on the table
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Id", _tableHeaderFont))) {BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Priority", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Description", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5 });
-                table.AddCell(new PdfPCell(new Phrase(new Chunk("Type", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                reqTable.AddCell(new PdfPCell(new Phrase(new Chunk("Id", _tableHeaderFont))) {BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                reqTable.AddCell(new PdfPCell(new Phrase(new Chunk("Priority", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
+                reqTable.AddCell(new PdfPCell(new Phrase(new Chunk("Description", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5 });
+                reqTable.AddCell(new PdfPCell(new Phrase(new Chunk("Type", _tableHeaderFont))) { BackgroundColor = _baseColor, BorderWidth = 0, Padding = 5});
             
                 foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory))
                 {
@@ -699,15 +704,60 @@ namespace Dogbert2.Services
                     cell3.AddElement(new Chunk(req.Description, _font));
                     cell4.AddElement(new Chunk(req.RequirementType.Id, _font));
 
-                    table.AddCell(cell1);
-                    table.AddCell(cell2);
-                    table.AddCell(cell3);
-                    table.AddCell(cell4);
+                    reqTable.AddCell(cell1);
+                    reqTable.AddCell(cell2);
+                    reqTable.AddCell(cell3);
+                    reqTable.AddCell(cell4);
                 }
 
-                _doc.Add(table);
-
+                //_doc.Add(table);
+                var cell = new PdfPCell(reqTable);
+                table.AddCell(cell);
             }
+        }
+        private void AddUseCases(PdfPTable table, Project project)
+        {
+            // create a new table for each category of use cases
+            foreach (var category in project.UseCases.Select(a => a.RequirementCategory).Distinct())
+            {
+                // add in the category name
+                var categoryTable = new PdfPTable(1);
+                categoryTable.TotalWidth = _pageWidth;
+                categoryTable.LockedWidth = true;
+                
+                categoryTable.AddCell(new PdfPCell(new Phrase(category.Name, _subHeaderFont)));
+
+                // deal with each use case in category
+                foreach (var useCase in project.UseCases.Where(a => a.RequirementCategory == category))
+                {
+                    categoryTable.AddCell(BuildUseCaseTable(useCase));
+                }
+
+                table.AddCell(new PdfPCell(categoryTable));
+            }
+        }
+        private PdfPCell BuildUseCaseTable(UseCase useCase)
+        {
+            // table for each of the use cases now
+            var useCaseTable = new PdfPTable(1);
+            useCaseTable.TotalWidth = _pageWidth;
+            useCaseTable.LockedWidth = true;
+
+            var nameCell = new PdfPCell(new Phrase(useCase.Name));
+            
+            var descriptionCell = new PdfPCell();
+            descriptionCell.AddElement(new Paragraph("Description"));
+            descriptionCell.AddElement(new Paragraph(useCase.Description));
+
+            var rolesCell = new PdfPCell();
+            rolesCell.AddElement(new Paragraph("Roles"));
+            rolesCell.AddElement(new Paragraph(useCase.Roles));
+
+            useCaseTable.AddCell(nameCell);
+            useCaseTable.AddCell(descriptionCell);
+            useCaseTable.AddCell(rolesCell);
+
+            return new PdfPCell(useCaseTable);
         }
         #endregion
     }
