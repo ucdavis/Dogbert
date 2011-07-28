@@ -1,7 +1,7 @@
 ﻿function InitializeSteps() {
 
     // compile the template
-    $.template("rowTemplate", $("#row-template table tbody").html());
+    $.template("step-template", $("#step-template table tbody").html());
 
     // set up the dialog
     $("#step-dialog").dialog({
@@ -14,45 +14,52 @@
         }
     });
 
-    // make the add step a button
-    $("#add-step").button();
-
     // bring up dialog to create a new step
     $("#add-step").click(function () {
 
         // blank the controls
         $("#step-description").val("");
         $("#step-optional").attr("checked", false);
+        $("#step-index").val(-1);
 
         // open the dialog
         $("#step-dialog").dialog("open");
 
     });
 
-    $(".edit-usecase").live("click", function () {
+    $(".edit-step").live("click", function () {
+
+        // get a reference to the current row
         var $row = $(this).parents("tr");
 
+        // read in the values
         var description = $row.find(".description-hdn");
         var optional = $row.find(".optional-hdn");
 
+        // open the dialog
         $("#step-dialog").dialog("open");
 
+        // set the values
         $("#step-description").val(description.val());
-        $("#step-optional").attr("checked", optional.val());
-        $("#step-edit").val($row.data("id"));
+        $("#step-optional").attr("checked", optional.val() == 'True');
+        $("#step-index").val($row.data("id"));
+
     });
 
-    $(".delete-usecase").live("click", function () {
+    $(".delete-step").live("click", function () {
 
         // delete the row
         $(this).parents("tr").remove();
 
+        // reinitialize the table dragging
         initializeTableDragging();
 
+        // update the step numbers
         reorderSteps();
 
     });
 
+    // initialize the table dragging for the first time
     initializeTableDragging();
 
 }
@@ -60,45 +67,47 @@
 function addStep() {
 
     // read the values out of the controls
-    var tbody = $("#steps tbody");
+    var $tbody = $("#steps tbody");
 
-    var existingIndex = parseInt($("#step-edit").val());
-
+    // deal with the current indexes
+    var existingIndex = parseInt($("#step-index").val());
     var index, number;
-
     if (existingIndex >= 0) {
         index = existingIndex;
         number = existingIndex + 1;        
     }
     else {
-        index = tbody.children().length;
-        number = tbody.children().length + 1;
+        index = $tbody.children().length;
+        number = $tbody.children().length + 1;
     }
     
+    // read out the values
     var description = $("#step-description").val();
     var optional = ($("#step-optional").attr("checked") ? "x" : "");
     var optionalValue = $("#step-optional").is(':checked');
 
+    // create a new row from the template
     var values = [{ Index: index, Number: number, Description: description, Optional: optional, OptionalValue: optionalValue}];
+    var newRow = $.tmpl("step-template", values);
 
     // update an existing step
-    if ($("#step-edit").val() >= 0) {
-        //var $row = tbody.find("tr[data-id='" + existingIndex + "']");
+    if (existingIndex >= 0) {
 
-        var $row = tbody.find("tr").filter(function () {
-            var indexId = $("#step-edit").val();
+        // get the existing row
+        var $row = $tbody.find("tr").filter(function () {
+            var indexId = $("#step-index").val();
 
             return $(this).data("id") == indexId;
         });
 
-
-        var newRow = $.tmpl("rowTemplate", values);
+        // set the information
         newRow.data("id", existingIndex);
         newRow.find(".id-hdn").val($row.find(".id-hdn").val());
         $row.replaceWith(newRow);
+
     }
     else {
-        $.tmpl("rowTemplate", values).appendTo("#steps tbody");
+        $tbody.append(newRow);
     }
 
     initializeTableDragging();
