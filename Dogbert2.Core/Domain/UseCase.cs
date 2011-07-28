@@ -31,6 +31,8 @@ namespace Dogbert2.Core.Domain
         [Required]
         [DataType(DataType.MultilineText)]
         public virtual string Description { get; set; }
+        [StringLength(100)]
+        public virtual string Roles { get; set; }
 
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime DateModified { get; set; }
@@ -88,6 +90,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.Description);
             Map(x => x.DateAdded);
             Map(x => x.DateModified);
+            Map(x => x.Roles);
 
             References(x => x.Project);
             References(x => x.RequirementCategory);

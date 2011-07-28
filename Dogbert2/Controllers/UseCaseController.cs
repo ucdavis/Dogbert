@@ -15,6 +15,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the UseCase class
     /// </summary>
+    [Authorize]
     public class UseCaseController : ApplicationController
     {
 	    private readonly IRepository<UseCase> _useCaseRepository;
