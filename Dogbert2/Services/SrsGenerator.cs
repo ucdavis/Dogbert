@@ -791,7 +791,7 @@ namespace Dogbert2.Services
                 categoryTable.TotalWidth = _pageWidth;
                 categoryTable.LockedWidth = true;
                 categoryTable.KeepTogether = true;
-                categoryTable.SplitLate = false;
+                //categoryTable.SplitLate = false;
 
                 // add in the category header
                 categoryTable.AddCell(CreateCell(chunk: new Chunk(category.Name, _subHeaderFont), paddingAll:10));
@@ -807,25 +807,108 @@ namespace Dogbert2.Services
         }
         private PdfPCell BuildUseCaseTable(UseCase useCase)
         {
+            // set variables for current cells in this table
+            var padding = 5;
+            var border = 1;
+
             // table for each of the use cases now
             var useCaseTable = new PdfPTable(1);
             useCaseTable.TotalWidth = _pageWidth;
             useCaseTable.LockedWidth = true;
 
-            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _font), paddingAll:5, borderAll: 1);
+            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _font), paddingAll: padding, borderAll: border);
 
-            var descriptionCell = CreateCell(paddingAll:5, borderAll: 1);
+            var descriptionCell = CreateCell(paddingAll: padding, borderAll: border);
             descriptionCell.AddElement(new Paragraph("Description", _font));
             descriptionCell.AddElement(new Paragraph(useCase.Description, _font));
 
-            var rolesCell = CreateCell(paddingAll:5, borderAll:1);
+            var rolesCell = CreateCell(paddingAll: padding, borderAll: border);
             rolesCell.AddElement(new Paragraph("Roles", _font));
             rolesCell.AddElement(new Paragraph(useCase.Roles, _font));
+
+            // preconditions
+            var preconditions = new List<HtmlElement>();
+            preconditions.Add(new HtmlElement("ul", true));
+
+            foreach (var a in useCase.Preconditions)
+            {
+                // opening li
+                preconditions.Add(new HtmlElement("li", true));
+
+                // put in the txt
+                preconditions.Add(new HtmlElement(a.Description));
+
+                // closing li
+                preconditions.Add(new HtmlElement("li", true, true));
+            }
+
+            // close the list
+            preconditions.Add(new HtmlElement("ul", true, true));
+
+            // create the cell
+            var preconditionCell = CreateCell(paddingAll: padding, borderAll: border);
+            preconditionCell.AddElement(new Paragraph("Preconditions", _font));
+            preconditionCell.AddElement(BuildListObject(preconditions, "ul", preconditionCell));
+
+            // postconditions
+            var postconditions = new List<HtmlElement>();
+            postconditions.Add(new HtmlElement("ul", true));
+
+            foreach (var a in useCase.Postconditions)
+            {
+                // opening li
+                postconditions.Add(new HtmlElement("li", true));
+
+                // put in the txt
+                postconditions.Add(new HtmlElement(a.Description));
+
+                // closing li
+                postconditions.Add(new HtmlElement("li", true, true));
+            }
+
+            // close the list
+            postconditions.Add(new HtmlElement("ul", true, true));
+
+            // create the cell
+            var postconditionCell = CreateCell(paddingAll: padding, borderAll: border);
+            postconditionCell.AddElement(new Paragraph("Postconditions", _font));
+            postconditionCell.AddElement(BuildListObject(postconditions, "ul", postconditionCell));
+
+            // steps
+            var steps = new List<HtmlElement>();
+            steps.Add(new HtmlElement("ol", true));
+
+            foreach (var a in useCase.UseCaseSteps.OrderBy(b => b.Order))
+            {
+                steps.Add(new HtmlElement("li", true));
+
+                if (a.Optional)
+                {
+                    steps.Add(new HtmlElement(string.Format("{0}*", a.Description)));
+                }
+                else
+                {
+                    steps.Add(new HtmlElement(a.Description));
+                }
+
+                steps.Add(new HtmlElement("li", true, true));
+            }
+
+            // close the list
+            steps.Add(new HtmlElement("ol", true, true));
+
+            // create the cell
+            var stepsCell = CreateCell(paddingAll: padding, borderAll: border);
+            stepsCell.AddElement(new Paragraph("Steps", _font));
+            stepsCell.AddElement(BuildListObject(steps, "ol", stepsCell));
 
             useCaseTable.AddCell(nameCell);
             useCaseTable.AddCell(descriptionCell);
             useCaseTable.AddCell(rolesCell);
-
+            useCaseTable.AddCell(preconditionCell);
+            useCaseTable.AddCell(postconditionCell);
+            useCaseTable.AddCell(stepsCell);
+            
             return new PdfPCell(useCaseTable);
         }
         #endregion
