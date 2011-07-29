@@ -1016,13 +1016,13 @@ namespace Dogbert2.Services
 
         private void AddWatermark(PdfWriter writer)
         {
-            float fontSize = 80;
-            float xPosition = 300;
-            float yPosition = 400;
+            float fontSize = 100;
+            float xPosition = 325;
+            float yPosition = 375;
             float angle = 45;
 
             PdfContentByte under = writer.DirectContentUnder;
-            BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED);
+            BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
             under.BeginText();
             under.SetColorFill(BaseColor.LIGHT_GRAY);
             under.SetFontAndSize(baseFont, fontSize);
