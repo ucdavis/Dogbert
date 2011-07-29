@@ -35,6 +35,7 @@ namespace Dogbert2.Services
         private Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
         private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
         private Font _subHeaderFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private Font _sectionHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
         private Font _captionFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
         private Font _tableHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
 
@@ -791,7 +792,7 @@ namespace Dogbert2.Services
                 categoryTable.TotalWidth = _pageWidth;
                 categoryTable.LockedWidth = true;
                 categoryTable.KeepTogether = true;
-                //categoryTable.SplitLate = false;
+                categoryTable.SplitLate = false;
 
                 // add in the category header
                 categoryTable.AddCell(CreateCell(chunk: new Chunk(category.Name, _subHeaderFont), paddingAll:10));
@@ -802,28 +803,33 @@ namespace Dogbert2.Services
                     categoryTable.AddCell(BuildUseCaseTable(useCase));
                 }
 
-                table.AddCell(new PdfPCell(categoryTable));
+                //table.AddCell(new PdfPCell(categoryTable));
+
+                var cell = CreateCell();
+                cell.AddElement(categoryTable);
+                table.AddCell(cell);
             }
         }
         private PdfPCell BuildUseCaseTable(UseCase useCase)
         {
             // set variables for current cells in this table
             var padding = 5;
-            var border = 1;
+            var border = 0;
 
             // table for each of the use cases now
             var useCaseTable = new PdfPTable(1);
             useCaseTable.TotalWidth = _pageWidth;
             useCaseTable.LockedWidth = true;
 
-            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _font), paddingAll: padding, borderAll: border);
+            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _sectionHeaderFont), paddingAll: padding, borderBottom:1);
+            nameCell.BorderColorBottom = _baseColor;
 
             var descriptionCell = CreateCell(paddingAll: padding, borderAll: border);
-            descriptionCell.AddElement(new Paragraph("Description", _font));
+            descriptionCell.AddElement(new Paragraph("Description", _boldFont));
             descriptionCell.AddElement(new Paragraph(useCase.Description, _font));
 
             var rolesCell = CreateCell(paddingAll: padding, borderAll: border);
-            rolesCell.AddElement(new Paragraph("Roles", _font));
+            rolesCell.AddElement(new Paragraph("Roles", _boldFont));
             rolesCell.AddElement(new Paragraph(useCase.Roles, _font));
 
             // preconditions
@@ -847,7 +853,7 @@ namespace Dogbert2.Services
 
             // create the cell
             var preconditionCell = CreateCell(paddingAll: padding, borderAll: border);
-            preconditionCell.AddElement(new Paragraph("Preconditions", _font));
+            preconditionCell.AddElement(new Paragraph("Preconditions", _boldFont));
             preconditionCell.AddElement(BuildListObject(preconditions, "ul", preconditionCell));
 
             // postconditions
@@ -871,7 +877,7 @@ namespace Dogbert2.Services
 
             // create the cell
             var postconditionCell = CreateCell(paddingAll: padding, borderAll: border);
-            postconditionCell.AddElement(new Paragraph("Postconditions", _font));
+            postconditionCell.AddElement(new Paragraph("Postconditions", _boldFont));
             postconditionCell.AddElement(BuildListObject(postconditions, "ul", postconditionCell));
 
             // steps
@@ -899,8 +905,9 @@ namespace Dogbert2.Services
 
             // create the cell
             var stepsCell = CreateCell(paddingAll: padding, borderAll: border);
-            stepsCell.AddElement(new Paragraph("Steps", _font));
+            stepsCell.AddElement(new Paragraph("Steps", _boldFont));
             stepsCell.AddElement(BuildListObject(steps, "ol", stepsCell));
+            stepsCell.PaddingBottom = 15;
 
             useCaseTable.AddCell(nameCell);
             useCaseTable.AddCell(descriptionCell);
@@ -909,7 +916,10 @@ namespace Dogbert2.Services
             useCaseTable.AddCell(postconditionCell);
             useCaseTable.AddCell(stepsCell);
             
-            return new PdfPCell(useCaseTable);
+            var cell = CreateCell();
+            cell.AddElement(useCaseTable);
+            return cell;
+
         }
         #endregion
     }
