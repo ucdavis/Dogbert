@@ -12,7 +12,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the Srs class
     /// </summary>
-    [AllRoles]
+    [Authorize]
     public class SrsController : ApplicationController
     {
         private readonly IRepository<Project> _projectRepository;
@@ -31,7 +31,7 @@ namespace Dogbert2.Controllers
         /// </summary>
         /// <param name="id">Project Id</param>
         /// <returns></returns>
-        public FileResult Index(int id)
+        public FileResult Index(int id, bool draft = false)
         {
             var project = _projectRepository.GetNullableById(id);
 
@@ -42,7 +42,7 @@ namespace Dogbert2.Controllers
             var generator = new SrsGenerator(_fileRepository, Repository.OfType<SectionType>());
 
             // get the srs
-            var srs = generator.GeneratePdf(project);
+            var srs = generator.GeneratePdf(project, draft);
 
             // append the files if any
             var files = new List<byte[]>();

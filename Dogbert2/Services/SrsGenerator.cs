@@ -77,7 +77,7 @@ namespace Dogbert2.Services
         /// </remakrs>
         /// <param name="project"></param>
         /// <returns></returns>
-        public byte[] GeneratePdf(Project project)
+        public byte[] GeneratePdf(Project project, bool draft)
         {
             InitializeDocument();
             _project = project;
@@ -86,7 +86,7 @@ namespace Dogbert2.Services
             var writer = PdfWriter.GetInstance(_doc, ms);
 
             // add in the header/footer
-            writer.PageEvent = new pdfPage(project);
+            writer.PageEvent = new pdfPage(project, draft);
 
             _doc.Open();
 
@@ -933,10 +933,12 @@ namespace Dogbert2.Services
     public class pdfPage : PdfPageEventHelper
     {
         private readonly Project _project;
+        private readonly bool _draft;
 
-        public pdfPage(Project project)
+        public pdfPage(Project project, bool draft)
         {
             _project = project;
+            _draft = draft;
         }
 
         private Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 12);
@@ -974,6 +976,11 @@ namespace Dogbert2.Services
 
                 table.WriteSelectedRows(0, -1, y, x, writer.DirectContent);
             }
+
+            if (_draft)
+            {
+                AddWatermark(writer);
+            }
         }
 
         /// <summary>
@@ -1005,6 +1012,23 @@ namespace Dogbert2.Services
 
                 table.WriteSelectedRows(0, -1, y, x, writer.DirectContent);
             }
+        }
+
+        private void AddWatermark(PdfWriter writer)
+        {
+            float fontSize = 80;
+            float xPosition = 300;
+            float yPosition = 400;
+            float angle = 45;
+
+            PdfContentByte under = writer.DirectContentUnder;
+            BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED);
+            under.BeginText();
+            under.SetColorFill(BaseColor.LIGHT_GRAY);
+            under.SetFontAndSize(baseFont, fontSize);
+            under.ShowTextAligned(PdfContentByte.ALIGN_CENTER, "DRAFT", xPosition, yPosition, angle);
+            under.EndText();
+
         }
 
         /// <summary>

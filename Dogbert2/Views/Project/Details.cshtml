@@ -22,6 +22,13 @@
 	</ul>
 }
 
+@section AdditionalScripts
+{
+    <style type="text/css">
+        #srs-container{text-align: center;}
+    </style>
+}
+
 <fieldset class="display-form">
     <legend>Project</legend>
 	<ul>
@@ -78,7 +85,10 @@
 
 	</ul>
 
-    <div class="text_btn">@Html.ActionLink("Generate SRS", "Index", "Srs", new { id=Model.Id }, new { })</div>
+    <div id="srs-container">
+    @Html.ActionLink("Generate SRS", "Index", "Srs", new { id=Model.Id, draft=false }, new { @class="large-btn", style="display: inline-block;" })
+    @Html.ActionLink("Generate Draft SRS", "Index", "Srs", new { id = Model.Id, draft = true }, new { @class = "large-btn", style = "display: inline-block;" })
+    </div>
 
 </fieldset>
 
