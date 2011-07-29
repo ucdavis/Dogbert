@@ -25,7 +25,7 @@ namespace Dogbert2.Models
                                 {
                                     UseCase = new UseCase(),
                                     Project = project,
-                                    RequirementCategories = project.RequirementCategories.Where(a => a.IsActive).ToList()
+                                    RequirementCategories = project.RequirementCategories.Where(a => a.IsActive).OrderBy(a=>a.Name).ToList()
                                 };
  
             return viewModel;
