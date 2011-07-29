@@ -39,7 +39,7 @@ namespace Dogbert2.Controllers
             var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
             if (redirect != null) throw new SecurityException("Not authorized to view file");
 
-            var generator = new SrsGenerator(_fileRepository, Repository.OfType<SectionType>());
+            var generator = new PdfService(_fileRepository, Repository.OfType<SectionType>());
 
             // get the srs
             var srs = generator.GeneratePdf(project, draft);
@@ -52,13 +52,18 @@ namespace Dogbert2.Controllers
             var pdf = new byte[0];
             if (files.Count() > 1)
             {
-                pdf = PdfMerger.MergePdfs(files);
+                pdf = generator.PdfMerger(files);
             }
             else
             {
                 pdf = srs;
             }
-            
+
+            if (draft)
+            {
+                pdf = generator.WatermarkPdf(pdf, "DRAFT");
+            }
+
             return File(pdf, "application/pdf", string.Format("srs-{0}.pdf", id));
         }
     }

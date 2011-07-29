@@ -21,7 +21,7 @@ namespace Dogbert2
 
             // local services
             container.Register(Component.For<IAccessValidatorService>().ImplementedBy<AccessValidatorService>().Named("accessValidatorService"));
-            container.Register(Component.For<ISrsGenerator>().ImplementedBy<SrsGenerator>().Named("srsGenerator"));
+            container.Register(Component.For<IPdfService>().ImplementedBy<PdfService>().Named("srsGenerator"));
 
             // access remote service
             container.Register(Component.For<IDepartmentClient>().ImplementedBy<DevDepartmentClient>().Named("departmentClient"));

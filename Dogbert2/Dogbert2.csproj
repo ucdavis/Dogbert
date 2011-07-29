@@ -188,9 +188,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DirectoryServices.cs" />
     <Compile Include="Services\IAccessValidatorService.cs" />
-    <Compile Include="Services\ISrsGenerator.cs" />
-    <Compile Include="Services\PdfMerger.cs" />
-    <Compile Include="Services\SrsGenerator.cs" />
+    <Compile Include="Services\IPdfService.cs" />
+    <Compile Include="Services\PdfService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentRegistrar.asax.cs" />
