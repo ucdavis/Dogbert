@@ -106,7 +106,7 @@ namespace Dogbert2.Controllers
 
         //
         // GET: /Project/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, bool publicList = false)
         {
             var project = _projectRepository.GetNullableById(id);
 
@@ -115,6 +115,8 @@ namespace Dogbert2.Controllers
             // validate access
             var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
             if (redirect != null) return redirect;
+
+            ViewBag.PublicList = publicList;
 
             return View(project);
         }
@@ -275,6 +277,17 @@ namespace Dogbert2.Controllers
             Message = "Project Removed Successfully";
 
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// View a list of all public projects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Public()
+        {
+            var projects = _projectRepository.Queryable.Where(a => a.IsPublic && !a.Hide);
+
+            return View(projects);
         }
     }
 }

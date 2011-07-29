@@ -10,14 +10,27 @@
 {
 	<ul class="navigation">
 		
-			<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+            @if (ViewBag.PublicList == false)
+            { 
+                <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) </li>
+            }
+			
 
-            <li>@Html.ActionLink("Glossary", "Index", "ProjectTerm", new {id=Model.Id}, new {})</li>
-            <li>@Html.ActionLink("Sections", "Index", "ProjectSection", new {id=Model.Id}, new {})</li>
-            <li>@Html.ActionLink("Requirements", "Index", "Requirement", new {id=Model.Id}, new {})</li>
-            <li>@Html.ActionLink("Use Cases", "Index", "UseCase", new {id=Model.Id}, new{})</li>
+            <li>@Html.ActionLink("Glossary", "Index", "ProjectTerm", new { id = Model.Id }, new { })</li>
+            <li>@Html.ActionLink("Sections", "Index", "ProjectSection", new { id = Model.Id }, new { })</li>
+            <li>@Html.ActionLink("Requirements", "Index", "Requirement", new { id = Model.Id }, new { })</li>
+            <li>@Html.ActionLink("Use Cases", "Index", "UseCase", new { id = Model.Id }, new { })</li>
             <li>@Html.ActionLink("Files", "Index", "File", new { id = Model.Id }, new { })</li>
-			<li>@Html.ActionLink("Back to List", "Index")</li>
+
+            @if (ViewBag.PublicList == false)
+            { 
+                <li>@Html.ActionLink("Back to List", "Index")</li>
+            }
+            else
+            { 
+                <li>@Html.ActionLink("Back to List", "Public")</li>
+            }
+			
 		
 	</ul>
 }
@@ -69,12 +82,12 @@
 		</li>
 
 		<li>
-			<div class="display-label">DateAdded</div>
+			<div class="display-label">Date Added</div>
 			<div class="display-details">@String.Format("{0:g}", Model.DateAdded)</div>
 		</li>
 
 		<li>
-			<div class="display-label">LastUpdate</div>
+			<div class="display-label">Last Update</div>
 			<div class="display-details">@String.Format("{0:g}", Model.LastUpdate)</div>
 		</li>
 
@@ -83,10 +96,15 @@
 			<div class="display-details">@Model.WorkgroupNames</div>
 		</li>
 
+        <li>
+            <div class="display-label">Is Public</div>
+            <div class="display-details">@(Model.IsPublic ? "Yes" : "No")</div>
+        </li>
+
 	</ul>
 
     <div id="srs-container">
-    @Html.ActionLink("Generate SRS", "Index", "Srs", new { id=Model.Id, draft=false }, new { @class="large-btn", style="display: inline-block;" })
+    @Html.ActionLink("Generate SRS", "Index", "Srs", new { id = Model.Id, draft = false }, new { @class = "large-btn", style = "display: inline-block;" })
     @Html.ActionLink("Generate Draft SRS", "Index", "Srs", new { id = Model.Id, draft = true }, new { @class = "large-btn", style = "display: inline-block;" })
     </div>
 

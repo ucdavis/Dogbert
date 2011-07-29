@@ -52,6 +52,8 @@ namespace Dogbert2.Core.Domain
         public virtual Worker ProjectManager { get; set; }
         [Display(Name = "Lead Programmer")]
         public virtual Worker LeadProgrammer { get; set; }
+        [Display(Name="Is Public")]
+        public virtual bool IsPublic { get; set; }
 
         // Client information
         [Required]
@@ -127,6 +129,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.End).Column("`End`");
             References(x => x.ProjectManager).Column("ProjectManagerId");
             References(x => x.LeadProgrammer).Column("LeadProgrammerId");
+            Map(x => x.IsPublic);
 
             Map(x => x.Contact);
             Map(x => x.ContactEmail);

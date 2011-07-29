@@ -45,7 +45,13 @@ namespace Dogbert2.Helpers
                 return AccessLevel.Read;
             }
 
-            // fall back)
+            // read permissions for any public project
+            if (project.IsPublic)
+            {
+                return AccessLevel.Read;
+            }
+
+            // fall back
             return AccessLevel.NoAccess;
         }
 

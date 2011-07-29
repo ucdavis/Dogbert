@@ -37,7 +37,7 @@
         {
             border-left: 1px solid black;
             width: 37%;
-            height: 250px;
+            height: 340px;
             float: right;
             vertical-align: middle;
         }
@@ -47,8 +47,6 @@
             margin: 0 auto;
             text-align: center;
         }
-        
-
         
     </style>
 }
@@ -77,6 +75,8 @@
             @Html.ActionLink("Sign-Up", "Create", "AccessRequest", new {}, new {@class="large-btn"})
 
             @Html.ActionLink("Login", "Index", "Project", new {}, new {@class="large-btn"})
+
+            @Html.ActionLink("Public Projects", "Public", "Project", new {  }, new { @class="large-btn" })
 
         </nav>
 
