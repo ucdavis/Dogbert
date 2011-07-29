@@ -90,7 +90,7 @@ namespace Dogbert2.Services
             var writer = PdfWriter.GetInstance(_doc, ms);
 
             // add in the header/footer
-            writer.PageEvent = new pdfPage(project, draft);
+            writer.PageEvent = new pdfPage(project);
 
             _doc.Open();
 
@@ -1098,12 +1098,10 @@ namespace Dogbert2.Services
     public class pdfPage : PdfPageEventHelper
     {
         private readonly Project _project;
-        private readonly bool _draft;
 
-        public pdfPage(Project project, bool draft)
+        public pdfPage(Project project)
         {
             _project = project;
-            _draft = draft;
         }
 
         private Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 12);
@@ -1141,11 +1139,6 @@ namespace Dogbert2.Services
 
                 table.WriteSelectedRows(0, -1, y, x, writer.DirectContent);
             }
-
-            //if (_draft)
-            //{
-            //    AddWatermark(writer);
-            //}
         }
 
         /// <summary>
@@ -1177,23 +1170,6 @@ namespace Dogbert2.Services
 
                 table.WriteSelectedRows(0, -1, y, x, writer.DirectContent);
             }
-        }
-
-        private void AddWatermark(PdfWriter writer)
-        {
-            float fontSize = 100;
-            float xPosition = 325;
-            float yPosition = 375;
-            float angle = 45;
-
-            PdfContentByte under = writer.DirectContentUnder;
-            BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
-            under.BeginText();
-            under.SetColorFill(BaseColor.LIGHT_GRAY);
-            under.SetFontAndSize(baseFont, fontSize);
-            under.ShowTextAligned(PdfContentByte.ALIGN_CENTER, "DRAFT", xPosition, yPosition, angle);
-            under.EndText();
-
         }
 
         /// <summary>
