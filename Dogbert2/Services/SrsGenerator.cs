@@ -105,7 +105,7 @@ namespace Dogbert2.Services
                     if (txt != null)
                     {
                         var table = InitializeTable();
-                        var cell = InitializeNoBorderCell();
+                        var cell = CreateCell();
 
                         // add the header
                         AddSectionHeader(sec.Name, cell);
@@ -124,8 +124,10 @@ namespace Dogbert2.Services
                     var table = new PdfPTable(1);
                     table.TotalWidth = _pageWidth;
                     table.LockedWidth = true;
+                    table.KeepTogether = true;
+                    table.SplitLate = false;
 
-                    var headerCell = new PdfPCell();
+                    var headerCell = CreateCell();
                     AddSectionHeader(sec.Name, headerCell);
 
                     table.AddCell(headerCell);
@@ -307,7 +309,7 @@ namespace Dogbert2.Services
             table.LockedWidth = true;
             table.SpacingAfter = 10f;
 
-            var cell = new PdfPCell();
+            var cell = CreateCell();//new PdfPCell();
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             
             cell.BorderWidthTop = 0;
@@ -375,11 +377,75 @@ namespace Dogbert2.Services
 
             return table;
         }
-        private PdfPCell InitializeNoBorderCell()
+        /// <summary>
+        /// Creates a formatted cell for a table header
+        /// </summary>
+        /// <param name="text">Text to be put in cell</param>
+        /// <param name="backgroundColor">Background color</param>
+        /// <param name="borderWidth">Border width</param>
+        /// <param name="padding">Padding</param>
+        /// <returns></returns>
+        private PdfPCell CreateTableHeader(string text, CMYKColor backgroundColor = null, float? borderWidth = null, float? padding = null)
         {
-            var cell = new PdfPCell();
+            if (backgroundColor == null) backgroundColor = _baseColor;
+            if (!borderWidth.HasValue) borderWidth = 0;
+            if (!padding.HasValue) padding = 5;
 
-            cell.Border = 0;
+            var chunk = new Chunk(text, _tableHeaderFont);
+            var phrase = new Phrase(chunk);
+            var cell = new PdfPCell(phrase) { BackgroundColor = backgroundColor, BorderWidth = borderWidth.Value, Padding = padding.Value };
+
+            return cell;
+        }
+        /// <summary>
+        /// Defaults to creating cell with no border and no padding
+        /// </summary>
+        /// <returns></returns>
+        private PdfPCell CreateCell(Chunk chunk = null, Phrase phrase = null
+                                   , float? borderLeft = null, float? borderTop = null, float? borderRight = null, float? borderBottom = null
+                                   , float? borderAll = null                       
+                                   , float? paddingLeft = null, float? paddingTop = null, float? paddingRight = null, float? paddingBottom = null
+                                   , float? paddingAll = null)
+        {
+            if (!borderLeft.HasValue) borderLeft = 0;
+            if (!borderTop.HasValue) borderTop = 0;
+            if (!borderRight.HasValue) borderRight = 0;
+            if (!borderBottom.HasValue) borderBottom = 0;
+
+            if (borderAll.HasValue)
+            {
+                borderLeft = borderAll;
+                borderTop = borderAll;
+                borderRight = borderAll;
+                borderBottom = borderAll;
+            }
+
+            if (!paddingLeft.HasValue) paddingLeft = 0;
+            if (!paddingTop.HasValue) paddingTop = 0;
+            if (!paddingRight.HasValue) paddingRight = 0;
+            if (!paddingBottom.HasValue) paddingBottom = 0;
+
+            if (paddingAll.HasValue)
+            {
+                paddingLeft = paddingAll;
+                paddingTop = paddingAll;
+                paddingRight = paddingAll;
+                paddingBottom = paddingAll;
+            }
+
+            if (chunk != null) phrase = new Phrase(chunk);
+
+            var cell = new PdfPCell(phrase)
+            {
+                BorderWidthLeft = borderLeft.Value,
+                BorderWidthTop = borderTop.Value,
+                BorderWidthRight = borderRight.Value,
+                BorderWidthBottom = borderBottom.Value,
+                PaddingLeft = paddingLeft.Value,
+                PaddingTop = paddingTop.Value,
+                PaddingRight = paddingRight.Value,
+                PaddingBottom = paddingBottom.Value,
+            };
 
             return cell;
         }
@@ -668,18 +734,14 @@ namespace Dogbert2.Services
             // close the list
             elements.Add(new HtmlElement("ul", true, true));
 
-            var cell = new PdfPCell();
+            var cell = CreateCell();
             var list = BuildListObject(elements, "ul", cell);
             table.AddCell(cell);
         }
         private void AddRequirementTable(PdfPTable table, Project project)
         {
-            foreach (var cat in project.RequirementCategories)
+            foreach (var cat in project.Requirements.Select(a => a.RequirementCategory).Distinct())
             {
-                // add in a category title
-                //_doc.Add(new Chunk(cat.Name, _subHeaderFont));
-                //table.AddCell(new PdfPCell(new Phrase(new Chunk(cat.Name, _subHeaderFont))));
-
                 // add in the table
                 var reqTable = new PdfPTable(4);
                 reqTable.TotalWidth = _pageWidth;
@@ -690,7 +752,7 @@ namespace Dogbert2.Services
                 //reqTable.SplitLate = false;   // not sure what this does
 
                 // add the category header
-                var subheaderCell = CreateCell(chunk: new Chunk(cat.Name, _subHeaderFont));
+                var subheaderCell = CreateCell(chunk: new Chunk(cat.Name, _subHeaderFont), paddingAll:10);
                 subheaderCell.Colspan = 4;
                 reqTable.AddCell(subheaderCell);
 
@@ -714,13 +776,11 @@ namespace Dogbert2.Services
                 }
 
                 //_doc.Add(table);
-                var cell = new PdfPCell(reqTable);
+                var cell = CreateCell();
+                cell.AddElement(reqTable);
                 table.AddCell(cell);
             }
         }
-
-
-        
         private void AddUseCases(PdfPTable table, Project project)
         {
             // create a new table for each category of use cases
@@ -730,8 +790,11 @@ namespace Dogbert2.Services
                 var categoryTable = new PdfPTable(1);
                 categoryTable.TotalWidth = _pageWidth;
                 categoryTable.LockedWidth = true;
-                
-                categoryTable.AddCell(new PdfPCell(new Phrase(category.Name, _subHeaderFont)));
+                categoryTable.KeepTogether = true;
+                categoryTable.SplitLate = false;
+
+                // add in the category header
+                categoryTable.AddCell(CreateCell(chunk: new Chunk(category.Name, _subHeaderFont), paddingAll:10));
 
                 // deal with each use case in category
                 foreach (var useCase in project.UseCases.Where(a => a.RequirementCategory == category))
@@ -749,15 +812,15 @@ namespace Dogbert2.Services
             useCaseTable.TotalWidth = _pageWidth;
             useCaseTable.LockedWidth = true;
 
-            var nameCell = new PdfPCell(new Phrase(useCase.Name));
-            
-            var descriptionCell = new PdfPCell();
-            descriptionCell.AddElement(new Paragraph("Description"));
-            descriptionCell.AddElement(new Paragraph(useCase.Description));
+            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _font), paddingAll:5, borderAll: 1);
 
-            var rolesCell = new PdfPCell();
-            rolesCell.AddElement(new Paragraph("Roles"));
-            rolesCell.AddElement(new Paragraph(useCase.Roles));
+            var descriptionCell = CreateCell(paddingAll:5, borderAll: 1);
+            descriptionCell.AddElement(new Paragraph("Description", _font));
+            descriptionCell.AddElement(new Paragraph(useCase.Description, _font));
+
+            var rolesCell = CreateCell(paddingAll:5, borderAll:1);
+            rolesCell.AddElement(new Paragraph("Roles", _font));
+            rolesCell.AddElement(new Paragraph(useCase.Roles, _font));
 
             useCaseTable.AddCell(nameCell);
             useCaseTable.AddCell(descriptionCell);
@@ -766,70 +829,6 @@ namespace Dogbert2.Services
             return new PdfPCell(useCaseTable);
         }
         #endregion
-
-        /// <summary>
-        /// Creates a formatted cell for a table header
-        /// </summary>
-        /// <param name="text">Text to be put in cell</param>
-        /// <param name="backgroundColor">Background color</param>
-        /// <param name="borderWidth">Border width</param>
-        /// <param name="padding">Padding</param>
-        /// <returns></returns>
-        private PdfPCell CreateTableHeader(string text, CMYKColor backgroundColor = null, float? borderWidth = null, float? padding = null)
-        {
-            if (backgroundColor == null) backgroundColor = _baseColor;
-            if (!borderWidth.HasValue) borderWidth = 0;
-            if (!padding.HasValue) padding = 5;
-
-            var chunk = new Chunk(text, _tableHeaderFont);
-            var phrase = new Phrase(chunk);
-            var cell = new PdfPCell(phrase) { BackgroundColor = backgroundColor, BorderWidth = borderWidth.Value, Padding = padding.Value };
-
-            return cell;
-        }
-        /// <summary>
-        /// Defaults to creating cell with no border and no padding
-        /// </summary>
-        /// <returns></returns>
-        private PdfPCell CreateCell( Chunk chunk = null, Phrase phrase = null
-                                   , float? borderLeft = null, float? borderTop = null, float? borderRight = null, float? borderBottom = null
-                                   , float? paddingLeft = null, float? paddingTop = null, float? paddingRight = null, float? paddingBottom = null
-                                   , float? paddingAll = null)
-        {
-            if (!borderLeft.HasValue) borderLeft = 0;
-            if (!borderTop.HasValue) borderTop = 0;
-            if (!borderRight.HasValue) borderRight = 0;
-            if (!borderBottom.HasValue) borderBottom = 0;
-
-            if (!paddingLeft.HasValue) paddingLeft = 0;
-            if (!paddingTop.HasValue) paddingTop = 0;
-            if (!paddingRight.HasValue) paddingRight = 0;
-            if (!paddingBottom.HasValue) paddingBottom = 0;
-
-            if (paddingAll.HasValue)
-            {
-                paddingLeft = paddingAll;
-                paddingTop = paddingAll;
-                paddingRight = paddingAll;
-                paddingBottom = paddingAll;
-            }
-
-            if (chunk != null) phrase = new Phrase(chunk);
-
-            var cell = new PdfPCell(phrase)
-            {
-                BorderWidthLeft = borderLeft.Value,
-                BorderWidthTop = borderTop.Value,
-                BorderWidthRight = borderRight.Value,
-                BorderWidthBottom = borderBottom.Value,
-                PaddingLeft = paddingLeft.Value,
-                PaddingTop = paddingTop.Value,
-                PaddingRight = paddingRight.Value,
-                PaddingBottom = paddingBottom.Value
-            };
-
-            return cell;
-        }
     }
 
     /// <summary>
