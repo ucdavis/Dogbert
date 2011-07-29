@@ -17,8 +17,11 @@
     [LeadProgrammerId] INT           NULL,
     [DateAdded]        DATETIME      NULL,
     [LastUpdate]       DATETIME      NULL,
-    [Hide]             BIT           NOT NULL
+    [Hide]             BIT           NOT NULL,
+    [IsPublic]         BIT           NULL
 );
+
+
 
 
 

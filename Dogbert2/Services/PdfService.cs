@@ -740,8 +740,7 @@ namespace Dogbert2.Services
             elements.Add(new HtmlElement("ul", true, true));
 
             var cell = CreateCell();
-            var list = BuildListObject(elements, "ul", cell);
-            table.AddCell(cell);
+            BuildListObject(elements, "ul", cell);
         }
         private void AddRequirementTable(PdfPTable table, Project project)
         {
@@ -824,6 +823,8 @@ namespace Dogbert2.Services
             var useCaseTable = new PdfPTable(1);
             useCaseTable.TotalWidth = _pageWidth;
             useCaseTable.LockedWidth = true;
+            useCaseTable.KeepTogether = true;
+            useCaseTable.SplitLate = false;
 
             var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _sectionHeaderFont), paddingAll: padding, borderBottom:1);
             nameCell.BorderColorBottom = _baseColor;
@@ -858,7 +859,7 @@ namespace Dogbert2.Services
             // create the cell
             var preconditionCell = CreateCell(paddingAll: padding, borderAll: border);
             preconditionCell.AddElement(new Paragraph("Preconditions", _sectionHeaderFont));
-            preconditionCell.AddElement(BuildListObject(preconditions, "ul", preconditionCell));
+            BuildListObject(preconditions, "ul", preconditionCell);
 
             // postconditions
             var postconditions = new List<HtmlElement>();
@@ -882,7 +883,7 @@ namespace Dogbert2.Services
             // create the cell
             var postconditionCell = CreateCell(paddingAll: padding, borderAll: border);
             postconditionCell.AddElement(new Paragraph("Postconditions", _sectionHeaderFont));
-            postconditionCell.AddElement(BuildListObject(postconditions, "ul", postconditionCell));
+            BuildListObject(postconditions, "ul", postconditionCell);
 
             // steps
             var steps = new List<HtmlElement>();
@@ -910,7 +911,7 @@ namespace Dogbert2.Services
             // create the cell
             var stepsCell = CreateCell(paddingAll: padding, borderAll: border);
             stepsCell.AddElement(new Paragraph("Steps", _sectionHeaderFont));
-            stepsCell.AddElement(BuildListObject(steps, "ol", stepsCell));
+            BuildListObject(steps, "ol", stepsCell);
             stepsCell.PaddingBottom = 15;
 
             useCaseTable.AddCell(nameCell);
