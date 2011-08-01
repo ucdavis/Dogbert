@@ -532,7 +532,7 @@
     <file relUrl="Scripts/tiny_mce/plugins/layer/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Shared/EditorTemplates/Month.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/Worker/Create.cshtml" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.Core.pdb" publishTime="08/01/2011 07:37:27" />
+    <file relUrl="bin/Dogbert2.Core.pdb" publishTime="08/01/2011 07:47:25" />
     <file relUrl="Scripts/jquery-1.6.2.min.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/img/smiley-cool.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="bin/Castle.Core.dll" publishTime="07/14/2011 07:12:17" />
@@ -570,14 +570,14 @@
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/acronym.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/element_common.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/simple/skins/o2k7/content.css" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.Clients.dll" publishTime="08/01/2011 07:37:28" />
+    <file relUrl="bin/Dogbert2.Clients.dll" publishTime="08/01/2011 07:47:26" />
     <file relUrl="Views/SectionType/_SectionType.cshtml" publishTime="07/18/2011 07:57:03" />
     <file relUrl="Scripts/tiny_mce/plugins/media/media.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/UseCase/_UseCasePreconditions.cshtml" publishTime="07/28/2011 15:14:11" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/quicktime.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/langs/en_dlg.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/iframe.gif" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Views/Project/Details.cshtml" publishTime="08/01/2011 07:35:55" />
+    <file relUrl="Views/Project/Details.cshtml" publishTime="08/01/2011 07:46:29" />
     <file relUrl="Css/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Images/logo-ucdavis.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="bin/NHibernate.dll" publishTime="07/14/2011 07:12:18" />
@@ -636,7 +636,7 @@
     <file relUrl="Scripts/HtmlFallback.js" publishTime="07/25/2011 13:16:30" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/skins/o2k7/ui.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/Worker/_Worker.cshtml" publishTime="07/14/2011 07:12:22" />
-    <file relUrl="bin/Dogbert2.Clients.pdb" publishTime="08/01/2011 07:37:28" />
+    <file relUrl="bin/Dogbert2.Clients.pdb" publishTime="08/01/2011 07:47:26" />
     <file relUrl="Views/RequirementCategory/Edit.cshtml" publishTime="07/15/2011 13:31:42" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/link.htm" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/SectionType/Edit.cshtml" publishTime="07/14/2011 07:12:21" />
@@ -736,7 +736,7 @@
     <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/ProjectSection/_Tokens.cshtml" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.dll" publishTime="08/01/2011 07:37:29" />
+    <file relUrl="bin/Dogbert2.dll" publishTime="08/01/2011 07:47:28" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/flash.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="bin/DataAnnotationsExtensions.dll" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Views/Worker/Edit.cshtml" publishTime="07/14/2011 07:12:22" />
@@ -746,7 +746,7 @@
     <file relUrl="Views/ProjectSection/Edit.cshtml" publishTime="07/16/2011 08:21:49" />
     <file relUrl="UCDArch.txt" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Images/edit.png" publishTime="07/14/2011 07:12:19" />
-    <file relUrl="Views/Web.config" publishTime="08/01/2011 07:37:40" />
+    <file relUrl="Views/Web.config" publishTime="08/01/2011 07:47:29" />
     <file relUrl="Scripts/tiny_mce/themes/simple/skins/default/content.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Css/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Scripts/tiny_mce/plugins/media/langs/en_dlg.js" publishTime="07/14/2011 07:12:20" />
@@ -839,8 +839,8 @@
     <file relUrl="Views/Shared/EditorTemplates/EmailAddress.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/tiny_mce/plugins/preview/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/insertdatetime/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="bin/Dogbert2.pdb" publishTime="08/01/2011 07:37:29" />
-    <file relUrl="Web.config" publishTime="08/01/2011 07:37:40" />
+    <file relUrl="bin/Dogbert2.pdb" publishTime="08/01/2011 07:47:27" />
+    <file relUrl="Web.config" publishTime="08/01/2011 07:47:29" />
     <file relUrl="Css/jquery-ui-1.8.14.caes.css" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Views/Shared/EditorTemplates/Search.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Images/delete.png" publishTime="07/14/2011 07:12:19" />
@@ -872,7 +872,7 @@
     <file relUrl="Views/Requirement/Edit.cshtml" publishTime="07/15/2011 13:00:21" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/editor_template_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/pagebreak/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="bin/Dogbert2.Core.dll" publishTime="08/01/2011 07:37:27" />
+    <file relUrl="bin/Dogbert2.Core.dll" publishTime="08/01/2011 07:47:26" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/js/image.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Workgroup/_Workgroup.cshtml" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/editor_plugin.js" publishTime="07/14/2011 07:12:20" />

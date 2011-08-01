@@ -32,29 +32,29 @@ namespace Dogbert2.Services
         private CMYKColor _baseColor = new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f);
 
         // standard body font
-        private Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 10);
-        private Font _boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
-        private Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
-        private Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _subHeaderFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _sectionHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _captionFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _tableHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
+        private readonly Font _font = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+        private readonly Font _boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);
+        private readonly Font _italicFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.ITALIC);
+        private readonly Font _headerFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _subHeaderFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _sectionHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _captionFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _tableHeaderFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
 
         // fonts for the cover page
-        private BaseFont _dateBaseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
-        private Font _coverProjNameFont = new Font(Font.FontFamily.HELVETICA, 30f, Font.BOLD, BaseColor.BLACK);
-        private Font _coverSmallFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _coverFont = new Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
-        private Font _disclaimerFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD, BaseColor.LIGHT_GRAY);
+        private readonly BaseFont _dateBaseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+        private readonly Font _coverProjNameFont = new Font(Font.FontFamily.HELVETICA, 30f, Font.BOLD, BaseColor.BLACK);
+        private readonly Font _coverSmallFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _coverFont = new Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD, new CMYKColor(0.9922f, 0.4264f, 0.0000f, 0.4941f));
+        private readonly Font _disclaimerFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD, BaseColor.LIGHT_GRAY);
 
         // width of the content
         private float _pageWidth;
         private float _pageHeight;
 
         // html tag types reuqired to be scanned
-        private List<string> blockTags = new List<string>() { "p", "ul", "ol" };
-        private List<string> listTags = new List<string>() { "ul", "ol" };
+        private readonly List<string> blockTags = new List<string>() { "p", "ul", "ol" };
+        private readonly List<string> listTags = new List<string>() { "ul", "ol" };
         #endregion
 
         // current documents
