@@ -104,8 +104,23 @@
 	</ul>
 
     <div id="srs-container">
-    @Html.ActionLink("Generate SRS", "Index", "Srs", new { id = Model.Id, draft = false }, new { @class = "large-btn", style = "display: inline-block;" })
-    @Html.ActionLink("Generate Draft SRS", "Index", "Srs", new { id = Model.Id, draft = true }, new { @class = "large-btn", style = "display: inline-block;" })
+
+    @if (ViewBag.AccessValidator.HasAccess(HttpContext.Current.User.Identity.Name, Model) == Dogbert2.Services.AccessLevel.Edit)
+    { 
+        @Html.ActionLink("Generate SRS", "Index", "Srs", new { id = Model.Id, draft = false }, new { @class = "large-btn", style = "display: inline-block;" })
+        @Html.ActionLink("Generate Draft SRS", "Index", "Srs", new { id = Model.Id, draft = true }, new { @class = "large-btn", style = "display: inline-block;" })
+    }
+    else
+    { 
+        if (Model.StatusCode.Id == 'P' || Model.StatusCode.Id == 'B')
+        { 
+            @Html.ActionLink("Generate SRS", "Index", "Srs", new { id = Model.Id, draft = false }, new { @class = "large-btn", style = "display: inline-block;" })
+        }
+        else
+        { 
+            @Html.ActionLink("Generate SRS", "Index", "Srs", new { id = Model.Id, draft = true }, new { @class = "large-btn", style = "display: inline-block;" })
+        }
+    }
     </div>
 
 </fieldset>

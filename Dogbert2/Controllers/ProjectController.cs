@@ -117,6 +117,7 @@ namespace Dogbert2.Controllers
             if (redirect != null) return redirect;
 
             ViewBag.PublicList = publicList;
+            ViewBag.AccessValidator = _accessValidator;
 
             return View(project);
         }
