@@ -492,9 +492,11 @@ namespace Dogbert2.Services
                             {
                                 // build the list object
                                 var paragraph = BuildListObject(elements, reader.Name, pCell);
-                                
-                                if (pCell != null) pCell.AddElement(paragraph);
-                                else _doc.Add(paragraph);
+
+                                if (pCell == null) _doc.Add(paragraph);
+
+                                //if (pCell != null) pCell.AddElement(paragraph);
+                                //else _doc.Add(paragraph);
 
                                 elements.Clear();
                             }
@@ -741,6 +743,8 @@ namespace Dogbert2.Services
 
             var cell = CreateCell();
             BuildListObject(elements, "ul", cell);
+
+            table.AddCell(cell);
         }
         private void AddRequirementTable(PdfPTable table, Project project)
         {

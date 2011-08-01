@@ -19,6 +19,7 @@
 	<thead>
 		<tr>
 			<th></th>
+            <th>Id</th>
 			<th>
 				Description
 			</th>
@@ -43,6 +44,9 @@
 					<img src='@Url.Image("edit.png")' />
 				</a>
 			</td>
+            <td>
+                @item.RequirementId
+            </td>
 			<td>
 				@item.Description
 			</td>
