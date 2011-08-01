@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
@@ -184,6 +185,7 @@ namespace Dogbert2.Controllers
 
             if (ModelState.IsValid)
             {
+                fileToEdit.LastUpdate = DateTime.Now;
                 _fileRepository.EnsurePersistent(fileToEdit);
 
                 Message = "File Edited Successfully";
