@@ -341,27 +341,50 @@ namespace Dogbert2.Services
         /// <param name="table"></param>
         private void AddToPage(PdfPTable table)
         {
-            // automatically insert new page if current contents goes over 80%
-            if (_currentHeight > _pageHeight * .8)
+            // is current content over 80%
+            var isOverEighty = _currentHeight > (_pageHeight*.8);
+
+            // will new content overrun page
+            var willOverrun = (_currentHeight + table.TotalHeight) > _pageHeight;
+
+            // overrun amount
+            var overrunAmt = willOverrun ? (_currentHeight + table.TotalHeight)%_pageHeight : -1;
+
+            // % overrun of page
+            var percentOverrun = overrunAmt > 0 ? overrunAmt/_pageHeight : -1;
+
+            // number of whole pages to house table
+            var numPages = Math.Floor(table.TotalHeight/_pageHeight);
+
+            if (isOverEighty)
             {
-                // add a new page
+                // add new page
                 _doc.NewPage();
 
-                // set the height to how much it takes on the last page
+                // just set the height to whatever is left on the last page of the table
                 _currentHeight = table.TotalHeight % _pageHeight;
             }
-            // page is less than 80% and table will not overrun page
-            else if (_currentHeight + table.TotalHeight < _pageHeight)
+            // will overrun but only by like 10% and take less than one whole page
+            else if (willOverrun && percentOverrun < .10 && numPages == 0)
             {
-                // just add the height into the count
-                _currentHeight += table.TotalHeight;
+                // add new page
+                _doc.NewPage();
+
+                // just set the height to whatever is left on the last page of the table
+                _currentHeight = table.TotalHeight%_pageHeight;
             }
-            // page is less than 80% and table will overrun page
+            // current contents less than 80% and will overrun, but take more than 10% of next page
+            else if (willOverrun)
+            {
+                // add the height of what is left on the last page
+                _currentHeight = (_currentHeight + table.TotalHeight) % _pageHeight;
+            }
+            // should not overrun
             else
             {
-                _currentHeight = table.TotalHeight % _pageHeight;
+                _currentHeight += table.TotalHeight;
             }
-
+            
             _doc.Add(table);
         }
 
