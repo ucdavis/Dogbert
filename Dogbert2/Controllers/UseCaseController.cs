@@ -119,6 +119,7 @@ namespace Dogbert2.Controllers
 
             var newUseCase = new UseCase(){Project = project};
             TransferValues(useCase, newUseCase);
+            newUseCase.UseCaseId = string.Format("U{0}", project.UseCases.Count + 1);
 
             ModelState.Clear();
             newUseCase.TransferValidationMessagesTo(ModelState);

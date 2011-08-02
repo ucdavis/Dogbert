@@ -1,0 +1,66 @@
+﻿@model Dogbert2.Models.TaskViewModel
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>TaskViewModel</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+
+            <li><div class="editor-label">Project:</div>
+                <div class="editor-field">@Model.Project.Name</div>
+            </li>
+
+            <li><div class="editor-label">@Html.LabelFor(model => model.Task.TaskId)</div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Task.TaskId)
+                    @Html.ValidationMessageFor(model => model.Task.TaskId)
+                </div>
+            </li>
+            <li><div class="editor-label">@Html.LabelFor(model => model.Task.Worker)</div>
+                <div class="editor-field">
+                    @this.Select("Task.Worker").Options(Model.Workers, x=>x.Id, x=>x.FullName).FirstOption("--Select Worker--").Selected(Model.Task.Worker != null ? Model.Task.Worker.Id.ToString() : string.Empty)
+                    @Html.ValidationMessageFor(model => model.Task.Worker)
+                </div>
+            </li>
+            <li><div class="editor-label">@Html.LabelFor(model => model.Task.Requirement)</div>
+                <div class="editor-field">
+                    @this.Select("Task.Requirement").Options(Model.Project.Requirements.OrderBy(a =>a.RequirementId ), x=>x.Id, x => string.Format("{0}-{1}", x.RequirementId, x.Description)).FirstOption("--Select Requirement--").Selected(Model.Task.Requirement != null ? Model.Task.Requirement.Id.ToString() : string.Empty)
+                    @Html.ValidationMessageFor(model => model.Task.Requirement)
+                </div>
+            </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Task.Description) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Task.Description)
+				    @Html.ValidationMessageFor(model => model.Task.Description)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Task.Comments) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Task.Comments)
+				    @Html.ValidationMessageFor(model => model.Task.Comments)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.Task.Complete) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.Task.Complete)
+				    @Html.ValidationMessageFor(model => model.Task.Complete)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label"><label>&nbsp;</label></div>
+			    <div class="editor-field"><input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { projectId = Model.Project.Id })</div>
+		    </li>
+	    </ul>
+	    </fieldset>
+    }

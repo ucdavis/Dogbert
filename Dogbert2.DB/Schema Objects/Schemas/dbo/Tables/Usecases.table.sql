@@ -6,8 +6,11 @@
     [ProjectId]             INT           NOT NULL,
     [RequirementCategoryId] INT           NOT NULL,
     [DateAdded]             DATETIME      NOT NULL,
-    [DateModified]          DATETIME      NOT NULL
+    [DateModified]          DATETIME      NOT NULL,
+    [UseCaseId]             VARCHAR (5)   NULL
 );
+
+
 
 
 

@@ -1,0 +1,49 @@
+﻿@model Dogbert2.Core.Domain.Task
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+		<li>@Html.ActionLink("Back to List", "Index", new { projectId = Model.Project.Id })</li>
+	</ul>
+}
+
+<fieldset class="display-form">
+    <legend>Task</legend>
+	<ul>
+        <li>
+            <div class="display-label">Requirement</div>
+            <div class="display-details">@string.Format("{0} - {1}", Model.Requirement.RequirementId, Model.Requirement.Description)</div>
+        </li>
+        <li>
+            <div class="display-label">Worker</div>
+            <div class="display-details">@Model.Worker.FullName</div>
+        </li>
+		<li>
+			<div class="display-label">Description</div>
+			<div class="display-details">@Model.Description</div>
+		</li>
+		<li>
+			<div class="display-label">Comments</div>
+			<div class="display-details">@Model.Comments</div>
+		</li>
+		<li>
+			<div class="display-label">Complete</div>
+			<div class="display-details">@Model.Complete</div>
+		</li>
+		<li>
+			<div class="display-label">DateCreated</div>
+			<div class="display-details">@String.Format("{0:g}", Model.DateCreated)</div>
+		</li>
+		<li>
+			<div class="display-label">LastUpdate</div>
+			<div class="display-details">@String.Format("{0:g}", Model.LastUpdate)</div>
+		</li>
+	</ul>
+</fieldset>
+
+

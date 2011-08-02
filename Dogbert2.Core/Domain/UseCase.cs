@@ -33,6 +33,8 @@ namespace Dogbert2.Core.Domain
         public virtual string Description { get; set; }
         [StringLength(100)]
         public virtual string Roles { get; set; }
+        [StringLength(5)]
+        public virtual string UseCaseId { get; set; }
 
         public virtual DateTime DateAdded { get; set; }
         public virtual DateTime DateModified { get; set; }

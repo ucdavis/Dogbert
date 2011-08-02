@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Dogbert2.Core.Domain.Task>
+
+@{
+	ViewBag.Title = "Project Tasks";
+}
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Create New", "Create", new { projectId = ViewBag.ProjectId })</li>
+	</ul>
+}
+
+
+<table class='dt-table'>
+	<thead>
+		<tr>
+			<th></th>
+
+            <th>
+                Id
+            </th>
+
+            <th>Req Id</th>
+
+            <th>Description</th>
+
+			<th>
+				Complete
+            </th>
+            <th>
+                Worker                
+            </th>
+			<th>
+				Last Update
+			</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+    @{ var odd = false; }
+    @foreach (var item in Model) {
+		    <tr class="@(odd ? "odd": "even")">
+			    <td>
+                    <a href='@Url.Action("Details", new {id=item.Id})'>
+					    <img src='@Url.Image("details.png")' />
+				    </a>
+				    <a href='@Url.Action("Edit", new {id=item.Id})'>
+					    <img src='@Url.Image("edit.png")' />
+				    </a>
+			    </td>
+                <td>
+                    @item.TaskId
+                </td>
+                <td>
+                    @item.Requirement.RequirementId
+                </td>
+			    <td>
+				    @item.Description
+			    </td>
+			    <td>
+				    @item.Complete
+			    </td>
+                <td>
+                    @item.Worker.FullName
+                </td>
+			    <td>
+				    @String.Format("{0:g}", item.LastUpdate)
+			    </td>
+			    <td>
+				    <a href='@Url.Action("Delete", new { id = item.Id })'>
+					    <img src='@Url.Image("delete.png")' />
+				    </a>
+			    </td>
+		
+		    </tr>
+		    odd = !odd;
+    }
+	</tbody>
+</table>

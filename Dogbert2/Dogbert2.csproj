@@ -156,6 +156,7 @@
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\SrsController.cs" />
     <Compile Include="Controllers\SectionTypeController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UseCaseController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Controllers\WorkgroupController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\RequirementCategoryViewModel.cs" />
     <Compile Include="Models\RequirementViewModel.cs" />
     <Compile Include="Models\SectionTypeViewModel.cs" />
+    <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\UseCaseViewModel.cs" />
     <Compile Include="Models\WorkgroupViewModel.cs" />
     <Compile Include="Models\WorkgroupWorkerViewModel.cs" />
@@ -663,6 +665,12 @@
     <Content Include="Views\UseCase\_UseCasePreconditions.cshtml" />
     <Content Include="Views\UseCase\_UseCasePostconditions.cshtml" />
     <Content Include="Views\Project\Public.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\Task\Create.cshtml" />
+    <Content Include="Views\Task\_task.cshtml" />
+    <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\Task\Delete.cshtml" />
+    <Content Include="Views\Task\Details.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

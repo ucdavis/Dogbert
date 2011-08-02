@@ -1,0 +1,13 @@
+﻿@model TaskViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section SubNav{
+    <ul class="navigation">
+        <li>@Html.ActionLink("Back to List", "Index", new {projectId = Model.Project.Id})</li>
+    </ul>
+}
+
+@Html.Partial("_task")

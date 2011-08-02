@@ -47,6 +47,7 @@ namespace Dogbert2.Core.Domain
         public virtual DateTime LastModified { get; set; }
 
         public virtual IList<UseCase> UseCases { get; set; }
+        public virtual IList<Task> Tasks { get; set; }
     }
 
     public class RequirementMap : ClassMap<Requirement>
@@ -73,6 +74,7 @@ namespace Dogbert2.Core.Domain
                 .ParentKeyColumn("RequirementId")
                 .ChildKeyColumn("UseCaseId")
                 .Table("UseCaseXRequirements").Cascade.SaveUpdate();
+            HasMany(x => x.Tasks).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }

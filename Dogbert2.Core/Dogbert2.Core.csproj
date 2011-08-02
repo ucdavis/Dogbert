@@ -70,6 +70,7 @@
     <Compile Include="Domain\ProjectType.cs" />
     <Compile Include="Domain\ProjectWorkgroup.cs" />
     <Compile Include="Domain\StatusCode.cs" />
+    <Compile Include="Domain\Task.cs" />
     <Compile Include="Domain\UseCase.cs" />
     <Compile Include="Domain\UseCasePostcondition.cs" />
     <Compile Include="Domain\UseCasePrecondition.cs" />

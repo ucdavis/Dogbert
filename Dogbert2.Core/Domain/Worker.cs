@@ -57,6 +57,8 @@ namespace Dogbert2.Core.Domain
         /// </summary>
         public virtual IList<Project> LeadProgrammers { get; set; }
 
+        public virtual IList<Task> Tasks { get; set; }
+
         #region Calculated Fields
         [Display(Name="Workgroups")]
         public virtual string WorkgroupNames { 
@@ -84,12 +86,10 @@ namespace Dogbert2.Core.Domain
             Map(x => x.LastName);
             Map(x => x.IsActive);
 
-            //HasManyToMany(x => x.Workgroups)
-            //    .ParentKeyColumn("WorkerId").ChildKeyColumn("WorkgroupId")
-            //    .Table("WorkgroupsXWorkers").Cascade.SaveUpdate();
             HasMany(x => x.WorkgroupWorkers).Inverse();
             HasMany(x => x.ProjectManagers).KeyColumn("ProjectManagerId").Inverse();
             HasMany(x => x.LeadProgrammers).KeyColumn("LeadProgrammerId").Inverse();
+            HasMany(x => x.Tasks).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }
