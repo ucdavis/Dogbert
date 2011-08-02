@@ -3,7 +3,7 @@
 <ul class="navigation">
     <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @class = ViewBag.NavigationKey == "Home" ? "currentpage" : string.Empty })</li>
     <li>@Html.ActionLink("Projects", "Index", "Project", new { }, new { @class = ViewBag.NavigationKey == "Project" ? "currentpage" : string.Empty })</li>
-    
+    <li>@Html.ActionLink("Tasks", "MyTasks", "Task", new {}, new {@class = ViewBag.NavigationKey == "Task" ? "currentpage" : string.Empty})</li>
     @if (User.IsInRole(Dogbert2.Filters.RoleNames.Admin))
     { 
         <li>@Html.ActionLink("Admin", "Admin", "Home", new { }, new { @class = ViewBag.NavigationKey == "Admin" ? "currentpage" : string.Empty })</li>

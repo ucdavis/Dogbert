@@ -1098,11 +1098,19 @@ namespace Dogbert2.Services
     /// Used for applying the header and footer
     /// </summary>
     /// <remarks>
+    /// Used for just how to use this event helper
     /// http://www.developerbarn.com/blogs/richyrich/32-using-itextsharp-generate-pdf-header-footer.html
+    /// 
+    /// For putting the Total number of pages
+    /// http://www.mazsoft.com/blog/post/2008/04/30/Code-sample-for-using-iTextSharp-PDF-library.aspx
     /// </remarks>
     public class pdfPage : PdfPageEventHelper
     {
         private readonly Project _project;
+
+        // template for the total page numbers
+        private PdfTemplate template;
+        private PdfContentByte cb;
 
         public pdfPage(Project project)
         {
@@ -1159,8 +1167,7 @@ namespace Dogbert2.Services
                 var table = new PdfPTable(2);
                 table.TotalWidth = CalculateWidth(document);
 
-                var leftcell =
-                    new PdfPCell(new Phrase(string.Format("{0} of {1}", document.PageNumber, "unknown"), _font));
+                var leftcell = new PdfPCell(new Phrase(string.Format("{0} of ", document.PageNumber), _font));
                 var rightcell = new PdfPCell(new Phrase(_project.WorkgroupNames));
 
                 leftcell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -1174,7 +1181,29 @@ namespace Dogbert2.Services
                 var x = document.BottomMargin;
 
                 table.WriteSelectedRows(0, -1, y, x, writer.DirectContent);
+
+                // add this in for the total # of pages
+                cb.AddTemplate(template, 67, 33.5f);
             }
+        }
+
+        public override void OnOpenDocument(PdfWriter writer, Document document)
+        {
+            cb = writer.DirectContent;
+            template = cb.CreateTemplate(50, 50);
+
+            base.OnOpenDocument(writer, document);
+        }
+
+        public override void OnCloseDocument(PdfWriter writer, Document document)
+        {
+            template.BeginText();
+            template.SetFontAndSize(BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED), 12);
+            template.SetTextMatrix(0, 0);
+            template.ShowText((writer.PageNumber - 1).ToString());
+            template.EndText();
+
+            base.OnCloseDocument(writer, document);
         }
 
         /// <summary>
