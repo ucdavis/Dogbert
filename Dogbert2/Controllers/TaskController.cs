@@ -137,6 +137,21 @@ namespace Dogbert2.Controllers
             taskToCreate.Project = project;
             taskToCreate.Requirement = task.Requirement;
 
+            if (project.Tasks.Count > 0)
+            {
+                // set the task id
+                // get the highest task id
+                var maxId = project.Tasks.Select(a => a.TaskId).Max();
+                // parse the int
+                var mid = maxId.Substring(1, maxId.Length - 1);
+                taskToCreate.TaskId = string.Format("T{0}", Convert.ToInt32(mid) + 1);    
+            }
+            else
+            {
+                taskToCreate.TaskId = "T1";
+            }
+            
+
             ModelState.Clear();
             taskToCreate.TransferValidationMessagesTo(ModelState);
 

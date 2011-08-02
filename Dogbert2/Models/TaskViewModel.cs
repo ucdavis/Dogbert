@@ -20,7 +20,7 @@ namespace Dogbert2.Models
         {
             Check.Require(repository != null, "Repository must be supplied");
 			
-            var viewModel = new TaskViewModel {Task = new Task() {TaskId = string.Format("T{0}",project.Tasks.Count + 1)}, Project = project};
+            var viewModel = new TaskViewModel {Task = new Task(), Project = project};
 
             // build the list of workers
             var workers = new List<Worker>();

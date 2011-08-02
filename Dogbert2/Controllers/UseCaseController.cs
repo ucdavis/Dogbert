@@ -121,6 +121,20 @@ namespace Dogbert2.Controllers
             TransferValues(useCase, newUseCase);
             newUseCase.UseCaseId = string.Format("U{0}", project.UseCases.Count + 1);
 
+            if (project.UseCases.Count > 0)
+            {
+                // set the task id
+                // get the highest use case id
+                var maxId = project.UseCases.Select(a => a.UseCaseId).Max();
+                // parse the int
+                var mid = maxId.Substring(1, maxId.Length - 1);
+                newUseCase.UseCaseId = string.Format("T{0}", Convert.ToInt32(mid) + 1);
+            }
+            else
+            {
+                newUseCase.UseCaseId = "U1";
+            }
+
             ModelState.Clear();
             newUseCase.TransferValidationMessagesTo(ModelState);
            

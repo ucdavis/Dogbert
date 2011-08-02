@@ -103,7 +103,19 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-            requirement.RequirementId = string.Format("R{0}", project.Requirements.Count() + 1);
+            if (project.Requirements.Count > 0)
+            {
+                // get the highest requirement id
+                var maxId = project.Requirements.Select(a => a.RequirementId).Max();
+                // parse the int
+                var mid = maxId.Substring(1, maxId.Length - 1);
+                requirement.RequirementId = string.Format("R{0}", Convert.ToInt32(mid) + 1);    
+            }
+            else
+            {
+                requirement.RequirementId = "R1";
+            }
+
             requirement.Project = project;
 
             ModelState.Clear();

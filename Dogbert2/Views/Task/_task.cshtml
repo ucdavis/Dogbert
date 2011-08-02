@@ -12,12 +12,6 @@
                 <div class="editor-field">@Model.Project.Name</div>
             </li>
 
-            <li><div class="editor-label">@Html.LabelFor(model => model.Task.TaskId)</div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Task.TaskId)
-                    @Html.ValidationMessageFor(model => model.Task.TaskId)
-                </div>
-            </li>
             <li><div class="editor-label">@Html.LabelFor(model => model.Task.Worker)</div>
                 <div class="editor-field">
                     @this.Select("Task.Worker").Options(Model.Workers, x=>x.Id, x=>x.FullName).FirstOption("--Select Worker--").Selected(Model.Task.Worker != null ? Model.Task.Worker.Id.ToString() : string.Empty)

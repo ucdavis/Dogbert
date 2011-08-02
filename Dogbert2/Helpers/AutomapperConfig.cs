@@ -77,6 +77,7 @@ namespace Dogbert2.Helpers
 
             CreateMap<UseCase, UseCase>()
                 .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.UseCaseId, x => x.Ignore())
                 .ForMember(x => x.DateAdded, x => x.Ignore())
                 .ForMember(x => x.UseCaseSteps, x => x.Ignore())
                 .ForMember(x => x.Requirements, x => x.Ignore())
@@ -91,6 +92,7 @@ namespace Dogbert2.Helpers
 
             CreateMap<Task, Task>()
                 .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.TaskId, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore())
                 .ForMember(x => x.DateCreated, x => x.Ignore());
         }
