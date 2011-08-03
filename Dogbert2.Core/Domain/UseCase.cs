@@ -93,6 +93,7 @@ namespace Dogbert2.Core.Domain
             Map(x => x.DateAdded);
             Map(x => x.DateModified);
             Map(x => x.Roles);
+            Map(x => x.UseCaseId);
 
             References(x => x.Project);
             References(x => x.RequirementCategory);

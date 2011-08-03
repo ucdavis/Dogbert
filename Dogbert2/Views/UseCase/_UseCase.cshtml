@@ -7,11 +7,17 @@
 	    <legend>Use Case</legend>
 	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
 	    <ul>
+            @if (!string.IsNullOrWhiteSpace(Model.UseCase.UseCaseId))
+            {
+                <li><div class="editor-label">Use Case Id</div>
+                    <div class="editor-field">@Model.UseCase.UseCaseId</div>
+                </li>
+            }
 		    <li><div class="editor-label required">
                     @Html.LabelFor(model => model.UseCase.RequirementCategory)<span>*</span>
                 </div>
                 <div class="editor-field">
-                    @this.Select("UseCase.RequirementCategory").Options(Model.RequirementCategories, x=>x.Id, x=>x.Name).FirstOption("--Select Category--").Selected(Model.UseCase.RequirementCategory != null ? Model.UseCase.RequirementCategory.Id.ToString() : string.Empty)
+                    @this.Select("UseCase.RequirementCategory").Options(Model.RequirementCategories, x => x.Id, x => x.Name).FirstOption("--Select Category--").Selected(Model.UseCase.RequirementCategory != null ? Model.UseCase.RequirementCategory.Id.ToString() : string.Empty)
                     @Html.ValidationMessageFor(model => model.UseCase.RequirementCategory)
                 </div>
             </li>
@@ -55,7 +61,7 @@
         <ul>
             <li>
 			    <div class="editor-label"><label>&nbsp;</label></div>
-			    <div class="editor-field"><input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id=Model.Project.Id })</div>
+			    <div class="editor-field"><input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { id = Model.Project.Id })</div>
 		    </li>
         </ul>
     </fieldset>
