@@ -16,6 +16,7 @@ namespace Dogbert2.Controllers
     /// <summary>
     /// Controller for the Task class
     /// </summary>
+    [Authorize]
     public class TaskController : ApplicationController
     {
 	    private readonly IRepository<Task> _taskRepository;
@@ -35,7 +36,9 @@ namespace Dogbert2.Controllers
         /// <returns></returns>
         public ActionResult MyTasks()
         {
-            return View();
+            var viewModel = MyTasksViewModel.Create(Repository, CurrentUser.Identity.Name);
+
+            return View(viewModel);
         }
 
         /// <summary>

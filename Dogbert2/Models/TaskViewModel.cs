@@ -42,4 +42,22 @@ namespace Dogbert2.Models
             return viewModel;
         }
     }
+
+    public class MyTasksViewModel
+    {
+        public IEnumerable<Task> Tasks { get; set; }
+        public IEnumerable<Project> Projects { get; set; }
+
+        public static MyTasksViewModel Create(IRepository repository, string loginId)
+        {
+            Check.Require(repository != null, "repository is required.");
+
+            var tasks = repository.OfType<Task>().Queryable.Where(a => a.Worker.LoginId == loginId);
+            var projects = tasks.Where(a => !a.Complete ).Select(a => a.Project).Distinct();
+
+            var viewModel = new MyTasksViewModel() {Tasks = tasks, Projects = projects};
+
+            return viewModel;
+        }
+    }
 }

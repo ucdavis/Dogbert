@@ -1,0 +1,50 @@
+﻿@model MyTasksViewModel
+
+@{
+    ViewBag.Title = "My Tasks";
+}
+
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#tabs").tabs();
+        });
+    </script>
+}
+
+<div id="tabs">
+
+    <ul>
+        @foreach (var project in Model.Projects)
+        { 
+            <li><a href="@(string.Format("#project-{0}", project.Id))">@project.Name</a></li>
+        }
+    </ul>
+
+    @foreach (var project in Model.Projects)
+    { 
+        <div id="@(string.Format("project-{0}", project.Id))">
+
+            <table class="dt-table nofirsticon">
+                <thead>
+                    <th></th>
+                    <th>Description</th>
+                    <th>Comments</th>
+                </thead>
+                <tbody>
+                    @foreach(var task in Model.Tasks.Where(a => a.Project == project))
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@task.Description</td>
+                            <td>@task.Comments</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+
+</div>
