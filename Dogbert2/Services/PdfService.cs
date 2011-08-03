@@ -757,6 +757,14 @@ namespace Dogbert2.Services
 
                 elements.Add(new HtmlElement(string.Format("- {0}", term.Definition)));
 
+                // add the reference if there is one
+                if (!string.IsNullOrWhiteSpace(term.Src))
+                {
+                    elements.Add(new HtmlElement("em", true));
+                    elements.Add(new HtmlElement(string.Format(" [{0}]", term.Src)));
+                    elements.Add(new HtmlElement("em", true, true));
+                }
+
                 // close li
                 elements.Add(new HtmlElement("li", true, true));
             }
@@ -833,8 +841,6 @@ namespace Dogbert2.Services
                     categoryTable.AddCell(BuildUseCaseTable(useCase));
                 }
 
-                //table.AddCell(new PdfPCell(categoryTable));
-
                 var cell = CreateCell();
                 cell.AddElement(categoryTable);
                 table.AddCell(cell);
@@ -853,7 +859,7 @@ namespace Dogbert2.Services
             useCaseTable.KeepTogether = true;
             useCaseTable.SplitLate = false;
 
-            var nameCell = CreateCell(chunk: new Chunk(useCase.Name, _sectionHeaderFont), paddingAll: padding, borderBottom:1);
+            var nameCell = CreateCell(chunk: new Chunk(string.Format("{0} ({1})",useCase.Name, useCase.UseCaseId), _sectionHeaderFont), paddingAll: padding, borderBottom:1);
             nameCell.BorderColorBottom = _baseColor;
 
             var descriptionCell = CreateCell(paddingAll: padding, borderAll: border);
