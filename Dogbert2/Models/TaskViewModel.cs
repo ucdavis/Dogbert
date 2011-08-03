@@ -26,7 +26,7 @@ namespace Dogbert2.Models
                                 {
                                     Task = task ?? new Task(), 
                                     Project = project, 
-                                    RequirementCategories = project.RequirementCategories,
+                                    RequirementCategories = project.RequirementCategories.Where(a => a.IsActive),
                                     Requirements = task != null ? project.Requirements.Where(a => a.RequirementCategory == task.RequirementCategory).ToList() : new List<Requirement>()
                                 };
 
