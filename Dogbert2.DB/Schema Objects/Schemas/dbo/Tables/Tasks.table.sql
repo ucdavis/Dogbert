@@ -8,6 +8,8 @@
     [WorkerId]      INT           NOT NULL,
     [DateCreated]   DATETIME      NOT NULL,
     [LastUpdate]    DATETIME      NOT NULL,
-    [TaskId]        VARCHAR (5)   NULL
+    [TaskId]        VARCHAR (5)   NOT NULL
 );
+
+
 
