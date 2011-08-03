@@ -1,0 +1,31 @@
+﻿#requirement-container{}
+    
+.requirement
+{
+    background-color: #E8E8E8;
+
+    border: 1px solid black;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    cursor: pointer;
+}
+.selected, .requirement:hover
+{
+    background-color: #074F84;
+    color: #FFFFFF;
+}
+.requirement div.id
+{
+    font-weight: bold;
+    display: inline-block;
+    width: 50px;
+    vertical-align: top;
+}
+.requirement div.description
+{
+    display: inline-block;
+    width: 900px;
+}
+    

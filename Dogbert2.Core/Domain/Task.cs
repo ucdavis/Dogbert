@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FluentNHibernate.Mapping;
 using UCDArch.Core.DomainModel;
@@ -13,6 +14,8 @@ namespace Dogbert2.Core.Domain
 
             DateCreated = DateTime.Now;
             LastUpdate = DateTime.Now;
+
+            Requirements = new List<Requirement>();
         }
 
         [StringLength(5)]
@@ -28,12 +31,14 @@ namespace Dogbert2.Core.Domain
         [Required]
         public virtual Project Project { get; set; }
         [Required]
-        public virtual Requirement Requirement { get; set; }
-        [Required]
+        [Display(Name="Category")]
+        public virtual RequirementCategory RequirementCategory { get; set; }
         public virtual Worker Worker { get; set; }
 
         public virtual DateTime DateCreated { get; set; }
         public virtual DateTime LastUpdate { get; set; }
+
+        public virtual IList<Requirement> Requirements { get; set; }
     }
 
     public class TaskMap : ClassMap<Task>
@@ -48,11 +53,13 @@ namespace Dogbert2.Core.Domain
             Map(x => x.Complete);
 
             References(x => x.Project);
-            References(x => x.Requirement);
+            References(x => x.RequirementCategory);
             References(x => x.Worker);
 
             Map(x => x.DateCreated);
             Map(x => x.LastUpdate);
+
+            HasManyToMany(x => x.Requirements).ParentKeyColumn("TaskId").ChildKeyColumn("RequirementId").Table("TasksXRequirements").Cascade.SaveUpdate();
         }
     }
 }

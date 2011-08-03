@@ -4,7 +4,7 @@
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary(true)
     <fieldset>
-	    <legend>TaskViewModel</legend>
+	    <legend>Tasks</legend>
 	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
 	    <ul>
 
@@ -18,15 +18,17 @@
                     @Html.ValidationMessageFor(model => model.Task.Worker)
                 </div>
             </li>
-            <li><div class="editor-label">@Html.LabelFor(model => model.Task.Requirement)</div>
+            <li><div class="editor-label required">@Html.LabelFor(model => model.Task.RequirementCategory)<span>*</span></div>
                 <div class="editor-field">
-                    @this.Select("Task.Requirement").Options(Model.Project.Requirements.OrderBy(a =>a.RequirementId ), x=>x.Id, x => string.Format("{0}-{1}", x.RequirementId, x.Description)).FirstOption("--Select Requirement--").Selected(Model.Task.Requirement != null ? Model.Task.Requirement.Id.ToString() : string.Empty)
-                    @Html.ValidationMessageFor(model => model.Task.Requirement)
+                    @this.Select("Task.RequirementCategory").Options(Model.RequirementCategories.OrderBy(a=>a.Name), x=>x.Id, x => x.Name).FirstOption("--Select Requirement--").Selected(Model.Task.RequirementCategory != null ? Model.Task.RequirementCategory.Id.ToString() : string.Empty)
+                    @Html.ValidationMessageFor(model => model.Task.RequirementCategory)
+                    <em>*Changing will clear selected requirements below</em>
                 </div>
             </li>
 		    <li>
-			    <div class="editor-label">
+			    <div class="editor-label required">
 				    @Html.LabelFor(model => model.Task.Description) 
+                    <span>*</span>
 			    </div>
 			    <div class="editor-field">
 				    @Html.EditorFor(model => model.Task.Description)
@@ -51,10 +53,57 @@
 				    @Html.ValidationMessageFor(model => model.Task.Complete)
 			    </div>
 		    </li>
-		    <li>
+	    </ul>
+	    </fieldset>
+        <fieldset>
+            
+            <legend>Requirement(s)</legend>
+
+            <div id="requirement-container">
+                @foreach (var requirement in Model.Requirements)
+                { 
+                    var selected = Model.Task.Requirements.Contains(requirement);
+                    
+                    <div class="requirement @(selected ? "selected" : string.Empty)" data-id="@requirement.Id">
+                    
+                        <div class="id">@requirement.RequirementId</div>
+
+                        <div class="description">@requirement.Description</div>
+
+                        @if(selected)
+                        {
+                            @Html.Hidden("Requirements", requirement.Id)
+                        }
+                    
+                    </div>
+                }
+            </div>
+
+        </fieldset>
+        <fieldset>
+            <ul>
+            <li>
 			    <div class="editor-label"><label>&nbsp;</label></div>
 			    <div class="editor-field"><input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new { projectId = Model.Project.Id })</div>
 		    </li>
-	    </ul>
-	    </fieldset>
+            </ul>
+        </fieldset>
     }
+
+
+
+    <div id="requirement-template" style="display:none;">
+    
+        <div class="requirement" data-id="${Id}">
+            <div class="id">${RequirementId}</div>
+            <div class="description">${Description}</div>
+        </div>
+
+    </div>
+
+    <div id="selected-template" style="display:none;">
+
+        @Html.Hidden("Requirements", "${Id}")
+
+    </div>
+

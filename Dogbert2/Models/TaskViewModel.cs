@@ -15,12 +15,20 @@ namespace Dogbert2.Models
         public Project Project { get; set; }
 
         public IEnumerable<Worker> Workers { get; set; }
+        public IEnumerable<RequirementCategory> RequirementCategories { get; set; }
+        public IEnumerable<Requirement> Requirements { get; set; }
 
-        public static TaskViewModel Create(IRepository repository, Project project)
+        public static TaskViewModel Create(IRepository repository, Project project, Task task = null)
         {
             Check.Require(repository != null, "Repository must be supplied");
 			
-            var viewModel = new TaskViewModel {Task = new Task(), Project = project};
+            var viewModel = new TaskViewModel
+                                {
+                                    Task = task ?? new Task(), 
+                                    Project = project, 
+                                    RequirementCategories = project.RequirementCategories,
+                                    Requirements = task != null ? project.Requirements.Where(a => a.RequirementCategory == task.RequirementCategory).ToList() : new List<Requirement>()
+                                };
 
             // build the list of workers
             var workers = new List<Worker>();

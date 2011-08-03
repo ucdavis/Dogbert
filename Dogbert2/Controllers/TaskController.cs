@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
@@ -7,6 +8,7 @@ using Dogbert2.Models;
 using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
 using MvcContrib;
+using UCDArch.Web.ActionResults;
 using UCDArch.Web.Helpers;
 
 namespace Dogbert2.Controllers
@@ -113,7 +115,7 @@ namespace Dogbert2.Controllers
         //
         // POST: /Task/Create
         [HttpPost]
-        public ActionResult Create(int projectId, Task task)
+        public ActionResult Create(int projectId, Task task, List<int> requirements)
         {
             var project = _projectRepository.GetNullableById(projectId);
 
@@ -132,10 +134,7 @@ namespace Dogbert2.Controllers
             }
 
             var taskToCreate = new Task();
-
-            AutoMapper.Mapper.Map(task, taskToCreate);
-            taskToCreate.Project = project;
-            taskToCreate.Requirement = task.Requirement;
+            TransferValues(task, taskToCreate, requirements, project);
 
             if (project.Tasks.Count > 0)
             {
@@ -164,8 +163,7 @@ namespace Dogbert2.Controllers
                 return this.RedirectToAction(a => a.Index(projectId));
             }
 
-			var viewModel = TaskViewModel.Create(Repository, project);
-            viewModel.Task = taskToCreate;
+			var viewModel = TaskViewModel.Create(Repository, project, taskToCreate);
 
             return View(viewModel);
         }
@@ -188,8 +186,7 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-			var viewModel = TaskViewModel.Create(Repository, project);
-			viewModel.Task = task;
+			var viewModel = TaskViewModel.Create(Repository, project, task);
 
 			return View(viewModel);
         }
@@ -197,7 +194,7 @@ namespace Dogbert2.Controllers
         //
         // POST: /Task/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Task task)
+        public ActionResult Edit(int id, Task task, List<int> requirements)
         {
             var taskToEdit = _taskRepository.GetNullableById(id);
 
@@ -213,8 +210,8 @@ namespace Dogbert2.Controllers
                 return redirect;
             }
 
-            AutoMapper.Mapper.Map(task, taskToEdit);
-            taskToEdit.Requirement = task.Requirement;
+            //AutoMapper.Mapper.Map(task, taskToEdit);
+            TransferValues(task, taskToEdit, requirements);
 
             ModelState.Clear();
             taskToEdit.TransferValidationMessagesTo(ModelState);
@@ -281,5 +278,61 @@ namespace Dogbert2.Controllers
             return this.RedirectToAction(a=>a.Index(project.Id));
         }
 
+        /// <summary>
+        /// Loads a list of requirements in a category
+        /// </summary>
+        /// <param name="projectId">Project Id</param>
+        /// <param name="categoryId">Category Id</param>
+        /// <returns></returns>
+        public JsonNetResult LoadRequirements(int projectId, int categoryId)
+        {
+            var project = _projectRepository.GetNullableById(projectId);
+
+            if (_accessValidator.HasAccess(CurrentUser.Identity.Name, project) == AccessLevel.Edit)
+            {
+
+                var requirements = project.Requirements.Where(a => a.RequirementCategory.Id == categoryId);
+
+                return new JsonNetResult(requirements.Select(a => new {a.Id, a.RequirementId, a.Description}));
+
+            }
+
+            // nothing to return no access
+            return new JsonNetResult(false);
+
+        }
+
+        private void TransferValues(Task src, Task dest, List<int> requirementIds, Project project = null)
+        {
+            AutoMapper.Mapper.Map(src, dest);
+
+            if (project != null)
+            {
+                dest.Project = project;
+            }
+
+            // requirements not in the lsit of requirement ids
+            var deletes = dest.Requirements.Where(a => !requirementIds.Contains(a.Id)).Select(a => a.Id).ToList();
+            foreach (var rid in deletes)
+            {
+                var requirement = dest.Requirements.Where(a => a.Id == rid).FirstOrDefault();
+                dest.Requirements.Remove(requirement);
+            }
+
+            project = dest.Project;
+
+            // add in the new ones
+            foreach (var rid in requirementIds)
+            {
+                // not in the list, go ahead and add
+                if (!dest.Requirements.Any(a => a.Id == rid))
+                {
+                    var requirement = project.Requirements.Where(a => a.Id == rid).FirstOrDefault();
+
+                    if (requirement != null) dest.Requirements.Add(requirement);
+                }
+            }
+
+        }
     }
 }

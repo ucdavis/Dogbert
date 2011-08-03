@@ -18,6 +18,9 @@ namespace Dogbert2.Core.Domain
         {
             DateAdded = DateTime.Now;
             LastModified = DateTime.Now;
+
+            UseCases = new List<UseCase>();
+            Tasks = new List<Task>();
         }
 
         [Required]
@@ -74,7 +77,8 @@ namespace Dogbert2.Core.Domain
                 .ParentKeyColumn("RequirementId")
                 .ChildKeyColumn("UseCaseId")
                 .Table("UseCaseXRequirements").Cascade.SaveUpdate();
-            HasMany(x => x.Tasks).Inverse().Cascade.AllDeleteOrphan();
+
+            HasManyToMany(x => x.Tasks).ParentKeyColumn("RequirementId").ChildKeyColumn("TaskId").Table("TasksXRequirements").Cascade.SaveUpdate();
         }
     }
 }

@@ -21,7 +21,7 @@
                 Id
             </th>
 
-            <th>Req Id</th>
+            <th>Category</th>
 
             <th>Description</th>
 
@@ -55,7 +55,7 @@
                     @item.TaskId
                 </td>
                 <td>
-                    @item.Requirement.RequirementId
+                    @item.RequirementCategory.Name
                 </td>
 			    <td>
 				    @item.Description
@@ -64,7 +64,7 @@
 				    @item.Complete
 			    </td>
                 <td>
-                    @item.Worker.FullName
+                    @(item.Worker != null ? item.Worker.FullName : "Unassigned")
                 </td>
 			    <td>
 				    @String.Format("{0:g}", item.LastUpdate)

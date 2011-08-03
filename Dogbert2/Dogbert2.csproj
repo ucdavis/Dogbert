@@ -209,6 +209,7 @@
     <Content Include="Css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Css\images\ui-icons_fffff_256x240.png" />
     <Content Include="Css\jquery-ui-1.8.14.caes.css" />
+    <Content Include="Css\Tasks.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Css\Site.css" />
@@ -247,6 +248,7 @@
     <Content Include="Scripts\jquery.tablednd_0_5.js" />
     <Content Include="Scripts\jquery.tmpl.min.js" />
     <Content Include="Scripts\modernizr-2.0.6.js" />
+    <Content Include="Scripts\Tasks.js" />
     <Content Include="Scripts\tiny_mce\jquery.tinymce.js" />
     <Content Include="Scripts\tiny_mce\langs\en.js" />
     <Content Include="Scripts\tiny_mce\license.txt" />

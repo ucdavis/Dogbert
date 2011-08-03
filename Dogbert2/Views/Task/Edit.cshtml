@@ -1,7 +1,26 @@
-﻿@model Dogbert2.Models.TaskViewModel
+﻿@model TaskViewModel
 
 @{
     ViewBag.Title = "Edit";
+}
+
+@section SubNav{
+    <ul class="navigation">
+        <li>@Html.ActionLink("Back to List", "Index", new { projectId = Model.Project.Id })</li>
+    </ul>
+}
+
+@section AdditionalScripts
+{
+    <script type="text/javascript">
+        var url = '@Url.Action("LoadRequirements")';
+        var projectId = '@Model.Project.Id';
+    </script>
+
+    <link type="text/css" rel="Stylesheet" href="@Url.Css("Tasks.css")" />
+
+    <script type="text/javascript" src="@Url.Script("jquery.tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.Script("Tasks.js")"></script>
 }
 
 @Html.Partial("_task")
