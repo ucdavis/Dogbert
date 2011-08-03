@@ -12,16 +12,21 @@
 	</ul>
 }
 
+@section AdditionalScripts
+{
+    <link type="text/css" rel="Stylesheet" href="@Url.Css("Tasks.css")" />
+}
+
 <fieldset class="display-form">
     <legend>Task</legend>
 	<ul>
         <li>
-            <div class="display-label">Requirement</div>
-            <div class="display-details">@string.Format("{0} - {1}", Model.Requirement.RequirementId, Model.Requirement.Description)</div>
+            <div class="display-label">Category</div>
+            <div class="display-details">@Model.RequirementCategory.Name</div>
         </li>
         <li>
             <div class="display-label">Worker</div>
-            <div class="display-details">@Model.Worker.FullName</div>
+            <div class="display-details">@(Model.Worker != null ? Model.Worker.FullName : "Unassigned")</div>
         </li>
 		<li>
 			<div class="display-label">Description</div>
@@ -44,6 +49,18 @@
 			<div class="display-details">@String.Format("{0:g}", Model.LastUpdate)</div>
 		</li>
 	</ul>
+</fieldset>
+<fieldset>
+    <legend>Requirements</legend>
+
+    @foreach (var requirement in Model.Requirements)
+    { 
+        <div class="requirement">
+            <div class="id">@requirement.Id</div>
+            <div class="description">@requirement.Description</div>
+        </div>
+    }
+
 </fieldset>
 
 
