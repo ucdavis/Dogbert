@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="\\hughman\wwwroot\dogbert2" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Test" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
-    <file relUrl="Scripts/tiny_mce/themes/simple/skins/o2k7/content.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="App_Code/ProjectInfo.cshtml" publishTime="07/14/2011 07:12:19" />
     <file relUrl="bin/UCDArch.dll" publishTime="07/14/2011 07:12:19" />
     <file relUrl="favicon.ico" publishTime="07/14/2011 07:12:22" />
@@ -30,7 +29,7 @@
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/colorpicker.jpg" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/color_picker.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/template/template.htm" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Scripts/tiny_mce/plugins/preview/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
+    <file relUrl="Css/images/ui-icons_fffff_256x240.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Scripts/tiny_mce/plugins/bbcode/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/pagebreak.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/langs/en.js" publishTime="07/14/2011 07:12:20" />
@@ -134,7 +133,7 @@
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/windowsmedia.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/acronym.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/element_common.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Scripts/tiny_mce/plugins/spellchecker/css/content.css" publishTime="07/14/2011 07:12:20" />
+    <file relUrl="Scripts/tiny_mce/themes/simple/skins/o2k7/content.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="bin/Dogbert2.Clients.dll" publishTime="07/25/2011 07:38:19" />
     <file relUrl="Views/SectionType/_SectionType.cshtml" publishTime="07/18/2011 07:57:03" />
     <file relUrl="Scripts/tiny_mce/plugins/media/media.htm" publishTime="07/14/2011 07:12:20" />
@@ -195,6 +194,7 @@
     <file relUrl="Views/ProjectTerm/Create.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="bin/HibernatingRhinos.Profiler.Appender.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="bin/Spring.Aop.dll" publishTime="07/14/2011 07:12:18" />
+    <file relUrl="Scripts/tiny_mce/plugins/preview/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/HtmlFallback.js" publishTime="07/15/2011 12:57:31" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/skins/o2k7/ui.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/Worker/_Worker.cshtml" publishTime="07/14/2011 07:12:22" />
@@ -309,10 +309,10 @@
     <file relUrl="Css/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Scripts/tiny_mce/plugins/media/langs/en_dlg.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/template/js/template.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Css/images/ui-icons_fffff_256x240.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/acronym.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Shared/EditorTemplates/PhoneNumber.cshtml" publishTime="07/14/2011 07:12:21" />
+    <file relUrl="Scripts/tiny_mce/plugins/spellchecker/css/content.css" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/corners.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/img/video.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="07/14/2011 07:12:20" />
@@ -453,7 +453,7 @@
     <file relUrl="Scripts/tiny_mce/themes/advanced/skins/o2k7/img/button_bg_black.png" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/tiny_mce/plugins/nonbreaking/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Project/Edit.cshtml" publishTime="07/19/2011 15:42:51" />
-    <file relUrl="Views/Web.config" publishTime="08/03/2011 11:36:36" />
+    <file relUrl="Views/Web.config" publishTime="08/04/2011 16:29:15" />
     <file relUrl="Scripts/tiny_mce/plugins/preview/jscripts/embed.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/del.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/autosave/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
@@ -500,7 +500,7 @@
     <file relUrl="Scripts/tiny_mce/license.txt" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/fullpage/langs/en_dlg.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/table/row.htm" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Web.config" publishTime="08/03/2011 11:36:36" />
+    <file relUrl="Web.config" publishTime="08/04/2011 16:29:15" />
     <file relUrl="Scripts/tiny_mce/plugins/advlink/link.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Css/images/ui-bg_glass_0_3182c0_1x400.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Scripts/InputTypeTest.js" publishTime="07/14/2011 09:03:20" />
@@ -532,7 +532,7 @@
     <file relUrl="Scripts/tiny_mce/plugins/layer/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Shared/EditorTemplates/Month.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/Worker/Create.cshtml" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.Core.pdb" publishTime="08/03/2011 11:36:24" />
+    <file relUrl="bin/Dogbert2.Core.pdb" publishTime="08/04/2011 16:28:47" />
     <file relUrl="Scripts/jquery-1.6.2.min.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="bin/Castle.Core.dll" publishTime="07/14/2011 07:12:17" />
     <file relUrl="bin/WebActivator.dll" publishTime="07/14/2011 07:12:24" />
@@ -571,7 +571,7 @@
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/acronym.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/js/element_common.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/simple/skins/o2k7/content.css" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.Clients.dll" publishTime="08/03/2011 11:36:26" />
+    <file relUrl="bin/Dogbert2.Clients.dll" publishTime="08/04/2011 16:28:47" />
     <file relUrl="Views/SectionType/_SectionType.cshtml" publishTime="07/18/2011 07:57:03" />
     <file relUrl="Scripts/tiny_mce/plugins/media/media.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/UseCase/_UseCasePreconditions.cshtml" publishTime="07/28/2011 15:14:11" />
@@ -582,7 +582,7 @@
     <file relUrl="Images/logo-ucdavis.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="bin/NHibernate.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="Scripts/tiny_mce/plugins/advhr/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Scripts/tiny_mce/plugins/save/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
+    <file relUrl="Scripts/tiny_mce/themes/advanced/skins/default/img/tabs.gif" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/tiny_mce/plugins/fullpage/fullpage.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/RequirementCategory/_RequirementCategory.cshtml" publishTime="07/15/2011 13:31:59" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/img/smiley-wink.gif" publishTime="07/14/2011 07:12:20" />
@@ -593,7 +593,6 @@
     <file relUrl="bin/Castle.Windsor.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="Scripts/tiny_mce/plugins/searchreplace/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Css/themes/base/images/ui-icons_454545_256x240.png" publishTime="07/14/2011 07:12:19" />
-    <file relUrl="Scripts/tiny_mce/themes/advanced/skins/default/img/tabs.gif" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Css/images/ui-icons_c83900_256x240.png" publishTime="07/14/2011 07:12:19" />
     <file relUrl="Views/File/Index.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/tiny_mce/plugins/example/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
@@ -625,6 +624,7 @@
     <file relUrl="Scripts/Common/jquery.placeholder.min.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/img/smiley-surprised.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Images/dogbert_logo.png" publishTime="07/15/2011 18:38:03" />
+    <file relUrl="Views/Task/MyTasks.cshtml" publishTime="08/04/2011 08:18:40" />
     <file relUrl="Views/Shared/_Navigation.cshtml" publishTime="08/02/2011 13:41:43" />
     <file relUrl="Views/AccessRequest/Details.cshtml" publishTime="07/16/2011 08:03:18" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/skins/o2k7/img/button_bg_silver.png" publishTime="07/14/2011 07:12:21" />
@@ -640,7 +640,7 @@
     <file relUrl="Scripts/tiny_mce/themes/advanced/skins/o2k7/ui.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Views/Worker/_Worker.cshtml" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="bin/Dogbert2.Clients.pdb" publishTime="08/03/2011 11:36:26" />
+    <file relUrl="bin/Dogbert2.Clients.pdb" publishTime="08/04/2011 16:28:47" />
     <file relUrl="Views/RequirementCategory/Edit.cshtml" publishTime="07/15/2011 13:31:42" />
     <file relUrl="Scripts/tiny_mce/tiny_mce_src.js" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/link.htm" publishTime="07/14/2011 07:12:21" />
@@ -682,7 +682,7 @@
     <file relUrl="Views/Task/Create.cshtml" publishTime="08/03/2011 10:04:46" />
     <file relUrl="Scripts/tiny_mce/plugins/table/table.htm" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/autoresize/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="07/28/2011 15:13:50" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="08/04/2011 08:06:24" />
     <file relUrl="Scripts/tiny_mce/plugins/iespell/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Requirement/Create.cshtml" publishTime="07/15/2011 12:59:55" />
@@ -699,6 +699,7 @@
     <file relUrl="Scripts/tiny_mce/themes/advanced/js/charmap.js" publishTime="07/14/2011 07:12:21" />
     <file relUrl="bin/NHibernate.ByteCode.Spring.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="Css/themes/base/jquery-ui.css" publishTime="07/14/2011 07:12:19" />
+    <file relUrl="Views/Workgroup/Create.cshtml" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/media/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/langs/en_dlg.js" publishTime="07/14/2011 07:12:21" />
@@ -743,7 +744,7 @@
     <file relUrl="Scripts/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/advanced/editor_template_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/ProjectSection/_Tokens.cshtml" publishTime="07/14/2011 07:12:21" />
-    <file relUrl="bin/Dogbert2.dll" publishTime="08/03/2011 11:36:27" />
+    <file relUrl="bin/Dogbert2.dll" publishTime="08/04/2011 16:28:50" />
     <file relUrl="Views/Worker/Edit.cshtml" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/table/css/cell.css" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Images/logo-caes-long-cap.png" publishTime="07/14/2011 07:12:19" />
@@ -752,7 +753,7 @@
     <file relUrl="bin/MvcContrib.FluentHtml.dll" publishTime="07/14/2011 07:12:18" />
     <file relUrl="UCDArch.txt" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Scripts/Tasks.js" publishTime="08/03/2011 10:04:41" />
-    <file relUrl="Views/Workgroup/Create.cshtml" publishTime="07/14/2011 07:12:22" />
+    <file relUrl="Scripts/tiny_mce/plugins/save/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/paste/js/pastetext.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/themes/simple/skins/default/content.css" publishTime="07/14/2011 07:12:21" />
     <file relUrl="Css/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="07/14/2011 07:12:19" />
@@ -846,7 +847,7 @@
     <file relUrl="Views/Shared/EditorTemplates/EmailAddress.cshtml" publishTime="07/14/2011 07:12:21" />
     <file relUrl="bin/DataAnnotationsExtensions.dll" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/insertdatetime/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="bin/Dogbert2.pdb" publishTime="08/03/2011 11:36:27" />
+    <file relUrl="bin/Dogbert2.pdb" publishTime="08/04/2011 16:28:50" />
     <file relUrl="Views/Project/_Project.cshtml" publishTime="07/29/2011 12:54:15" />
     <file relUrl="Scripts/tiny_mce/plugins/advlist/editor_plugin_src.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Shared/EditorTemplates/Search.cshtml" publishTime="07/14/2011 07:12:21" />
@@ -880,7 +881,7 @@
     <file relUrl="Views/Requirement/Edit.cshtml" publishTime="07/15/2011 13:00:21" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/img/sample.gif" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Scripts/tiny_mce/plugins/pagebreak/editor_plugin.js" publishTime="07/14/2011 07:12:20" />
-    <file relUrl="bin/Dogbert2.Core.dll" publishTime="08/03/2011 11:36:24" />
+    <file relUrl="bin/Dogbert2.Core.dll" publishTime="08/04/2011 16:28:47" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/js/image.js" publishTime="07/14/2011 07:12:20" />
     <file relUrl="Views/Workgroup/_Workgroup.cshtml" publishTime="07/14/2011 07:12:22" />
     <file relUrl="Scripts/tiny_mce/plugins/advimage/editor_plugin.js" publishTime="07/14/2011 07:12:20" />

@@ -120,6 +120,10 @@ namespace Dogbert2.Controllers
                     {
                         _fileRepository.EnsurePersistent(newFile);
                     }
+                    else
+                    {
+                        Message = string.Format("There was a problem saving {0}", newFile.FileName);
+                    }
                 }
             }
 
