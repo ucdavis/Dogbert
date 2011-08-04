@@ -52,7 +52,7 @@ namespace Dogbert2.Models
         {
             Check.Require(repository != null, "repository is required.");
 
-            var tasks = repository.OfType<Task>().Queryable.Where(a => a.Worker.LoginId == loginId);
+            var tasks = repository.OfType<Task>().Queryable.Where(a => a.Worker.LoginId == loginId && !a.Complete);
             var projects = tasks.Where(a => !a.Complete ).Select(a => a.Project).Distinct();
 
             var viewModel = new MyTasksViewModel() {Tasks = tasks, Projects = projects};

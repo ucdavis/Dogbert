@@ -42,6 +42,35 @@ namespace Dogbert2.Controllers
         }
 
         /// <summary>
+        /// Worker's interface to update the task, can make comments and mark complete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="comments"></param>
+        /// <param name="complete"></param>
+        /// <returns></returns>
+        public JsonNetResult UpdateTask(int id, string description, string comments, bool complete = false)
+        {
+            var task = _taskRepository.GetNullableById(id);
+
+            // validate user's permission
+            if (task.Worker.LoginId != CurrentUser.Identity.Name)
+            {
+                return new JsonNetResult(false);
+            }
+
+            // update task
+            task.Description = description;
+            task.Comments = comments;
+            task.Complete = complete;
+
+            // save
+            _taskRepository.EnsurePersistent(task);
+
+            // just return true
+            return new JsonNetResult(true);
+        }
+
+        /// <summary>
         /// View list of tasks for project
         /// </summary>
         /// <param name="projectId"></param>

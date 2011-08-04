@@ -2,17 +2,105 @@
 
 @{
     ViewBag.Title = "My Tasks";
+    ViewBag.NavigationKey = "Task";
 }
 
 @section AdditionalScripts
 {
+    <style type="text/css">
+        .dialog ul {list-style: none;}
+    </style>
+
     <script type="text/javascript">
         $(function () {
+
+            // for some reason this is necessary to get post to make call back
+            jQuery.ajaxSettings.traditional = false;
+
             $("#tabs").tabs();
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 400,
+                buttons: {
+                    "Save & Complete": function () {
+
+                        updateTask(true, $(this));
+
+                    },
+                    "Save": function () {
+
+                        updateTask(false, $(this));
+
+                    },
+                    "Cancel": function () { $(this).dialog("close"); }
+                }
+            });
+
+            $(".edit-taskBtn").click(function () {
+
+                // set the inputs
+                var $row = $(this).parents("tr.task-row");
+                var description = $row.find(".description").html();
+                var comments = $row.find(".comments").html();
+                $("#taskid").val($row.data("id"));
+                $("#task-description").val(description);
+                $("#task-comments").val(comments);
+
+                // open the dialog
+                $("#dialog").dialog("open");
+
+            });
         });
+
+        function updateTask(complete, $that)
+        {
+            // set the url
+            var url = '@Url.Action("UpdateTask")';
+
+            // get the values
+            var id = $("#taskid").val();
+            var description = $("#task-description").val();
+            var comments = $("#task-comments").val();
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            // post the values
+            $.post(url, { id: id, description: description, comments: comments, complete:complete, __RequestVerificationToken: token },
+                            function (result) {
+
+                                // success
+                                if (result) {
+
+                                    // update the row
+                                    var $row = $("#task-" + id);
+                                    $row.find(".comments").html(comments);
+
+                                    $that.dialog("close");
+                                }
+                                else {
+                                    alert("There was an error saving.");
+                                }
+
+                            });
+
+            // reset the dialog controls
+            $("#taskid").val(-1);
+            $("#task-description").val("");
+            $("#task-comments").val("");
+
+            if (complete) {
+                var $row = $("#task-" + id);
+                $row.remove();
+            }
+        }
     </script>
 }
 
+@Html.AntiForgeryToken()
+
+@if (Model.Tasks.Count() > 0)
+{ 
 <div id="tabs">
 
     <ul>
@@ -26,19 +114,19 @@
     { 
         <div id="@(string.Format("project-{0}", project.Id))">
 
-            <table class="dt-table nofirsticon">
+            <table class="dt-table nolasticon">
                 <thead>
                     <th></th>
                     <th>Description</th>
                     <th>Comments</th>
                 </thead>
                 <tbody>
-                    @foreach(var task in Model.Tasks.Where(a => a.Project == project))
+                    @foreach (var task in Model.Tasks.Where(a => a.Project == project))
                     {
-                        <tr>
-                            <td></td>
-                            <td>@task.Description</td>
-                            <td>@task.Comments</td>
+                        <tr id="@string.Format("task-{0}", task.Id)" data-id="@task.Id" data-completed="@task.Complete" class="task-row">
+                            <td><a href="javascript:;" class="edit-taskBtn">Edit</a></td>
+                            <td><span class="description">@task.Description</span></td>
+                            <td><span class="comments">@task.Comments</span></td>
                         </tr>
                     }
                 </tbody>
@@ -46,5 +134,25 @@
 
         </div>
     }
+
+</div>
+}
+else
+{ 
+    <div>You do not have any assigned tasks.</div>
+}
+
+<div id="dialog" title="Edit Task" class="dialog">
+
+    @Html.Hidden("taskid", -1)
+
+    <ul>
+        <li>Description:
+            @Html.TextArea("task-description", new { style = "width: 375px; height: 75px;" })
+        </li>
+        <li>Comments:
+            @Html.TextArea("task-comments", new {style="width: 375px; height: 75px;"})
+        </li>
+    </ul>
 
 </div>
