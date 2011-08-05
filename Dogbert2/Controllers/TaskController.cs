@@ -353,6 +353,9 @@ namespace Dogbert2.Controllers
 
             project = dest.Project;
 
+
+            requirementIds = requirementIds ?? new List<int>();
+
             // add in the new ones
             foreach (var rid in requirementIds)
             {

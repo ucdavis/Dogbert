@@ -13,6 +13,9 @@
             $.getJSON(url,
                         { projectId: projectId, categoryId: categoryId },
                         function (result) {
+
+                            $("#requirement-container").empty();
+
                             $.each(result, function (index, item) {
                                 var values = [{ Id: item.Id, RequirementId: item.RequirementId, Description: item.Description}];
                                 $.tmpl("requirement-template", values).appendTo("#requirement-container");
