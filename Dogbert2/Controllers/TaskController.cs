@@ -172,7 +172,8 @@ namespace Dogbert2.Controllers
             {
                 // set the task id
                 // get the highest task id
-                var maxId = project.Tasks.Select(a => a.TaskId).Max();
+                var tid = project.Tasks.Select(a => a.Id).Max();
+                var maxId = project.Tasks.Where(a => a.Id == tid).Select(a => a.TaskId).FirstOrDefault();
                 // parse the int
                 var mid = maxId.Substring(1, maxId.Length - 1);
                 taskToCreate.TaskId = string.Format("T{0}", Convert.ToInt32(mid) + 1);    

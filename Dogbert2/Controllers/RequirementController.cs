@@ -106,7 +106,8 @@ namespace Dogbert2.Controllers
             if (project.Requirements.Count > 0)
             {
                 // get the highest requirement id
-                var maxId = project.Requirements.Select(a => a.RequirementId).Max();
+                var rid = project.Requirements.Select(a => a.Id).Max();
+                var maxId = project.Requirements.Where(a => a.Id == rid).Select(a => a.RequirementId).FirstOrDefault();
                 // parse the int
                 var mid = maxId.Substring(1, maxId.Length - 1);
                 requirement.RequirementId = string.Format("R{0}", Convert.ToInt32(mid) + 1);    

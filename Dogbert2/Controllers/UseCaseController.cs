@@ -125,7 +125,8 @@ namespace Dogbert2.Controllers
             {
                 // set the task id
                 // get the highest use case id
-                var maxId = project.UseCases.Select(a => a.UseCaseId).Max();
+                var uid = project.UseCases.Select(a => a.Id).Max();
+                var maxId = project.UseCases.Where(a => a.Id == uid).Select(a => a.UseCaseId).FirstOrDefault();
                 // parse the int
                 var mid = maxId.Substring(1, maxId.Length - 1);
                 newUseCase.UseCaseId = string.Format("T{0}", Convert.ToInt32(mid) + 1);
