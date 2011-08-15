@@ -801,7 +801,7 @@ namespace Dogbert2.Services
                 reqTable.AddCell(CreateTableHeader("Description"));
                 reqTable.AddCell(CreateTableHeader("Type"));
             
-                foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory))
+                foreach (var req in project.Requirements.Where(a=>a.RequirementCategory == cat).OrderBy(a => a.RequirementCategory).ThenBy(a => a.Order))
                 {
                     var cell1 = CreateCell(chunk: new Chunk(req.RequirementId, _font), paddingAll:5);
                     var cell2 = CreateCell(chunk: new Chunk(req.PriorityType.Name, _font), paddingAll: 5);
