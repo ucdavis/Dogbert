@@ -34,6 +34,8 @@ namespace Dogbert2.Core.Domain
         [Required]
         public virtual string RequirementId { get; set; }
 
+        public virtual int Order { get; set; }
+
         [Required]
         [Display(Name="Requirement Type")]
         public virtual RequirementType RequirementType { get; set; }
@@ -64,6 +66,8 @@ namespace Dogbert2.Core.Domain
             Map(x => x.IsComplete);
 
             Map(x => x.RequirementId);
+
+            Map(x => x.Order).Column("`Order`");
 
             References(x => x.RequirementType);
             References(x => x.PriorityType);

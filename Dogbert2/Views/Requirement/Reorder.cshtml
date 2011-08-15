@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Requirement>
+
+@{
+    ViewBag.Title = "Reorder Requirements";
+    ViewBag.NavigationKey = "Project";
+}
+
+@section SubNav
+{
+    <ul class="navigation">
+        <li>@Html.ActionLink("Back to List", "Index", new {id=ViewBag.ProjectId})</li>
+    </ul>
+}
+
+@section AdditionalScripts
+{
+    <script type="text/javascript" src="@Url.Script("jquery.tablednd_0_5.js")"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#tabs").tabs();
+
+            $("table").tableDnD({
+                onDragClass: "dragging",
+                onDrop: function (table, row) {
+                    // re-adjust the odd, even row classes
+                    $("tbody tr").removeClass("odd");
+                    $("tbody tr").removeClass("even");
+
+                    $("tbody tr:even").addClass("even");
+                    $("tbody tr:odd").addClass("odd");
+
+                    var rows = table.tBodies[0].rows;
+                    var order = [];
+                    $.each(rows, function (index, item) {
+                        order.push($(item).data("reqid"));
+                    });
+
+                    var projectId = @(ViewBag.ProjectId) ;
+                    var categoryId = $(table).data("catid");
+                    var antiForgery = $('input[name="__RequestVerificationToken"]').val();
+                    
+                    var url = '@Url.Action("UpdateOrder")';
+
+                    var parameters = { projectId: projectId, categoryId: categoryId, requirementIds: order, __RequestVerificationToken: antiForgery };
+
+                    $.post(url, parameters, function(result) {
+                        
+                        if (result == false) alert("failed to updated order");
+                        
+                    });
+                    
+                }
+            });
+        })
+    </script>
+}
+
+@Html.AntiForgeryToken()
+
+<div id="tabs">
+
+    <ul>
+        @foreach (var cat in Model.Select(a => a.RequirementCategory).Distinct())
+        {
+            <li><a href="@string.Format("#tabs-{0}", cat.Id)">@cat.Name</a></li>
+        }
+    </ul>
+
+    @foreach (var cat in Model.Select(a => a.RequirementCategory).Distinct())
+    {
+        <div id="@string.Format("tabs-{0}", cat.Id)">
+
+            <table class="noicon" data-catId="@cat.Id">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Description</th>
+                        <th>Difficulty</th>
+                        <th>Last Modified</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var odd = false; }
+                    @foreach (var req in Model.Where(a => a.RequirementCategory == cat).OrderBy(a => a.Order))
+                    {
+                        <tr class="@(odd ? "odd" : "even")" data-reqId="@req.Id">
+                            <td>@req.RequirementId</td>
+                            <td>@req.Description</td>
+                            <td>@req.TechnicalDifficulty</td>
+                            <td>@req.LastModified.ToString("d")</td>
+                        </tr>
+
+                        odd = !odd;
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+
+</div>

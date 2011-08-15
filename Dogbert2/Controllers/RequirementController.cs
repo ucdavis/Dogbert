@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dogbert2.App_GlobalResources;
@@ -7,6 +8,7 @@ using Dogbert2.Filters;
 using Dogbert2.Models;
 using Dogbert2.Services;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Web.ActionResults;
 using UCDArch.Web.Helpers;
 using MvcContrib;
 
@@ -32,7 +34,7 @@ namespace Dogbert2.Controllers
         /// <summary>
         /// GET: /Requirement/
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Project Id</param>
         /// <returns></returns>
         public ActionResult Index(int id)
         {
@@ -54,7 +56,62 @@ namespace Dogbert2.Controllers
 
             ViewBag.ProjectId = id;
 
-            return View(project.Requirements.OrderBy(a => a.RequirementCategory.Name).ToList());
+            return View(project.Requirements.OrderBy(a => a.RequirementCategory.Name).ThenBy(a => a.Order).ToList());
+        }
+
+        /// <summary>
+        /// Reorder requirements inside their categories
+        /// </summary>
+        /// <param name="id">Project Id</param>
+        /// <returns></returns>
+        public ActionResult Reorder(int id)
+        {
+            var project = _projectRepository.GetNullableById(id);
+
+            if (project == null)
+            {
+                Message = string.Format(Messages.NotFound, "Project", id);
+                return this.RedirectToAction<ProjectController>(a => a.Index());
+            }
+
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, project);
+            if (redirect != null)
+            {
+                Message = "Not authorized to edit project.";
+                return redirect;
+            }
+
+            ViewBag.ProjectId = id;
+
+            return View(project.Requirements.OrderBy(a => a.RequirementCategory.Name).ThenBy(a => a.Order).ToList());
+        }
+
+        [HttpPost]
+        public JsonResult UpdateOrder(int projectId, int categoryId, List<int> requirementIds)
+        {
+            try
+            {
+                var project = _projectRepository.GetNullableById(projectId);
+                var category = Repository.OfType<RequirementCategory>().GetNullableById(categoryId);
+
+                var requirements = project.Requirements.Where(a => a.RequirementCategory == category);
+
+                for (var i = 0; i < requirementIds.Count; i++)
+                {
+                    var requirement = requirements.Where(a => a.Id == requirementIds[i]).FirstOrDefault();
+
+                    requirement.Order = i + 1;
+
+                    _requirementRepository.EnsurePersistent(requirement);
+                }
+
+                return Json(true);
+            }
+            catch 
+            {
+                return Json(false);
+            }
         }
 
         //

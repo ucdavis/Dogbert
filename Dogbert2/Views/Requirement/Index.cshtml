@@ -9,6 +9,7 @@
 {
 	<ul class='navigation'>
 		<li>@Html.ActionLink("Create New", "Create", new { id=ViewBag.ProjectId })</li>
+        <li>@Html.ActionLink("Reorder", "Reorder", new {id=ViewBag.ProjectId} )</li>
         <li>@Html.ActionLink("Categories", "Index", "RequirementCategory", new { id=ViewBag.ProjectId}, new {})</li>
         <li>@Html.ActionLink("Back to Project", "Details", "Project", new { id=ViewBag.ProjectId }, new { })</li>
 	</ul>
