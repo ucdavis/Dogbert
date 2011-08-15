@@ -9,6 +9,9 @@
     [CategoryId]          INT           NOT NULL,
     [DateAdded]           DATETIME      NOT NULL,
     [LastModified]        DATETIME      NOT NULL,
-    [RequirementId]       VARCHAR (5)   NOT NULL
+    [RequirementId]       VARCHAR (5)   NOT NULL,
+    [Order]               INT           NOT NULL
 );
+
+
 
