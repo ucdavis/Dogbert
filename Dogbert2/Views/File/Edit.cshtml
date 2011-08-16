@@ -21,7 +21,7 @@
                 <div class='editor-field'>@Html.TextBox("file.Title", Model.Title)</div>
             </li>
             <li><div class='editor-label'>Caption</div>
-                <div class='editor-field'>@Html.TextBox("file.Caption", Model.Caption)</div>
+                <div class='editor-field'>@Html.TextArea("file.Caption", Model.Caption)</div>
             </li>
             <li><div class='editor-label required'>File<span>*</span></div>
                 <div class='editor-field'><input type="file" id='file_file' name='file.File' /></div>
