@@ -715,8 +715,8 @@ namespace Dogbert2.Services
                 var img = Image.GetInstance(ms);
                 img.Alignment = Element.ALIGN_CENTER;
 
-                // scale the image
-                img.ScaleToFit(_pageWidth, 250f);
+                // scale the image, because it is too big
+                //img.ScaleToFit(_pageWidth, 250f);
 
                 var paragraph = new Paragraph(file.Caption, _captionFont);
                 paragraph.Alignment = Element.ALIGN_CENTER;
