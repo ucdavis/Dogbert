@@ -779,7 +779,7 @@ namespace Dogbert2.Services
         }
         private void AddRequirementTable(PdfPTable table, Project project)
         {
-            foreach (var cat in project.Requirements.Select(a => a.RequirementCategory).Distinct())
+            foreach (var cat in project.Requirements.Select(a => a.RequirementCategory).OrderBy(a => a.Name).Distinct())
             {
                 // add in the table
                 var reqTable = new PdfPTable(4);
@@ -823,7 +823,7 @@ namespace Dogbert2.Services
         private void AddUseCases(PdfPTable table, Project project)
         {
             // create a new table for each category of use cases
-            foreach (var category in project.UseCases.Select(a => a.RequirementCategory).Distinct())
+            foreach (var category in project.UseCases.Select(a => a.RequirementCategory).OrderBy(a => a.Name).Distinct())
             {
                 // add in the category name
                 var categoryTable = new PdfPTable(1);
