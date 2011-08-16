@@ -741,7 +741,7 @@ namespace Dogbert2.Services
             // open the list
             elements.Add(new HtmlElement("ul", true, false));
 
-            foreach (var term in project.ProjectTerms)
+            foreach (var term in project.ProjectTerms.OrderBy(a => a.Term))
             {
                 // open li
                 elements.Add(new HtmlElement("li", true, false));
