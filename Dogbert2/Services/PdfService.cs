@@ -129,7 +129,7 @@ namespace Dogbert2.Services
                     var table = new PdfPTable(1);
                     table.TotalWidth = _pageWidth;
                     table.LockedWidth = true;
-                    table.KeepTogether = true;
+                    //table.KeepTogether = true;
                     table.SplitLate = false;
 
                     var headerCell = CreateCell();
