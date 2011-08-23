@@ -675,6 +675,7 @@
     <Content Include="Views\Task\Details.cshtml" />
     <Content Include="Views\Task\MyTasks.cshtml" />
     <Content Include="Views\Requirement\Reorder.cshtml" />
+    <Content Include="Views\ProjectSection\Details.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

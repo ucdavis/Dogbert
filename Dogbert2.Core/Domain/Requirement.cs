@@ -21,6 +21,8 @@ namespace Dogbert2.Core.Domain
 
             UseCases = new List<UseCase>();
             Tasks = new List<Task>();
+
+            Order = 999;
         }
 
         [Required]
