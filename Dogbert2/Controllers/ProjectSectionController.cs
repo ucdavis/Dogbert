@@ -60,7 +60,8 @@ namespace Dogbert2.Controllers
         // GET: /ProjectText/Details/5
         public ActionResult Details(int id)
         {
-            throw new NotImplementedException();
+            return View();
+
 
             var projectText = _projectTextRepository.GetNullableById(id);
 
