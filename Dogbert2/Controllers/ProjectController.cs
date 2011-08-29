@@ -265,7 +265,7 @@ namespace Dogbert2.Controllers
             if (projectToDelete == null) return RedirectToAction("Index");
 
             // validate access
-            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, project);
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, projectToDelete);
             if (redirect != null)
             {
                 Message = "Not authorized to edit project.";
