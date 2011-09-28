@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\AccessRequest.cs" />
+    <Compile Include="Domain\ChangeRequest.cs" />
     <Compile Include="Domain\File.cs" />
     <Compile Include="Domain\ProjectTerm.cs" />
     <Compile Include="Domain\Department.cs" />

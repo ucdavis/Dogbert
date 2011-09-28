@@ -84,6 +84,7 @@ namespace Dogbert2.Core.Domain
         public virtual IList<Requirement> Requirements { get; set; }
         public virtual IList<UseCase> UseCases { get; set; }
         public virtual IList<Task> Tasks { get; set; }
+        public virtual IList<ChangeRequest> ChangeRequests { get; set; }
 
         #region Non-Mapped fields
 
@@ -149,6 +150,7 @@ namespace Dogbert2.Core.Domain
             HasMany(x => x.Requirements).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.UseCases).Inverse().Cascade.AllDeleteOrphan();
             HasMany(x => x.Tasks).Inverse().Cascade.AllDeleteOrphan();
+            HasMany(x => x.ChangeRequests).Inverse().Cascade.AllDeleteOrphan();
         }
     }
 }
