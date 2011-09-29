@@ -13,7 +13,6 @@
 	</ul>
 }
 
-
 <table class='dt-table'>
 	<thead>
 		<tr>
@@ -22,25 +21,19 @@
 				Name
 			</th>
 			<th>
-				AffectedRole
+				Affected Role(s)
 			</th>
 			<th>
-				TimeToDevelop
+				Time To Develop
 			</th>
 			<th>
-				RequestedBy
+				Requested By
 			</th>
 			<th>
-				RequestedDate
+				Date
 			</th>
 			<th>
-				Approved
-			</th>
-			<th>
-				Pending
-			</th>
-			<th>
-				ChangeRequestStatus
+				Status
 			</th>
 
 			<th></th>
@@ -73,12 +66,6 @@
 			</td>
 			<td>
 				@String.Format("{0:g}", item.RequestedDate)
-			</td>
-			<td>
-				@item.Approved
-			</td>
-			<td>
-				@item.Pending
 			</td>
 			<td>
 				@item.ChangeRequestStatus
