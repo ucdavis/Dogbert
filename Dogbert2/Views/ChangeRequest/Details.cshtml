@@ -12,6 +12,15 @@
 	</ul>
 }
 
+@section AdditionalScripts
+{
+    <style type="text/css">
+        .changerequest-description {padding: 1em; margin: 1em 0; border: 1px solid #DDDDDD;}
+        .changerequest-description p { margin: 1em 0;}
+        .display-form .changerequest-description ul li { list-style: circle; margin-left: 20px;}
+    </style>
+}
+
 <fieldset class="display-form">
     <legend>ChangeRequest</legend>
 	<ul>
@@ -20,9 +29,10 @@
 			<div class="display-details">@Model.Name</div>
 		</li>
 		<li>
-			<div class="display-label">Description</div><br/><br/>
-			<div class="display-details">@Html.Raw(Model.Description)</div>
-            <br/>
+			<div class="display-label">Description</div>
+			
+            <div class="changerequest-description">@Html.Raw(Model.Description)</div>
+
 		</li>
 		<li>
 			<div class="display-label">AffectedRole</div>
