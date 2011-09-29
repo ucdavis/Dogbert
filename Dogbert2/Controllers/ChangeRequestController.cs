@@ -60,6 +60,10 @@ namespace Dogbert2.Controllers
 
             if (changeRequest == null) return RedirectToAction("Index");
 
+            // validate access
+            var redirect = _accessValidator.CheckReadAccess(CurrentUser.Identity.Name, changeRequest.Project);
+            if (redirect != null) return redirect;
+
             return View(changeRequest);
         }
 
@@ -136,6 +140,9 @@ namespace Dogbert2.Controllers
 
             if (changeRequest == null) return RedirectToAction("Index", new {id=changeRequest.Project.Id});
 
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, changeRequest.Project);
+            if (redirect != null) return redirect;
+
 			var viewModel = ChangeRequestViewModel.Create(Repository, changeRequest.Project, changeRequest);
 
 			return View(viewModel);
@@ -150,6 +157,9 @@ namespace Dogbert2.Controllers
             var changeRequestToEdit = _changeRequestRepository.GetNullableById(id);
 
             if (changeRequestToEdit == null) if (changeRequest == null) return RedirectToAction("Index", "Project");
+
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, changeRequestToEdit.Project);
+            if (redirect != null) return redirect;
 
             AutoMapper.Mapper.Map(changeRequest, changeRequestToEdit);
 
@@ -175,6 +185,9 @@ namespace Dogbert2.Controllers
 
             if (changeRequest == null) return RedirectToAction("Index", "Project");
 
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, changeRequest.Project);
+            if (redirect != null) return redirect;
+
             return View(changeRequest);
         }
 
@@ -186,6 +199,9 @@ namespace Dogbert2.Controllers
 			var changeRequestToDelete = _changeRequestRepository.GetNullableById(id);
 
             if (changeRequestToDelete == null) return RedirectToAction("Index", "Project");
+
+            var redirect = _accessValidator.CheckEditAccess(CurrentUser.Identity.Name, changeRequestToDelete.Project);
+            if (redirect != null) return redirect;
 
             var projectId = changeRequestToDelete.Project.Id;
 
