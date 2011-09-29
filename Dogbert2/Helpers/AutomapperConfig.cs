@@ -96,6 +96,14 @@ namespace Dogbert2.Helpers
                 .ForMember(x => x.TaskId, x => x.Ignore())
                 .ForMember(x => x.Project, x => x.Ignore())
                 .ForMember(x => x.DateCreated, x => x.Ignore());
+
+            CreateMap<ChangeRequest, ChangeRequest>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.Project, x=> x.Ignore())
+                .ForMember(x => x.RequestedDate, x=> x.Ignore())
+                .ForMember(x => x.Approved, x=> x.Ignore())
+                .ForMember(x => x.Pending, x=> x.Ignore())
+                .ForMember(x => x.ChangeRequestStatus, x=> x.Ignore());
         }
     }
 }

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Dogbert2.Core.Domain.ChangeRequest>
+
+@{
+	ViewBag.Title = "Change Requests";
+}
+
+
+@section SubNav
+{
+	<ul class='navigation'>
+		<li>@Html.ActionLink("Create New", "Create", new {id=ViewBag.ProjectId}, new {})</li>
+        <li>@Html.ActionLink("Back to Project", "Details", "Project", new {id=ViewBag.ProjectId}, new {})</li>
+	</ul>
+}
+
+
+<table class='dt-table'>
+	<thead>
+		<tr>
+			<th></th>
+			<th>
+				Name
+			</th>
+			<th>
+				AffectedRole
+			</th>
+			<th>
+				TimeToDevelop
+			</th>
+			<th>
+				RequestedBy
+			</th>
+			<th>
+				RequestedDate
+			</th>
+			<th>
+				Approved
+			</th>
+			<th>
+				Pending
+			</th>
+			<th>
+				ChangeRequestStatus
+			</th>
+
+			<th></th>
+
+		</tr>
+	</thead>
+	<tbody>
+@{ var odd = false; }
+@foreach (var item in Model) {
+		<tr class="@(odd ? "odd": "even")">
+			<td>
+				<a href='@Url.Action("Details", new {id=item.Id})'>
+					<img src='@Url.Image("details.png")' />
+				</a>
+				<a href='@Url.Action("Edit", new {id=item.Id})'>
+					<img src='@Url.Image("edit.png")' />
+				</a>
+			</td>
+			<td>
+				@item.Name
+			</td>
+			<td>
+				@item.AffectedRole
+			</td>
+			<td>
+				@item.TimeToDevelop
+			</td>
+			<td>
+				@item.RequestedBy
+			</td>
+			<td>
+				@String.Format("{0:g}", item.RequestedDate)
+			</td>
+			<td>
+				@item.Approved
+			</td>
+			<td>
+				@item.Pending
+			</td>
+			<td>
+				@item.ChangeRequestStatus
+			</td>
+							<td>
+						<a href='@Url.Action("Delete", new { id = item.Id })'>
+							<img src='@Url.Image("delete.png")' />
+						</a>
+					</td>
+		
+		</tr>
+		odd = !odd;
+}
+	</tbody>
+</table>

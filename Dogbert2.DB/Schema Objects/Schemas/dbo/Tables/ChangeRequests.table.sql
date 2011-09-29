@@ -4,10 +4,12 @@
     [Description]   VARCHAR (MAX) NULL,
     [AffectedRole]  VARCHAR (MAX) NULL,
     [TimeToDevelop] VARCHAR (50)  NOT NULL,
-    [RequestedBy]   VARCHAR (100) NULL,
-    [RequestedDate] DATE          NULL,
+    [RequestedBy]   VARCHAR (100) NOT NULL,
+    [RequestedDate] DATE          NOT NULL,
     [Approved]      BIT           NULL,
     [Pending]       BIT           NOT NULL,
     [ProjectId]     INT           NOT NULL
 );
+
+
 

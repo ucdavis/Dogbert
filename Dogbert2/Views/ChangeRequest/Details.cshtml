@@ -1,0 +1,50 @@
+﻿@model Dogbert2.Core.Domain.ChangeRequest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section SubNav
+{
+	<ul class="navigation">
+		<li>@Html.ActionLink("Edit", "Edit", new { id=Model.Id }) </li>
+		<li>@Html.ActionLink("Back to List", "Index", new {id=Model.Id})</li>
+	</ul>
+}
+
+<fieldset class="display-form">
+    <legend>ChangeRequest</legend>
+	<ul>
+		<li>
+			<div class="display-label">Name</div>
+			<div class="display-details">@Model.Name</div>
+		</li>
+		<li>
+			<div class="display-label">Description</div><br/><br/>
+			<div class="display-details">@Html.Raw(Model.Description)</div>
+            <br/>
+		</li>
+		<li>
+			<div class="display-label">AffectedRole</div>
+			<div class="display-details">@Model.AffectedRole</div>
+		</li>
+		<li>
+			<div class="display-label">TimeToDevelop</div>
+			<div class="display-details">@Model.TimeToDevelop</div>
+		</li>
+		<li>
+			<div class="display-label">RequestedBy</div>
+			<div class="display-details">@Model.RequestedBy</div>
+		</li>
+		<li>
+			<div class="display-label">RequestedDate</div>
+			<div class="display-details">@String.Format("{0:g}", Model.RequestedDate)</div>
+		</li>
+		<li>
+			<div class="display-label">Status</div>
+			<div class="display-details">@Model.ChangeRequestStatus</div>
+		</li>
+	</ul>
+</fieldset>
+
+

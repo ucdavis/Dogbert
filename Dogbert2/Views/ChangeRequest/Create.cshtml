@@ -1,0 +1,19 @@
+﻿@model Dogbert2.Models.ChangeRequestViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section SubNav
+{
+<ul class="navigation">
+    <li>@Html.ActionLink("Back to List", "Index", new {id=Model.Project.Id})</li>
+</ul>
+}
+
+@section AdditionalScripts
+{
+    @Html.Partial("_ChangeRequestScripts")
+}
+
+@Html.Partial("_ChangeRequestForm")

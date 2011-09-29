@@ -21,6 +21,7 @@
             <li>@Html.ActionLink("Use Cases", "Index", "UseCase", new { id = Model.Id }, new { })</li>
             <li>@Html.ActionLink("Files", "Index", "File", new { id = Model.Id }, new { })</li>
             <li>@Html.ActionLink("Tasks", "Index", "Task", new { projectId = Model.Id }, new { })</li>
+            <li>@Html.ActionLink("Changes", "Index", "ChangeRequest", new {id=Model.Id}, new {})</li>
 
             @if (ViewBag.PublicList == false)
             { 

@@ -1,0 +1,65 @@
+﻿@model Dogbert2.Models.ChangeRequestViewModel
+
+@using (Html.BeginForm()) {
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+    <fieldset>
+	    <legend>ChangeRequestViewModel</legend>
+	    <p>All required fields are in <strong>bold</strong> and have a red <span class="required">*</span> next to the field label.</p>
+	    <ul>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.ChangeRequest.Name)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ChangeRequest.Name)
+				    @Html.ValidationMessageFor(model => model.ChangeRequest.Name)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.ChangeRequest.Description) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ChangeRequest.Description)
+				    @Html.ValidationMessageFor(model => model.ChangeRequest.Description)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label">
+				    @Html.LabelFor(model => model.ChangeRequest.AffectedRole) 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ChangeRequest.AffectedRole)
+				    @Html.ValidationMessageFor(model => model.ChangeRequest.AffectedRole)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.ChangeRequest.TimeToDevelop)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ChangeRequest.TimeToDevelop)
+				    @Html.ValidationMessageFor(model => model.ChangeRequest.TimeToDevelop)
+			    </div>
+		    </li>
+		    <li>
+			    <div class="editor-label required">
+				    @Html.LabelFor(model => model.ChangeRequest.RequestedBy)<span>*</span> 
+			    </div>
+			    <div class="editor-field">
+				    @Html.EditorFor(model => model.ChangeRequest.RequestedBy)
+				    @Html.ValidationMessageFor(model => model.ChangeRequest.RequestedBy)
+			    </div>
+		    </li>
+		    <li>
+                <div class="editor-label">
+			    <label>&nbsp;</label>
+                </div>
+                <div class="editor-field">
+			    <input class="button" type="submit" value="Save" /> | @Html.ActionLink("Cancel", "Index", new {id=Model.Project.Id})
+                </div>
+		    </li>
+	    </ul>
+	</fieldset>
+}
